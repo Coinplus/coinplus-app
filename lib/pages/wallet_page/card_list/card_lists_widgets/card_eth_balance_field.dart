@@ -41,9 +41,7 @@ class CardEthBalanceField extends HookWidget {
         return ScaleTap(
           onPressed: _balanceStore.cardCurrentIndex == index
               ? () async {
-                  final isActivated = isEthCardWalletActivated(
-                    balanceStore: _balanceStore,
-                  );
+                  final isActivated = isEthCardWalletActivated();
                   await recordAmplitudeEvent(
                     TopUpButtonClicked(
                       walletType: 'Card',
@@ -58,9 +56,7 @@ class CardEthBalanceField extends HookWidget {
           child: Container(
             height: 60,
             padding: EdgeInsets.symmetric(
-              horizontal: context.height > 667
-                  ? context.height * 0.035
-                  : context.height * 0.043,
+              horizontal: context.height > 667 ? context.height * 0.035 : context.height * 0.043,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6),
@@ -93,8 +89,7 @@ class CardEthBalanceField extends HookWidget {
                             ),
                             Observer(
                               builder: (context) {
-                                final myFormat =
-                                    NumberFormat.decimalPatternDigits(
+                                final myFormat = NumberFormat.decimalPatternDigits(
                                   locale: 'en_us',
                                   decimalDigits: 2,
                                 );
@@ -111,8 +106,7 @@ class CardEthBalanceField extends HookWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   strokeWidth: 3,
                                                   color: Colors.white,
                                                 ),
@@ -122,13 +116,11 @@ class CardEthBalanceField extends HookWidget {
                                         )
                                       : Observer(
                                           builder: (_) {
-                                            if (_accelerometerStore
-                                                .hasPerformedAction) {
+                                            if (_accelerometerStore.hasPerformedAction) {
                                               return const Text(
                                                 r'$*****',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.white,
                                                   fontSize: 18,
@@ -138,8 +130,7 @@ class CardEthBalanceField extends HookWidget {
                                               return Text(
                                                 '\$${myFormat.format(ethCard.finalBalance)}',
                                                 style: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.white,
                                                   fontSize: 20,

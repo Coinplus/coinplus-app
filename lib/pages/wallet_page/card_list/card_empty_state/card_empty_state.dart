@@ -128,8 +128,7 @@ class CardEmptyState extends StatelessWidget {
                                         highlightColor: Colors.grey[100]!,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
+                                            borderRadius: BorderRadius.circular(4),
                                             color: Colors.grey,
                                           ),
                                           height: 26,
@@ -139,8 +138,7 @@ class CardEmptyState extends StatelessWidget {
                                     } else {
                                       return Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
+                                          borderRadius: BorderRadius.circular(4),
                                           color: const Color(0xFFFD7E70),
                                         ),
                                         child: Padding(
@@ -151,8 +149,7 @@ class CardEmptyState extends StatelessWidget {
                                           child: Text(
                                             snapshot.data!.price.toString(),
                                             style: const TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -225,8 +222,7 @@ class CardEmptyState extends StatelessWidget {
                         );
                       },
                     ).then(
-                      (value) =>
-                          walletProtectState.updateModalStatus(isOpened: false),
+                      (value) => walletProtectState.updateModalStatus(isOpened: false),
                     );
                   }
                 : null,

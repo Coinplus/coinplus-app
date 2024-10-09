@@ -8,15 +8,12 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../trouble_tapping_bar/trouble_tapping_bar.dart';
 
 class AndroidBarNfcModal extends StatelessWidget {
-  const AndroidBarNfcModal({super.key, required this.state});
-
-  final SendToState state;
+  const AndroidBarNfcModal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +85,7 @@ class AndroidBarNfcModal extends StatelessWidget {
                   ),
                   backgroundColor: Colors.white,
                   builder: (context) {
-                    return BarIssueOptionsSheet(state: state);
+                    return const BarIssueOptionsSheet();
                   },
                 );
               },

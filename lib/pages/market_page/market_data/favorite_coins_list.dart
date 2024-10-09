@@ -85,10 +85,8 @@ class FavoriteCoinsList extends StatelessWidget {
                         duration: const Duration(milliseconds: 800),
                         child: Builder(
                           builder: (context) {
-                            final data =
-                                _marketPageStore.favoriteCoinsList[index];
-                            final formattedMarketCap =
-                                formatLargeNumber(data.marketCap.toInt());
+                            final data = _marketPageStore.favoriteCoinsList[index];
+                            final formattedMarketCap = formatLargeNumber(data.marketCap.toInt());
                             return ScaleTap(
                               scaleMinValue: 0.99,
                               enableFeedback: false,
@@ -117,43 +115,35 @@ class FavoriteCoinsList extends StatelessWidget {
                                           data.rank.toString(),
                                           style: TextStyle(
                                             fontFamily: FontFamily.redHatMedium,
-                                            fontSize:
-                                                data.rank < 2000 ? 12 : 10,
+                                            fontSize: data.rank < 2000 ? 12 : 10,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                       ),
                                       SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.55,
+                                        width: MediaQuery.of(context).size.width * 0.55,
                                         child: Row(
                                           children: [
                                             SizedBox(
                                               height: 26,
                                               child: CachedNetworkImage(
                                                 imageUrl: data.icon,
-                                                placeholder: (context, url) =>
-                                                    Container(
+                                                placeholder: (context, url) => Container(
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
+                                                    borderRadius: BorderRadius.circular(
                                                       20,
                                                     ),
-                                                    color: Colors.grey
-                                                        .withOpacity(0.5),
+                                                    color: Colors.grey.withOpacity(0.5),
                                                   ),
                                                   height: 26,
                                                   width: 26,
                                                   child: CircleAvatar(
-                                                    backgroundColor: Colors.grey
-                                                        .withOpacity(0.3),
+                                                    backgroundColor: Colors.grey.withOpacity(0.3),
                                                     child: Center(
                                                       child: Text(
                                                         data.symbol,
                                                         style: const TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
+                                                          fontFamily: FontFamily.redHatMedium,
                                                           fontSize: 7,
                                                           color: Colors.black,
                                                         ),
@@ -172,27 +162,22 @@ class FavoriteCoinsList extends StatelessWidget {
                                             const SizedBox(width: 15),
                                             Expanded(
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     data.symbol,
                                                     style: const TextStyle(
                                                       fontSize: 16,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
                                                     '\$$formattedMarketCap',
                                                     style: const TextStyle(
                                                       fontSize: 12,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      color: AppColors
-                                                          .secondaryTextColor,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      color: AppColors.secondaryTextColor,
                                                     ),
                                                   ),
                                                 ],
@@ -202,21 +187,15 @@ class FavoriteCoinsList extends StatelessWidget {
                                               child: Row(
                                                 children: [
                                                   if (data.priceChange1d > 0)
-                                                    Assets.icons.arrowDropUp
-                                                        .image(height: 5)
+                                                    Assets.icons.arrowDropUp.image(height: 5)
                                                   else
-                                                    Assets.icons.arrowDropDown
-                                                        .image(height: 5),
+                                                    Assets.icons.arrowDropDown.image(height: 5),
                                                   Text(
                                                     '${data.priceChange1d.toStringAsFixed(2)}%',
                                                     style: TextStyle(
                                                       fontSize: 15,
-                                                      color:
-                                                          data.priceChange1d > 0
-                                                              ? Colors.green
-                                                              : Colors.red,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],

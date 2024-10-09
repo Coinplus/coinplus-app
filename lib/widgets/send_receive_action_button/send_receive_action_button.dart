@@ -65,13 +65,10 @@ class SendReceiveActionButton extends StatelessWidget {
             dynamic isCardActivated;
             dynamic isBarActivated;
             if (selectedCard?.blockchain == 'BTC') {
-              isCardActivated =
-                  isCardWalletActivated(balanceStore: _balanceStore);
-              isBarActivated =
-                  isBarWalletActivated(balanceStore: _balanceStore);
+              isCardActivated = isCardWalletActivated();
+              isBarActivated = isBarWalletActivated();
             } else if (selectedCard?.blockchain == 'ETH') {
-              isCardActivated =
-                  isEthCardWalletActivated(balanceStore: _balanceStore);
+              isCardActivated = isEthCardWalletActivated();
             }
 
             if (selectedCard == null || _pageController.page != 0) {

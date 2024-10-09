@@ -56,8 +56,6 @@ class TapToConnectButton extends StatelessWidget {
               await router.maybePop();
               await nfcSessionIos(
                 isMifareUltralight: isMifareUltralight,
-                walletProtectState: _walletProtectState,
-                isBarList: false,
               );
             }
           : () async {
@@ -71,7 +69,6 @@ class TapToConnectButton extends StatelessWidget {
               );
               await nfcSessionAndroid(
                 isMifareUltralight: isMifareUltralight,
-                walletProtectState: _walletProtectState,
               );
               await router.maybePop();
               await showModalBottomSheet(

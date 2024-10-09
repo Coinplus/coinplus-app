@@ -32,11 +32,8 @@ class CoinsDataWidget extends StatelessWidget {
               ? 200
               : _marketPageStore.searchedList.isNotEmpty
                   ? _marketPageStore.searchedList.length +
-                      (_marketPageStore.isLoading
-                          ? 1
-                          : (_marketPageStore.isSearched ? 0 : 1))
-                  : (_marketPageStore.filteredData.length <=
-                          _marketPageStore.searchedList.length
+                      (_marketPageStore.isLoading ? 1 : (_marketPageStore.isSearched ? 0 : 1))
+                  : (_marketPageStore.filteredData.length <= _marketPageStore.searchedList.length
                       ? _marketPageStore.searchedList.length
                       : _marketPageStore.searchedList.length + 1),
           separatorBuilder: (_, __) {
@@ -76,8 +73,7 @@ class CoinsDataWidget extends StatelessWidget {
                               duration: const Duration(milliseconds: 600),
                               child: _marketPageStore.isLoading
                                   ? const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 15),
+                                      padding: EdgeInsets.symmetric(horizontal: 15),
                                       child: MarketPageShimmer(),
                                     )
                                   : Padding(
@@ -96,29 +92,23 @@ class CoinsDataWidget extends StatelessWidget {
                                           style: context.theme
                                               .buttonStyle(
                                                 textStyle: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
-                                                  color: AppColors
-                                                      .primaryTextColor,
+                                                  fontFamily: FontFamily.redHatMedium,
+                                                  color: AppColors.primaryTextColor,
                                                   fontSize: 15,
                                                 ),
                                               )
                                               .copyWith(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
+                                                backgroundColor: WidgetStateProperty.all(
                                                   Colors.grey.withOpacity(0.1),
                                                 ),
-                                                shape:
-                                                    const WidgetStatePropertyAll(
+                                                shape: const WidgetStatePropertyAll(
                                                   RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
+                                                    borderRadius: BorderRadius.all(
                                                       Radius.circular(15),
                                                     ),
                                                   ),
                                                 ),
-                                                padding:
-                                                    WidgetStateProperty.all(
+                                                padding: WidgetStateProperty.all(
                                                   const EdgeInsets.symmetric(
                                                     vertical: 5,
                                                   ),
@@ -127,8 +117,7 @@ class CoinsDataWidget extends StatelessWidget {
                                           child: const Text(
                                             'Load more',
                                             style: TextStyle(
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               fontSize: 14,
                                             ),
                                           ),
@@ -138,10 +127,8 @@ class CoinsDataWidget extends StatelessWidget {
                             )
                           : Builder(
                               builder: (context) {
-                                final data =
-                                    _marketPageStore.searchedList[index];
-                                final formattedMarketCap =
-                                    formatLargeNumber(data.marketCap.toInt());
+                                final data = _marketPageStore.searchedList[index];
+                                final formattedMarketCap = formatLargeNumber(data.marketCap.toInt());
                                 return ScaleTap(
                                   scaleMinValue: 0.99,
                                   enableFeedback: false,
@@ -169,51 +156,36 @@ class CoinsDataWidget extends StatelessWidget {
                                             child: Text(
                                               data.rank.toString(),
                                               style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
-                                                fontSize:
-                                                    data.rank < 2000 ? 12 : 10,
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontSize: data.rank < 2000 ? 12 : 10,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.55,
+                                            width: MediaQuery.of(context).size.width * 0.55,
                                             child: Row(
                                               children: [
                                                 SizedBox(
                                                   height: 26,
                                                   child: CachedNetworkImage(
                                                     imageUrl: data.icon,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Container(
+                                                    placeholder: (context, url) => Container(
                                                       decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color: Colors.grey
-                                                            .withOpacity(0.5),
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        color: Colors.grey.withOpacity(0.5),
                                                       ),
                                                       height: 26,
                                                       width: 26,
                                                       child: CircleAvatar(
-                                                        backgroundColor: Colors
-                                                            .grey
-                                                            .withOpacity(0.3),
+                                                        backgroundColor: Colors.grey.withOpacity(0.3),
                                                         child: Center(
                                                           child: Text(
                                                             data.symbol,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
+                                                            style: const TextStyle(
+                                                              fontFamily: FontFamily.redHatMedium,
                                                               fontSize: 7,
-                                                              color:
-                                                                  Colors.black,
+                                                              color: Colors.black,
                                                             ),
                                                           ),
                                                         ),
@@ -230,28 +202,22 @@ class CoinsDataWidget extends StatelessWidget {
                                                 const SizedBox(width: 15),
                                                 Expanded(
                                                   child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
                                                         data.symbol,
                                                         style: const TextStyle(
                                                           fontSize: 16,
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                          fontWeight: FontWeight.bold,
                                                         ),
                                                       ),
                                                       Text(
                                                         '\$$formattedMarketCap',
                                                         style: const TextStyle(
                                                           fontSize: 12,
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
-                                                          color: AppColors
-                                                              .secondaryTextColor,
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                          color: AppColors.secondaryTextColor,
                                                         ),
                                                       ),
                                                     ],
@@ -260,25 +226,16 @@ class CoinsDataWidget extends StatelessWidget {
                                                 Flexible(
                                                   child: Row(
                                                     children: [
-                                                      if (data.priceChange1d >
-                                                          0)
-                                                        Assets.icons.arrowDropUp
-                                                            .image(height: 5)
+                                                      if (data.priceChange1d > 0)
+                                                        Assets.icons.arrowDropUp.image(height: 5)
                                                       else
-                                                        Assets
-                                                            .icons.arrowDropDown
-                                                            .image(height: 5),
+                                                        Assets.icons.arrowDropDown.image(height: 5),
                                                       Text(
                                                         '${data.priceChange1d.toStringAsFixed(2)}%',
                                                         style: TextStyle(
                                                           fontSize: 15,
-                                                          color:
-                                                              data.priceChange1d >
-                                                                      0
-                                                                  ? Colors.green
-                                                                  : Colors.red,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                          color: data.priceChange1d > 0 ? Colors.green : Colors.red,
+                                                          fontWeight: FontWeight.bold,
                                                         ),
                                                       ),
                                                     ],

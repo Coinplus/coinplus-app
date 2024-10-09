@@ -53,14 +53,11 @@ class BarConnectPage extends StatefulWidget {
   State<BarConnectPage> createState() => _BarConnectPageState();
 }
 
-class _BarConnectPageState extends State<BarConnectPage>
-    with TickerProviderStateMixin {
+class _BarConnectPageState extends State<BarConnectPage> with TickerProviderStateMixin {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  late final ShakeAnimationController _shakeAnimationController =
-      ShakeAnimationController();
-  late final TextEditingController _btcAddressController =
-      TextEditingController();
+  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
@@ -90,12 +87,9 @@ class _BarConnectPageState extends State<BarConnectPage>
       vsync: this,
     );
     _focusNode.addListener(() {
-      _focusNode.hasFocus
-          ? _textFieldAnimationController.forward()
-          : _textFieldAnimationController.animateBack(0);
+      _focusNode.hasFocus ? _textFieldAnimationController.forward() : _textFieldAnimationController.animateBack(0);
     });
-    _connectivitySubscription = _connectivity.onConnectivityChanged
-        .listen(_connectivityStore.updateConnectionStatus);
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
     _textFieldAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 200),
@@ -138,9 +132,7 @@ class _BarConnectPageState extends State<BarConnectPage>
               ),
               child: IconButton(
                 onPressed: () {
-                  _allSettingsState.isLineVisible
-                      ? makeLineInvisible()
-                      : router.maybePop();
+                  _allSettingsState.isLineVisible ? makeLineInvisible() : router.maybePop();
                 },
                 icon: Assets.icons.arrowBackIos.image(height: 22),
               ),
@@ -198,9 +190,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: _allSettingsState.isLineVisible
-                                      ? Assets.images.bar.filledBar
-                                          .image()
-                                          .image
+                                      ? Assets.images.bar.filledBar.image().image
                                       : Assets.images.bar.barFill.image().image,
                                 ),
                               ),
@@ -209,9 +199,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                 child: Row(
                                   children: [
                                     Opacity(
-                                      opacity: _allSettingsState.isLineVisible
-                                          ? 1
-                                          : 0,
+                                      opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                       child: CustomPaint(
                                         size: Size(
                                           61,
@@ -225,32 +213,19 @@ class _BarConnectPageState extends State<BarConnectPage>
                                         width: context.width * 0.6,
                                         child: Column(
                                           children: [
-                                            if (context.height > 667)
-                                              const Gap(35)
-                                            else
-                                              const Gap(20),
+                                            if (context.height > 667) const Gap(35) else const Gap(20),
                                             Stack(
                                               children: [
                                                 Container(
-                                                  height: context.height > 667
-                                                      ? 164
-                                                      : 140,
+                                                  height: context.height > 667 ? 164 : 140,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: Assets.images.bar
-                                                          .hologramWithFrame
-                                                          .image()
-                                                          .image,
+                                                      image: Assets.images.bar.hologramWithFrame.image().image,
                                                     ),
                                                   ),
                                                   child: Center(
-                                                    child: Assets
-                                                        .images.bar.barSecret1
-                                                        .image(
-                                                      height:
-                                                          context.height > 667
-                                                              ? 44
-                                                              : 40,
+                                                    child: Assets.images.bar.barSecret1.image(
+                                                      height: context.height > 667 ? 44 : 40,
                                                     ),
                                                   ),
                                                 ),
@@ -258,67 +233,47 @@ class _BarConnectPageState extends State<BarConnectPage>
                                             ),
                                             const Gap(10),
                                             Opacity(
-                                              opacity: _allSettingsState
-                                                      .isLineVisible
-                                                  ? 0
-                                                  : 1,
+                                              opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
+                                                mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [
                                                   Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
                                                     children: [
                                                       const Text(
                                                         'Balance',
                                                         style: TextStyle(
                                                           fontSize: 15,
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
+                                                          fontFamily: FontFamily.redHatMedium,
                                                         ),
                                                       ),
                                                       Observer(
                                                         builder: (context) {
-                                                          final myFormat =
-                                                              NumberFormat
-                                                                  .decimalPatternDigits(
+                                                          final myFormat = NumberFormat.decimalPatternDigits(
                                                             locale: 'en_us',
                                                             decimalDigits: 2,
                                                           );
                                                           if (_balanceStore
-                                                                      .loadings[
-                                                                  _balanceStore
-                                                                      .selectedBar
-                                                                      ?.address] ??
+                                                                  .loadings[_balanceStore.selectedBar?.address] ??
                                                               false) {
                                                             return const Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(
+                                                              padding: EdgeInsets.all(
                                                                 4,
                                                               ),
-                                                              child:
-                                                                  CupertinoActivityIndicator(
+                                                              child: CupertinoActivityIndicator(
                                                                 radius: 5,
                                                               ),
                                                             );
                                                           }
                                                           return Text(
-                                                            (_balanceStore.selectedBar !=
-                                                                        null
+                                                            (_balanceStore.selectedBar != null
                                                                     ? '\$${myFormat.format((_balanceStore.selectedBar!.finalBalance ?? 0) / 100000000 * data!.price)}'
                                                                     : '')
                                                                 .toString(),
                                                             style: TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              color: Colors
-                                                                  .black
-                                                                  .withOpacity(
+                                                              fontFamily: FontFamily.redHatMedium,
+                                                              fontWeight: FontWeight.w700,
+                                                              color: Colors.black.withOpacity(
                                                                 0.7,
                                                               ),
                                                               fontSize: 20,
@@ -331,70 +286,47 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                 ],
                                               ),
                                             ),
-                                            if (context.height > 667)
-                                              const Gap(15)
-                                            else
-                                              const SizedBox(),
+                                            if (context.height > 667) const Gap(15) else const SizedBox(),
                                             Opacity(
-                                              opacity: _allSettingsState
-                                                      .isLineVisible
-                                                  ? 0
-                                                  : 1,
+                                              opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                               child: ScaleTap(
                                                 enableFeedback: false,
-                                                onPressed: _allSettingsState
-                                                        .isLineVisible
+                                                onPressed: _allSettingsState.isLineVisible
                                                     ? null
                                                     : () async {
                                                         await recordAmplitudeEvent(
                                                           AddressCopied(
                                                             walletType: 'Bar',
-                                                            walletAddress:
-                                                                _balanceStore
-                                                                    .selectedBar!
-                                                                    .address,
+                                                            walletAddress: _balanceStore.selectedBar!.address,
                                                             activated: false,
                                                             source: 'Balance',
                                                           ),
                                                         );
                                                         await Clipboard.setData(
                                                           ClipboardData(
-                                                            text: _balanceStore
-                                                                .selectedBar!
-                                                                .address
-                                                                .toString(),
+                                                            text: _balanceStore.selectedBar!.address.toString(),
                                                           ),
                                                         ).then(
                                                           (_) {
-                                                            HapticFeedback
-                                                                .mediumImpact();
+                                                            HapticFeedback.mediumImpact();
                                                             showTopSnackBar(
-                                                              displayDuration:
-                                                                  const Duration(
-                                                                milliseconds:
-                                                                    400,
+                                                              displayDuration: const Duration(
+                                                                milliseconds: 400,
                                                               ),
                                                               Overlay.of(
                                                                 context,
                                                               ),
-                                                              CustomSnackBar
-                                                                  .success(
-                                                                backgroundColor:
-                                                                    const Color(
+                                                              CustomSnackBar.success(
+                                                                backgroundColor: const Color(
                                                                   0xFF4A4A4A,
                                                                 ).withOpacity(
                                                                   0.9,
                                                                 ),
-                                                                message:
-                                                                    'Address was copied',
-                                                                textStyle:
-                                                                    const TextStyle(
-                                                                  fontFamily:
-                                                                      FontFamily
-                                                                          .redHatMedium,
+                                                                message: 'Address was copied',
+                                                                textStyle: const TextStyle(
+                                                                  fontFamily: FontFamily.redHatMedium,
                                                                   fontSize: 14,
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Colors.white,
                                                                 ),
                                                               ),
                                                             );
@@ -405,43 +337,29 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                   height: 33,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: Assets
-                                                          .images.bar.barAddress
-                                                          .image()
-                                                          .image,
+                                                      image: Assets.images.bar.barAddress.image().image,
                                                     ),
                                                   ),
                                                   child: Center(
                                                     child: Observer(
                                                       builder: (context) {
                                                         if (_balanceStore
-                                                                    .loadings[
-                                                                _balanceStore
-                                                                    .selectedBar
-                                                                    ?.address] ??
+                                                                .loadings[_balanceStore.selectedBar?.address] ??
                                                             false) {
                                                           return const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
+                                                            padding: EdgeInsets.all(
                                                               4,
                                                             ),
-                                                            child:
-                                                                CupertinoActivityIndicator(
+                                                            child: CupertinoActivityIndicator(
                                                               radius: 5,
                                                             ),
                                                           );
                                                         }
                                                         return Text(
-                                                          _balanceStore
-                                                                  .selectedBar
-                                                                  ?.address ??
-                                                              '',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily: FontFamily
-                                                                .redHatMedium,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                          _balanceStore.selectedBar?.address ?? '',
+                                                          style: const TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontWeight: FontWeight.w600,
                                                             color: Colors.black,
                                                             fontSize: 10,
                                                           ),
@@ -452,29 +370,16 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                 ),
                                               ),
                                             ),
-                                            if (context.height > 667)
-                                              const Gap(15)
-                                            else
-                                              const SizedBox(),
+                                            if (context.height > 667) const Gap(15) else const SizedBox(),
                                             Opacity(
-                                              opacity: _allSettingsState
-                                                      .isLineVisible
-                                                  ? 0
-                                                  : 1,
-                                              child: Assets
-                                                  .images.bar.barCoinplusLogo
-                                                  .image(
+                                              opacity: _allSettingsState.isLineVisible ? 0 : 1,
+                                              child: Assets.images.bar.barCoinplusLogo.image(
                                                 height: 40,
                                               ),
                                             ),
-                                            if (context.height > 667)
-                                              const Gap(15)
-                                            else
-                                              const Gap(25),
+                                            if (context.height > 667) const Gap(15) else const Gap(25),
                                             Assets.images.bar.barSecret2.image(
-                                              height: context.height > 667
-                                                  ? 43
-                                                  : 36,
+                                              height: context.height > 667 ? 43 : 36,
                                             ),
                                           ],
                                         ),
@@ -489,8 +394,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                               width: context.width - 34,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image:
-                                      Assets.images.bar.barFill.image().image,
+                                  image: Assets.images.bar.barFill.image().image,
                                 ),
                               ),
                               child: Center(
@@ -501,32 +405,25 @@ class _BarConnectPageState extends State<BarConnectPage>
                                     children: [
                                       Gap(context.height * 0.035),
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               const Text(
                                                 'Balance',
                                                 style: TextStyle(
                                                   fontSize: 15,
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                 ),
                                               ),
                                               Observer(
                                                 builder: (context) {
-                                                  final myFormat = NumberFormat
-                                                      .decimalPatternDigits(
+                                                  final myFormat = NumberFormat.decimalPatternDigits(
                                                     locale: 'en_us',
                                                     decimalDigits: 2,
                                                   );
-                                                  if ((_balanceStore.loadings[
-                                                              _balanceStore
-                                                                  .selectedBar
-                                                                  ?.address] ??
+                                                  if ((_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
                                                           false) ||
                                                       data == null) {
                                                     return const Padding(
@@ -536,26 +433,21 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                       child: SizedBox(
                                                         height: 15,
                                                         width: 15,
-                                                        child:
-                                                            CircularProgressIndicator(
+                                                        child: CircularProgressIndicator(
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                     );
                                                   }
                                                   return Text(
-                                                    (_balanceStore.selectedBar !=
-                                                                null
+                                                    (_balanceStore.selectedBar != null
                                                             ? '\$${myFormat.format((_balanceStore.selectedBar!.finalBalance ?? 0) / 100000000 * data.price)}'
                                                             : '')
                                                         .toString(),
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Colors.black
-                                                          .withOpacity(0.7),
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      color: Colors.black.withOpacity(0.7),
                                                       fontSize: 20,
                                                     ),
                                                   );
@@ -571,9 +463,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                         onPressed: () {
                                           Clipboard.setData(
                                             ClipboardData(
-                                              text: _balanceStore
-                                                  .selectedBar!.address
-                                                  .toString(),
+                                              text: _balanceStore.selectedBar!.address.toString(),
                                             ),
                                           ).then(
                                             (_) {
@@ -584,13 +474,10 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                 ),
                                                 Overlay.of(context),
                                                 CustomSnackBar.success(
-                                                  backgroundColor:
-                                                      const Color(0xFF4A4A4A)
-                                                          .withOpacity(0.9),
+                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
                                                   message: 'Address was copied',
                                                   textStyle: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 14,
                                                     color: Colors.white,
                                                   ),
@@ -603,34 +490,25 @@ class _BarConnectPageState extends State<BarConnectPage>
                                           height: 33,
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
-                                              image: Assets
-                                                  .images.bar.barAddress
-                                                  .image()
-                                                  .image,
+                                              image: Assets.images.bar.barAddress.image().image,
                                             ),
                                           ),
                                           child: Center(
                                             child: Observer(
                                               builder: (context) {
-                                                if (_balanceStore.loadings[
-                                                        _balanceStore
-                                                            .selectedBar
-                                                            ?.address] ??
+                                                if (_balanceStore.loadings[_balanceStore.selectedBar?.address] ??
                                                     false) {
                                                   return const Padding(
                                                     padding: EdgeInsets.all(
                                                       4,
                                                     ),
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         SizedBox(
                                                           height: 10,
                                                           width: 10,
-                                                          child:
-                                                              CircularProgressIndicator(
+                                                          child: CircularProgressIndicator(
                                                             color: Colors.grey,
                                                           ),
                                                         ),
@@ -639,12 +517,9 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                   );
                                                 }
                                                 return Text(
-                                                  _balanceStore.selectedBar
-                                                          ?.address ??
-                                                      '',
+                                                  _balanceStore.selectedBar?.address ?? '',
                                                   style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontWeight: FontWeight.w600,
                                                     color: Colors.black,
                                                     fontSize: 10,
@@ -660,9 +535,8 @@ class _BarConnectPageState extends State<BarConnectPage>
                                 ),
                               ),
                             ),
-                            crossFadeState: _allSettingsState.isLineVisible
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
+                            crossFadeState:
+                                _allSettingsState.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                             duration: const Duration(milliseconds: 600),
                           ),
                           secondChild: Container(
@@ -701,9 +575,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                         fontFamily: FontFamily.redHatLight,
                                       ),
                                       onTapOutside: (_) {
-                                        WidgetsBinding
-                                            .instance.focusManager.primaryFocus
-                                            ?.unfocus();
+                                        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                                       },
                                       decoration: InputDecoration(
                                         filled: true,
@@ -713,18 +585,15 @@ class _BarConnectPageState extends State<BarConnectPage>
                                         hintStyle: TextStyle(
                                           fontFamily: FontFamily.redHatLight,
                                           fontSize: 12,
-                                          color: AppColors.primaryTextColor
-                                              .withOpacity(
+                                          color: AppColors.primaryTextColor.withOpacity(
                                             0.8,
                                           ),
                                         ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
+                                        contentPadding: const EdgeInsets.symmetric(
                                           horizontal: 8,
                                           vertical: 10,
                                         ),
-                                        prefixIconConstraints:
-                                            const BoxConstraints(
+                                        prefixIconConstraints: const BoxConstraints(
                                           minWidth: 27,
                                           minHeight: 27,
                                         ),
@@ -747,25 +616,21 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                           milliseconds: 300,
                                                         ),
                                                       );
-                                                      final res = await context
-                                                          .pushRoute<String?>(
+                                                      final res = await context.pushRoute<String?>(
                                                         QrScannerRoute(),
                                                       );
                                                       if (res == null) {
                                                         return;
                                                       }
 
-                                                      await hasShownWallet()
-                                                          .then(
+                                                      await hasShownWallet().then(
                                                         (hasShown) async {
                                                           if (hasShown) {
                                                             unawaited(
                                                               recordAmplitudeEvent(
                                                                 QrScanned(
-                                                                  source:
-                                                                      'Wallet',
-                                                                  walletAddress:
-                                                                      res,
+                                                                  source: 'Wallet',
+                                                                  walletAddress: res,
                                                                 ),
                                                               ),
                                                             );
@@ -773,10 +638,8 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                             unawaited(
                                                               recordAmplitudeEvent(
                                                                 QrScanned(
-                                                                  source:
-                                                                      'Onboarding',
-                                                                  walletAddress:
-                                                                      res,
+                                                                  source: 'Onboarding',
+                                                                  walletAddress: res,
                                                                 ),
                                                               ),
                                                             );
@@ -784,37 +647,28 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                         },
                                                       );
                                                       setState(() {
-                                                        _btcAddressController
-                                                            .text = res;
+                                                        _btcAddressController.text = res;
                                                       });
-                                                      _addressState.btcAddress =
-                                                          res;
-                                                      await _addressState
-                                                          .validateBTCAddress();
+                                                      _addressState.btcAddress = res;
+                                                      await _addressState.validateBTCAddress();
                                                     },
-                                                    icon: Assets.icons.qrCode
-                                                        .image(
+                                                    icon: Assets.icons.qrCode.image(
                                                       height: 34,
                                                     ),
                                                   )
                                                 : Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(8),
+                                                    padding: const EdgeInsets.all(8),
                                                     child: Lottie.asset(
                                                       'assets/lottie_animations/address_validation_success.json',
                                                       height: 30,
-                                                      controller:
-                                                          _lottieController,
+                                                      controller: _lottieController,
                                                       onLoaded: (composition) {
                                                         Future.delayed(
                                                           const Duration(
                                                             milliseconds: 1000,
                                                           ),
                                                         );
-                                                        _lottieController
-                                                                .duration =
-                                                            composition
-                                                                .duration;
+                                                        _lottieController.duration = composition.duration;
                                                       },
                                                     ),
                                                   );
@@ -843,9 +697,8 @@ class _BarConnectPageState extends State<BarConnectPage>
                               ),
                             ),
                           ),
-                          crossFadeState: _addressState.isAddressVisible
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
+                          crossFadeState:
+                              _addressState.isAddressVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                           duration: const Duration(milliseconds: 400),
                         ),
                       ),
@@ -887,10 +740,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                       ActivatedCheckboxClicked(
                                                         source: 'Wallet',
                                                         walletType: 'Card',
-                                                        walletAddress:
-                                                            _balanceStore
-                                                                .selectedBar!
-                                                                .address,
+                                                        walletAddress: _balanceStore.selectedBar!.address,
                                                       ),
                                                     ),
                                                   );
@@ -900,37 +750,27 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                       ActivatedCheckboxClicked(
                                                         source: 'Onboarding',
                                                         walletType: 'Card',
-                                                        walletAddress:
-                                                            _balanceStore
-                                                                .selectedBar!
-                                                                .address,
+                                                        walletAddress: _balanceStore.selectedBar!.address,
                                                       ),
                                                     ),
                                                   );
                                                 }
                                               },
                                             );
-                                            _allSettingsState
-                                                .makeActiveCheckbox();
+                                            _allSettingsState.makeActiveCheckbox();
                                             HapticFeedback.heavyImpact();
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
+                                              borderRadius: BorderRadius.circular(8),
                                               border: Border.all(
-                                                color: _allSettingsState
-                                                        .isActivatedCheckBox
+                                                color: _allSettingsState.isActivatedCheckBox
                                                     ? const Color(0xFF73C3A6)
-                                                    : const Color(0xFFFF2E00)
-                                                        .withOpacity(0.6),
+                                                    : const Color(0xFFFF2E00).withOpacity(0.6),
                                               ),
-                                              color: _allSettingsState
-                                                      .isActivatedCheckBox
-                                                  ? const Color(0xFF73C3A6)
-                                                      .withOpacity(0.1)
-                                                  : const Color(0xFFFF2E00)
-                                                      .withOpacity(0.05),
+                                              color: _allSettingsState.isActivatedCheckBox
+                                                  ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                                  : const Color(0xFFFF2E00).withOpacity(0.05),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.all(14),
@@ -939,24 +779,19 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                   const Text(
                                                     'This bar was previously activated!',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
                                                       fontSize: 16,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ).expandedHorizontally(),
                                                   const Gap(4),
                                                   const Text(
                                                     "This bar has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the bar yourself, please avoid using it.",
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ).expandedHorizontally(),
                                                 ],
@@ -970,14 +805,11 @@ class _BarConnectPageState extends State<BarConnectPage>
                                       builder: (context) {
                                         return Container(
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(8),
                                             border: Border.all(
-                                              color:
-                                                  Colors.grey.withOpacity(0.3),
+                                              color: Colors.grey.withOpacity(0.3),
                                             ),
-                                            color:
-                                                Colors.white.withOpacity(0.7),
+                                            color: Colors.white.withOpacity(0.7),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(14),
@@ -987,33 +819,24 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                   firstChild: const Text(
                                                     'Fill in the address of your physical bar wallet',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
                                                       fontSize: 16,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ).expandedHorizontally(),
                                                   secondChild: const Text(
                                                     'Coinplus Virtual Bar',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
                                                       fontSize: 16,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ).expandedHorizontally(),
-                                                  crossFadeState: _addressState
-                                                          .isAddressVisible
-                                                      ? CrossFadeState
-                                                          .showSecond
-                                                      : CrossFadeState
-                                                          .showFirst,
+                                                  crossFadeState: _addressState.isAddressVisible
+                                                      ? CrossFadeState.showSecond
+                                                      : CrossFadeState.showFirst,
                                                   duration: const Duration(
                                                     milliseconds: 400,
                                                   ),
@@ -1023,29 +846,22 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                   firstChild: const Text(
                                                     'Please fill the address from your physical bar into the address input field, or scan the QR code.',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ).expandedHorizontally(),
                                                   secondChild: const Text(
                                                     'This is the virtual copy of your physical Coinplus Bar with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ).expandedHorizontally(),
-                                                  crossFadeState: _addressState
-                                                          .isAddressVisible
-                                                      ? CrossFadeState
-                                                          .showSecond
-                                                      : CrossFadeState
-                                                          .showFirst,
+                                                  crossFadeState: _addressState.isAddressVisible
+                                                      ? CrossFadeState.showSecond
+                                                      : CrossFadeState.showFirst,
                                                   duration: const Duration(
                                                     milliseconds: 400,
                                                   ),
@@ -1056,9 +872,8 @@ class _BarConnectPageState extends State<BarConnectPage>
                                         );
                                       },
                                     ),
-                                    crossFadeState: isActivated == true
-                                        ? CrossFadeState.showFirst
-                                        : CrossFadeState.showSecond,
+                                    crossFadeState:
+                                        isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                     duration: const Duration(milliseconds: 400),
                                   );
                                 },
@@ -1081,16 +896,13 @@ class _BarConnectPageState extends State<BarConnectPage>
                                           ? const Color(0xFF73C3A6)
                                           : _allSettingsState.isAccepted
                                               ? Colors.grey.withOpacity(0.3)
-                                              : const Color(0xFFFF2E00)
-                                                  .withOpacity(0.6),
+                                              : const Color(0xFFFF2E00).withOpacity(0.6),
                                     ),
                                     color: _allSettingsState.isActive
-                                        ? const Color(0xFF73C3A6)
-                                            .withOpacity(0.1)
+                                        ? const Color(0xFF73C3A6).withOpacity(0.1)
                                         : _allSettingsState.isAccepted
                                             ? Colors.white.withOpacity(0.7)
-                                            : const Color(0xFFFF2E00)
-                                                .withOpacity(0.05),
+                                            : const Color(0xFFFF2E00).withOpacity(0.05),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(14),
@@ -1141,30 +953,22 @@ class _BarConnectPageState extends State<BarConnectPage>
                                         scale: 1.2,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(20),
                                           ),
                                           child: Observer(
                                             builder: (context) {
                                               return Checkbox(
-                                                checkColor:
-                                                    const Color(0xFF73C3A6),
-                                                activeColor:
-                                                    const Color(0xFF73C3A6)
-                                                        .withOpacity(0.5),
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
+                                                checkColor: const Color(0xFF73C3A6),
+                                                activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                                shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.all(
                                                     Radius.circular(4),
                                                   ),
                                                 ),
                                                 side: BorderSide(
-                                                  color: const Color(0xFFFF2E00)
-                                                      .withOpacity(0.6),
+                                                  color: const Color(0xFFFF2E00).withOpacity(0.6),
                                                 ),
-                                                value: _allSettingsState
-                                                    .isActivatedCheckBox,
+                                                value: _allSettingsState.isActivatedCheckBox,
                                                 onChanged: (_) {
                                                   hasShownWallet().then(
                                                     (hasShown) async {
@@ -1173,12 +977,8 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                           recordAmplitudeEvent(
                                                             ActivatedCheckboxClicked(
                                                               source: 'Wallet',
-                                                              walletType:
-                                                                  'Card',
-                                                              walletAddress:
-                                                                  _balanceStore
-                                                                      .selectedBar!
-                                                                      .address,
+                                                              walletType: 'Card',
+                                                              walletAddress: _balanceStore.selectedBar!.address,
                                                             ),
                                                           ),
                                                         );
@@ -1186,14 +986,9 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                         unawaited(
                                                           recordAmplitudeEvent(
                                                             ActivatedCheckboxClicked(
-                                                              source:
-                                                                  'Onboarding',
-                                                              walletType:
-                                                                  'Card',
-                                                              walletAddress:
-                                                                  _balanceStore
-                                                                      .selectedBar!
-                                                                      .address,
+                                                              source: 'Onboarding',
+                                                              walletType: 'Card',
+                                                              walletAddress: _balanceStore.selectedBar!.address,
                                                             ),
                                                           ),
                                                         );
@@ -1201,8 +996,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                     },
                                                   );
 
-                                                  _allSettingsState
-                                                      .makeActiveCheckbox();
+                                                  _allSettingsState.makeActiveCheckbox();
                                                 },
                                                 splashRadius: 15,
                                               );
@@ -1229,8 +1023,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                       builder: (context) {
                                         return Checkbox(
                                           checkColor: const Color(0xFF73C3A6),
-                                          activeColor: const Color(0xFF73C3A6)
-                                              .withOpacity(0.5),
+                                          activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(4),
@@ -1239,8 +1032,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                           side: BorderSide(
                                             color: _allSettingsState.isAccepted
                                                 ? Colors.grey.withOpacity(0.5)
-                                                : const Color(0xFFFF2E00)
-                                                    .withOpacity(0.6),
+                                                : const Color(0xFFFF2E00).withOpacity(0.6),
                                           ),
                                           value: _allSettingsState.isActive,
                                           onChanged: (_) {
@@ -1289,8 +1081,7 @@ class _BarConnectPageState extends State<BarConnectPage>
                                 unawaited(
                                   recordAmplitudeEventPartTwo(
                                     BarAddedEvent(
-                                      address:
-                                          _balanceStore.selectedBar!.address,
+                                      address: _balanceStore.selectedBar!.address,
                                     ),
                                   ),
                                 );
@@ -1353,13 +1144,10 @@ class _BarConnectPageState extends State<BarConnectPage>
                             return Observer(
                               builder: (context) {
                                 return LoadingButton(
-                                  onPressed: _connectivityStore
-                                              .connectionStatus ==
-                                          ConnectivityResult.none
+                                  onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
                                       ? null
                                       : _addressState.isAddressVisible
-                                          ? _allSettingsState
-                                                  .isActivatedCheckBox
+                                          ? _allSettingsState.isActivatedCheckBox
                                               ? () async {
                                                   await hasShownWallet().then(
                                                     (hasShown) async {
@@ -1368,58 +1156,37 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                           SaveToWalletClicked(
                                                             source: 'Wallet',
                                                             walletType: 'Bar',
-                                                            walletAddress:
-                                                                _btcAddressController
-                                                                    .text,
+                                                            walletAddress: _btcAddressController.text,
                                                           ),
                                                         );
                                                       } else {
                                                         await recordAmplitudeEvent(
                                                           SaveToWalletClicked(
-                                                            source:
-                                                                'Onboarding',
+                                                            source: 'Onboarding',
                                                             walletType: 'Bar',
-                                                            walletAddress:
-                                                                _btcAddressController
-                                                                    .text,
+                                                            walletAddress: _btcAddressController.text,
                                                           ),
                                                         );
                                                       }
                                                     },
                                                   );
-                                                  final barIndex = _balanceStore
-                                                      .bars
-                                                      .indexWhere(
-                                                    (element) =>
-                                                        element.address ==
-                                                        _balanceStore
-                                                            .selectedBar
-                                                            ?.address,
+                                                  final barIndex = _balanceStore.bars.indexWhere(
+                                                    (element) => element.address == _balanceStore.selectedBar?.address,
                                                   );
-                                                  final cardIndex =
-                                                      _balanceStore.cards
-                                                          .indexWhere(
-                                                    (element) =>
-                                                        element.address ==
-                                                        _balanceStore
-                                                            .selectedBar
-                                                            ?.address,
+                                                  final cardIndex = _balanceStore.cards.indexWhere(
+                                                    (element) => element.address == _balanceStore.selectedBar?.address,
                                                   );
-                                                  if (cardIndex != -1 ||
-                                                      barIndex != -1) {
+                                                  if (cardIndex != -1 || barIndex != -1) {
                                                     await alreadySavedBar(
                                                       context,
                                                       _walletProtectState,
-                                                      _balanceStore
-                                                          .selectedBar!.address,
+                                                      _balanceStore.selectedBar!.address,
                                                     );
                                                     _balanceStore.onBarAdded(
-                                                      _balanceStore
-                                                          .selectedBar!.address,
+                                                      _balanceStore.selectedBar!.address,
                                                     );
                                                   } else {
-                                                    _allSettingsState
-                                                        .makeVisible();
+                                                    _allSettingsState.makeVisible();
                                                   }
                                                 }
                                               : () async {
@@ -1430,76 +1197,49 @@ class _BarConnectPageState extends State<BarConnectPage>
                                                           SaveToWalletClicked(
                                                             source: 'Wallet',
                                                             walletType: 'Bar',
-                                                            walletAddress:
-                                                                _balanceStore
-                                                                    .selectedBar!
-                                                                    .address,
+                                                            walletAddress: _balanceStore.selectedBar!.address,
                                                           ),
                                                         );
                                                       } else {
                                                         await recordAmplitudeEvent(
                                                           SaveToWalletClicked(
-                                                            source:
-                                                                'Onboarding',
+                                                            source: 'Onboarding',
                                                             walletType: 'Bar',
-                                                            walletAddress:
-                                                                _balanceStore
-                                                                    .selectedBar!
-                                                                    .address,
+                                                            walletAddress: _balanceStore.selectedBar!.address,
                                                           ),
                                                         );
                                                       }
                                                     },
                                                   );
                                                   if (isActivated == true) {
-                                                    await HapticFeedback
-                                                        .vibrate();
-                                                    _allSettingsState
-                                                        .checkboxAccept();
-                                                    _shakeAnimationController
-                                                        .start();
+                                                    await HapticFeedback.vibrate();
+                                                    _allSettingsState.checkboxAccept();
+                                                    _shakeAnimationController.start();
                                                     await Future.delayed(
                                                       const Duration(
                                                         milliseconds: 600,
                                                       ),
                                                     );
-                                                    _shakeAnimationController
-                                                        .stop();
+                                                    _shakeAnimationController.stop();
                                                   } else {
-                                                    final cardIndex =
-                                                        _balanceStore.cards
-                                                            .indexWhere(
+                                                    final cardIndex = _balanceStore.cards.indexWhere(
                                                       (element) =>
-                                                          element.address ==
-                                                          _balanceStore
-                                                              .selectedBar
-                                                              ?.address,
+                                                          element.address == _balanceStore.selectedBar?.address,
                                                     );
-                                                    final barIndex =
-                                                        _balanceStore.bars
-                                                            .indexWhere(
+                                                    final barIndex = _balanceStore.bars.indexWhere(
                                                       (element) =>
-                                                          element.address ==
-                                                          _balanceStore
-                                                              .selectedBar
-                                                              ?.address,
+                                                          element.address == _balanceStore.selectedBar?.address,
                                                     );
-                                                    if (cardIndex != -1 ||
-                                                        barIndex != -1) {
+                                                    if (cardIndex != -1 || barIndex != -1) {
                                                       await alreadySavedCard(
                                                         context,
-                                                        _balanceStore
-                                                            .selectedBar!
-                                                            .address,
+                                                        _balanceStore.selectedBar!.address,
                                                       );
                                                       _balanceStore.onCardAdded(
-                                                        _balanceStore
-                                                            .selectedBar!
-                                                            .address,
+                                                        _balanceStore.selectedBar!.address,
                                                       );
                                                     } else {
-                                                      _allSettingsState
-                                                          .makeVisible();
+                                                      _allSettingsState.makeVisible();
                                                     }
                                                   }
                                                 }

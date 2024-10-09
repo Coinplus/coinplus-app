@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../gen/fonts.gen.dart';
 import '../../send_to_state.dart';
 
 class AmountMatchWidget extends StatelessWidget {
-  const AmountMatchWidget({super.key, required this.state});
+  const AmountMatchWidget({super.key});
 
-  final SendToState state;
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class AmountMatchWidget extends StatelessWidget {
                   ),
                   secondChild: const SizedBox(),
                   crossFadeState: () {
-                    if (state.isCoverFee) {
+                    if (_sendToState.isCoverFee) {
                       return CrossFadeState.showFirst;
                     } else {
                       return CrossFadeState.showSecond;
@@ -123,8 +124,7 @@ class AmountMatchWidget extends StatelessWidget {
                   ),
                   secondChild: const SizedBox(),
                   crossFadeState: () {
-                    if (state.isInputtedAmountBiggerTotal &&
-                        !state.isCoverFee) {
+                    if (_sendToState.isInputtedAmountBiggerTotal && !_sendToState.isCoverFee) {
                       return CrossFadeState.showFirst;
                     } else {
                       return CrossFadeState.showSecond;
@@ -183,9 +183,7 @@ class AmountMatchWidget extends StatelessWidget {
                     ),
                   ),
                   secondChild: const SizedBox(),
-                  crossFadeState: state.isAmountToSmall
-                      ? CrossFadeState.showFirst
-                      : CrossFadeState.showSecond,
+                  crossFadeState: _sendToState.isAmountToSmall ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                   duration: const Duration(milliseconds: 300),
                 );
               },

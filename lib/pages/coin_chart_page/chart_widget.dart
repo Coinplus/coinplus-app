@@ -70,8 +70,7 @@ class ChartWidget extends HookWidget {
             dashArray: [1, 3],
           ),
           FlDotData(
-            getDotPainter: (spot, percent, barData, index) =>
-                FlDotCirclePainter(
+            getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
               radius: 4,
               color: Colors.transparent,
               strokeWidth: 2,
@@ -144,15 +143,11 @@ class ChartWidget extends HookWidget {
                   ),
                   lineTouchData: LineTouchData(
                     touchCallback: (event, touchResponse) {
-                      if (touchResponse != null &&
-                          touchResponse.lineBarSpots != null) {
-                        final FlSpot touchedSpot =
-                            touchResponse.lineBarSpots!.first;
+                      if (touchResponse != null && touchResponse.lineBarSpots != null) {
+                        final FlSpot touchedSpot = touchResponse.lineBarSpots!.first;
                         if (marketPageStore?.lastTouchedSpot == null ||
-                            marketPageStore?.lastTouchedSpot!.x !=
-                                touchedSpot.x ||
-                            marketPageStore?.lastTouchedSpot!.y !=
-                                touchedSpot.y) {
+                            marketPageStore?.lastTouchedSpot!.x != touchedSpot.x ||
+                            marketPageStore?.lastTouchedSpot!.y != touchedSpot.y) {
                           marketPageStore?.lastTouchedSpot = touchedSpot;
                           Future.delayed(
                             const Duration(),
@@ -222,8 +217,7 @@ class ChartWidget extends HookWidget {
                             fontSize: 12,
                             fontFamily: FontFamily.redHatMedium,
                           ),
-                          labelResolver: (line) =>
-                              '\$${priceFormatter.format(highestPoint.y)}',
+                          labelResolver: (line) => '\$${priceFormatter.format(highestPoint.y)}',
                         ),
                       ),
                       HorizontalLine(
@@ -239,8 +233,7 @@ class ChartWidget extends HookWidget {
                             fontSize: 12,
                             fontFamily: FontFamily.redHatMedium,
                           ),
-                          labelResolver: (line) =>
-                              '\$${priceFormatter.format(lowestPoint.y)}',
+                          labelResolver: (line) => '\$${priceFormatter.format(lowestPoint.y)}',
                         ),
                       ),
                     ],
@@ -276,18 +269,15 @@ class ChartWidget extends HookWidget {
                                                           ? const Color(
                                                               0xFF749EED,
                                                             )
-                                                          : data!.symbol ==
-                                                                  'XRP'
+                                                          : data!.symbol == 'XRP'
                                                               ? const Color(
                                                                   0xFF2f2c56,
                                                                 )
-                                                              : data!.symbol ==
-                                                                      'TON'
+                                                              : data!.symbol == 'TON'
                                                                   ? const Color(
                                                                       0xFF3887E6,
                                                                     )
-                                                                  : data!.symbol ==
-                                                                          'DOGE'
+                                                                  : data!.symbol == 'DOGE'
                                                                       ? const Color(
                                                                           0xFFe1b303,
                                                                         )
@@ -336,13 +326,11 @@ class ChartWidget extends HookWidget {
                                                           ? const Color(
                                                               0xFF2f2c56,
                                                             )
-                                                          : data!.symbol ==
-                                                                  'TON'
+                                                          : data!.symbol == 'TON'
                                                               ? const Color(
                                                                   0xFF3887E6,
                                                                 )
-                                                              : data!.symbol ==
-                                                                      'DOGE'
+                                                              : data!.symbol == 'DOGE'
                                                                   ? const Color(
                                                                       0xFFe1b303,
                                                                     )
@@ -384,18 +372,15 @@ class ChartWidget extends HookWidget {
                                                           ? const Color(
                                                               0xFF749EED,
                                                             )
-                                                          : data!.symbol ==
-                                                                  'XRP'
+                                                          : data!.symbol == 'XRP'
                                                               ? const Color(
                                                                   0xFF2f2c56,
                                                                 )
-                                                              : data!.symbol ==
-                                                                      'TON'
+                                                              : data!.symbol == 'TON'
                                                                   ? const Color(
                                                                       0xFF3887E6,
                                                                     )
-                                                                  : data!.symbol ==
-                                                                          'DOGE'
+                                                                  : data!.symbol == 'DOGE'
                                                                       ? const Color(
                                                                           0xFFe1b303,
                                                                         )
@@ -409,8 +394,7 @@ class ChartWidget extends HookWidget {
                         ),
                       ),
                       spots: spots,
-                      isCurved:
-                          marketPageStore?.chartEnum != ChartEnum.ONE_MONTH,
+                      isCurved: marketPageStore?.chartEnum != ChartEnum.ONE_MONTH,
                     ),
                   ],
                 ),

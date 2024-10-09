@@ -21,6 +21,7 @@ class BarModel with _$BarModel {
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('Coinplus Bitcoin Bar') String name,
     @Default('BTC') String blockchain,
+    @Default(false) bool isBackup,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
   }) = _BarModel;
 

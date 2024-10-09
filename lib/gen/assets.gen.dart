@@ -39,6 +39,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Notch.png
   AssetGenImage get notch => const AssetGenImage('assets/icons/Notch.png');
 
+  /// File path: assets/icons/activate_wallet_illustration.png
+  AssetGenImage get activateWalletIllustration =>
+      const AssetGenImage('assets/icons/activate_wallet_illustration.png');
+
   /// File path: assets/icons/arrow_back.png
   AssetGenImage get arrowBack =>
       const AssetGenImage('assets/icons/arrow_back.png');
@@ -58,6 +62,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_forward_ios.png
   AssetGenImage get arrowForwardIos =>
       const AssetGenImage('assets/icons/arrow_forward_ios.png');
+
+  /// File path: assets/icons/backup_icon.png
+  AssetGenImage get backupIcon =>
+      const AssetGenImage('assets/icons/backup_icon.png');
+
+  /// File path: assets/icons/backup_wallet_illustration.png
+  AssetGenImage get backupWalletIllustration =>
+      const AssetGenImage('assets/icons/backup_wallet_illustration.png');
 
   /// File path: assets/icons/bar_address_field.png
   AssetGenImage get barAddressField =>
@@ -351,11 +363,14 @@ class $AssetsIconsGen {
         balance,
         faceIDSuccess,
         notch,
+        activateWalletIllustration,
         arrowBack,
         arrowBackIos,
         arrowDropDown,
         arrowDropUp,
         arrowForwardIos,
+        backupIcon,
+        backupWalletIllustration,
         barAddressField,
         binIcon,
         buy,

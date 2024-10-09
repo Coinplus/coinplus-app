@@ -36,7 +36,6 @@ class SendButtonWidget extends HookWidget {
     required this.tabController,
     required this.walletContext,
     required this.allSettingsState,
-    required this.state,
   });
 
   final bool isBarList;
@@ -45,9 +44,6 @@ class SendButtonWidget extends HookWidget {
   final TabController tabController;
   final BuildContext walletContext;
   final AllSettingsState allSettingsState;
-  final SendToState state;
-
-  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +52,10 @@ class SendButtonWidget extends HookWidget {
         dynamic isCardActivated;
         dynamic isBarActivated;
         if (card.blockchain == 'BTC') {
-          isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
-          isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+          isCardActivated = isCardWalletActivated();
+          isBarActivated = isBarWalletActivated();
         } else if (card.blockchain == 'ETH') {
-          isCardActivated =
-              isEthCardWalletActivated(balanceStore: _balanceStore);
+          isCardActivated = isEthCardWalletActivated();
         }
 
         return LoadingButton(
@@ -96,7 +91,6 @@ class SendButtonWidget extends HookWidget {
                         await showSendFromWalletModal(
                           allSettingsState: allSettingsState,
                           isBarList: isBarList,
-                          state: state,
                         );
                         isModalOpened.value = false;
                       } else {
@@ -117,7 +111,6 @@ class SendButtonWidget extends HookWidget {
                           isModalOpened: isModalOpened,
                           card: card,
                           context: context,
-                          state: state,
                         );
                         isModalOpened.value = false;
                       }
@@ -137,7 +130,6 @@ class SendButtonWidget extends HookWidget {
                           await showSendFromWalletModal(
                             allSettingsState: allSettingsState,
                             isBarList: isBarList,
-                            state: state,
                           );
                         } else {
                           await alreadyActivatedWallet(context);
@@ -161,7 +153,6 @@ class SendButtonWidget extends HookWidget {
                           isModalOpened: isModalOpened,
                           card: card,
                           context: context,
-                          state: state,
                         );
                         isModalOpened.value = false;
                       }
@@ -221,10 +212,11 @@ class SendButtonWidget extends HookWidget {
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
+SendToState get _sendToState => GetIt.I<SendToState>();
+
 Future<void> showSendFromWalletModal({
   required AllSettingsState allSettingsState,
   required bool isBarList,
-  required SendToState state,
 }) async {
   await showModalBottomSheet(
     isScrollControlled: true,
@@ -239,18 +231,20 @@ Future<void> showSendFromWalletModal({
       return SendToModal(
         allSettingsState: allSettingsState,
         isBarList: isBarList,
-        state: state,
       );
     },
   );
-  state
+  _sendToState
     ..clearAddressController()
     ..clearAmountControllers()
     ..isUseMaxClicked = false
     ..shouldValidateReceiverAddress = false
-    ..transactionsStore.selectedCard = state.historyPageStore.cardHistoryIndex
+    ..transactionsStore.selectedCard =
+        _sendToState.historyPageStore.cardHistoryIndex
     ..setAmount('0');
   isBarList
-      ? state.transactionsStore.selectedBar = _balanceStore.cardCurrentIndex
-      : state.transactionsStore.selectedCard = _balanceStore.cardCurrentIndex;
+      ? _sendToState.transactionsStore.selectedBar =
+          _balanceStore.cardCurrentIndex
+      : _sendToState.transactionsStore.selectedCard =
+          _balanceStore.cardCurrentIndex;
 }

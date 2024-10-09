@@ -13,7 +13,6 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/bar_model/bar_model.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
@@ -30,7 +29,6 @@ Future<void> barActivationDialog({
   required ValueNotifier<bool> isModalOpened,
   required BarModel bar,
   required bool isBarList,
-  required SendToState state,
 }) async {
   await showDialogBox(
     context,
@@ -113,7 +111,6 @@ Future<void> barActivationDialog({
                       await router.push(
                         BarActivationRoute(
                           receivedData: walletAddress.toString(),
-                          state: state,
                         ),
                       );
                     } else {
@@ -157,7 +154,6 @@ Future<void> barActivationDialog({
                   return Future(
                     () => showBarTapIssueBottomSheet(
                       isModalOpened: isModalOpened,
-                      state: state,
                     ),
                   );
                 },
@@ -219,7 +215,6 @@ Future<void> barActivationDialog({
                       await router.push(
                         BarActivationRoute(
                           receivedData: walletAddress.toString(),
-                          state: state,
                         ),
                       );
                     } else {
@@ -260,7 +255,6 @@ Future<void> barActivationDialog({
                     return Future(
                       () => showBarTapIssueBottomSheet(
                         isModalOpened: isModalOpened,
-                        state: state,
                       ),
                     );
                   });
@@ -269,7 +263,6 @@ Future<void> barActivationDialog({
               await router.maybePop();
               await showAndroidBarNfcBottomSheet(
                 isModalOpened: isModalOpened,
-                state: state,
               );
             },
     ),

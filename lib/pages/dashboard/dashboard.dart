@@ -39,7 +39,6 @@ import '../../utils/wallet_activation_status.dart';
 import '../../widgets/send_receive_action_button/send_receive_action_button.dart';
 import '../history_page/history_page.dart';
 import '../market_page/market_page.dart';
-import '../send_page/send_to/send_to_state.dart';
 import '../settings_page/settings_page.dart';
 import '../splash_screen/background.dart';
 import '../wallet_page/wallet_page.dart';
@@ -65,7 +64,6 @@ class DashboardPage extends HookWidget {
     final isModalOpened = useState(false);
     final currentIndex = useState(0);
     final _nfcStore = useMemoized(AllSettingsState.new);
-    final state = useMemoized(SendToState.new);
     final _allSettingsState = useMemoized(AllSettingsState.new);
     final pageController = useMemoized(PageControllerManager.new);
     final isPaused = useState(false);
@@ -112,9 +110,7 @@ class DashboardPage extends HookWidget {
     Future<void> initModalState() async {
       final prefs = await SharedPreferences.getInstance();
       final packageInfo = await PackageInfo.fromPlatform();
-      await FirebaseMessaging.instance
-          .getInitialMessage()
-          .then((message) async {
+      await FirebaseMessaging.instance.getInitialMessage().then((message) async {
         if (message != null && message.data['screen'] == 'buy_bitcoin') {
           await Future.delayed(const Duration(milliseconds: 1000));
           await openModalBottomSheet();
@@ -128,15 +124,13 @@ class DashboardPage extends HookWidget {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               openModalBottomSheet();
             });
-          } else {
+          } else if (!_walletProtectState.isModalOpened) {
             await openModalBottomSheet();
           }
         }
       });
 
-      if (prefs.getBool('show_modal') == true ||
-          prefs.getString('package_info') != packageInfo.version.toString()) {
-        await Future.delayed(const Duration(milliseconds: 1000));
+      if (prefs.getBool('show_modal') == true || prefs.getString('package_info') != packageInfo.version.toString()) {
         await openModalBottomSheet();
         await prefs.setBool('show_modal', false);
         await prefs.setString('package_info', packageInfo.version.toString());
@@ -157,14 +151,10 @@ class DashboardPage extends HookWidget {
         if (!_walletProtectState.isBiometricsRunning) {
           isInactive.value = [AppLifecycleState.inactive].contains(current);
         }
-        if (appLocked.value &&
-            isInactive.value == true &&
-            isModalOpened.value) {
+        if (appLocked.value && isInactive.value == true && isModalOpened.value) {
           await router.maybePop();
         }
-        if (appLocked.value &&
-            isInactive.value == true &&
-            _walletProtectState.isModalOpened == true) {
+        if (appLocked.value && isInactive.value == true && _walletProtectState.isModalOpened == true) {
           await router.maybePop();
         }
         appLocked.value = await _secureStorage.getIsPinCodeSet();
@@ -173,9 +163,7 @@ class DashboardPage extends HookWidget {
             !_walletProtectState.isBiometricsRunning &&
             !_walletProtectState.isLinkOpened) {
           if (appLocked.value) {
-            if (router.stackData
-                .indexWhere((element) => element.name == PinCodeRoute.name)
-                .isNegative) {
+            if (router.stackData.indexWhere((element) => element.name == PinCodeRoute.name).isNegative) {
               await router.push(const PinCodeRoute());
               isPaused.value = false;
               isInactive.value = false;
@@ -192,8 +180,7 @@ class DashboardPage extends HookWidget {
                   (element) => element.address == deepLinkRes.value.toString(),
                 );
                 if (!cardExists) {
-                  await router
-                      .push(CardConnectRoute(receivedData: deepLinkRes.value));
+                  await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
                   deepLinkRes.value = null;
                 } else {
                   Future.delayed(
@@ -224,9 +211,7 @@ class DashboardPage extends HookWidget {
         final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
-            if (!appLocked.value &&
-                deepLinkRes.value != null &&
-                router.current.name != CardConnectRoute.name) {
+            if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardConnectRoute.name) {
               await recordAmplitudeEvent(
                 DeeplinkClicked(
                   source: 'Wallet',
@@ -238,8 +223,7 @@ class DashboardPage extends HookWidget {
                 (element) => element.address == deepLinkRes.value.toString(),
               );
               if (!cardExists) {
-                await router
-                    .push(CardConnectRoute(receivedData: deepLinkRes.value));
+                await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               } else {
                 Future.delayed(
@@ -268,8 +252,7 @@ class DashboardPage extends HookWidget {
                 (element) => element.address == deepLinkRes.value.toString(),
               );
               if (!cardExists) {
-                await router
-                    .push(CardConnectRoute(receivedData: deepLinkRes.value));
+                await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
                 deepLinkRes.value = null;
               } else {
                 Future.delayed(
@@ -304,12 +287,11 @@ class DashboardPage extends HookWidget {
         dynamic isBarActivated;
 
         if (selectedCard?.blockchain == 'ETH') {
-          isCardActivated =
-              isEthCardWalletActivated(balanceStore: _balanceStore);
-          isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+          isCardActivated = isEthCardWalletActivated();
+          isBarActivated = isBarWalletActivated();
         } else {
-          isCardActivated = isCardWalletActivated(balanceStore: _balanceStore);
-          isBarActivated = isBarWalletActivated(balanceStore: _balanceStore);
+          isCardActivated = isCardWalletActivated();
+          isBarActivated = isBarWalletActivated();
         }
 
         Gaimon.medium();
@@ -326,7 +308,6 @@ class DashboardPage extends HookWidget {
           allSettingsState: _allSettingsState,
           tabController: tabController,
           context: context,
-          state: state,
         );
       },
       [
@@ -360,8 +341,7 @@ class DashboardPage extends HookWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ReactionBuilder(
-        builder: (_) =>
-            reaction((p0) => _walletProtectState.isBiometricsRunning, (p0) {
+        builder: (_) => reaction((p0) => _walletProtectState.isBiometricsRunning, (p0) {
           isInactive.value = false;
         }),
         child: Stack(
@@ -397,7 +377,6 @@ class DashboardPage extends HookWidget {
                       },
                       pageController: _pageController,
                       allSettingsState: _allSettingsState,
-                      state: state,
                       onOpenSendReceiveModal: onOpenSendReceiveModal,
                     ),
                     MarketPage(
@@ -409,7 +388,6 @@ class DashboardPage extends HookWidget {
                         currentCard.value = val;
                         _allSettingsState.updateTabIndex(val.index);
                       },
-                      state: state,
                     ),
                     const SettingsPage(),
                   ],
@@ -430,9 +408,7 @@ class DashboardPage extends HookWidget {
                   builder: (context) {
                     return Theme(
                       data: ThemeData(
-                        canvasColor: _allSettingsState.currentIndex == 1
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.5),
+                        canvasColor: _allSettingsState.currentIndex == 1 ? Colors.white : Colors.white.withOpacity(0.5),
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                       ),
@@ -441,10 +417,8 @@ class DashboardPage extends HookWidget {
                           return ClipRRect(
                             child: BackdropFilter(
                               filter: ImageFilter.blur(
-                                sigmaX:
-                                    _allSettingsState.currentIndex == 1 ? 0 : 8,
-                                sigmaY:
-                                    _allSettingsState.currentIndex == 1 ? 0 : 8,
+                                sigmaX: _allSettingsState.currentIndex == 1 ? 0 : 8,
+                                sigmaY: _allSettingsState.currentIndex == 1 ? 0 : 8,
                               ),
                               child: BottomNavigationBar(
                                 selectedLabelStyle: const TextStyle(
@@ -466,27 +440,18 @@ class DashboardPage extends HookWidget {
                                       ),
                                       if (_balanceStore.cards.isNotEmpty)
                                         {
-                                          _rampService
-                                                  .configuration.userAddress =
-                                              _balanceStore
-                                                  .cards[_historyPageStore
-                                                      .cardHistoryIndex]
-                                                  .address,
+                                          _rampService.configuration.userAddress =
+                                              _balanceStore.cards[_historyPageStore.cardHistoryIndex].address,
                                         }
                                       else if (_balanceStore.bars.isNotEmpty)
                                         {
-                                          _rampService
-                                                  .configuration.userAddress =
-                                              _balanceStore
-                                                  .bars[_historyPageStore
-                                                      .barHistoryIndex]
-                                                  .address,
+                                          _rampService.configuration.userAddress =
+                                              _balanceStore.bars[_historyPageStore.barHistoryIndex].address,
                                         },
                                     }
                                   else if (index == 1)
                                     {
-                                      if (currentIndex.value == index &&
-                                          index == 1)
+                                      if (currentIndex.value == index && index == 1)
                                         {
                                           programmaticRefresh(),
                                         },
@@ -510,9 +475,7 @@ class DashboardPage extends HookWidget {
                                 ],
                                 currentIndex: _allSettingsState.currentIndex,
                                 backgroundColor:
-                                    _allSettingsState.currentIndex == 1
-                                        ? Colors.white
-                                        : Colors.white.withOpacity(0.8),
+                                    _allSettingsState.currentIndex == 1 ? Colors.white : Colors.white.withOpacity(0.8),
                                 elevation: 0,
                                 type: BottomNavigationBarType.fixed,
                                 selectedItemColor: Colors.black,
@@ -521,9 +484,8 @@ class DashboardPage extends HookWidget {
                                   BottomNavigationBarItem(
                                     icon: Assets.icons.walletIcon.image(
                                       height: 32,
-                                      color: _allSettingsState.currentIndex == 0
-                                          ? Colors.black
-                                          : const Color(0xFfB8BEC5),
+                                      color:
+                                          _allSettingsState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
                                     ),
                                     label: 'Wallet',
                                   ),
@@ -535,10 +497,9 @@ class DashboardPage extends HookWidget {
                                       ),
                                       child: Assets.icons.market.image(
                                         height: 23,
-                                        color:
-                                            _allSettingsState.currentIndex == 1
-                                                ? Colors.black
-                                                : const Color(0xFfB8BEC5),
+                                        color: _allSettingsState.currentIndex == 1
+                                            ? Colors.black
+                                            : const Color(0xFfB8BEC5),
                                       ),
                                     ),
                                     label: 'Markets            ',
@@ -551,10 +512,9 @@ class DashboardPage extends HookWidget {
                                       ),
                                       child: Assets.icons.history.image(
                                         height: 28,
-                                        color:
-                                            _allSettingsState.currentIndex == 2
-                                                ? Colors.black
-                                                : const Color(0xFfB8BEC5),
+                                        color: _allSettingsState.currentIndex == 2
+                                            ? Colors.black
+                                            : const Color(0xFfB8BEC5),
                                       ),
                                     ),
                                     label: '             History',
@@ -562,9 +522,8 @@ class DashboardPage extends HookWidget {
                                   BottomNavigationBarItem(
                                     icon: Assets.icons.pageInfo.image(
                                       height: 32,
-                                      color: _allSettingsState.currentIndex == 3
-                                          ? Colors.black
-                                          : const Color(0xFfB8BEC5),
+                                      color:
+                                          _allSettingsState.currentIndex == 3 ? Colors.black : const Color(0xFfB8BEC5),
                                     ),
                                     label: 'Settings',
                                   ),
@@ -581,8 +540,7 @@ class DashboardPage extends HookWidget {
             ),
             Observer(
               builder: (_) {
-                if (_walletProtectState.isBiometricsRunning ||
-                    _walletProtectState.isNfcSessionStarted) {
+                if (_walletProtectState.isBiometricsRunning || _walletProtectState.isNfcSessionStarted) {
                   return const SizedBox();
                 }
 

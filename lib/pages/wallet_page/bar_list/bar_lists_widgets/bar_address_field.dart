@@ -33,9 +33,7 @@ class BarAddressField extends StatelessWidget {
       enableFeedback: false,
       onPressed: balanceStore.barCurrentIndex == index
           ? () async {
-              final isBarActivated = isBarWalletActivated(
-                balanceStore: balanceStore,
-              );
+              final isBarActivated = isBarWalletActivated();
               await recordAmplitudeEvent(
                 AddressCopied(
                   walletType: 'Bar',

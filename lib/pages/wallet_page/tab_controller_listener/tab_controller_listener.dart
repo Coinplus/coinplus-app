@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../constants/card_record.dart';
 import '../../../models/abstract_card/abstract_card.dart';
@@ -15,13 +16,14 @@ int cardCarouselIndex = 0;
 int barCarouselIndex = 0;
 bool _isAmplitudeEventInProgress = false;
 
+SendToState get _sendToState => GetIt.I<SendToState>();
+
 void tabControllerListener({
   required TabController tabController,
   required HistoryPageStore historyPageStore,
   required BalanceStore balanceStore,
   required RampService rampService,
   required CardChangeCallBack onChangeCard,
-  required SendToState state,
   required int cardCarouselIndex,
   required int barCarouselIndex,
 }) {
@@ -33,27 +35,25 @@ void tabControllerListener({
     if (tabController.index == 1 &&
         balanceStore.bars.isNotEmpty &&
         balanceStore.barCurrentIndex != balanceStore.bars.length) {
-      rampService.configuration.userAddress =
-          balanceStore.bars[balanceStore.barCurrentIndex].address;
+      rampService.configuration.userAddress = balanceStore.bars[balanceStore.barCurrentIndex].address;
     }
     if (tabController.index == 0 &&
         balanceStore.cards.isNotEmpty &&
         balanceStore.cardCurrentIndex != balanceStore.cards.length) {
-      rampService.configuration.userAddress =
-          balanceStore.cards[balanceStore.cardCurrentIndex].address;
+      rampService.configuration.userAddress = balanceStore.cards[balanceStore.cardCurrentIndex].address;
     }
     historyPageStore.setTabIndex(tabController.index);
 
     if (tabController.index == 0) {
       if (balanceStore.cards.isNotEmpty) {
         if (balanceStore.cardCurrentIndex != balanceStore.cards.length) {
-          state.transactionsStore.onSelectCard(balanceStore.cardCurrentIndex);
+          _sendToState.transactionsStore.onSelectCard(balanceStore.cardCurrentIndex);
         }
       }
     } else if (tabController.index == 1) {
       if (balanceStore.bars.isNotEmpty) {
         if (balanceStore.barCurrentIndex != balanceStore.bars.length) {
-          state.transactionsStore.onSelectBar(balanceStore.barCurrentIndex);
+          _sendToState.transactionsStore.onSelectBar(balanceStore.barCurrentIndex);
         }
       }
     }

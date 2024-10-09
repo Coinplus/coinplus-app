@@ -10,7 +10,6 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
@@ -21,9 +20,7 @@ import '../recommended_by_tap_card/recommended_by_tap.dart';
 import 'recommended_activate_with_nfc.dart';
 
 class CardIssueOptionsSheet extends StatelessWidget {
-  const CardIssueOptionsSheet({super.key, required this.state});
-
-  final SendToState state;
+  const CardIssueOptionsSheet({super.key});
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
@@ -42,7 +39,7 @@ class CardIssueOptionsSheet extends StatelessWidget {
 
     final walletAddress = card.address;
 
-    final isActivated = isCardWalletActivated(balanceStore: _balanceStore);
+    final isActivated = isCardWalletActivated();
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 12,
@@ -103,7 +100,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
-                  state: state,
                 ),
               );
             },
@@ -130,7 +126,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
-                  state: state,
                 ),
               );
             },
@@ -156,7 +151,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 activated: await isActivated,
-                state: state,
               );
             },
           ),
@@ -182,7 +176,6 @@ class CardIssueOptionsSheet extends StatelessWidget {
                   walletAddress: walletAddress,
                   walletType: 'Card',
                   activated: await isActivated,
-                  state: state,
                 ),
               );
             },

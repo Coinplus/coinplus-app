@@ -24,6 +24,8 @@ import '../../../../store/all_settings_state/all_settings_state.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../store/connectivity_store/connectivity_store.dart';
 import '../../../../store/history_page_store/history_page_store.dart';
+import '../../../../utils/secure_storage_utils.dart';
+import '../../../../utils/storage_utils.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../../../splash_screen/splash_screen.dart';
 import '../../card_connect_events/card_connect_events.dart';
@@ -35,7 +37,7 @@ class GotItButton extends StatelessWidget {
     required this.receivedData,
     required this.balanceStore,
     required this.cardColor,
-    required this.isOriginalCard,
+    required this.isOriginalNxp,
     required this.shakeAnimationController,
     required this.isOldCard,
     required this.isMiFareUltralight,
@@ -45,25 +47,33 @@ class GotItButton extends StatelessWidget {
     required this.addressState,
     required this.toggleCard,
     required this.flipCardController,
+    required this.hasBackup,
+    required this.backup,
+    required this.mainWalletAddress,
   });
 
   final AllSettingsState allSettingsState;
   final String receivedData;
   final BalanceStore balanceStore;
   final String? cardColor;
-  final bool isOriginalCard;
+  final bool isOriginalNxp;
   final ShakeAnimationController shakeAnimationController;
   final bool? isMiFareUltralight;
   final bool? isOldCard;
   final bool? isActivated;
+  final bool? hasBackup;
+  final bool backup;
   final HistoryPageStore historyPageStore;
   final ConnectivityStore connectivityStore;
   final AddressState addressState;
   final Future<void> Function()? toggleCard;
   final FlipCardController flipCardController;
+  final String mainWalletAddress;
 
   @override
   Widget build(BuildContext context) {
+    final _secureStorage = SecureStorageService();
+
     return Observer(
       builder: (_) {
         return allSettingsState.isLineVisible
@@ -74,7 +84,7 @@ class GotItButton extends StatelessWidget {
                         await balanceStore.updateCardIndicatorIndex(
                           balanceStore.cardCurrentIndex,
                         );
-                        if (isOriginalCard == true) {
+                        if (isOriginalNxp == true) {
                           unawaited(connectedCount(receivedData));
                           if (cardColor == '0') {
                             balanceStore.saveSelectedEthCard(
@@ -126,27 +136,61 @@ class GotItButton extends StatelessWidget {
                         await balanceStore.updateCardIndicatorIndex(
                           balanceStore.cardCurrentIndex,
                         );
-                        if (isOriginalCard == true) {
+                        if (isOriginalNxp == true) {
                           unawaited(connectedCount(receivedData));
-                          if (cardColor == '0') {
-                            balanceStore.saveSelectedCard(
-                              color: CardColor.ORANGE,
+                          if (backup) {
+                            if (cardColor == '0') {
+                              balanceStore.saveSelectedBackupCard(
+                                color: CardColor.ORANGE,
+                              );
+                            } else if (cardColor == '1') {
+                              balanceStore.saveSelectedBackupCard(
+                                color: CardColor.WHITE,
+                              );
+                            } else if (cardColor == '2') {
+                              balanceStore.saveSelectedBackupCard(
+                                color: CardColor.BLACK,
+                              );
+                            }
+                            await StorageUtils.saveMainAndBackupCard(
+                              mainCardAddress: balanceStore.mainWalletAddress,
+                              backupCard: balanceStore.selectedBackupCard!,
                             );
-                          } else if (cardColor == '1') {
-                            balanceStore.saveSelectedCard(
-                              color: CardColor.WHITE,
-                            );
-                          } else if (cardColor == '2') {
-                            balanceStore.saveSelectedCard(
-                              color: CardColor.BLACK,
+                            await _secureStorage.setBackupStatus(
+                              isSet: true,
+                              address: balanceStore.mainWalletAddress,
                             );
                           } else {
-                            balanceStore.saveSelectedCard(
-                              color: CardColor.ORANGE,
+                            if (cardColor == '0') {
+                              balanceStore.saveSelectedCard(
+                                color: CardColor.ORANGE,
+                              );
+                            } else if (cardColor == '1') {
+                              balanceStore.saveSelectedCard(
+                                color: CardColor.WHITE,
+                              );
+                            } else if (cardColor == '2') {
+                              balanceStore.saveSelectedCard(
+                                color: CardColor.BLACK,
+                              );
+                            } else {
+                              balanceStore.saveSelectedCard(
+                                color: CardColor.ORANGE,
+                              );
+                            }
+                            unawaited(
+                              historyPageStore.saveAndPatchCardAddress(
+                                balanceStore.selectedCard!.address,
+                              ),
                             );
                           }
                         } else {
                           if (isMiFareUltralight == true) {
+                            unawaited(
+                              historyPageStore.saveAndPatchCardAddress(
+                                balanceStore.selectedCard!.address,
+                              ),
+                            );
                             if (isOldCard == false || isOldCard == null) {
                               await recordUserProperty(const Tracker());
                               balanceStore.saveSelectedCardManually(
@@ -165,6 +209,11 @@ class GotItButton extends StatelessWidget {
                               );
                             }
                           } else {
+                            unawaited(
+                              historyPageStore.saveAndPatchCardAddress(
+                                balanceStore.selectedCard!.address,
+                              ),
+                            );
                             await recordUserProperty(const Tracker());
                             balanceStore.saveSelectedCardManually(
                               color: CardColor.TRACKER,
@@ -181,17 +230,34 @@ class GotItButton extends StatelessWidget {
                           );
                           recordUserProperty(const CardTap());
                           if (hasShown) {
-                            router.maybePop();
+                            hasBackup == true
+                                ? router.push(
+                                    BackupMyWalletRoute(
+                                      walletAddress: receivedData,
+                                      hasBackup: hasBackup,
+                                      isWalletActivated: false,
+                                    ),
+                                  )
+                                : router.maybePop();
                           } else {
-                            router.pushAndPopAll(
-                              const WalletProtectionRoute(),
-                            );
+                            hasBackup == true
+                                ? router.push(
+                                    BackupMyWalletRoute(
+                                      walletAddress: receivedData,
+                                      hasBackup: hasBackup,
+                                      isWalletActivated: false,
+                                    ),
+                                  )
+                                : router.pushAndPopAll(
+                                    const WalletProtectionRoute(),
+                                  );
                           }
                         });
-
-                        await historyPageStore.saveAndPatchCardAddress(
-                          balanceStore.selectedCard!.address,
-                        );
+                        await hasShownWallet().then((hasShown) async {
+                          if (backup && !hasShown) {
+                            await router.pushAndPopAll(const WalletProtectionRoute());
+                          }
+                        });
                       } else {
                         await HapticFeedback.vibrate();
                         allSettingsState.accept();
@@ -210,8 +276,7 @@ class GotItButton extends StatelessWidget {
                               GotItClicked(
                                 source: 'Wallet',
                                 walletType: 'Card',
-                                walletAddress:
-                                    balanceStore.selectedCard!.address,
+                                walletAddress: balanceStore.selectedCard!.address,
                               ),
                             );
                           } else {
@@ -219,8 +284,7 @@ class GotItButton extends StatelessWidget {
                               GotItClicked(
                                 source: 'Onboarding',
                                 walletType: 'Card',
-                                walletAddress:
-                                    balanceStore.selectedCard!.address,
+                                walletAddress: balanceStore.selectedCard!.address,
                               ),
                             );
                           }
@@ -244,8 +308,7 @@ class GotItButton extends StatelessWidget {
                 builder: (context) {
                   return receivedData.startsWith('0')
                       ? LoadingButton(
-                          onPressed: connectivityStore.connectionStatus ==
-                                  ConnectivityResult.none
+                          onPressed: connectivityStore.connectionStatus == ConnectivityResult.none
                               ? null
                               : addressState.isAddressVisible
                                   ? allSettingsState.isActivatedCheckBox
@@ -257,9 +320,7 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedEthCard!
-                                                        .address,
+                                                    walletAddress: balanceStore.selectedEthCard!.address,
                                                   ),
                                                 );
                                               } else {
@@ -267,34 +328,22 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedEthCard!
-                                                        .address,
+                                                    walletAddress: balanceStore.selectedEthCard!.address,
                                                   ),
                                                 );
                                               }
                                             },
                                           );
-                                          final cardIndex =
-                                              balanceStore.cards.indexWhere(
-                                            (element) =>
-                                                element.address ==
-                                                balanceStore
-                                                    .selectedEthCard?.address,
+                                          final cardIndex = balanceStore.cards.indexWhere(
+                                            (element) => element.address == balanceStore.selectedEthCard?.address,
                                           );
-                                          final barIndex =
-                                              balanceStore.bars.indexWhere(
-                                            (element) =>
-                                                element.address ==
-                                                balanceStore
-                                                    .selectedEthCard?.address,
+                                          final barIndex = balanceStore.bars.indexWhere(
+                                            (element) => element.address == balanceStore.selectedEthCard?.address,
                                           );
-                                          if (cardIndex != -1 ||
-                                              barIndex != -1) {
+                                          if (cardIndex != -1 || barIndex != -1) {
                                             await alreadySavedCard(
                                               context,
-                                              balanceStore
-                                                  .selectedEthCard!.address,
+                                              balanceStore.selectedEthCard!.address,
                                             );
                                           } else {
                                             await toggleCard!();
@@ -314,9 +363,7 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedEthCard!
-                                                        .address,
+                                                    walletAddress: balanceStore.selectedEthCard!.address,
                                                   ),
                                                 );
                                               } else {
@@ -324,9 +371,7 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedEthCard!
-                                                        .address,
+                                                    walletAddress: balanceStore.selectedEthCard!.address,
                                                   ),
                                                 );
                                               }
@@ -343,31 +388,20 @@ class GotItButton extends StatelessWidget {
                                             );
                                             shakeAnimationController.stop();
                                           } else {
-                                            final cardIndex =
-                                                balanceStore.cards.indexWhere(
-                                              (element) =>
-                                                  element.address ==
-                                                  balanceStore
-                                                      .selectedEthCard?.address,
+                                            final cardIndex = balanceStore.cards.indexWhere(
+                                              (element) => element.address == balanceStore.selectedEthCard?.address,
                                             );
-                                            final barIndex =
-                                                balanceStore.bars.indexWhere(
-                                              (element) =>
-                                                  element.address ==
-                                                  balanceStore
-                                                      .selectedEthCard?.address,
+                                            final barIndex = balanceStore.bars.indexWhere(
+                                              (element) => element.address == balanceStore.selectedEthCard?.address,
                                             );
 
-                                            if (cardIndex != -1 ||
-                                                barIndex != -1) {
+                                            if (cardIndex != -1 || barIndex != -1) {
                                               await alreadySavedCard(
                                                 context,
-                                                balanceStore
-                                                    .selectedEthCard!.address,
+                                                balanceStore.selectedEthCard!.address,
                                               );
                                             } else {
-                                              if (flipCardController
-                                                  .state!.isFront) {
+                                              if (flipCardController.state!.isFront) {
                                                 await toggleCard!();
                                                 allSettingsState.makeVisible();
                                               }
@@ -384,8 +418,7 @@ class GotItButton extends StatelessWidget {
                           ),
                         ).paddingHorizontal(49)
                       : LoadingButton(
-                          onPressed: connectivityStore.connectionStatus ==
-                                  ConnectivityResult.none
+                          onPressed: connectivityStore.connectionStatus == ConnectivityResult.none
                               ? null
                               : addressState.isAddressVisible
                                   ? allSettingsState.isActivatedCheckBox
@@ -397,8 +430,7 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: balanceStore.selectedCard!.address,
                                                   ),
                                                 );
                                               } else {
@@ -406,33 +438,22 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: balanceStore.selectedCard!.address,
                                                   ),
                                                 );
                                               }
                                             },
                                           );
-                                          final cardIndex =
-                                              balanceStore.cards.indexWhere(
-                                            (element) =>
-                                                element.address ==
-                                                balanceStore
-                                                    .selectedCard?.address,
+                                          final cardIndex = balanceStore.cards.indexWhere(
+                                            (element) => element.address == balanceStore.selectedCard?.address,
                                           );
-                                          final barIndex =
-                                              balanceStore.bars.indexWhere(
-                                            (element) =>
-                                                element.address ==
-                                                balanceStore
-                                                    .selectedCard?.address,
+                                          final barIndex = balanceStore.bars.indexWhere(
+                                            (element) => element.address == balanceStore.selectedCard?.address,
                                           );
-                                          if (cardIndex != -1 ||
-                                              barIndex != -1) {
+                                          if (cardIndex != -1 || barIndex != -1) {
                                             await alreadySavedCard(
                                               context,
-                                              balanceStore
-                                                  .selectedCard!.address,
+                                              balanceStore.selectedCard!.address,
                                             );
                                           } else {
                                             await toggleCard!();
@@ -452,8 +473,7 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Wallet',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: balanceStore.selectedCard!.address,
                                                   ),
                                                 );
                                               } else {
@@ -461,8 +481,7 @@ class GotItButton extends StatelessWidget {
                                                   SaveToWalletClicked(
                                                     source: 'Onboarding',
                                                     walletType: 'Card',
-                                                    walletAddress: balanceStore
-                                                        .selectedCard!.address,
+                                                    walletAddress: balanceStore.selectedCard!.address,
                                                   ),
                                                 );
                                               }
@@ -479,31 +498,20 @@ class GotItButton extends StatelessWidget {
                                             );
                                             shakeAnimationController.stop();
                                           } else {
-                                            final cardIndex =
-                                                balanceStore.cards.indexWhere(
-                                              (element) =>
-                                                  element.address ==
-                                                  balanceStore
-                                                      .selectedCard?.address,
+                                            final cardIndex = balanceStore.cards.indexWhere(
+                                              (element) => element.address == balanceStore.selectedCard?.address,
                                             );
-                                            final barIndex =
-                                                balanceStore.bars.indexWhere(
-                                              (element) =>
-                                                  element.address ==
-                                                  balanceStore
-                                                      .selectedCard?.address,
+                                            final barIndex = balanceStore.bars.indexWhere(
+                                              (element) => element.address == balanceStore.selectedCard?.address,
                                             );
 
-                                            if (cardIndex != -1 ||
-                                                barIndex != -1) {
+                                            if (cardIndex != -1 || barIndex != -1) {
                                               await alreadySavedCard(
                                                 context,
-                                                balanceStore
-                                                    .selectedCard!.address,
+                                                balanceStore.selectedCard!.address,
                                               );
                                             } else {
-                                              if (flipCardController
-                                                  .state!.isFront) {
+                                              if (flipCardController.state!.isFront) {
                                                 await toggleCard!();
                                                 allSettingsState.makeVisible();
                                               }
@@ -511,9 +519,9 @@ class GotItButton extends StatelessWidget {
                                           }
                                         }
                                   : null,
-                          child: const Text(
-                            'Save to wallet',
-                            style: TextStyle(
+                          child: Text(
+                            backup ? 'Save backup card' : 'Save to wallet',
+                            style: const TextStyle(
                               fontSize: 17,
                               fontFamily: FontFamily.redHatSemiBold,
                             ),

@@ -205,10 +205,8 @@ class CardReorderWidget extends StatelessWidget {
                                 const Gap(5),
                                 Builder(
                                   builder: (context) {
-                                    final data = _marketPageStore
-                                        .singleCoin?.result.first;
-                                    final myFormat =
-                                        NumberFormat.decimalPatternDigits(
+                                    final data = _marketPageStore.singleCoin?.result.first;
+                                    final myFormat = NumberFormat.decimalPatternDigits(
                                       locale: 'en_us',
                                       decimalDigits: 2,
                                     );
@@ -234,14 +232,12 @@ class CardReorderWidget extends StatelessWidget {
                                     return Observer(
                                       builder: (_) {
                                         final balance = item.finalBalance;
-                                        if (_accelerometerStore
-                                            .hasPerformedAction) {
+                                        if (_accelerometerStore.hasPerformedAction) {
                                           return const Text(
                                             r'$*****',
                                             style: TextStyle(
                                               fontSize: 13,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                             ),
                                           );
                                         } else {
@@ -249,8 +245,7 @@ class CardReorderWidget extends StatelessWidget {
                                             '\$${myFormat.format((balance ?? 0) / 100000000 * data.price)}',
                                             style: const TextStyle(
                                               fontSize: 13,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                             ),
                                           );
                                         }
@@ -303,8 +298,7 @@ class CardReorderWidget extends StatelessWidget {
             onReorderEnd: (val) {
               _settingsState.isReorderingStart = false;
               if (index != _balanceStore.cards.length) {
-                _rampService.configuration.userAddress =
-                    _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
+                _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
               }
             },
           ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../extensions/context_extension.dart';
 import '../../../gen/assets.gen.dart';
@@ -20,12 +21,12 @@ class SendToModal extends HookWidget {
     super.key,
     required this.allSettingsState,
     required this.isBarList,
-    required this.state,
   });
 
   final AllSettingsState allSettingsState;
   final bool isBarList;
-  final SendToState state;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +38,12 @@ class SendToModal extends HookWidget {
     useEffect(
       () {
         tabController.addListener(() {
-          state.setSelectedIndex(tabController.index);
+          _sendToState.setSelectedIndex(tabController.index);
         });
         Timer.periodic(const Duration(minutes: 1), (timer) {
-          state.transactionsStore.getRecommendedFee();
+          _sendToState.transactionsStore.getRecommendedFee();
         });
-        return state.dispose;
+        return _sendToState.dispose;
       },
       [],
     );
@@ -70,9 +71,9 @@ class SendToModal extends HookWidget {
                       IconButton(
                         splashRadius: 20,
                         onPressed: () {
-                          if (state.selectedIndex == 0) {
+                          if (_sendToState.selectedIndex == 0) {
                             router.maybePop();
-                          } else if (state.selectedIndex == 1) {
+                          } else if (_sendToState.selectedIndex == 1) {
                             usdFocusNode.unfocus();
                             btcFocusNode.unfocus();
                             tabController.animateTo(0);
@@ -85,7 +86,7 @@ class SendToModal extends HookWidget {
                           builder: (_) {
                             return Row(
                               children: [
-                                if (state.selectedIndex == 0)
+                                if (_sendToState.selectedIndex == 0)
                                   Assets.icons.close.image(
                                     height: 32,
                                     color: AppColors.primary,
@@ -116,20 +117,17 @@ class SendToModal extends HookWidget {
                 controller: tabController,
                 children: [
                   ProvideAddressTab(
-                    state: state,
                     tabController: tabController,
                     isBarList: isBarList,
                     sendFocusNode: sendFocusNode,
                   ),
                   ProvideAmountTab(
-                    state: state,
                     tabController: tabController,
                     isBarList: isBarList,
                     usdFocusNode: usdFocusNode,
                     btcFocusNode: btcFocusNode,
                   ),
                   TransactionReviewTab(
-                    state: state,
                     tabController: tabController,
                     allSettingsState: allSettingsState,
                     isBarList: isBarList,

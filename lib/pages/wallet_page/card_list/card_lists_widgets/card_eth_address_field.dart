@@ -35,9 +35,7 @@ class CardEthAddressField extends HookWidget {
       enableFeedback: false,
       onPressed: _balanceStore.cardCurrentIndex == index
           ? () async {
-              final isCardActivated = isEthCardWalletActivated(
-                balanceStore: _balanceStore,
-              );
+              final isCardActivated = isEthCardWalletActivated();
               await recordAmplitudeEvent(
                 AddressCopied(
                   walletType: 'Card',
@@ -63,9 +61,7 @@ class CardEthAddressField extends HookWidget {
           : null,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: context.height > 667
-              ? context.height * 0.035
-              : context.height * 0.043,
+          horizontal: context.height > 667 ? context.height * 0.035 : context.height * 0.043,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(6),

@@ -14,6 +14,8 @@ class CardsModel {
   late int? connected;
   late int? deleted;
   final String? email;
+  final bool? hasBackup;
+  final bool? backup;
   final String? nfcId;
   final bool? possibleOldCard;
   late bool? replenished;
@@ -32,6 +34,8 @@ class CardsModel {
     this.connected,
     this.deleted,
     this.email,
+    this.hasBackup,
+    this.backup,
     this.nfcId,
     this.possibleOldCard,
     this.replenished,

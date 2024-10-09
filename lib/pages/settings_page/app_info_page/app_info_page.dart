@@ -69,8 +69,7 @@ class AboutAppPage extends HookWidget {
           Center(
             child: Container(
               height: 100,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Assets.images.appLogo.image(),
@@ -170,10 +169,8 @@ class AboutAppPage extends HookWidget {
                         ),
                         safariVCOptions: const SafariViewControllerOptions(
                           barCollapsingEnabled: true,
-                          modalPresentationStyle:
-                              UIModalPresentationStyle.formSheet,
-                          dismissButtonStyle:
-                              SafariViewControllerDismissButtonStyle.done,
+                          modalPresentationStyle: UIModalPresentationStyle.formSheet,
+                          dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
                           modalPresentationCapturesStatusBarAppearance: true,
                         ),
                       );

@@ -71,8 +71,7 @@ class _RemoveBarState extends State<RemoveBar> with TickerProviderStateMixin {
         const Gap(15),
         LoadingButton(
           onPressed: () async {
-            final isBarActivated =
-                isBarWalletActivated(balanceStore: _balanceStore);
+            final isBarActivated = isBarWalletActivated();
             await recordAmplitudeEventPartTwo(
               NotSureClicked(
                 walletAddress: widget.bar.address,

@@ -46,9 +46,8 @@ class PeriodSelectionTab extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: _marketPageStore.chartEnum == ChartEnum.ONE_DAY
-                    ? Colors.grey.withOpacity(0.2)
-                    : Colors.transparent,
+                color:
+                    _marketPageStore.chartEnum == ChartEnum.ONE_DAY ? Colors.grey.withOpacity(0.2) : Colors.transparent,
               ),
               child: Center(
                 child: Text(
@@ -57,9 +56,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.ONE_DAY
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.ONE_DAY ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),
@@ -69,8 +66,7 @@ class PeriodSelectionTab extends StatelessWidget {
             enableFeedback: false,
             onPressed: () {
               Gaimon.light();
-              if (_marketPageStore.chartEnum != ChartEnum.ONE_WEEK &&
-                  !_marketPageStore.chartLoading) {
+              if (_marketPageStore.chartEnum != ChartEnum.ONE_WEEK && !_marketPageStore.chartLoading) {
                 _marketPageStore.chartData.clear();
                 _marketPageStore
                   ..getChartData(
@@ -98,9 +94,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.ONE_WEEK
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.ONE_WEEK ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),
@@ -110,8 +104,7 @@ class PeriodSelectionTab extends StatelessWidget {
             enableFeedback: false,
             onPressed: () {
               Gaimon.light();
-              if (_marketPageStore.chartEnum != ChartEnum.ONE_MONTH &&
-                  !_marketPageStore.chartLoading) {
+              if (_marketPageStore.chartEnum != ChartEnum.ONE_MONTH && !_marketPageStore.chartLoading) {
                 _marketPageStore.chartData.clear();
                 _marketPageStore
                   ..getChartData(
@@ -139,9 +132,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.ONE_MONTH
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.ONE_MONTH ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),
@@ -151,8 +142,7 @@ class PeriodSelectionTab extends StatelessWidget {
             enableFeedback: false,
             onPressed: () {
               Gaimon.light();
-              if (_marketPageStore.chartEnum != ChartEnum.THREE_MONTHS &&
-                  !_marketPageStore.chartLoading) {
+              if (_marketPageStore.chartEnum != ChartEnum.THREE_MONTHS && !_marketPageStore.chartLoading) {
                 _marketPageStore.chartData.clear();
                 _marketPageStore
                   ..getChartData(
@@ -180,9 +170,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.THREE_MONTHS
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.THREE_MONTHS ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),
@@ -192,8 +180,7 @@ class PeriodSelectionTab extends StatelessWidget {
             enableFeedback: false,
             onPressed: () {
               Gaimon.light();
-              if (_marketPageStore.chartEnum != ChartEnum.SIX_MONTHS &&
-                  !_marketPageStore.chartLoading) {
+              if (_marketPageStore.chartEnum != ChartEnum.SIX_MONTHS && !_marketPageStore.chartLoading) {
                 _marketPageStore.chartData.clear();
                 _marketPageStore
                   ..getChartData(
@@ -221,9 +208,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.SIX_MONTHS
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.SIX_MONTHS ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),
@@ -233,8 +218,7 @@ class PeriodSelectionTab extends StatelessWidget {
             enableFeedback: false,
             onPressed: () {
               Gaimon.light();
-              if (_marketPageStore.chartEnum != ChartEnum.ONE_YEAR &&
-                  !_marketPageStore.chartLoading) {
+              if (_marketPageStore.chartEnum != ChartEnum.ONE_YEAR && !_marketPageStore.chartLoading) {
                 _marketPageStore.chartData.clear();
                 _marketPageStore
                   ..getChartData(
@@ -262,9 +246,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.ONE_YEAR
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.ONE_YEAR ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),
@@ -274,8 +256,7 @@ class PeriodSelectionTab extends StatelessWidget {
             enableFeedback: false,
             onPressed: () {
               Gaimon.light();
-              if (_marketPageStore.chartEnum != ChartEnum.ALL &&
-                  !_marketPageStore.chartLoading) {
+              if (_marketPageStore.chartEnum != ChartEnum.ALL && !_marketPageStore.chartLoading) {
                 _marketPageStore.chartData.clear();
                 _marketPageStore
                   ..getChartData(
@@ -292,9 +273,7 @@ class PeriodSelectionTab extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: _marketPageStore.chartEnum == ChartEnum.ALL
-                    ? Colors.grey.withOpacity(0.2)
-                    : Colors.transparent,
+                color: _marketPageStore.chartEnum == ChartEnum.ALL ? Colors.grey.withOpacity(0.2) : Colors.transparent,
               ),
               child: Center(
                 child: Text(
@@ -303,9 +282,7 @@ class PeriodSelectionTab extends StatelessWidget {
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _marketPageStore.chartEnum == ChartEnum.ALL
-                        ? AppColors.primary
-                        : Colors.grey,
+                    color: _marketPageStore.chartEnum == ChartEnum.ALL ? AppColors.primary : Colors.grey,
                   ),
                 ),
               ),

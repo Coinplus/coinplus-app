@@ -30,6 +30,7 @@ mixin _$EthCardModel {
   String get name => throw _privateConstructorUsedError;
   WalletType get label => throw _privateConstructorUsedError;
   String get blockchain => throw _privateConstructorUsedError;
+  bool get isBackup => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
 
@@ -58,6 +59,7 @@ abstract class $EthCardModelCopyWith<$Res> {
       String name,
       WalletType label,
       String blockchain,
+      bool isBackup,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
@@ -84,6 +86,7 @@ class _$EthCardModelCopyWithImpl<$Res, $Val extends EthCardModel>
     Object? name = null,
     Object? label = null,
     Object? blockchain = null,
+    Object? isBackup = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -119,6 +122,10 @@ class _$EthCardModelCopyWithImpl<$Res, $Val extends EthCardModel>
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
+      isBackup: null == isBackup
+          ? _value.isBackup
+          : isBackup // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -144,6 +151,7 @@ abstract class _$$EthCardModelImplCopyWith<$Res>
       String name,
       WalletType label,
       String blockchain,
+      bool isBackup,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
@@ -168,6 +176,7 @@ class __$$EthCardModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? label = null,
     Object? blockchain = null,
+    Object? isBackup = null,
     Object? createdAt = null,
   }) {
     return _then(_$EthCardModelImpl(
@@ -203,6 +212,10 @@ class __$$EthCardModelImplCopyWithImpl<$Res>
           ? _value.blockchain
           : blockchain // ignore: cast_nullable_to_non_nullable
               as String,
+      isBackup: null == isBackup
+          ? _value.isBackup
+          : isBackup // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -223,6 +236,7 @@ class _$EthCardModelImpl implements _EthCardModel {
       this.name = 'Coinplus Ethereum Card',
       this.label = WalletType.COINPLUS_WALLET,
       this.blockchain = 'ETH',
+      this.isBackup = false,
       @JsonKey(fromJson: timeFromJson) this.createdAt = ''});
 
   factory _$EthCardModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -252,12 +266,15 @@ class _$EthCardModelImpl implements _EthCardModel {
   @JsonKey()
   final String blockchain;
   @override
+  @JsonKey()
+  final bool isBackup;
+  @override
   @JsonKey(fromJson: timeFromJson)
   final String createdAt;
 
   @override
   String toString() {
-    return 'EthCardModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, name: $name, label: $label, blockchain: $blockchain, createdAt: $createdAt)';
+    return 'EthCardModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, name: $name, label: $label, blockchain: $blockchain, isBackup: $isBackup, createdAt: $createdAt)';
   }
 
   @override
@@ -276,6 +293,8 @@ class _$EthCardModelImpl implements _EthCardModel {
             (identical(other.label, label) || other.label == label) &&
             (identical(other.blockchain, blockchain) ||
                 other.blockchain == blockchain) &&
+            (identical(other.isBackup, isBackup) ||
+                other.isBackup == isBackup) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -283,7 +302,7 @@ class _$EthCardModelImpl implements _EthCardModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, address, finalBalance,
-      totalReceived, color, type, name, label, blockchain, createdAt);
+      totalReceived, color, type, name, label, blockchain, isBackup, createdAt);
 
   /// Create a copy of EthCardModel
   /// with the given fields replaced by the non-null parameter values.
@@ -311,6 +330,7 @@ abstract class _EthCardModel implements EthCardModel, AbstractCard {
           final String name,
           final WalletType label,
           final String blockchain,
+          final bool isBackup,
           @JsonKey(fromJson: timeFromJson) final String createdAt}) =
       _$EthCardModelImpl;
 
@@ -335,6 +355,8 @@ abstract class _EthCardModel implements EthCardModel, AbstractCard {
   WalletType get label;
   @override
   String get blockchain;
+  @override
+  bool get isBackup;
   @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;

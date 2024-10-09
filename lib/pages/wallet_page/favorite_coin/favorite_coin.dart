@@ -176,8 +176,7 @@ class FavoriteCoin extends HookWidget {
                                       const Gap(3),
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(2),
+                                          borderRadius: BorderRadius.circular(2),
                                           color: Colors.grey.withOpacity(0.1),
                                         ),
                                         padding: const EdgeInsets.symmetric(
@@ -222,8 +221,7 @@ class FavoriteCoin extends HookWidget {
                                               style: TextStyle(
                                                 fontSize: 10,
                                                 color: AppColors.textHintsColor,
-                                                fontFamily:
-                                                    FontFamily.redHatBold,
+                                                fontFamily: FontFamily.redHatBold,
                                               ),
                                             ),
                                             if (data.priceChange1d > 0)
@@ -242,9 +240,7 @@ class FavoriteCoin extends HookWidget {
                                               '${data.priceChange1d.toStringAsFixed(2)} %',
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                color: data.priceChange1d > 0
-                                                    ? Colors.green
-                                                    : Colors.red,
+                                                color: data.priceChange1d > 0 ? Colors.green : Colors.red,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),

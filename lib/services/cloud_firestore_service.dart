@@ -23,6 +23,21 @@ Future<CardsModel?> getCardData(String documentId) async {
   return null;
 }
 
+Future<CardsModel?> getBackupCardData(String documentId) async {
+  final DocumentSnapshot documentSnapshot =
+      await _firestore.collection('backup_cards').doc(documentId).get();
+
+  if (documentSnapshot.exists) {
+    final documentData = documentSnapshot.data() as Map<String, dynamic>?;
+
+    if (documentData != null) {
+      final card = CardsModel.fromJson(documentData);
+      return card;
+    }
+  } else {}
+  return null;
+}
+
 Future<void> setCardsData({
   required String? documentID,
   required String? tagId,

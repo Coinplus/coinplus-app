@@ -127,9 +127,8 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _walletProtectState.isCreatedPinMatch
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },
@@ -227,9 +226,8 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _walletProtectState.isCreatedPinMatch
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },
@@ -254,8 +252,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                       repeatPin = value;
                       if (enteredPin == repeatPin) {
                         if (_walletProtectState.canCheckBiometrics) {
-                          await _walletProtectState
-                              .authenticateWithBiometrics();
+                          await _walletProtectState.authenticateWithBiometrics();
                         }
                         await _secureStorage.savePinCode(pinCode: value);
                         await Future.delayed(const Duration(milliseconds: 100));

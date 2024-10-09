@@ -95,5 +95,9 @@ class Router extends $Router {
     AdaptiveRoute(
       page: BuyCardRoute.page,
     ),
+    AdaptiveRoute(
+      page: BackupMyWalletRoute.page,
+      fullscreenDialog: true,
+    ),
   ];
 }

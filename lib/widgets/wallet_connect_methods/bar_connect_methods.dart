@@ -69,7 +69,6 @@ class BarScanMethodsPage extends HookWidget {
                     await router.maybePop();
                     await nfcSessionIos(
                       isMifareUltralight: isMifareUltralight.value,
-                      walletProtectState: _walletProtectState,
                       isBarList: true,
                     );
                   }
@@ -84,7 +83,6 @@ class BarScanMethodsPage extends HookWidget {
                     );
                     await nfcSessionAndroid(
                       isMifareUltralight: isMifareUltralight.value,
-                      walletProtectState: _walletProtectState,
                     );
                     await router.maybePop();
                     await showModalBottomSheet(

@@ -73,8 +73,7 @@ class TotalBalance extends StatelessWidget {
                 duration: const Duration(milliseconds: 500),
                 child: data == null || _balanceStore.balanceLoading == true
                     ? const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                         child: SizedBox(
                           height: 15,
                           width: 15,
@@ -101,16 +100,13 @@ class TotalBalance extends StatelessWidget {
                             );
                           } else {
                             return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
                                 '\$${myFormat.format((balance / 100000000 * (data.price)) + ethBalance)}',
                                 style: TextStyle(
                                   fontFamily: FontFamily.redHatBold,
                                   color: Colors.white,
-                                  fontSize: balance > 1000000000
-                                      ? (balance > 100000000 ? 24 : 26)
-                                      : 28,
+                                  fontSize: balance > 1000000000 ? (balance > 100000000 ? 24 : 26) : 28,
                                 ),
                               ),
                             );

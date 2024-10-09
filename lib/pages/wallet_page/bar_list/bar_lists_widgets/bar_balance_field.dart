@@ -42,9 +42,7 @@ class BarBalanceField extends StatelessWidget {
           scaleMinValue: .98,
           onPressed: balanceStore.barCurrentIndex == index
               ? () async {
-                  final isActivated = isBarWalletActivated(
-                    balanceStore: balanceStore,
-                  );
+                  final isActivated = isBarWalletActivated();
                   await recordAmplitudeEvent(
                     TopUpButtonClicked(
                       walletType: 'Bar',

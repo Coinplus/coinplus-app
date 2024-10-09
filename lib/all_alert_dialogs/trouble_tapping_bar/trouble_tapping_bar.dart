@@ -10,7 +10,6 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/balance_store/balance_store.dart';
@@ -20,16 +19,15 @@ import '../recommended_by_tap_bar/recommended_by_tap.dart';
 import 'recommended_activate_bar_by_tap.dart';
 
 class BarIssueOptionsSheet extends StatelessWidget {
-  const BarIssueOptionsSheet({super.key, required this.state});
+  const BarIssueOptionsSheet({super.key});
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
-  final SendToState state;
 
   @override
   Widget build(BuildContext context) {
     final bar = _balanceStore.bars[_balanceStore.barCurrentIndex];
     final walletAddress = bar.address;
-    final isActivated = isBarWalletActivated(balanceStore: _balanceStore);
+    final isActivated = isBarWalletActivated();
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -90,7 +88,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Card',
                 activated: await isActivated,
-                state: state,
               );
             },
           ),
@@ -107,7 +104,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Bar',
                 activated: await isActivated,
-                state: state,
               );
             },
           ),
@@ -123,7 +119,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletType: 'Bar',
                 activated: await isActivated,
                 context: context,
-                state: state,
               );
             },
           ),
@@ -139,7 +134,6 @@ class BarIssueOptionsSheet extends StatelessWidget {
                 walletAddress: walletAddress,
                 walletType: 'Bar',
                 activated: await isActivated,
-                state: state,
               );
             },
           ),

@@ -18,6 +18,7 @@ _$CardModelImpl _$$CardModelImplFromJson(Map json) => _$CardModelImpl(
           WalletType.COINPLUS_WALLET,
       name: json['name'] as String? ?? 'Coinplus Bitcoin Card',
       blockchain: json['blockchain'] as String? ?? 'BTC',
+      isBackup: json['isBackup'] as bool? ?? false,
       createdAt: json['createdAt'] == null
           ? ''
           : timeFromJson(json['createdAt'] as String),
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$CardModelImplToJson(_$CardModelImpl instance) {
   val['label'] = _$WalletTypeEnumMap[instance.label]!;
   val['name'] = instance.name;
   val['blockchain'] = instance.blockchain;
+  val['isBackup'] = instance.isBackup;
   val['createdAt'] = instance.createdAt;
   return val;
 }

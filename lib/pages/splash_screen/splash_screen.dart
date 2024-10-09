@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../gen/colors.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../store/balance_store/balance_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
 
@@ -14,11 +16,16 @@ import '../../utils/storage_utils.dart';
 class SplashPage extends HookWidget {
   const SplashPage({super.key});
 
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
   @override
   Widget build(BuildContext context) {
     final _secureStorage = SecureStorageService();
     final isPinCodeSet = _secureStorage.getIsPinCodeSet();
     useEffect(() {
+      if (_balanceStore.cards.isNotEmpty || _balanceStore.bars.isNotEmpty) {
+        setWalletShown();
+      }
       hasShownWallet().then(
         (hasShown) async {
           if (hasShown) {

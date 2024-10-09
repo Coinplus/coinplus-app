@@ -37,6 +37,13 @@ abstract class _AllSettingsState with Store {
   bool isButtonEnabled = false;
   @observable
   bool isNfcSupported = false;
+  @observable
+  int currentPage = 0;
+
+  @action
+  void setPage(int page) {
+    currentPage = page;
+  }
 
   @action
   bool isEmpty() {

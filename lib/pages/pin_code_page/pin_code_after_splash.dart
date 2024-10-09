@@ -32,23 +32,20 @@ class PinAfterSplash extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    late final _shakeAnimationController =
-        useMemoized(ShakeAnimationController.new);
+    late final _shakeAnimationController = useMemoized(ShakeAnimationController.new);
     final _pinController = useTextEditingController();
     final _secureStorage = SecureStorageService();
 
     final isLocalAuthChanged = useCallback<Future<bool> Function()>(
       () async {
-        final currentToken =
-            await StorageUtils.getString(key: 'biometricsToken');
+        final currentToken = await StorageUtils.getString(key: 'biometricsToken');
 
         if (currentToken == null) {
           return false;
         }
 
         final status = Platform.isIOS
-            ? await DidChangeAuthLocal.instance
-                .checkBiometricIOS(token: currentToken)
+            ? await DidChangeAuthLocal.instance.checkBiometricIOS(token: currentToken)
             : await DidChangeAuthLocal.instance.checkBiometricAndroid();
         return status == AuthLocalStatus.changed;
       },
@@ -66,8 +63,7 @@ class PinAfterSplash extends HookWidget {
         }
 
         if (_walletProtectState.isBiometricsEnabled && !isAuthChanged) {
-          final currentToken =
-              await DidChangeAuthLocal.instance.getTokenBiometric();
+          final currentToken = await DidChangeAuthLocal.instance.getTokenBiometric();
           await StorageUtils.setString(
             key: 'biometricsToken',
             value: currentToken,
@@ -106,15 +102,11 @@ class PinAfterSplash extends HookWidget {
             Observer(
               builder: (context) {
                 return Text(
-                  !_walletProtectState.isCreatedPinMatch
-                      ? 'Enter your passcode'
-                      : 'Incorrect passcode',
+                  !_walletProtectState.isCreatedPinMatch ? 'Enter your passcode' : 'Incorrect passcode',
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     fontSize: 20,
-                    color: !_walletProtectState.isCreatedPinMatch
-                        ? AppColors.primary
-                        : Colors.red,
+                    color: !_walletProtectState.isCreatedPinMatch ? AppColors.primary : Colors.red,
                   ),
                 );
               },
@@ -234,8 +226,7 @@ class PinAfterSplash extends HookWidget {
                             onPressed: () {
                               _walletProtectState.authenticateWithBiometrics();
                             },
-                            child: _walletProtectState.availableBiometric ==
-                                    BiometricType.fingerprint
+                            child: _walletProtectState.availableBiometric == BiometricType.fingerprint
                                 ? Assets.icons.iphoneTouchId.image(
                                     height: 30,
                                   )

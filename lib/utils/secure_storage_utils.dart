@@ -98,6 +98,22 @@ class SecureStorageService {
     await _secureStorage.write(key: 'card$address', value: isSet.toString());
   }
 
+  Future<void> setBackupStatus({
+    required bool isSet,
+    required String address,
+  }) async {
+    await _secureStorage.write(key: 'backup$address', value: isSet.toString());
+  }
+
+  Future<bool> checkBackupStatus(String address) async {
+    final value = await _secureStorage.read(key: 'backup$address');
+    return value == 'true';
+  }
+
+  Future<void> deleteBackup({required String mainCardAddress}) async {
+    await _secureStorage.delete(key: 'backup$mainCardAddress');
+  }
+
   Future<bool> checkWalletStatus(String address) async {
     final value = await _secureStorage.read(key: 'card$address');
     return value == 'true';

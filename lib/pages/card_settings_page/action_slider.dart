@@ -9,11 +9,13 @@ import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../providers/screen_service.dart';
+import '../../router.dart';
 import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../utils/secure_storage_utils.dart';
+import '../../utils/storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar_method.dart';
 
@@ -52,13 +54,30 @@ class ActionSliderForCardDelete extends StatelessWidget {
         await Future.delayed(const Duration(seconds: 1));
         controller.success();
         if (card.blockchain == 'BTC') {
-          await balanceStore.getSelectedCard(card.address);
-          await balanceStore.removeSelectedCard();
+          final isCardActivated = isCardWalletActivated();
+          await recordAmplitudeEventPartTwo(
+            CardDeleted(
+              walletAddress: card.address,
+              walletType: 'Card',
+              activated: await isCardActivated,
+            ),
+          );
+          unawaited(balanceStore.getSelectedCard(card.address));
+          unawaited(balanceStore.removeSelectedCard());
         } else if (card.blockchain == 'ETH') {
+          final isCardActivated = isEthCardWalletActivated();
+          await recordAmplitudeEventPartTwo(
+            CardDeleted(
+              walletAddress: card.address,
+              walletType: 'Card',
+              activated: await isCardActivated,
+            ),
+          );
           await balanceStore.getSelectedEthCard(card.address);
           await balanceStore.removeSelectedEthCard();
         }
         await _secureStorage.deleteCard(card: card);
+        await StorageUtils.deleteBackupCard(card.address);
         await _historyPageStore.deleteAddressFromHistoryMap(
           address: card.address,
         );
@@ -69,15 +88,8 @@ class ActionSliderForCardDelete extends StatelessWidget {
           card.address,
         );
         await _historyPageStore.setCardHistoryIndex(0);
-        final isCardActivated =
-            isCardWalletActivated(balanceStore: _balanceStore);
-        await recordAmplitudeEventPartTwo(
-          CardDeleted(
-            walletAddress: card.address,
-            walletType: 'Card',
-            activated: await isCardActivated,
-          ),
-        );
+
+        router.popUntilRouteWithName(DashboardRoute.name);
         await showCustomSnackBar(
           context: context,
           message: 'Your card was removed',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../all_alert_dialogs/bar_activation_alert/bar_activation_alert.dart';
 import '../../../../all_alert_dialogs/card_activation_alert/card_activation_alert.dart';
@@ -24,21 +25,21 @@ class ChangeSelectedAddressModal extends HookWidget {
   const ChangeSelectedAddressModal({
     super.key,
     required this.isBarList,
-    required this.state,
   });
 
   final bool isBarList;
-  final SendToState state;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        final cards = state.transactionsStore.cards;
-        final bars = state.transactionsStore.bars;
+        final cards = _sendToState.transactionsStore.cards;
+        final bars = _sendToState.transactionsStore.bars;
 
-        state.historyPageStore.loadCardActivationStatus(cards);
-        state.historyPageStore.loadBarActivationStatus(bars);
+        _sendToState.historyPageStore.loadCardActivationStatus(cards);
+        _sendToState.historyPageStore.loadBarActivationStatus(bars);
       });
       return null;
     });
@@ -80,8 +81,8 @@ class ChangeSelectedAddressModal extends HookWidget {
                     child: Observer(
                       builder: (context) {
                         final items = [
-                          ...state.transactionsStore.cards,
-                          ...state.transactionsStore.bars,
+                          ..._sendToState.transactionsStore.cards,
+                          ..._sendToState.transactionsStore.bars,
                         ];
                         return ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -91,79 +92,65 @@ class ChangeSelectedAddressModal extends HookWidget {
                             final item = items[index];
                             if (item is CardModel) {
                               final card = item;
-                              final formattedCardAddress =
-                                  getSplitAddress(card.address);
-                              final data = state.btc;
-                              final myFormat =
-                                  NumberFormat.decimalPatternDigits(
+                              final formattedCardAddress = getSplitAddress(card.address);
+                              final data = _sendToState.btc;
+                              final myFormat = NumberFormat.decimalPatternDigits(
                                 locale: 'en_us',
                                 decimalDigits: 2,
                               );
-                              final cardActivationStatus = state
-                                      .historyPageStore
-                                      .cardActivationStatus[card.address] ??
-                                  false;
+                              final cardActivationStatus =
+                                  _sendToState.historyPageStore.cardActivationStatus[card.address] ?? false;
 
                               return Observer(
                                 builder: (context) {
-                                  final isSelected = state.historyPageStore
-                                              .cardHistoryIndex ==
-                                          index &&
-                                      state.transactionsStore.selectedBar == -1;
+                                  final isSelected = _sendToState.historyPageStore.cardHistoryIndex == index &&
+                                      _sendToState.transactionsStore.selectedBar == -1;
                                   return InkWell(
-                                    onTap:
-                                        card.label == WalletType.COINPLUS_WALLET
-                                            ? () async {
-                                                if (cardActivationStatus) {
-                                                  state.transactionsStore
-                                                      .onSelectCard(index);
-                                                  await router.maybePop();
-                                                  await recordAmplitudeEventPartTwo(
-                                                    SendFromAddressChanged(
-                                                      address: card.address,
-                                                    ),
-                                                  );
-                                                  await state.transactionsStore
-                                                      .getUtxosData();
-                                                } else {
-                                                  await cardActivationAlert(
-                                                    context: context,
-                                                    isModalOpened:
-                                                        ValueNotifier(true),
-                                                    card: card,
-                                                    isBarList: isBarList,
-                                                    state: state,
-                                                  );
-                                                  await state.historyPageStore
-                                                      .setCardActivationIndex(
-                                                    index: index,
-                                                  );
-                                                }
-                                                state
-                                                  ..clearAmountControllers()
-                                                  ..isUseMaxClicked = false
-                                                  ..setAmount('0');
-                                              }
-                                            : () {
-                                                maybeCoinplusCard(context);
-                                                state
-                                                  ..clearAmountControllers()
-                                                  ..isUseMaxClicked = false
-                                                  ..setAmount('0');
-                                              },
+                                    onTap: card.label == WalletType.COINPLUS_WALLET
+                                        ? () async {
+                                            if (cardActivationStatus) {
+                                              _sendToState.transactionsStore.onSelectCard(index);
+                                              await router.maybePop();
+                                              await recordAmplitudeEventPartTwo(
+                                                SendFromAddressChanged(
+                                                  address: card.address,
+                                                ),
+                                              );
+                                              await _sendToState.transactionsStore.getUtxosData();
+                                            } else {
+                                              await cardActivationAlert(
+                                                context: context,
+                                                isModalOpened: ValueNotifier(true),
+                                                card: card,
+                                                isBarList: isBarList,
+                                              );
+                                              await _sendToState.historyPageStore.setCardActivationIndex(
+                                                index: index,
+                                              );
+                                            }
+                                            _sendToState
+                                              ..clearAmountControllers()
+                                              ..isUseMaxClicked = false
+                                              ..setAmount('0');
+                                          }
+                                        : () {
+                                            maybeCoinplusCard(context);
+                                            _sendToState
+                                              ..clearAmountControllers()
+                                              ..isUseMaxClicked = false
+                                              ..setAmount('0');
+                                          },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
-                                        color:
-                                            (isSelected && cardActivationStatus)
-                                                ? Colors.grey.withOpacity(0.1)
-                                                : Colors.transparent,
+                                        color: (isSelected && cardActivationStatus)
+                                            ? Colors.grey.withOpacity(0.1)
+                                            : Colors.transparent,
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
                                               children: [
@@ -172,37 +159,29 @@ class ChangeSelectedAddressModal extends HookWidget {
                                                   width: 30,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: card.color.image
-                                                          .image()
-                                                          .image,
+                                                      image: card.color.image.image().image,
                                                     ),
                                                   ),
                                                 ),
                                                 const Gap(12),
                                                 Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       card.name,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 15,
-                                                        color:
-                                                            AppColors.primary,
+                                                        color: AppColors.primary,
                                                       ),
                                                     ),
                                                     Text(
                                                       formattedCardAddress,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 14,
-                                                        color: AppColors
-                                                            .textHintsColor,
+                                                        color: AppColors.textHintsColor,
                                                       ),
                                                     ),
                                                   ],
@@ -213,8 +192,7 @@ class ChangeSelectedAddressModal extends HookWidget {
                                               '\$${myFormat.format((card.finalBalance ?? 0) / 100000000 * data!.price)}',
                                               style: const TextStyle(
                                                 fontSize: 16,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -228,28 +206,21 @@ class ChangeSelectedAddressModal extends HookWidget {
                               );
                             } else {
                               final bar = item as BarModel;
-                              final formattedBarAddress =
-                                  getSplitAddress(bar.address);
-                              final data = state.btc;
-                              final myFormat =
-                                  NumberFormat.decimalPatternDigits(
+                              final formattedBarAddress = getSplitAddress(bar.address);
+                              final data = _sendToState.btc;
+                              final myFormat = NumberFormat.decimalPatternDigits(
                                 locale: 'en_us',
                                 decimalDigits: 2,
                               );
-                              final barActivationStatus = state.historyPageStore
-                                      .barActivationStatus[bar.address] ??
-                                  false;
+                              final barActivationStatus =
+                                  _sendToState.historyPageStore.barActivationStatus[bar.address] ?? false;
 
                               return Observer(
                                 builder: (context) {
-                                  final isSelected = state.historyPageStore
-                                              .barHistoryIndex ==
-                                          index -
-                                              state.transactionsStore.cards
-                                                  .length &&
-                                      state.transactionsStore.selectedCard ==
-                                          -1 &&
-                                      state.transactionsStore.selectedBar != -1;
+                                  final isSelected = _sendToState.historyPageStore.barHistoryIndex ==
+                                          index - _sendToState.transactionsStore.cards.length &&
+                                      _sendToState.transactionsStore.selectedCard == -1 &&
+                                      _sendToState.transactionsStore.selectedBar != -1;
                                   return InkWell(
                                     onTap: () async {
                                       await recordAmplitudeEventPartTwo(
@@ -258,30 +229,23 @@ class ChangeSelectedAddressModal extends HookWidget {
                                         ),
                                       );
                                       if (barActivationStatus) {
-                                        state.transactionsStore.onSelectBar(
-                                          index -
-                                              state.transactionsStore.cards
-                                                  .length,
+                                        _sendToState.transactionsStore.onSelectBar(
+                                          index - _sendToState.transactionsStore.cards.length,
                                         );
                                         await router.maybePop();
-                                        await state.transactionsStore
-                                            .getUtxosData();
+                                        await _sendToState.transactionsStore.getUtxosData();
                                       } else {
                                         await barActivationDialog(
                                           context: context,
                                           isModalOpened: ValueNotifier(true),
                                           bar: bar,
                                           isBarList: isBarList,
-                                          state: state,
                                         );
-                                        await state.historyPageStore
-                                            .setBarActivationIndex(
-                                          index: index -
-                                              state.transactionsStore.cards
-                                                  .length,
+                                        await _sendToState.historyPageStore.setBarActivationIndex(
+                                          index: index - _sendToState.transactionsStore.cards.length,
                                         );
                                       }
-                                      state
+                                      _sendToState
                                         ..clearAmountControllers()
                                         ..isUseMaxClicked = false
                                         ..setAmount('0');
@@ -296,8 +260,7 @@ class ChangeSelectedAddressModal extends HookWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
                                               children: [
@@ -306,37 +269,29 @@ class ChangeSelectedAddressModal extends HookWidget {
                                                   width: 30,
                                                   decoration: BoxDecoration(
                                                     image: DecorationImage(
-                                                      image: bar.color.image
-                                                          .image()
-                                                          .image,
+                                                      image: bar.color.image.image().image,
                                                     ),
                                                   ),
                                                 ),
                                                 const Gap(12),
                                                 Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       bar.name,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 15,
-                                                        color:
-                                                            AppColors.primary,
+                                                        color: AppColors.primary,
                                                       ),
                                                     ),
                                                     Text(
                                                       formattedBarAddress,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 14,
-                                                        color: AppColors
-                                                            .textHintsColor,
+                                                        color: AppColors.textHintsColor,
                                                       ),
                                                     ),
                                                   ],
@@ -347,8 +302,7 @@ class ChangeSelectedAddressModal extends HookWidget {
                                               '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data!.price)}',
                                               style: const TextStyle(
                                                 fontSize: 16,
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 color: AppColors.textHintsColor,
                                                 fontWeight: FontWeight.w700,
                                               ),

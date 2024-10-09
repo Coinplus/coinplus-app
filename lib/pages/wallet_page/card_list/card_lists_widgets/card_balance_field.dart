@@ -50,9 +50,7 @@ class CardBalanceField extends HookWidget {
           child: Container(
             height: 60,
             padding: EdgeInsets.symmetric(
-              horizontal: context.height > 667
-                  ? context.height * 0.035
-                  : context.height * 0.043,
+              horizontal: context.height > 667 ? context.height * 0.035 : context.height * 0.043,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(6),
@@ -85,15 +83,13 @@ class CardBalanceField extends HookWidget {
                             ),
                             Observer(
                               builder: (context) {
-                                final myFormat =
-                                    NumberFormat.decimalPatternDigits(
+                                final myFormat = NumberFormat.decimalPatternDigits(
                                   locale: 'en_us',
                                   decimalDigits: 2,
                                 );
                                 return AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 400),
-                                  child: _balanceStore.btcPrice == null ||
-                                          _balanceStore.cardMapResult == null
+                                  child: _balanceStore.btcPrice == null || _balanceStore.cardMapResult == null
                                       ? const Padding(
                                           padding: EdgeInsets.symmetric(
                                             vertical: 4,
@@ -104,8 +100,7 @@ class CardBalanceField extends HookWidget {
                                               SizedBox(
                                                 height: 10,
                                                 width: 10,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                child: CircularProgressIndicator(
                                                   strokeWidth: 3,
                                                   color: Colors.white,
                                                 ),
@@ -115,13 +110,11 @@ class CardBalanceField extends HookWidget {
                                         )
                                       : Observer(
                                           builder: (_) {
-                                            if (_accelerometerStore
-                                                .hasPerformedAction) {
+                                            if (_accelerometerStore.hasPerformedAction) {
                                               return const Text(
                                                 r'$*****',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.white,
                                                   fontSize: 18,
@@ -131,8 +124,7 @@ class CardBalanceField extends HookWidget {
                                               return Text(
                                                 '\$${myFormat.format(_balanceStore.cardBalance)}',
                                                 style: const TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,
                                                   color: Colors.white,
                                                   fontSize: 20,

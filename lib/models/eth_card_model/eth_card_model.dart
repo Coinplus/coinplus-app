@@ -22,6 +22,7 @@ class EthCardModel with _$EthCardModel {
     @Default('Coinplus Ethereum Card') String name,
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('ETH') String blockchain,
+    @Default(false) bool isBackup,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
   }) = _EthCardModel;
 

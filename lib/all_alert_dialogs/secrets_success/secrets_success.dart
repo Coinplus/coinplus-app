@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../gen/fonts.gen.dart';
 import '../../../models/bar_model/bar_model.dart';
-import '../../../pages/send_page/send_to/send_to_state.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
@@ -14,6 +13,7 @@ import '../../../widgets/alert_dialog/show_dialog_box.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../services/amplitude_service.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../widgets/send_button_widget/send_button_widget.dart';
 
 Future<void> secretsSuccessAlert({
@@ -21,8 +21,8 @@ Future<void> secretsSuccessAlert({
   required String walletAddress,
   required String walletType,
   required bool isBarList,
-  required SendToState state,
   required BalanceStore balanceStore,
+  required bool? hasBackup,
   AbstractCard? card,
   BarModel? bar,
 }) {
@@ -45,36 +45,40 @@ Future<void> secretsSuccessAlert({
           : 'Your wallet activation is successful. You can find your private key in the card settings ⚙️',
       primaryActionText: 'Next',
       primaryAction: () async {
-        if (isBarList) {
-          balanceStore.activateBar();
-          balanceStore.onBarActivated(bar!.address);
+        if (hasBackup == true) {
+          await router.pushAndPopAll(const DashboardRoute());
+          await connectBackupWalletIos(mainWalletAddress: walletAddress);
         } else {
-          if (card!.blockchain == 'BTC') {
-            balanceStore.activateCard();
-            balanceStore.onCardActivated(card.address);
+          if (isBarList) {
+            balanceStore.activateBar();
+            balanceStore.onBarActivated(bar!.address);
           } else {
-            balanceStore.activateCard();
-            balanceStore.onCardActivated(card.address);
+            if (card!.blockchain == 'BTC') {
+              balanceStore.activateCard();
+              balanceStore.onCardActivated(card.address);
+            } else {
+              balanceStore.activateCard();
+              balanceStore.onCardActivated(card.address);
+            }
           }
-        }
 
-        router.popUntilRouteWithName(DashboardRoute.name);
+          router.popUntilRouteWithName(DashboardRoute.name);
 
-        if (card?.blockchain == 'BTC') {
-          await showSendFromWalletModal(
-            allSettingsState: allSettingsState,
-            isBarList: isBarList,
-            state: state,
+          if (card?.blockchain == 'BTC') {
+            await showSendFromWalletModal(
+              allSettingsState: allSettingsState,
+              isBarList: isBarList,
+            );
+          }
+
+          await recordAmplitudeEventPartTwo(
+            ActivationNextClicked(address: card!.address),
           );
-        }
-
-        await recordAmplitudeEventPartTwo(
-          ActivationNextClicked(address: card!.address),
-        );
-        if (isBarList) {
-          balanceStore.reActivateBar();
-        } else {
-          balanceStore.reActivateCard();
+          if (isBarList) {
+            balanceStore.reActivateBar();
+          } else {
+            balanceStore.reActivateCard();
+          }
         }
       },
     ),

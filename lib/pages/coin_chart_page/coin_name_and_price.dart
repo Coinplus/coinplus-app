@@ -104,38 +104,28 @@ class CoinNameAndPrice extends StatelessWidget {
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: _marketPageStore.priceChangeInPercents! >
-                                        0
+                                color: _marketPageStore.priceChangeInPercents! > 0
                                     ? Colors.greenAccent
-                                    : _marketPageStore.priceChangeInPercents! ==
-                                            0
+                                    : _marketPageStore.priceChangeInPercents! == 0
                                         ? Colors.greenAccent
                                         : Colors.red,
                               ),
                               child: Observer(
                                 builder: (context) {
-                                  final priceChange = _marketPageStore
-                                      .priceChangeInPercents
-                                      ?.toStringAsFixed(2);
+                                  final priceChange = _marketPageStore.priceChangeInPercents?.toStringAsFixed(2);
                                   return Row(
                                     children: [
-                                      if (_marketPageStore
-                                              .priceChangeInPercents! >
-                                          0)
+                                      if (_marketPageStore.priceChangeInPercents! > 0)
                                         Assets.icons.arrowDropUp.image(
                                           height: 5,
                                           color: Colors.white,
                                         )
-                                      else if (_marketPageStore
-                                              .priceChangeInPercents! >
-                                          0)
+                                      else if (_marketPageStore.priceChangeInPercents! > 0)
                                         Assets.icons.arrowDropDown.image(
                                           height: 5,
                                           color: Colors.white,
                                         )
-                                      else if (_marketPageStore
-                                              .priceChangeInPercents! ==
-                                          0)
+                                      else if (_marketPageStore.priceChangeInPercents! == 0)
                                         Assets.icons.arrowDropUp.image(
                                           height: 5,
                                           color: Colors.white,

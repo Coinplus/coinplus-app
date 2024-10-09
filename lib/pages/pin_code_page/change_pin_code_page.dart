@@ -110,9 +110,8 @@ class ChangePinCode extends StatelessWidget {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _changePinCodeState.isNewPinMatched
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _changePinCodeState.isNewPinMatched ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },
@@ -133,8 +132,7 @@ class ChangePinCode extends StatelessWidget {
                       style: TextStyle(fontSize: 15),
                     ),
                     onCompleted: (value) async {
-                      final savedPinCode =
-                          await _secureStorage.getSavedPinCode();
+                      final savedPinCode = await _secureStorage.getSavedPinCode();
                       enteredPin = value;
                       if (enteredPin == savedPinCode) {
                         _pageController.jumpToPage(1);
@@ -219,9 +217,8 @@ class ChangePinCode extends StatelessWidget {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _walletProtectState.isCreatedPinMatch
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _walletProtectState.isCreatedPinMatch ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },
@@ -315,9 +312,8 @@ class ChangePinCode extends StatelessWidget {
                         color: AppColors.red,
                       ),
                     ),
-                    crossFadeState: _changePinCodeState.isNewPinMatched
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _changePinCodeState.isNewPinMatched ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     duration: const Duration(milliseconds: 1),
                   );
                 },

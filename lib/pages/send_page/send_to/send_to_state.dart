@@ -97,15 +97,13 @@ abstract class SendToStateBase with Store {
   CoinResultModel? get btc => _marketPageStore.singleCoin?.result.first;
 
   @computed
-  bool get isConvertedAmountVisible =>
-      _amount.usdToSatoshi(btcCurrentPrice: btcPrice) != 0;
+  bool get isConvertedAmountVisible => _amount.usdToSatoshi(btcCurrentPrice: btcPrice) != 0;
 
   @computed
   bool get hasCards => _balanceStore.cards.isNotEmpty;
 
   @computed
-  bool get hasMoreThanOneWallets =>
-      _balanceStore.cards.length + _balanceStore.bars.length > 1;
+  bool get hasMoreThanOneWallets => _balanceStore.cards.length + _balanceStore.bars.length > 1;
 
   @computed
   CardModel? get selectedCard {
@@ -129,12 +127,10 @@ abstract class SendToStateBase with Store {
   bool get hasPerformedAction => _accelerometerStore.hasPerformedAction;
 
   @computed
-  num get totalAmount =>
-      transactionsStore.sortedUtxos.fold(0, (prev, utxo) => prev + utxo.value);
+  num get totalAmount => transactionsStore.sortedUtxos.fold(0, (prev, utxo) => prev + utxo.value);
 
   @computed
-  num get spendableBalance =>
-      totalAmount.satoshiToUsd(btcCurrentPrice: btcPrice);
+  num get spendableBalance => totalAmount.satoshiToUsd(btcCurrentPrice: btcPrice);
 
   @computed
   String get receiverWalletAddress => transactionsStore.receiverWalletAddress;
@@ -146,8 +142,7 @@ abstract class SendToStateBase with Store {
   String? get selectedBarAddress => selectedBar?.address;
 
   @computed
-  num get networkFee =>
-      transactionsStore.txFee.satoshiToUsd(btcCurrentPrice: btcPrice);
+  num get networkFee => transactionsStore.txFee.satoshiToUsd(btcCurrentPrice: btcPrice);
 
   @computed
   num get sendAmountInUsd {
@@ -184,10 +179,8 @@ abstract class SendToStateBase with Store {
         return false;
       }
     }
-    if ((transactionsStore.sendAmount + transactionsStore.txFee) >
-        totalAmount) {}
-    return (transactionsStore.sendAmount + transactionsStore.txFee) >
-        totalAmount;
+    if ((transactionsStore.sendAmount + transactionsStore.txFee) > totalAmount) {}
+    return (transactionsStore.sendAmount + transactionsStore.txFee) > totalAmount;
   }
 
   @computed
@@ -201,22 +194,16 @@ abstract class SendToStateBase with Store {
     final balanceAfterWithoutFee = spendableBalance - _amount;
     return balanceAfterWithoutFee == 0
         ? 0
-        : (balanceAfterWithoutFee -
-                    transactionsStore.txFee
-                        .satoshiToUsd(btcCurrentPrice: btcPrice)) <
-                0.3
+        : (balanceAfterWithoutFee - transactionsStore.txFee.satoshiToUsd(btcCurrentPrice: btcPrice)) < 0.3
             ? 0
-            : (balanceAfterWithoutFee -
-                transactionsStore.txFee
-                    .satoshiToUsd(btcCurrentPrice: btcPrice));
+            : (balanceAfterWithoutFee - transactionsStore.txFee.satoshiToUsd(btcCurrentPrice: btcPrice));
   }
 
   @computed
   num get maxTotal {
     return _amount == spendableBalance
         ? spendableBalance
-        : (_amount.usdToSatoshi(btcCurrentPrice: btcPrice) +
-                transactionsStore.txFee)
+        : (_amount.usdToSatoshi(btcCurrentPrice: btcPrice) + transactionsStore.txFee)
             .satoshiToUsd(btcCurrentPrice: btcPrice);
   }
 
@@ -268,8 +255,7 @@ abstract class SendToStateBase with Store {
   @action
   void handleUsdAmountSelection() {
     final selection = usdController.selection;
-    final isAllTextSelected = selection.baseOffset == 0 &&
-        selection.extentOffset == usdController.text.length;
+    final isAllTextSelected = selection.baseOffset == 0 && selection.extentOffset == usdController.text.length;
     if (isAllTextSelected) {
       isUseMaxClicked = false;
     }
@@ -278,8 +264,7 @@ abstract class SendToStateBase with Store {
   @action
   void handleBtcAmountSelection() {
     final selection = btcController.selection;
-    final isAllTextSelected = selection.baseOffset == 0 &&
-        selection.extentOffset == btcController.text.length;
+    final isAllTextSelected = selection.baseOffset == 0 && selection.extentOffset == btcController.text.length;
     if (isAllTextSelected) {
       isUseMaxClicked = false;
     }
@@ -288,8 +273,7 @@ abstract class SendToStateBase with Store {
   @action
   void handleNextButtonStatus() {
     final selection = addressController.selection;
-    final isAllTextSelected = selection.baseOffset == 0 &&
-        selection.extentOffset == addressController.text.length;
+    final isAllTextSelected = selection.baseOffset == 0 && selection.extentOffset == addressController.text.length;
     if (isAllTextSelected) {
       nextButtonStatus = false;
     }

@@ -62,8 +62,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
         await router.maybePop();
         unawaited(_balanceStore.removeSelectedBar());
 
-        final isBarActivated =
-            isBarWalletActivated(balanceStore: _balanceStore);
+        final isBarActivated = isBarWalletActivated();
         await recordAmplitudeEventPartTwo(
           CardDeleted(
             walletAddress: bar.address,

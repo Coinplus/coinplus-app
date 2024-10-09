@@ -13,6 +13,7 @@ class Preferences {
 
   static const cards = 'cards';
   static const ethCards = 'ethCards';
+  static const backupCards = 'backupCards';
   static const bars = 'bars';
   static const hasShownWallet = 'bools';
   static const isActivatedBool = 'isActivatedBool';
@@ -37,6 +38,20 @@ class StorageUtils {
     }
 
     return cards;
+  }
+
+  static Future<List<CardModel>> getBackupCards() async {
+    final cardsJson =
+        await _read<List>(Preferences.backupCards) ?? <Map<String, dynamic>>[];
+
+    final backupCards = <CardModel>[];
+    for (final element in cardsJson) {
+      backupCards.add(
+        CardModel.fromJson(element),
+      );
+    }
+
+    return backupCards;
   }
 
   static Future<List<EthCardModel>> getEthCards() async {
@@ -65,6 +80,35 @@ class StorageUtils {
     }
 
     return bars;
+  }
+
+  static Future<void> saveMainAndBackupCard({
+    required String mainCardAddress,
+    required CardModel backupCard,
+  }) async {
+    final backupCardJson = json.encode(backupCard.toJson());
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(mainCardAddress, backupCardJson);
+  }
+
+  static Future<void> deleteBackupCard(String mainCardAddress) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(mainCardAddress)) {
+      await prefs.remove(mainCardAddress);
+    } else {}
+  }
+
+  static Future<CardModel?> searchMainAndBackupCard(
+    String mainCardAddress,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final backupCardJson = prefs.getString(mainCardAddress);
+    if (backupCardJson != null) {
+      final backupCard = CardModel.fromJson(json.decode(backupCardJson));
+      return backupCard;
+    } else {
+      return null;
+    }
   }
 
   static Future<void> replaceCard(String address, CardModel newCard) async {
@@ -116,6 +160,12 @@ class StorageUtils {
     await _save(Preferences.cards, cards.toSet().toList());
   }
 
+  static Future<void> addBackupCard(CardModel card) async {
+    final cards = await getBackupCards();
+    cards.add(card);
+    await _save(Preferences.backupCards, cards.toSet().toList());
+  }
+
   static Future<void> addEthCard(EthCardModel card) async {
     final cards = await getEthCards();
     cards.add(card);
@@ -132,6 +182,12 @@ class StorageUtils {
     final cards = await getCards();
     cards.removeWhere((card) => card.address == address);
     await _save(Preferences.cards, cards.toSet().toList());
+  }
+
+  static Future<void> removeBackupCard(String address) async {
+    final cards = await getBackupCards();
+    cards.removeWhere((card) => card.address == address);
+    await _save(Preferences.backupCards, cards.toSet().toList());
   }
 
   static Future<void> removeEthCard(String address) async {
@@ -230,6 +286,7 @@ class StorageUtils {
   static Future<void> clear() async {
     final prefs = await sharedInstance;
     await prefs.reload();
+    await prefs.clear();
     await Future.wait([
       prefs.remove('cards'),
       prefs.remove('ethCards'),

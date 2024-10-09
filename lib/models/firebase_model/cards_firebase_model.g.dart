@@ -17,6 +17,8 @@ CardsModel _$CardsModelFromJson(Map json) => CardsModel(
       connected: (json['connected'] as num?)?.toInt(),
       deleted: (json['deleted'] as num?)?.toInt(),
       email: json['email'] as String?,
+      hasBackup: json['hasBackup'] as bool?,
+      backup: json['backup'] as bool?,
       nfcId: json['nfcId'] as String?,
       possibleOldCard: json['possibleOldCard'] as bool?,
       replenished: json['replenished'] as bool?,
@@ -47,6 +49,8 @@ Map<String, dynamic> _$CardsModelToJson(CardsModel instance) {
   writeNotNull('connected', instance.connected);
   writeNotNull('deleted', instance.deleted);
   writeNotNull('email', instance.email);
+  writeNotNull('hasBackup', instance.hasBackup);
+  writeNotNull('backup', instance.backup);
   writeNotNull('nfcId', instance.nfcId);
   writeNotNull('possibleOldCard', instance.possibleOldCard);
   writeNotNull('replenished', instance.replenished);

@@ -217,6 +217,22 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
+  late final _$currentPageAtom =
+      Atom(name: '_AllSettingsState.currentPage', context: context);
+
+  @override
+  int get currentPage {
+    _$currentPageAtom.reportRead();
+    return super.currentPage;
+  }
+
+  @override
+  set currentPage(int value) {
+    _$currentPageAtom.reportWrite(value, super.currentPage, () {
+      super.currentPage = value;
+    });
+  }
+
   late final _$checkNfcSupportAsyncAction =
       AsyncAction('_AllSettingsState.checkNfcSupport', context: context);
 
@@ -251,6 +267,17 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   late final _$_AllSettingsStateActionController =
       ActionController(name: '_AllSettingsState', context: context);
+
+  @override
+  void setPage(int page) {
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
+        name: '_AllSettingsState.setPage');
+    try {
+      return super.setPage(page);
+    } finally {
+      _$_AllSettingsStateActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   bool isEmpty() {
@@ -355,7 +382,8 @@ isLineVisible: ${isLineVisible},
 isAddressCopied: ${isAddressCopied},
 isReorderingStart: ${isReorderingStart},
 isButtonEnabled: ${isButtonEnabled},
-isNfcSupported: ${isNfcSupported}
+isNfcSupported: ${isNfcSupported},
+currentPage: ${currentPage}
     ''';
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../constants/currency.dart';
 import '../../../../extensions/extensions.dart';
@@ -19,17 +20,17 @@ class ProvideAmountTab extends HookWidget {
   const ProvideAmountTab({
     super.key,
     required this.tabController,
-    required this.state,
     required this.isBarList,
     required this.usdFocusNode,
     required this.btcFocusNode,
   });
 
-  final SendToState state;
   final TabController tabController;
   final bool isBarList;
   final FocusNode usdFocusNode;
   final FocusNode btcFocusNode;
+
+  SendToState get _sendToState => GetIt.I<SendToState>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,6 @@ class ProvideAmountTab extends HookWidget {
                   AmountInputField(
                     usdFocusNode: usdFocusNode,
                     btcFocusNode: btcFocusNode,
-                    state: state,
                   ),
                   SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -81,7 +81,7 @@ class ProvideAmountTab extends HookWidget {
                               clipBehavior: Clip.hardEdge,
                               child: Column(
                                 children: [
-                                  AmountMatchWidget(state: state),
+                                  const AmountMatchWidget(),
                                   Observer(
                                     builder: (context) {
                                       return AnimatedCrossFade(
@@ -90,44 +90,33 @@ class ProvideAmountTab extends HookWidget {
                                             Row(
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
+                                                  padding: const EdgeInsets.only(
                                                     left: 10,
                                                     top: 10,
                                                     bottom: 10,
                                                   ),
                                                   child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       const Text(
                                                         'Estimated fee',
                                                         style: TextStyle(
-                                                          fontFamily: FontFamily
-                                                              .redHatMedium,
+                                                          fontFamily: FontFamily.redHatMedium,
                                                           fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: AppColors
-                                                              .primaryTextColor,
+                                                          fontWeight: FontWeight.w700,
+                                                          color: AppColors.primaryTextColor,
                                                         ),
                                                       ),
                                                       const Gap(8),
                                                       Observer(
                                                         builder: (context) {
                                                           return Text(
-                                                            '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))} ≈ ${state.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
+                                                            '\$ ${formatter.format(_sendToState.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))} ≈ ${_sendToState.transactionsStore.calculatedTxFee.satoshiToBtc()} BTC',
+                                                            style: const TextStyle(
+                                                              fontFamily: FontFamily.redHatMedium,
                                                               fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: AppColors
-                                                                  .textHintsColor,
+                                                              fontWeight: FontWeight.w500,
+                                                              color: AppColors.textHintsColor,
                                                             ),
                                                           );
                                                         },
@@ -145,13 +134,10 @@ class ProvideAmountTab extends HookWidget {
                                           ],
                                         ),
                                         secondChild: const SizedBox(),
-                                        crossFadeState:
-                                            state.totalAmount != 0 &&
-                                                    state.amount != 0
-                                                ? CrossFadeState.showFirst
-                                                : CrossFadeState.showSecond,
-                                        duration:
-                                            const Duration(milliseconds: 250),
+                                        crossFadeState: _sendToState.totalAmount != 0 && _sendToState.amount != 0
+                                            ? CrossFadeState.showFirst
+                                            : CrossFadeState.showSecond,
+                                        duration: const Duration(milliseconds: 250),
                                         firstCurve: Curves.easeOut,
                                         secondCurve: Curves.elasticOut,
                                       );
@@ -160,8 +146,7 @@ class ProvideAmountTab extends HookWidget {
                                   Observer(
                                     builder: (context) {
                                       return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -169,39 +154,29 @@ class ProvideAmountTab extends HookWidget {
                                               top: 10,
                                             ),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 const Text(
                                                   'Send from',
                                                   style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w700,
-                                                    color: AppColors
-                                                        .primaryTextColor,
+                                                    color: AppColors.primaryTextColor,
                                                   ),
                                                 ),
                                                 const Gap(8),
                                                 Observer(
                                                   builder: (context) {
                                                     return Text(
-                                                      state.transactionsStore
-                                                                  .selectedCard !=
-                                                              -1
-                                                          ? state.formattedSelectedCardAddress ??
-                                                              ''
-                                                          : state
-                                                              .formattedSelectedBarAddress,
+                                                      _sendToState.transactionsStore.selectedCard != -1
+                                                          ? _sendToState.formattedSelectedCardAddress ?? ''
+                                                          : _sendToState.formattedSelectedBarAddress,
                                                       style: const TextStyle(
-                                                        fontFamily: FontFamily
-                                                            .redHatMedium,
+                                                        fontFamily: FontFamily.redHatMedium,
                                                         fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: AppColors
-                                                            .textHintsColor,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: AppColors.textHintsColor,
                                                       ),
                                                     );
                                                   },
@@ -215,22 +190,19 @@ class ProvideAmountTab extends HookWidget {
                                               top: 10,
                                             ),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                              crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 const Text(
                                                   'Balance',
                                                   style: TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w700,
-                                                    color: AppColors
-                                                        .primaryTextColor,
+                                                    color: AppColors.primaryTextColor,
                                                   ),
                                                 ),
                                                 const Gap(8),
-                                                if (state.btc == null)
+                                                if (_sendToState.btc == null)
                                                   const SizedBox()
                                                 else
                                                   Observer(
@@ -239,18 +211,12 @@ class ProvideAmountTab extends HookWidget {
                                                         firstChild: Observer(
                                                           builder: (context) {
                                                             return Text(
-                                                              '\$${formatter.format(state.spendableBalance)}',
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .redHatMedium,
+                                                              '\$${formatter.format(_sendToState.spendableBalance)}',
+                                                              style: const TextStyle(
+                                                                fontFamily: FontFamily.redHatMedium,
                                                                 fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: AppColors
-                                                                    .textHintsColor,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: AppColors.textHintsColor,
                                                               ),
                                                             );
                                                           },
@@ -258,31 +224,20 @@ class ProvideAmountTab extends HookWidget {
                                                         secondChild: Observer(
                                                           builder: (context) {
                                                             return Text(
-                                                              'BTC ${state.spendableBalance.usdToBtc(btcCurrentPrice: state.btcPrice)}',
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontFamily:
-                                                                    FontFamily
-                                                                        .redHatMedium,
+                                                              'BTC ${_sendToState.spendableBalance.usdToBtc(btcCurrentPrice: _sendToState.btcPrice)}',
+                                                              style: const TextStyle(
+                                                                fontFamily: FontFamily.redHatMedium,
                                                                 fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: AppColors
-                                                                    .textHintsColor,
+                                                                fontWeight: FontWeight.w500,
+                                                                color: AppColors.textHintsColor,
                                                               ),
                                                             );
                                                           },
                                                         ),
-                                                        crossFadeState:
-                                                            state.currency ==
-                                                                    Currency.USD
-                                                                ? CrossFadeState
-                                                                    .showFirst
-                                                                : CrossFadeState
-                                                                    .showSecond,
-                                                        duration:
-                                                            const Duration(
+                                                        crossFadeState: _sendToState.currency == Currency.USD
+                                                            ? CrossFadeState.showFirst
+                                                            : CrossFadeState.showSecond,
+                                                        duration: const Duration(
                                                           milliseconds: 300,
                                                         ),
                                                       );
@@ -307,26 +262,22 @@ class ProvideAmountTab extends HookWidget {
                                           bottom: 10,
                                         ),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             const Text(
                                               'Send to',
                                               style: TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w700,
-                                                color:
-                                                    AppColors.primaryTextColor,
+                                                color: AppColors.primaryTextColor,
                                               ),
                                             ),
                                             const Gap(8),
                                             Text(
-                                              state.formattedAddress,
+                                              _sendToState.formattedAddress,
                                               style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.textHintsColor,
@@ -345,11 +296,11 @@ class ProvideAmountTab extends HookWidget {
                           Observer(
                             builder: (context) {
                               return LoadingButton(
-                                onPressed: !state.isAmountToSmall
-                                    ? state.sendAmountInUsd == 0
+                                onPressed: !_sendToState.isAmountToSmall
+                                    ? _sendToState.sendAmountInUsd == 0
                                         ? null
-                                        : !state.isInputtedAmountBiggerTotal
-                                            ? !state.isCoverFee
+                                        : !_sendToState.isInputtedAmountBiggerTotal
+                                            ? !_sendToState.isCoverFee
                                                 ? () async {
                                                     usdFocusNode.unfocus();
                                                     btcFocusNode.unfocus();
@@ -359,21 +310,16 @@ class ProvideAmountTab extends HookWidget {
                                                       ),
                                                     );
                                                     tabController.animateTo(2);
-                                                    await state
-                                                        .transactionsStore
-                                                        .findOptimalUtxo();
+                                                    await _sendToState.transactionsStore.findOptimalUtxo();
                                                     await recordAmplitudeEventPartTwo(
                                                       AmountNextClicked(
-                                                        sendToAddress:
-                                                            state.outputAddress,
-                                                        sendFromAddress: state
-                                                            .selectedCardAddress!,
-                                                        amount:
-                                                            '${state.amount.toStringAsFixed(3)} \$',
+                                                        sendToAddress: _sendToState.outputAddress,
+                                                        sendFromAddress: _sendToState.selectedCardAddress!,
+                                                        amount: '${_sendToState.amount.toStringAsFixed(3)} \$',
                                                         balance:
-                                                            '${state.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: state.btcPrice).toStringAsFixed(3)} \$',
+                                                            '${_sendToState.selectedCard!.finalBalance!.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice).toStringAsFixed(3)} \$',
                                                         fee:
-                                                            '\$ ${formatter.format(state.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: state.btcPrice))}',
+                                                            '\$ ${formatter.format(_sendToState.transactionsStore.calculatedTxFee.satoshiToUsd(btcCurrentPrice: _sendToState.btcPrice))}',
                                                       ),
                                                     );
                                                   }
