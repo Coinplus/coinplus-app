@@ -89,9 +89,7 @@ Future<void> sendReceiveButtonModal({
                     ReceiveClicked(
                       walletType: isBarList ? 'Bar' : 'Card',
                       walletAddress: card.address,
-                      activated: isBarList
-                          ? await isBarActivated
-                          : await isCardActivated,
+                      activated: isBarList ? await isBarActivated : await isCardActivated,
                     ),
                   ),
                 );
@@ -180,9 +178,7 @@ Future<void> sendReceiveButtonModal({
                   BuyWithCardClicked(
                     walletType: isBarList ? 'Bar' : 'Card',
                     walletAddress: card.address,
-                    activated: isBarList
-                        ? await isBarActivated
-                        : await isCardActivated,
+                    activated: isBarList ? await isBarActivated : await isCardActivated,
                   ),
                 );
                 await router.maybePop();
@@ -250,9 +246,7 @@ Future<void> sendReceiveButtonModal({
                   HistoryClicked(
                     walletType: isBarList ? 'Bar' : 'Card',
                     walletAddress: card.address,
-                    activated: isBarList
-                        ? await isBarActivated
-                        : await isCardActivated,
+                    activated: isBarList ? await isBarActivated : await isCardActivated,
                   ),
                 );
                 await router.maybePop();

@@ -15,47 +15,34 @@ import 'package:coinplus/models/abstract_card/abstract_card.dart' as _i34;
 import 'package:coinplus/models/bar_model/bar_model.dart' as _i31;
 import 'package:coinplus/models/coins_dto/coin_model.dart' as _i35;
 import 'package:coinplus/models/firebase_model/buy_card_model.dart' as _i33;
-import 'package:coinplus/pages/bar_activation_page/bar_activation_page.dart'
-    as _i3;
+import 'package:coinplus/pages/bar_activation_page/bar_activation_page.dart' as _i3;
 import 'package:coinplus/pages/bar_connect_page/bar_connect_page.dart' as _i4;
-import 'package:coinplus/pages/bar_connect_page/bar_connect_with_nfc.dart'
-    as _i5;
+import 'package:coinplus/pages/bar_connect_page/bar_connect_with_nfc.dart' as _i5;
 import 'package:coinplus/pages/bar_settings_page/bar_settings_page.dart' as _i6;
 import 'package:coinplus/pages/buy_card_page/buy_card_page.dart' as _i7;
-import 'package:coinplus/pages/card_activation_page/card_activation_page.dart'
-    as _i8;
-import 'package:coinplus/pages/card_connect_page/backup_my_wallet_flow/backup_my_wallet_page.dart'
-    as _i2;
+import 'package:coinplus/pages/card_activation_page/card_activation_page.dart' as _i8;
+import 'package:coinplus/pages/card_connect_page/backup_my_wallet_flow/backup_my_wallet_page.dart' as _i2;
 import 'package:coinplus/pages/card_connect_page/card_connect_page.dart' as _i9;
-import 'package:coinplus/pages/card_connect_page/card_connect_with_nfc/card_connect_with_nfc.dart'
-    as _i10;
-import 'package:coinplus/pages/card_settings_page/card_settings_page.dart'
-    as _i11;
+import 'package:coinplus/pages/card_connect_page/card_connect_with_nfc/card_connect_with_nfc.dart' as _i10;
+import 'package:coinplus/pages/card_settings_page/card_settings_page.dart' as _i11;
 import 'package:coinplus/pages/coin_chart_page/coin_chart_page.dart' as _i13;
 import 'package:coinplus/pages/dashboard/dashboard.dart' as _i16;
 import 'package:coinplus/pages/onboarding_page/onboarding_page.dart' as _i17;
 import 'package:coinplus/pages/pin_code_page/change_pin_code_page.dart' as _i12;
 import 'package:coinplus/pages/pin_code_page/create_pin_code_page.dart' as _i15;
-import 'package:coinplus/pages/pin_code_page/pin_code_after_splash.dart'
-    as _i18;
-import 'package:coinplus/pages/pin_code_page/pin_code_for_all_pages.dart'
-    as _i19;
-import 'package:coinplus/pages/pin_code_page/pin_code_for_private_key.dart'
-    as _i20;
+import 'package:coinplus/pages/pin_code_page/pin_code_after_splash.dart' as _i18;
+import 'package:coinplus/pages/pin_code_page/pin_code_for_all_pages.dart' as _i19;
+import 'package:coinplus/pages/pin_code_page/pin_code_for_private_key.dart' as _i20;
 import 'package:coinplus/pages/pin_code_page/pin_code_page.dart' as _i21;
 import 'package:coinplus/pages/pin_code_page/remove_pin_code.dart' as _i22;
 import 'package:coinplus/pages/qr_scanner_page/qr_scanner.dart' as _i23;
-import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart'
-    as _i1;
-import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart'
-    as _i14;
+import 'package:coinplus/pages/settings_page/app_info_page/app_info_page.dart' as _i1;
+import 'package:coinplus/pages/settings_page/contact_us/contact_us.dart' as _i14;
 import 'package:coinplus/pages/settings_page/settings_page.dart' as _i24;
 import 'package:coinplus/pages/splash_screen/splash_screen.dart' as _i25;
-import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart'
-    as _i26;
+import 'package:coinplus/pages/wallet_protection_page/wallet_protection_page.dart' as _i26;
 import 'package:coinplus/store/bar_color_state/bar_setting_state.dart' as _i36;
-import 'package:coinplus/store/card_color_state/card_setting_state.dart'
-    as _i37;
+import 'package:coinplus/store/card_color_state/card_setting_state.dart' as _i37;
 import 'package:flutter/cupertino.dart' as _i30;
 import 'package:flutter/foundation.dart' as _i29;
 import 'package:flutter/material.dart' as _i28;
@@ -84,8 +71,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     BarActivationRoute.name: (routeData) {
-      final args = routeData.argsAs<BarActivationRouteArgs>(
-          orElse: () => const BarActivationRouteArgs());
+      final args = routeData.argsAs<BarActivationRouteArgs>(orElse: () => const BarActivationRouteArgs());
       return _i27.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.BarActivationPage(
@@ -96,8 +82,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     BarConnectRoute.name: (routeData) {
-      final args = routeData.argsAs<BarConnectRouteArgs>(
-          orElse: () => const BarConnectRouteArgs());
+      final args = routeData.argsAs<BarConnectRouteArgs>(orElse: () => const BarConnectRouteArgs());
       return _i27.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.BarConnectPage(
@@ -140,8 +125,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     CardActivationRoute.name: (routeData) {
-      final args = routeData.argsAs<CardActivationRouteArgs>(
-          orElse: () => const CardActivationRouteArgs());
+      final args = routeData.argsAs<CardActivationRouteArgs>(orElse: () => const CardActivationRouteArgs());
       return _i27.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i8.CardActivationPage(
@@ -152,8 +136,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     CardConnectRoute.name: (routeData) {
-      final args = routeData.argsAs<CardConnectRouteArgs>(
-          orElse: () => const CardConnectRouteArgs());
+      final args = routeData.argsAs<CardConnectRouteArgs>(orElse: () => const CardConnectRouteArgs());
       return _i27.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i9.CardConnectPage(
@@ -164,8 +147,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     CardConnectWithNfc.name: (routeData) {
-      final args = routeData.argsAs<CardConnectWithNfcArgs>(
-          orElse: () => const CardConnectWithNfcArgs());
+      final args = routeData.argsAs<CardConnectWithNfcArgs>(orElse: () => const CardConnectWithNfcArgs());
       return _i27.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i10.CardConnectWithNfc(
@@ -246,8 +228,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     PinCodeForPrivateKey.name: (routeData) {
-      final args = routeData.argsAs<PinCodeForPrivateKeyArgs>(
-          orElse: () => const PinCodeForPrivateKeyArgs());
+      final args = routeData.argsAs<PinCodeForPrivateKeyArgs>(orElse: () => const PinCodeForPrivateKeyArgs());
       return _i27.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i20.PinCodeForPrivateKey(
@@ -272,8 +253,7 @@ abstract class $Router extends _i27.RootStackRouter {
       );
     },
     QrScannerRoute.name: (routeData) {
-      final args = routeData.argsAs<QrScannerRouteArgs>(
-          orElse: () => const QrScannerRouteArgs());
+      final args = routeData.argsAs<QrScannerRouteArgs>(orElse: () => const QrScannerRouteArgs());
       return _i27.AutoRoutePage<String?>(
         routeData: routeData,
         child: _i23.QrScannerPage(
@@ -339,8 +319,7 @@ class BackupMyWalletRoute extends _i27.PageRouteInfo<BackupMyWalletRouteArgs> {
 
   static const String name = 'BackupMyWalletRoute';
 
-  static const _i27.PageInfo<BackupMyWalletRouteArgs> page =
-      _i27.PageInfo<BackupMyWalletRouteArgs>(name);
+  static const _i27.PageInfo<BackupMyWalletRouteArgs> page = _i27.PageInfo<BackupMyWalletRouteArgs>(name);
 }
 
 class BackupMyWalletRouteArgs {
@@ -385,8 +364,7 @@ class BarActivationRoute extends _i27.PageRouteInfo<BarActivationRouteArgs> {
 
   static const String name = 'BarActivationRoute';
 
-  static const _i27.PageInfo<BarActivationRouteArgs> page =
-      _i27.PageInfo<BarActivationRouteArgs>(name);
+  static const _i27.PageInfo<BarActivationRouteArgs> page = _i27.PageInfo<BarActivationRouteArgs>(name);
 }
 
 class BarActivationRouteArgs {
@@ -426,8 +404,7 @@ class BarConnectRoute extends _i27.PageRouteInfo<BarConnectRouteArgs> {
 
   static const String name = 'BarConnectRoute';
 
-  static const _i27.PageInfo<BarConnectRouteArgs> page =
-      _i27.PageInfo<BarConnectRouteArgs>(name);
+  static const _i27.PageInfo<BarConnectRouteArgs> page = _i27.PageInfo<BarConnectRouteArgs>(name);
 }
 
 class BarConnectRouteArgs {
@@ -470,8 +447,7 @@ class BarConnectWithNfc extends _i27.PageRouteInfo<BarConnectWithNfcArgs> {
 
   static const String name = 'BarConnectWithNfc';
 
-  static const _i27.PageInfo<BarConnectWithNfcArgs> page =
-      _i27.PageInfo<BarConnectWithNfcArgs>(name);
+  static const _i27.PageInfo<BarConnectWithNfcArgs> page = _i27.PageInfo<BarConnectWithNfcArgs>(name);
 }
 
 class BarConnectWithNfcArgs {
@@ -517,8 +493,7 @@ class BarSettingsRoute extends _i27.PageRouteInfo<BarSettingsRouteArgs> {
 
   static const String name = 'BarSettingsRoute';
 
-  static const _i27.PageInfo<BarSettingsRouteArgs> page =
-      _i27.PageInfo<BarSettingsRouteArgs>(name);
+  static const _i27.PageInfo<BarSettingsRouteArgs> page = _i27.PageInfo<BarSettingsRouteArgs>(name);
 }
 
 class BarSettingsRouteArgs {
@@ -555,8 +530,7 @@ class BuyCardRoute extends _i27.PageRouteInfo<BuyCardRouteArgs> {
 
   static const String name = 'BuyCardRoute';
 
-  static const _i27.PageInfo<BuyCardRouteArgs> page =
-      _i27.PageInfo<BuyCardRouteArgs>(name);
+  static const _i27.PageInfo<BuyCardRouteArgs> page = _i27.PageInfo<BuyCardRouteArgs>(name);
 }
 
 class BuyCardRouteArgs {
@@ -595,8 +569,7 @@ class CardActivationRoute extends _i27.PageRouteInfo<CardActivationRouteArgs> {
 
   static const String name = 'CardActivationRoute';
 
-  static const _i27.PageInfo<CardActivationRouteArgs> page =
-      _i27.PageInfo<CardActivationRouteArgs>(name);
+  static const _i27.PageInfo<CardActivationRouteArgs> page = _i27.PageInfo<CardActivationRouteArgs>(name);
 }
 
 class CardActivationRouteArgs {
@@ -638,8 +611,7 @@ class CardConnectRoute extends _i27.PageRouteInfo<CardConnectRouteArgs> {
 
   static const String name = 'CardConnectRoute';
 
-  static const _i27.PageInfo<CardConnectRouteArgs> page =
-      _i27.PageInfo<CardConnectRouteArgs>(name);
+  static const _i27.PageInfo<CardConnectRouteArgs> page = _i27.PageInfo<CardConnectRouteArgs>(name);
 }
 
 class CardConnectRouteArgs {
@@ -697,8 +669,7 @@ class CardConnectWithNfc extends _i27.PageRouteInfo<CardConnectWithNfcArgs> {
 
   static const String name = 'CardConnectWithNfc';
 
-  static const _i27.PageInfo<CardConnectWithNfcArgs> page =
-      _i27.PageInfo<CardConnectWithNfcArgs>(name);
+  static const _i27.PageInfo<CardConnectWithNfcArgs> page = _i27.PageInfo<CardConnectWithNfcArgs>(name);
 }
 
 class CardConnectWithNfcArgs {
@@ -762,8 +733,7 @@ class CardSettingsRoute extends _i27.PageRouteInfo<CardSettingsRouteArgs> {
 
   static const String name = 'CardSettingsRoute';
 
-  static const _i27.PageInfo<CardSettingsRouteArgs> page =
-      _i27.PageInfo<CardSettingsRouteArgs>(name);
+  static const _i27.PageInfo<CardSettingsRouteArgs> page = _i27.PageInfo<CardSettingsRouteArgs>(name);
 }
 
 class CardSettingsRouteArgs {
@@ -814,8 +784,7 @@ class CoinChartRoute extends _i27.PageRouteInfo<CoinChartRouteArgs> {
 
   static const String name = 'CoinChartRoute';
 
-  static const _i27.PageInfo<CoinChartRouteArgs> page =
-      _i27.PageInfo<CoinChartRouteArgs>(name);
+  static const _i27.PageInfo<CoinChartRouteArgs> page = _i27.PageInfo<CoinChartRouteArgs>(name);
 }
 
 class CoinChartRouteArgs {
@@ -920,8 +889,7 @@ class PinCodeForAllRoutes extends _i27.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i20.PinCodeForPrivateKey]
-class PinCodeForPrivateKey
-    extends _i27.PageRouteInfo<PinCodeForPrivateKeyArgs> {
+class PinCodeForPrivateKey extends _i27.PageRouteInfo<PinCodeForPrivateKeyArgs> {
   PinCodeForPrivateKey({
     _i28.Key? key,
     _i31.BarModel? bar,
@@ -943,8 +911,7 @@ class PinCodeForPrivateKey
 
   static const String name = 'PinCodeForPrivateKey';
 
-  static const _i27.PageInfo<PinCodeForPrivateKeyArgs> page =
-      _i27.PageInfo<PinCodeForPrivateKeyArgs>(name);
+  static const _i27.PageInfo<PinCodeForPrivateKeyArgs> page = _i27.PageInfo<PinCodeForPrivateKeyArgs>(name);
 }
 
 class PinCodeForPrivateKeyArgs {
@@ -1018,8 +985,7 @@ class QrScannerRoute extends _i27.PageRouteInfo<QrScannerRouteArgs> {
 
   static const String name = 'QrScannerRoute';
 
-  static const _i27.PageInfo<QrScannerRouteArgs> page =
-      _i27.PageInfo<QrScannerRouteArgs>(name);
+  static const _i27.PageInfo<QrScannerRouteArgs> page = _i27.PageInfo<QrScannerRouteArgs>(name);
 }
 
 class QrScannerRouteArgs {

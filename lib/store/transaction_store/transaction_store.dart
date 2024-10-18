@@ -199,8 +199,7 @@ abstract class _TransactionStore with Store {
   int calculateFee(int inputCount, int outputCount, int feeRate) {
     const inputSize = 148;
     const overheadSize = 10;
-    final transactionSize =
-        (inputCount * inputSize) + (outputCount * outputByte) + overheadSize;
+    final transactionSize = (inputCount * inputSize) + (outputCount * outputByte) + overheadSize;
     final transactionFee = transactionSize * feeRate;
 
     return transactionFee;
@@ -337,14 +336,12 @@ abstract class _TransactionStore with Store {
   }
 
   @computed
-  int get calculatedFee =>
-      ((inputQuantity * 148) + (1 * outputByte) + 10) * selectedFee;
+  int get calculatedFee => ((inputQuantity * 148) + (1 * outputByte) + 10) * selectedFee;
 
   @action
   int findMaxUtxo() {
     final selectedUtxos = <UtxoModel>[];
-    final newFeeWithoutChange =
-        calculateFee(sortedUtxos.length, 1, selectedFee);
+    final newFeeWithoutChange = calculateFee(sortedUtxos.length, 1, selectedFee);
     selectedUtxos.addAll(sortedUtxos);
     txFee = newFeeWithoutChange;
     final utxoHashes = sortedUtxos.map((utxo) => utxo.txHash).toList();

@@ -13,12 +13,10 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   List<CoinResultModel> get searchedList => (_$searchedListComputed ??=
-          Computed<List<CoinResultModel>>(() => super.searchedList,
-              name: '_MarketPageStore.searchedList'))
+          Computed<List<CoinResultModel>>(() => super.searchedList, name: '_MarketPageStore.searchedList'))
       .value;
 
-  late final _$_marketCapAtom =
-      Atom(name: '_MarketPageStore._marketCap', context: context);
+  late final _$_marketCapAtom = Atom(name: '_MarketPageStore._marketCap', context: context);
 
   MarketCapDto? get marketCap {
     _$_marketCapAtom.reportRead();
@@ -50,8 +48,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$filteredDataAtom =
-      Atom(name: '_MarketPageStore.filteredData', context: context);
+  late final _$filteredDataAtom = Atom(name: '_MarketPageStore.filteredData', context: context);
 
   @override
   List<CoinResultModel> get filteredData {
@@ -66,8 +63,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$favoriteCoinModelAtom =
-      Atom(name: '_MarketPageStore.favoriteCoinModel', context: context);
+  late final _$favoriteCoinModelAtom = Atom(name: '_MarketPageStore.favoriteCoinModel', context: context);
 
   @override
   UniqueCoinModel? get favoriteCoinModel {
@@ -82,8 +78,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$currentPageAtom =
-      Atom(name: '_MarketPageStore.currentPage', context: context);
+  late final _$currentPageAtom = Atom(name: '_MarketPageStore.currentPage', context: context);
 
   @override
   int get currentPage {
@@ -98,8 +93,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$displayedItemCountAtom =
-      Atom(name: '_MarketPageStore.displayedItemCount', context: context);
+  late final _$displayedItemCountAtom = Atom(name: '_MarketPageStore.displayedItemCount', context: context);
 
   @override
   int get displayedItemCount {
@@ -114,8 +108,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$totalItemCountAtom =
-      Atom(name: '_MarketPageStore.totalItemCount', context: context);
+  late final _$totalItemCountAtom = Atom(name: '_MarketPageStore.totalItemCount', context: context);
 
   @override
   int get totalItemCount {
@@ -130,8 +123,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$hasErrorAtom =
-      Atom(name: '_MarketPageStore.hasError', context: context);
+  late final _$hasErrorAtom = Atom(name: '_MarketPageStore.hasError', context: context);
 
   @override
   bool get hasError {
@@ -146,8 +138,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$shouldShowUpButtonAtom =
-      Atom(name: '_MarketPageStore.shouldShowUpButton', context: context);
+  late final _$shouldShowUpButtonAtom = Atom(name: '_MarketPageStore.shouldShowUpButton', context: context);
 
   @override
   bool get shouldShowUpButton {
@@ -162,8 +153,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isSearchVisibleAtom =
-      Atom(name: '_MarketPageStore.isSearchVisible', context: context);
+  late final _$isSearchVisibleAtom = Atom(name: '_MarketPageStore.isSearchVisible', context: context);
 
   @override
   bool get isSearchVisible {
@@ -178,8 +168,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isTextFieldVisibleAtom =
-      Atom(name: '_MarketPageStore.isTextFieldVisible', context: context);
+  late final _$isTextFieldVisibleAtom = Atom(name: '_MarketPageStore.isTextFieldVisible', context: context);
 
   @override
   bool get isTextFieldVisible {
@@ -194,8 +183,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isLoadingAtom =
-      Atom(name: '_MarketPageStore.isLoading', context: context);
+  late final _$isLoadingAtom = Atom(name: '_MarketPageStore.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -210,8 +198,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isSearchedAtom =
-      Atom(name: '_MarketPageStore.isSearched', context: context);
+  late final _$isSearchedAtom = Atom(name: '_MarketPageStore.isSearched', context: context);
 
   @override
   bool get isSearched {
@@ -226,8 +213,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$allCoinsAtom =
-      Atom(name: '_MarketPageStore.allCoins', context: context);
+  late final _$allCoinsAtom = Atom(name: '_MarketPageStore.allCoins', context: context);
 
   @override
   CoinModel? get allCoins {
@@ -242,8 +228,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$singleCoinAtom =
-      Atom(name: '_MarketPageStore.singleCoin', context: context);
+  late final _$singleCoinAtom = Atom(name: '_MarketPageStore.singleCoin', context: context);
 
   @override
   CoinModel? get singleCoin {
@@ -258,8 +243,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$chartDataAtom =
-      Atom(name: '_MarketPageStore.chartData', context: context);
+  late final _$chartDataAtom = Atom(name: '_MarketPageStore.chartData', context: context);
 
   @override
   List<List<num>> get chartData {
@@ -274,8 +258,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$chartEnumAtom =
-      Atom(name: '_MarketPageStore.chartEnum', context: context);
+  late final _$chartEnumAtom = Atom(name: '_MarketPageStore.chartEnum', context: context);
 
   @override
   ChartEnum get chartEnum {
@@ -290,8 +273,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$chartLoadingAtom =
-      Atom(name: '_MarketPageStore.chartLoading', context: context);
+  late final _$chartLoadingAtom = Atom(name: '_MarketPageStore.chartLoading', context: context);
 
   @override
   bool get chartLoading {
@@ -306,8 +288,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$touchedXValueAtom =
-      Atom(name: '_MarketPageStore.touchedXValue', context: context);
+  late final _$touchedXValueAtom = Atom(name: '_MarketPageStore.touchedXValue', context: context);
 
   @override
   double? get touchedXValue {
@@ -322,8 +303,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$touchedYValueAtom =
-      Atom(name: '_MarketPageStore.touchedYValue', context: context);
+  late final _$touchedYValueAtom = Atom(name: '_MarketPageStore.touchedYValue', context: context);
 
   @override
   double? get touchedYValue {
@@ -338,8 +318,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$chartDateTimeAtom =
-      Atom(name: '_MarketPageStore.chartDateTime', context: context);
+  late final _$chartDateTimeAtom = Atom(name: '_MarketPageStore.chartDateTime', context: context);
 
   @override
   String get chartDateTime {
@@ -354,8 +333,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$onChartTouchAtom =
-      Atom(name: '_MarketPageStore.onChartTouch', context: context);
+  late final _$onChartTouchAtom = Atom(name: '_MarketPageStore.onChartTouch', context: context);
 
   @override
   bool get onChartTouch {
@@ -370,8 +348,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$priceChangeInPercentsAtom =
-      Atom(name: '_MarketPageStore.priceChangeInPercents', context: context);
+  late final _$priceChangeInPercentsAtom = Atom(name: '_MarketPageStore.priceChangeInPercents', context: context);
 
   @override
   double? get priceChangeInPercents {
@@ -381,14 +358,12 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   set priceChangeInPercents(double? value) {
-    _$priceChangeInPercentsAtom.reportWrite(value, super.priceChangeInPercents,
-        () {
+    _$priceChangeInPercentsAtom.reportWrite(value, super.priceChangeInPercents, () {
       super.priceChangeInPercents = value;
     });
   }
 
-  late final _$lastTouchedSpotAtom =
-      Atom(name: '_MarketPageStore.lastTouchedSpot', context: context);
+  late final _$lastTouchedSpotAtom = Atom(name: '_MarketPageStore.lastTouchedSpot', context: context);
 
   @override
   FlSpot? get lastTouchedSpot {
@@ -403,8 +378,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$hapticDebounceTimerAtom =
-      Atom(name: '_MarketPageStore.hapticDebounceTimer', context: context);
+  late final _$hapticDebounceTimerAtom = Atom(name: '_MarketPageStore.hapticDebounceTimer', context: context);
 
   @override
   Timer? get hapticDebounceTimer {
@@ -419,8 +393,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isHapticFeedbackActiveAtom =
-      Atom(name: '_MarketPageStore.isHapticFeedbackActive', context: context);
+  late final _$isHapticFeedbackActiveAtom = Atom(name: '_MarketPageStore.isHapticFeedbackActive', context: context);
 
   @override
   bool get isHapticFeedbackActive {
@@ -430,14 +403,12 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   set isHapticFeedbackActive(bool value) {
-    _$isHapticFeedbackActiveAtom
-        .reportWrite(value, super.isHapticFeedbackActive, () {
+    _$isHapticFeedbackActiveAtom.reportWrite(value, super.isHapticFeedbackActive, () {
       super.isHapticFeedbackActive = value;
     });
   }
 
-  late final _$isCollapsedAtom =
-      Atom(name: '_MarketPageStore.isCollapsed', context: context);
+  late final _$isCollapsedAtom = Atom(name: '_MarketPageStore.isCollapsed', context: context);
 
   @override
   bool get isCollapsed {
@@ -452,8 +423,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isLoadingFavoritesAtom =
-      Atom(name: '_MarketPageStore.isLoadingFavorites', context: context);
+  late final _$isLoadingFavoritesAtom = Atom(name: '_MarketPageStore.isLoadingFavorites', context: context);
 
   @override
   bool get isLoadingFavorites {
@@ -468,8 +438,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$isFavoriteAtom =
-      Atom(name: '_MarketPageStore.isFavorite', context: context);
+  late final _$isFavoriteAtom = Atom(name: '_MarketPageStore.isFavorite', context: context);
 
   @override
   bool get isFavorite {
@@ -484,8 +453,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$favoriteCoinsListAtom =
-      Atom(name: '_MarketPageStore.favoriteCoinsList', context: context);
+  late final _$favoriteCoinsListAtom = Atom(name: '_MarketPageStore.favoriteCoinsList', context: context);
 
   @override
   ObservableList<CoinResultModel> get favoriteCoinsList {
@@ -500,55 +468,43 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
     });
   }
 
-  late final _$getFavoriteCoinsAsyncAction =
-      AsyncAction('_MarketPageStore.getFavoriteCoins', context: context);
+  late final _$getFavoriteCoinsAsyncAction = AsyncAction('_MarketPageStore.getFavoriteCoins', context: context);
 
   @override
   Future<void> getFavoriteCoins({required String coinId}) {
-    return _$getFavoriteCoinsAsyncAction
-        .run(() => super.getFavoriteCoins(coinId: coinId));
+    return _$getFavoriteCoinsAsyncAction.run(() => super.getFavoriteCoins(coinId: coinId));
   }
 
-  late final _$checkIfFavoriteAsyncAction =
-      AsyncAction('_MarketPageStore.checkIfFavorite', context: context);
+  late final _$checkIfFavoriteAsyncAction = AsyncAction('_MarketPageStore.checkIfFavorite', context: context);
 
   @override
   Future<void> checkIfFavorite(String coinId) {
-    return _$checkIfFavoriteAsyncAction
-        .run(() => super.checkIfFavorite(coinId));
+    return _$checkIfFavoriteAsyncAction.run(() => super.checkIfFavorite(coinId));
   }
 
-  late final _$toggleFavoriteAsyncAction =
-      AsyncAction('_MarketPageStore.toggleFavorite', context: context);
+  late final _$toggleFavoriteAsyncAction = AsyncAction('_MarketPageStore.toggleFavorite', context: context);
 
   @override
-  Future<void> toggleFavorite(
-      {required String coinId,
-      required BuildContext context,
-      required String coinName}) {
-    return _$toggleFavoriteAsyncAction.run(() => super
-        .toggleFavorite(coinId: coinId, context: context, coinName: coinName));
+  Future<void> toggleFavorite({required String coinId, required BuildContext context, required String coinName}) {
+    return _$toggleFavoriteAsyncAction
+        .run(() => super.toggleFavorite(coinId: coinId, context: context, coinName: coinName));
   }
 
-  late final _$addToFavoritesAsyncAction =
-      AsyncAction('_MarketPageStore.addToFavorites', context: context);
+  late final _$addToFavoritesAsyncAction = AsyncAction('_MarketPageStore.addToFavorites', context: context);
 
   @override
   Future<void> addToFavorites(String coinId) {
     return _$addToFavoritesAsyncAction.run(() => super.addToFavorites(coinId));
   }
 
-  late final _$removeFromFavoritesAsyncAction =
-      AsyncAction('_MarketPageStore.removeFromFavorites', context: context);
+  late final _$removeFromFavoritesAsyncAction = AsyncAction('_MarketPageStore.removeFromFavorites', context: context);
 
   @override
   Future<void> removeFromFavorites(String coinId) {
-    return _$removeFromFavoritesAsyncAction
-        .run(() => super.removeFromFavorites(coinId));
+    return _$removeFromFavoritesAsyncAction.run(() => super.removeFromFavorites(coinId));
   }
 
-  late final _$loadFavoriteCoinsAsyncAction =
-      AsyncAction('_MarketPageStore.loadFavoriteCoins', context: context);
+  late final _$loadFavoriteCoinsAsyncAction = AsyncAction('_MarketPageStore.loadFavoriteCoins', context: context);
 
   @override
   Future<void> loadFavoriteCoins() {
@@ -560,93 +516,79 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   Future<void> triggerHapticFeedback() {
-    return _$triggerHapticFeedbackAsyncAction
-        .run(() => super.triggerHapticFeedback());
+    return _$triggerHapticFeedbackAsyncAction.run(() => super.triggerHapticFeedback());
   }
 
-  late final _$collapseWidgetAsyncAction =
-      AsyncAction('_MarketPageStore.collapseWidget', context: context);
+  late final _$collapseWidgetAsyncAction = AsyncAction('_MarketPageStore.collapseWidget', context: context);
 
   @override
   Future<void> collapseWidget() {
     return _$collapseWidgetAsyncAction.run(() => super.collapseWidget());
   }
 
-  late final _$expandWidgetAsyncAction =
-      AsyncAction('_MarketPageStore.expandWidget', context: context);
+  late final _$expandWidgetAsyncAction = AsyncAction('_MarketPageStore.expandWidget', context: context);
 
   @override
   Future<void> expandWidget() {
     return _$expandWidgetAsyncAction.run(() => super.expandWidget());
   }
 
-  late final _$defaultPercentageAsyncAction =
-      AsyncAction('_MarketPageStore.defaultPercentage', context: context);
+  late final _$defaultPercentageAsyncAction = AsyncAction('_MarketPageStore.defaultPercentage', context: context);
 
   @override
   Future<void> defaultPercentage({required CoinResultModel? data}) {
-    return _$defaultPercentageAsyncAction
-        .run(() => super.defaultPercentage(data: data));
+    return _$defaultPercentageAsyncAction.run(() => super.defaultPercentage(data: data));
   }
 
-  late final _$makeInvisibleAsyncAction =
-      AsyncAction('_MarketPageStore.makeInvisible', context: context);
+  late final _$makeInvisibleAsyncAction = AsyncAction('_MarketPageStore.makeInvisible', context: context);
 
   @override
   Future<void> makeInvisible() {
     return _$makeInvisibleAsyncAction.run(() => super.makeInvisible());
   }
 
-  late final _$setSearchTextAsyncAction =
-      AsyncAction('_MarketPageStore.setSearchText', context: context);
+  late final _$setSearchTextAsyncAction = AsyncAction('_MarketPageStore.setSearchText', context: context);
 
   @override
   Future<void> setSearchText(String val) {
     return _$setSearchTextAsyncAction.run(() => super.setSearchText(val));
   }
 
-  late final _$resetSearchAsyncAction =
-      AsyncAction('_MarketPageStore.resetSearch', context: context);
+  late final _$resetSearchAsyncAction = AsyncAction('_MarketPageStore.resetSearch', context: context);
 
   @override
   Future<void> resetSearch() {
     return _$resetSearchAsyncAction.run(() => super.resetSearch());
   }
 
-  late final _$loadCoinsAsyncAction =
-      AsyncAction('_MarketPageStore.loadCoins', context: context);
+  late final _$loadCoinsAsyncAction = AsyncAction('_MarketPageStore.loadCoins', context: context);
 
   @override
   Future<void> loadCoins({bool resetPage = false}) {
-    return _$loadCoinsAsyncAction
-        .run(() => super.loadCoins(resetPage: resetPage));
+    return _$loadCoinsAsyncAction.run(() => super.loadCoins(resetPage: resetPage));
   }
 
-  late final _$loadMoreCoinsAsyncAction =
-      AsyncAction('_MarketPageStore.loadMoreCoins', context: context);
+  late final _$loadMoreCoinsAsyncAction = AsyncAction('_MarketPageStore.loadMoreCoins', context: context);
 
   @override
   Future<void> loadMoreCoins() {
     return _$loadMoreCoinsAsyncAction.run(() => super.loadMoreCoins());
   }
 
-  late final _$toggleShouldShowUpButtonAsyncAction = AsyncAction(
-      '_MarketPageStore.toggleShouldShowUpButton',
-      context: context);
+  late final _$toggleShouldShowUpButtonAsyncAction =
+      AsyncAction('_MarketPageStore.toggleShouldShowUpButton', context: context);
 
   @override
   Future<void> toggleShouldShowUpButton({bool shouldShowUpButton = false}) {
-    return _$toggleShouldShowUpButtonAsyncAction.run(() =>
-        super.toggleShouldShowUpButton(shouldShowUpButton: shouldShowUpButton));
+    return _$toggleShouldShowUpButtonAsyncAction
+        .run(() => super.toggleShouldShowUpButton(shouldShowUpButton: shouldShowUpButton));
   }
 
-  late final _$_MarketPageStoreActionController =
-      ActionController(name: '_MarketPageStore', context: context);
+  late final _$_MarketPageStoreActionController = ActionController(name: '_MarketPageStore', context: context);
 
   @override
   void setChartData(List<List<num>> data) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.setChartData');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.setChartData');
     try {
       return super.setChartData(data);
     } finally {
@@ -656,8 +598,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void chartTouched() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.chartTouched');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.chartTouched');
     try {
       return super.chartTouched();
     } finally {
@@ -667,8 +608,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void chartUntouched() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.chartUntouched');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.chartUntouched');
     try {
       return super.chartUntouched();
     } finally {
@@ -678,8 +618,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void setChartDateTime({required String dateTime}) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.setChartDateTime');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.setChartDateTime');
     try {
       return super.setChartDateTime(dateTime: dateTime);
     } finally {
@@ -689,8 +628,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void setXValue({required double value}) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.setXValue');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.setXValue');
     try {
       return super.setXValue(value: value);
     } finally {
@@ -700,8 +638,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void setYValue({required double value}) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.setYValue');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.setYValue');
     try {
       return super.setYValue(value: value);
     } finally {
@@ -711,8 +648,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void setPercents({required double percents}) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.setPercents');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.setPercents');
     try {
       return super.setPercents(percents: percents);
     } finally {
@@ -722,8 +658,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void resetPercents() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.resetPercents');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.resetPercents');
     try {
       return super.resetPercents();
     } finally {
@@ -733,8 +668,8 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void initAnimationController(TickerProvider vsync) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.initAnimationController');
+    final _$actionInfo =
+        _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.initAnimationController');
     try {
       return super.initAnimationController(vsync);
     } finally {
@@ -744,8 +679,8 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void toggleTextFieldVisibility() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.toggleTextFieldVisibility');
+    final _$actionInfo =
+        _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.toggleTextFieldVisibility');
     try {
       return super.toggleTextFieldVisibility();
     } finally {
@@ -755,8 +690,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void handleError(String errorMessage) {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.handleError');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.handleError');
     try {
       return super.handleError(errorMessage);
     } finally {
@@ -766,8 +700,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onOneDaySelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onOneDaySelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onOneDaySelect');
     try {
       return super.onOneDaySelect();
     } finally {
@@ -777,8 +710,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onOneWeekSelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onOneWeekSelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onOneWeekSelect');
     try {
       return super.onOneWeekSelect();
     } finally {
@@ -788,8 +720,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onOneMonthSelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onOneMonthSelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onOneMonthSelect');
     try {
       return super.onOneMonthSelect();
     } finally {
@@ -799,8 +730,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onThreeMonthsSelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onThreeMonthsSelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onThreeMonthsSelect');
     try {
       return super.onThreeMonthsSelect();
     } finally {
@@ -810,8 +740,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onSixMonthsSelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onSixMonthsSelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onSixMonthsSelect');
     try {
       return super.onSixMonthsSelect();
     } finally {
@@ -821,8 +750,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onOneYearSelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onOneYearSelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onOneYearSelect');
     try {
       return super.onOneYearSelect();
     } finally {
@@ -832,8 +760,7 @@ mixin _$MarketPageStore on _MarketPageStore, Store {
 
   @override
   void onAllSelect() {
-    final _$actionInfo = _$_MarketPageStoreActionController.startAction(
-        name: '_MarketPageStore.onAllSelect');
+    final _$actionInfo = _$_MarketPageStoreActionController.startAction(name: '_MarketPageStore.onAllSelect');
     try {
       return super.onAllSelect();
     } finally {

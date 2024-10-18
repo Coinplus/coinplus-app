@@ -11,7 +11,9 @@ import 'package:get_it/get_it.dart';
 import 'package:ios_smooth_page_indicator/ios_smooth_page_indicator.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
 import '../../../constants/card_color.dart';
+import '../../../constants/card_type.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
@@ -72,6 +74,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
 
   RampService get _rampService => GetIt.I<RampService>();
 
+  bool? hasBackUp;
+
   final _nfcState = AllSettingsState();
 
   @override
@@ -87,7 +91,9 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
           return;
         }
         _balanceStore.getCardsInfo();
-        widget.carouselController.animateToPage(index);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          widget.carouselController.animateToPage(index);
+        });
       })
       ..setOnCardDeletedCallback((address) {
         final index = _balanceStore.cards.indexWhere((element) => element.address == address);
@@ -374,93 +380,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
-                                                        Positioned(
-                                                          left: 30,
-                                                          top: 15,
-                                                          child: ClipRRect(
-                                                            child: BackdropFilter(
-                                                              filter: ImageFilter.blur(
-                                                                sigmaX: 5,
-                                                                sigmaY: 5,
-                                                              ),
-                                                              child: ScaleTap(
-                                                                enableFeedback: false,
-                                                                onPressed: () async {
-                                                                  final isWalletActivated =
-                                                                      await isCardWalletActivated();
-                                                                  final hasBackUp = await isCardWalletHasBackup(
-                                                                    address: card.address,
-                                                                  );
-
-                                                                  if (isWalletActivated && hasBackUp) {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled: true,
-                                                                      backgroundColor: Colors.white,
-                                                                      shape: const RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.only(
-                                                                          topLeft: Radius.circular(20),
-                                                                          topRight: Radius.circular(20),
-                                                                        ),
-                                                                      ),
-                                                                      context: context,
-                                                                      builder: (_) {
-                                                                        return MainBackupCardWidget(
-                                                                          mainCardAddress: card.address,
-                                                                        );
-                                                                      },
-                                                                    );
-                                                                  } else if (isWalletActivated && !hasBackUp) {
-                                                                    final cardData = await getCardData(
-                                                                      card.address,
-                                                                    );
-                                                                    await _balanceStore.setMainWalletAddress(
-                                                                      walletAddress: card.address,
-                                                                    );
-                                                                    await router.push(
-                                                                      BackupMyWalletRoute(
-                                                                        walletAddress: card.address,
-                                                                        hasBackup: cardData?.hasBackup,
-                                                                        isWalletActivated: isWalletActivated,
-                                                                      ),
-                                                                    );
-                                                                  } else if (!isWalletActivated && !hasBackUp) {
-                                                                    final cardData = await getCardData(
-                                                                      card.address,
-                                                                    );
-                                                                    await router.push(
-                                                                      BackupMyWalletRoute(
-                                                                        walletAddress: card.address,
-                                                                        hasBackup: cardData?.hasBackup,
-                                                                        isWalletActivated: isWalletActivated,
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                },
-                                                                child: Container(
-                                                                  decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(
-                                                                      6,
-                                                                    ),
-                                                                    color: Colors.grey.withOpacity(
-                                                                      0.3,
-                                                                    ),
-                                                                  ),
-                                                                  child: Padding(
-                                                                    padding: const EdgeInsets.all(
-                                                                      4,
-                                                                    ),
-                                                                    child: Assets.icons.backupIcon.image(
-                                                                      height: 30,
-                                                                      color: Colors.black.withOpacity(
-                                                                        0.5,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
                                                         SizedBox(
                                                           height: context.height > 667 ? context.height * 0.52 : 450,
                                                           child: Center(
@@ -492,6 +411,108 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                     index: index,
                                                                   ),
                                                               ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          left: 33,
+                                                          top: 15,
+                                                          child: ScaleTap(
+                                                            enableFeedback: false,
+                                                            onPressed: card.label == WalletType.COINPLUS_WALLET
+                                                                ? () async {
+                                                                    final isWalletActivated =
+                                                                        await isCardWalletActivated();
+                                                                    final hasBackUp = await isCardWalletHasBackup(
+                                                                      address: card.address,
+                                                                    );
+
+                                                                    if (isWalletActivated && hasBackUp) {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled: true,
+                                                                        backgroundColor: Colors.white,
+                                                                        shape: const RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.only(
+                                                                            topLeft: Radius.circular(20),
+                                                                            topRight: Radius.circular(20),
+                                                                          ),
+                                                                        ),
+                                                                        context: context,
+                                                                        builder: (_) {
+                                                                          return MainBackupCardWidget(
+                                                                            mainCardAddress: card.address,
+                                                                          );
+                                                                        },
+                                                                      );
+                                                                    } else if (isWalletActivated && !hasBackUp) {
+                                                                      final cardData = await getCardData(
+                                                                        card.address,
+                                                                      );
+                                                                      await _balanceStore.setMainWalletAddress(
+                                                                        walletAddress: card.address,
+                                                                      );
+
+                                                                      await router.push(
+                                                                        BackupMyWalletRoute(
+                                                                          walletAddress: card.address,
+                                                                          hasBackup: cardData?.hasBackup,
+                                                                          isWalletActivated: isWalletActivated,
+                                                                        ),
+                                                                      );
+                                                                    } else if (!isWalletActivated) {
+                                                                      final cardData = await getCardData(
+                                                                        card.address,
+                                                                      );
+                                                                      await _balanceStore.setMainWalletAddress(
+                                                                        walletAddress: card.address,
+                                                                      );
+                                                                      await router.push(
+                                                                        BackupMyWalletRoute(
+                                                                          walletAddress: card.address,
+                                                                          hasBackup: cardData?.hasBackup,
+                                                                          isWalletActivated: isWalletActivated,
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                : () async {
+                                                                    await maybeCoinplusCard(
+                                                                      context,
+                                                                    );
+                                                                  },
+                                                            child: ClipRRect(
+                                                              child: BackdropFilter(
+                                                                filter: ImageFilter.blur(
+                                                                  sigmaX: 3,
+                                                                  sigmaY: 3,
+                                                                ),
+                                                                child: Container(
+                                                                  height: 40,
+                                                                  width: 40,
+                                                                  decoration: BoxDecoration(
+                                                                    borderRadius: BorderRadius.circular(
+                                                                      8,
+                                                                    ),
+                                                                    border: Border.all(
+                                                                      color: Colors.white,
+                                                                    ),
+                                                                    color: Colors.black.withOpacity(
+                                                                      0.6,
+                                                                    ),
+                                                                  ),
+                                                                  child: Center(
+                                                                    child: card.hasBackedUp
+                                                                        ? Assets.icons.cloudDone.image(
+                                                                            height: 25,
+                                                                            color: Colors.greenAccent,
+                                                                          )
+                                                                        : Assets.icons.backupIcon.image(
+                                                                            height: 25,
+                                                                            color: Colors.white,
+                                                                          ),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
@@ -531,7 +552,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                               ),
                                                               child: Text(
                                                                 ethCard.name,
-                                                                // Accessing 'ethName' safely
                                                                 style: const TextStyle(
                                                                   fontFamily: FontFamily.redHatMedium,
                                                                   fontSize: 15,

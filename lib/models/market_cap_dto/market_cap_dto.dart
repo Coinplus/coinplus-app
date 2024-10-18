@@ -16,6 +16,5 @@ class MarketCapDto with _$MarketCapDto {
     required double btcDominanceChange,
   }) = _MarketCapDto;
 
-  factory MarketCapDto.fromJson(Map<String, dynamic> json) =>
-      _$MarketCapDtoFromJson(json);
+  factory MarketCapDto.fromJson(Map<String, dynamic> json) => _$MarketCapDtoFromJson(json);
 }

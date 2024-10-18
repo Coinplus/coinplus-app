@@ -40,14 +40,12 @@ mixin _$UtxoModel {
   /// Create a copy of UtxoModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UtxoModelCopyWith<UtxoModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $UtxoModelCopyWith<UtxoModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UtxoModelCopyWith<$Res> {
-  factory $UtxoModelCopyWith(UtxoModel value, $Res Function(UtxoModel) then) =
-      _$UtxoModelCopyWithImpl<$Res, UtxoModel>;
+  factory $UtxoModelCopyWith(UtxoModel value, $Res Function(UtxoModel) then) = _$UtxoModelCopyWithImpl<$Res, UtxoModel>;
   @useResult
   $Res call(
       {@JsonKey(name: 'tx_hash_big_endian') String txHashBigEndian,
@@ -61,8 +59,7 @@ abstract class $UtxoModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UtxoModelCopyWithImpl<$Res, $Val extends UtxoModel>
-    implements $UtxoModelCopyWith<$Res> {
+class _$UtxoModelCopyWithImpl<$Res, $Val extends UtxoModel> implements $UtxoModelCopyWith<$Res> {
   _$UtxoModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -122,10 +119,8 @@ class _$UtxoModelCopyWithImpl<$Res, $Val extends UtxoModel>
 }
 
 /// @nodoc
-abstract class _$$UtxoModelImplCopyWith<$Res>
-    implements $UtxoModelCopyWith<$Res> {
-  factory _$$UtxoModelImplCopyWith(
-          _$UtxoModelImpl value, $Res Function(_$UtxoModelImpl) then) =
+abstract class _$$UtxoModelImplCopyWith<$Res> implements $UtxoModelCopyWith<$Res> {
+  factory _$$UtxoModelImplCopyWith(_$UtxoModelImpl value, $Res Function(_$UtxoModelImpl) then) =
       __$$UtxoModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -141,12 +136,9 @@ abstract class _$$UtxoModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UtxoModelImplCopyWithImpl<$Res>
-    extends _$UtxoModelCopyWithImpl<$Res, _$UtxoModelImpl>
+class __$$UtxoModelImplCopyWithImpl<$Res> extends _$UtxoModelCopyWithImpl<$Res, _$UtxoModelImpl>
     implements _$$UtxoModelImplCopyWith<$Res> {
-  __$$UtxoModelImplCopyWithImpl(
-      _$UtxoModelImpl _value, $Res Function(_$UtxoModelImpl) _then)
-      : super(_value, _then);
+  __$$UtxoModelImplCopyWithImpl(_$UtxoModelImpl _value, $Res Function(_$UtxoModelImpl) _then) : super(_value, _then);
 
   /// Create a copy of UtxoModel
   /// with the given fields replaced by the non-null parameter values.
@@ -212,8 +204,7 @@ class _$UtxoModelImpl with DiagnosticableTreeMixin implements _UtxoModel {
       required this.confirmations,
       @JsonKey(name: 'tx_index') required this.txIndex});
 
-  factory _$UtxoModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UtxoModelImplFromJson(json);
+  factory _$UtxoModelImpl.fromJson(Map<String, dynamic> json) => _$$UtxoModelImplFromJson(json);
 
   @override
   @JsonKey(name: 'tx_hash_big_endian')
@@ -262,24 +253,20 @@ class _$UtxoModelImpl with DiagnosticableTreeMixin implements _UtxoModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UtxoModelImpl &&
-            (identical(other.txHashBigEndian, txHashBigEndian) ||
-                other.txHashBigEndian == txHashBigEndian) &&
+            (identical(other.txHashBigEndian, txHashBigEndian) || other.txHashBigEndian == txHashBigEndian) &&
             (identical(other.txHash, txHash) || other.txHash == txHash) &&
-            (identical(other.txOutputN, txOutputN) ||
-                other.txOutputN == txOutputN) &&
+            (identical(other.txOutputN, txOutputN) || other.txOutputN == txOutputN) &&
             (identical(other.script, script) || other.script == script) &&
             (identical(other.value, value) || other.value == value) &&
-            (identical(other.valueHex, valueHex) ||
-                other.valueHex == valueHex) &&
-            (identical(other.confirmations, confirmations) ||
-                other.confirmations == confirmations) &&
+            (identical(other.valueHex, valueHex) || other.valueHex == valueHex) &&
+            (identical(other.confirmations, confirmations) || other.confirmations == confirmations) &&
             (identical(other.txIndex, txIndex) || other.txIndex == txIndex));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, txHashBigEndian, txHash,
-      txOutputN, script, value, valueHex, confirmations, txIndex);
+  int get hashCode =>
+      Object.hash(runtimeType, txHashBigEndian, txHash, txOutputN, script, value, valueHex, confirmations, txIndex);
 
   /// Create a copy of UtxoModel
   /// with the given fields replaced by the non-null parameter values.
@@ -299,8 +286,7 @@ class _$UtxoModelImpl with DiagnosticableTreeMixin implements _UtxoModel {
 
 abstract class _UtxoModel implements UtxoModel {
   const factory _UtxoModel(
-      {@JsonKey(name: 'tx_hash_big_endian')
-      required final String txHashBigEndian,
+      {@JsonKey(name: 'tx_hash_big_endian') required final String txHashBigEndian,
       @JsonKey(name: 'tx_hash') required final String txHash,
       @JsonKey(name: 'tx_output_n') required final int txOutputN,
       required final String script,
@@ -309,8 +295,7 @@ abstract class _UtxoModel implements UtxoModel {
       required final int confirmations,
       @JsonKey(name: 'tx_index') required final int txIndex}) = _$UtxoModelImpl;
 
-  factory _UtxoModel.fromJson(Map<String, dynamic> json) =
-      _$UtxoModelImpl.fromJson;
+  factory _UtxoModel.fromJson(Map<String, dynamic> json) = _$UtxoModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'tx_hash_big_endian')
@@ -338,8 +323,7 @@ abstract class _UtxoModel implements UtxoModel {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UtxoModelImplCopyWith<_$UtxoModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UtxoModelImplCopyWith<_$UtxoModelImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 Status _$StatusFromJson(Map<String, dynamic> json) {
@@ -363,17 +347,13 @@ mixin _$Status {
 
 /// @nodoc
 abstract class $StatusCopyWith<$Res> {
-  factory $StatusCopyWith(Status value, $Res Function(Status) then) =
-      _$StatusCopyWithImpl<$Res, Status>;
+  factory $StatusCopyWith(Status value, $Res Function(Status) then) = _$StatusCopyWithImpl<$Res, Status>;
   @useResult
-  $Res call(
-      {String notice,
-      @JsonKey(name: 'unspent_outputs') List<UtxoModel> unspentOutputs});
+  $Res call({String notice, @JsonKey(name: 'unspent_outputs') List<UtxoModel> unspentOutputs});
 }
 
 /// @nodoc
-class _$StatusCopyWithImpl<$Res, $Val extends Status>
-    implements $StatusCopyWith<$Res> {
+class _$StatusCopyWithImpl<$Res, $Val extends Status> implements $StatusCopyWith<$Res> {
   _$StatusCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -404,23 +384,17 @@ class _$StatusCopyWithImpl<$Res, $Val extends Status>
 
 /// @nodoc
 abstract class _$$StatusImplCopyWith<$Res> implements $StatusCopyWith<$Res> {
-  factory _$$StatusImplCopyWith(
-          _$StatusImpl value, $Res Function(_$StatusImpl) then) =
+  factory _$$StatusImplCopyWith(_$StatusImpl value, $Res Function(_$StatusImpl) then) =
       __$$StatusImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String notice,
-      @JsonKey(name: 'unspent_outputs') List<UtxoModel> unspentOutputs});
+  $Res call({String notice, @JsonKey(name: 'unspent_outputs') List<UtxoModel> unspentOutputs});
 }
 
 /// @nodoc
-class __$$StatusImplCopyWithImpl<$Res>
-    extends _$StatusCopyWithImpl<$Res, _$StatusImpl>
+class __$$StatusImplCopyWithImpl<$Res> extends _$StatusCopyWithImpl<$Res, _$StatusImpl>
     implements _$$StatusImplCopyWith<$Res> {
-  __$$StatusImplCopyWithImpl(
-      _$StatusImpl _value, $Res Function(_$StatusImpl) _then)
-      : super(_value, _then);
+  __$$StatusImplCopyWithImpl(_$StatusImpl _value, $Res Function(_$StatusImpl) _then) : super(_value, _then);
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
@@ -447,13 +421,10 @@ class __$$StatusImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StatusImpl with DiagnosticableTreeMixin implements _Status {
   const _$StatusImpl(
-      {required this.notice,
-      @JsonKey(name: 'unspent_outputs')
-      required final List<UtxoModel> unspentOutputs})
+      {required this.notice, @JsonKey(name: 'unspent_outputs') required final List<UtxoModel> unspentOutputs})
       : _unspentOutputs = unspentOutputs;
 
-  factory _$StatusImpl.fromJson(Map<String, dynamic> json) =>
-      _$$StatusImplFromJson(json);
+  factory _$StatusImpl.fromJson(Map<String, dynamic> json) => _$$StatusImplFromJson(json);
 
   @override
   final String notice;
@@ -486,22 +457,19 @@ class _$StatusImpl with DiagnosticableTreeMixin implements _Status {
         (other.runtimeType == runtimeType &&
             other is _$StatusImpl &&
             (identical(other.notice, notice) || other.notice == notice) &&
-            const DeepCollectionEquality()
-                .equals(other._unspentOutputs, _unspentOutputs));
+            const DeepCollectionEquality().equals(other._unspentOutputs, _unspentOutputs));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, notice,
-      const DeepCollectionEquality().hash(_unspentOutputs));
+  int get hashCode => Object.hash(runtimeType, notice, const DeepCollectionEquality().hash(_unspentOutputs));
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatusImplCopyWith<_$StatusImpl> get copyWith =>
-      __$$StatusImplCopyWithImpl<_$StatusImpl>(this, _$identity);
+  _$$StatusImplCopyWith<_$StatusImpl> get copyWith => __$$StatusImplCopyWithImpl<_$StatusImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -514,8 +482,7 @@ class _$StatusImpl with DiagnosticableTreeMixin implements _Status {
 abstract class _Status implements Status {
   const factory _Status(
       {required final String notice,
-      @JsonKey(name: 'unspent_outputs')
-      required final List<UtxoModel> unspentOutputs}) = _$StatusImpl;
+      @JsonKey(name: 'unspent_outputs') required final List<UtxoModel> unspentOutputs}) = _$StatusImpl;
 
   factory _Status.fromJson(Map<String, dynamic> json) = _$StatusImpl.fromJson;
 
@@ -529,6 +496,5 @@ abstract class _Status implements Status {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StatusImplCopyWith<_$StatusImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$StatusImplCopyWith<_$StatusImpl> get copyWith => throw _privateConstructorUsedError;
 }

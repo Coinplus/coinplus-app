@@ -47,6 +47,5 @@ abstract class IdentifyModel with _$IdentifyModel {
     @Default('true') String notificationOn,
   }) = NotificationsOn;
 
-  factory IdentifyModel.fromJson(Map<String, dynamic> json) =>
-      _$IdentifyModelFromJson(json);
+  factory IdentifyModel.fromJson(Map<String, dynamic> json) => _$IdentifyModelFromJson(json);
 }

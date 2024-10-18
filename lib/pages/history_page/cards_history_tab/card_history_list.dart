@@ -103,8 +103,7 @@ class CardHistoryList extends StatelessWidget {
                 },
               );
             }
-            final currentDate =
-                state.historyPageStore.cardUniqueDates?[dateIndex];
+            final currentDate = state.historyPageStore.cardUniqueDates?[dateIndex];
             final transactionsOfDay = state.historyPageStore.cardsTransactions
                 ?.where(
                   (transaction) =>
@@ -166,11 +165,9 @@ class CardHistoryList extends StatelessWidget {
                         itemCount: transactionsOfDay!.length,
                         itemBuilder: (context, index) {
                           final transaction = transactionsOfDay[index];
-                          final totalWorth =
-                              transaction.transactions?[0].items.fold<double>(
+                          final totalWorth = transaction.transactions?[0].items.fold<double>(
                             0,
-                            (previousValue, item) =>
-                                previousValue + item.totalWorth,
+                            (previousValue, item) => previousValue + item.totalWorth,
                           );
                           final myFormat = NumberFormat.decimalPatternDigits(
                             locale: 'en_us',
@@ -216,8 +213,7 @@ class CardHistoryList extends StatelessWidget {
                                     bottom: 12,
                                   ),
                                   child: CachedNetworkImage(
-                                    imageUrl: transaction
-                                        .mainContent!.coinIcons.first,
+                                    imageUrl: transaction.mainContent!.coinIcons.first,
                                     placeholder: (
                                       context,
                                       url,
@@ -251,8 +247,7 @@ class CardHistoryList extends StatelessWidget {
                                   ),
                                 ),
                                 title: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -283,32 +278,22 @@ class CardHistoryList extends StatelessWidget {
                                         return state.hasPerformedAction
                                             ? Column(
                                                 mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    transaction.type != 'Sent'
-                                                        ? '***** BTC'
-                                                        : '***** BTC',
+                                                    transaction.type != 'Sent' ? '***** BTC' : '***** BTC',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 16,
-                                                      color: transaction.type !=
-                                                              'Sent'
-                                                          ? Colors.green
-                                                          : Colors.red,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      color: transaction.type != 'Sent' ? Colors.green : Colors.red,
+                                                      fontWeight: FontWeight.w700,
                                                     ),
                                                   ),
                                                   const Text(
                                                     r'$*****',
                                                     style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 16,
                                                       color: Color(0xFF838995),
                                                     ),
@@ -317,32 +302,24 @@ class CardHistoryList extends StatelessWidget {
                                               )
                                             : Column(
                                                 mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Text(
                                                     transaction.type != 'Sent'
                                                         ? '+${transaction.coinData!.count.toStringAsFixed(8)} BTC'
                                                         : '${transaction.coinData!.count.toStringAsFixed(8)} BTC',
                                                     style: TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 16,
-                                                      color: transaction.type !=
-                                                              'Sent'
-                                                          ? Colors.green
-                                                          : Colors.red,
-                                                      fontWeight:
-                                                          FontWeight.w700,
+                                                      color: transaction.type != 'Sent' ? Colors.green : Colors.red,
+                                                      fontWeight: FontWeight.w700,
                                                     ),
                                                   ),
                                                   Text(
                                                     '\$${myFormat.format(totalWorth)}',
                                                     style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 16,
                                                       color: Color(0xFF838995),
                                                     ),

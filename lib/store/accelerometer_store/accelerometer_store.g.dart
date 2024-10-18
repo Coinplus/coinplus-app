@@ -9,8 +9,7 @@ part of 'accelerometer_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AccelerometerStore on _AccelerometerStore, Store {
-  late final _$hasPerformedActionAtom =
-      Atom(name: '_AccelerometerStore.hasPerformedAction', context: context);
+  late final _$hasPerformedActionAtom = Atom(name: '_AccelerometerStore.hasPerformedAction', context: context);
 
   @override
   bool get hasPerformedAction {
@@ -25,30 +24,26 @@ mixin _$AccelerometerStore on _AccelerometerStore, Store {
     });
   }
 
-  late final _$loadActionStateAsyncAction =
-      AsyncAction('_AccelerometerStore.loadActionState', context: context);
+  late final _$loadActionStateAsyncAction = AsyncAction('_AccelerometerStore.loadActionState', context: context);
 
   @override
   Future<void> loadActionState() {
     return _$loadActionStateAsyncAction.run(() => super.loadActionState());
   }
 
-  late final _$saveActionStateAsyncAction =
-      AsyncAction('_AccelerometerStore.saveActionState', context: context);
+  late final _$saveActionStateAsyncAction = AsyncAction('_AccelerometerStore.saveActionState', context: context);
 
   @override
   Future<void> saveActionState() {
     return _$saveActionStateAsyncAction.run(() => super.saveActionState());
   }
 
-  late final _$disableAccelerometerFunctionAsyncAction = AsyncAction(
-      '_AccelerometerStore.disableAccelerometerFunction',
-      context: context);
+  late final _$disableAccelerometerFunctionAsyncAction =
+      AsyncAction('_AccelerometerStore.disableAccelerometerFunction', context: context);
 
   @override
   Future<void> disableAccelerometerFunction() {
-    return _$disableAccelerometerFunctionAsyncAction
-        .run(() => super.disableAccelerometerFunction());
+    return _$disableAccelerometerFunctionAsyncAction.run(() => super.disableAccelerometerFunction());
   }
 
   @override

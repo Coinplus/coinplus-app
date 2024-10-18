@@ -10,8 +10,7 @@ import '../../../../store/market_page_store/market_page_store.dart';
 
 part 'change_selected_address_state.g.dart';
 
-class ChangeSelectedAddressState = ChangeSelectedAddressStateBase
-    with _$ChangeSelectedAddressState;
+class ChangeSelectedAddressState = ChangeSelectedAddressStateBase with _$ChangeSelectedAddressState;
 
 abstract class ChangeSelectedAddressStateBase with Store {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();

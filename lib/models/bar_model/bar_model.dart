@@ -22,11 +22,11 @@ class BarModel with _$BarModel {
     @Default('Coinplus Bitcoin Bar') String name,
     @Default('BTC') String blockchain,
     @Default(false) bool isBackup,
+    @Default(false) bool hasBackedUp,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
   }) = _BarModel;
 
-  factory BarModel.fromJson(Map<String, dynamic> json) =>
-      _$BarModelFromJson(json);
+  factory BarModel.fromJson(Map<String, dynamic> json) => _$BarModelFromJson(json);
 }
 
 String timeFromJson(String a) {

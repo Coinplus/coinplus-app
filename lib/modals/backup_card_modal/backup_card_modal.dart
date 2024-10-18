@@ -23,8 +23,7 @@ import 'remove_backup_modal.dart';
 class MainBackupCardWidget extends StatefulWidget {
   final String mainCardAddress;
 
-  const MainBackupCardWidget({required this.mainCardAddress, Key? key})
-      : super(key: key);
+  const MainBackupCardWidget({required this.mainCardAddress, Key? key}) : super(key: key);
 
   @override
   _MainBackupCardWidgetState createState() => _MainBackupCardWidgetState();
@@ -76,27 +75,22 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
                     child: Builder(
                       builder: (context) {
                         if (backupCard != null) {
-                          final formattedAddress = getSplitAddress(
-                            backupCard.address,
-                          );
+                          final formattedAddress = getSplitAddress(backupCard.address);
                           return Observer(
                             builder: (context) {
                               return _balanceStore.backupCardLoading
                                   ? const CircularProgressIndicator()
                                   : Row(
                                       children: [
-                                        backupCard.color.image
-                                            .image(height: 45),
+                                        backupCard.color.image.image(height: 45),
                                         const Gap(10),
                                         Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               backupCard.name,
                                               style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.primary,
                                                 fontSize: 15,
@@ -105,8 +99,7 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
                                             Text(
                                               formattedAddress,
                                               style: const TextStyle(
-                                                fontFamily:
-                                                    FontFamily.redHatMedium,
+                                                fontFamily: FontFamily.redHatMedium,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.textHintsColor,
                                                 fontSize: 14,
@@ -117,8 +110,7 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
                                         const Spacer(),
                                         Observer(
                                           builder: (context) {
-                                            final myFormat = NumberFormat
-                                                .decimalPatternDigits(
+                                            final myFormat = NumberFormat.decimalPatternDigits(
                                               locale: 'en_us',
                                               decimalDigits: 2,
                                             );
@@ -126,64 +118,50 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
                                               duration: const Duration(
                                                 milliseconds: 400,
                                               ),
-                                              child: _balanceStore.btcPrice ==
-                                                          null ||
-                                                      _balanceStore
-                                                              .cardMapResult ==
-                                                          null
-                                                  ? const Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        vertical: 4,
-                                                        horizontal: 2,
-                                                      ),
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            height: 10,
-                                                            width: 10,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              strokeWidth: 3,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
+                                              child:
+                                                  _balanceStore.btcPrice == null || _balanceStore.cardMapResult == null
+                                                      ? const Padding(
+                                                          padding: EdgeInsets.symmetric(
+                                                            vertical: 4,
+                                                            horizontal: 2,
                                                           ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : Observer(
-                                                      builder: (_) {
-                                                        if (_accelerometerStore
-                                                            .hasPerformedAction) {
-                                                          return const Text(
-                                                            r'$*****',
-                                                            style: TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: AppColors
-                                                                  .primary,
-                                                              fontSize: 15,
-                                                            ),
-                                                          );
-                                                        } else {
-                                                          return Text(
-                                                            '\$${myFormat.format(backupCard.finalBalance ?? 0 / 100000000 * _balanceStore.btcPrice!)}',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontFamily: FontFamily
-                                                                  .redHatMedium,
-                                                              color: AppColors
-                                                                  .primary,
-                                                              fontSize: 15,
-                                                            ),
-                                                          );
-                                                        }
-                                                      },
-                                                    ),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 10,
+                                                                width: 10,
+                                                                child: CircularProgressIndicator(
+                                                                  strokeWidth: 3,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Observer(
+                                                          builder: (_) {
+                                                            if (_accelerometerStore.hasPerformedAction) {
+                                                              return const Text(
+                                                                r'$*****',
+                                                                style: TextStyle(
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  fontWeight: FontWeight.w500,
+                                                                  color: AppColors.primary,
+                                                                  fontSize: 15,
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              return Text(
+                                                                '\$${myFormat.format(backupCard.finalBalance ?? 0 / 100000000 * _balanceStore.btcPrice!)}',
+                                                                style: const TextStyle(
+                                                                  fontFamily: FontFamily.redHatMedium,
+                                                                  color: AppColors.primary,
+                                                                  fontSize: 15,
+                                                                ),
+                                                              );
+                                                            }
+                                                          },
+                                                        ),
                                             );
                                           },
                                         ),

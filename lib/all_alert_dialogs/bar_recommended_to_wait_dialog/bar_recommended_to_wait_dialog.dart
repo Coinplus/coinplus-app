@@ -58,8 +58,7 @@ Future<void> recommendedToWaitDialog({
               );
               await router.maybePop();
               await NfcManager.instance.startSession(
-                alertMessage:
-                    "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
+                alertMessage: "Please tap your phone on the top of your Bar's box to verify it's legitimacy",
                 onDiscovered: (tag) async {
                   final ndef = Ndef.from(tag);
                   final records = ndef!.cachedMessage!.records;
@@ -147,8 +146,7 @@ Future<void> recommendedToWaitDialog({
                     );
 
                     await NfcManager.instance.stopSession(
-                      errorMessage:
-                          'You tapped the wrong card. Please check the wallet address of the card.',
+                      errorMessage: 'You tapped the wrong card. Please check the wallet address of the card.',
                     );
                   }
                 },

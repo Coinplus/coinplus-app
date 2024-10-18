@@ -184,8 +184,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                 IconButton(
                   padding: const EdgeInsets.all(16),
                   icon: const Icon(Icons.arrow_back_rounded),
-                  onPressed: () =>
-                      pageIndexNotifier.value = pageIndexNotifier.value - 1,
+                  onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
                 ),
               ],
             ),

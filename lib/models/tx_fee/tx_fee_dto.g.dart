@@ -14,8 +14,7 @@ _$TxFeeDtoImpl _$$TxFeeDtoImplFromJson(Map json) => _$TxFeeDtoImpl(
       minimumFee: (json['minimumFee'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$TxFeeDtoImplToJson(_$TxFeeDtoImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$TxFeeDtoImplToJson(_$TxFeeDtoImpl instance) => <String, dynamic>{
       'fastestFee': instance.fastestFee,
       'halfHourFee': instance.halfHourFee,
       'hourFee': instance.hourFee,

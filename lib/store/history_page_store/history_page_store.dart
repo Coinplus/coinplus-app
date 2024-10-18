@@ -56,31 +56,25 @@ abstract class _HistoryPageStore with Store {
   String selectedBarAddress = '';
 
   @observable
-  ObservableMap<String, List<TransactionModel>> cardHistories =
-      ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> cardHistories = ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, List<TransactionModel>> barHistories =
-      ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> barHistories = ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, List<TransactionModel>> cardTransactionCache =
-      ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> cardTransactionCache = ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, List<TransactionModel>> barTransactionCache =
-      ObservableMap<String, List<TransactionModel>>();
+  ObservableMap<String, List<TransactionModel>> barTransactionCache = ObservableMap<String, List<TransactionModel>>();
 
   @observable
-  ObservableMap<String, bool> cardActivationStatus =
-      ObservableMap<String, bool>();
+  ObservableMap<String, bool> cardActivationStatus = ObservableMap<String, bool>();
 
   @observable
   ObservableMap<String, bool> historyLoading = ObservableMap<String, bool>();
 
   @observable
-  ObservableMap<String, bool> barActivationStatus =
-      ObservableMap<String, bool>();
+  ObservableMap<String, bool> barActivationStatus = ObservableMap<String, bool>();
 
   @observable
   ObservableMap<String, bool> disabledButtons = ObservableMap<String, bool>();
@@ -200,8 +194,7 @@ abstract class _HistoryPageStore with Store {
       if (cachedTransactions != null) {
         await isCachedCardTransactions(address);
       } else {
-        final fetchedTransactions =
-            await coinStatsRepo.getTransactions(address: address, page: 1);
+        final fetchedTransactions = await coinStatsRepo.getTransactions(address: address, page: 1);
         cardTransactions.add(fetchedTransactions);
         cardHistories[address] = [fetchedTransactions];
         cacheCardTransaction(address, [fetchedTransactions]);
@@ -221,8 +214,7 @@ abstract class _HistoryPageStore with Store {
       if (cachedTransactions != null) {
         await isCachedBarTransactions(address);
       } else {
-        final fetchedTransactions =
-            await coinStatsRepo.getTransactions(address: address, page: 1);
+        final fetchedTransactions = await coinStatsRepo.getTransactions(address: address, page: 1);
         barTransactions.add(fetchedTransactions);
         barHistories[address] = [fetchedTransactions];
         cacheBarTransaction(address, [fetchedTransactions]);
@@ -318,11 +310,8 @@ abstract class _HistoryPageStore with Store {
   @computed
   List<TransactionItem>? get cardsTransactions {
     if (_balanceStore.cards.isNotEmpty) {
-      if (cardHistories[_balanceStore.cards[cardHistoryIndex].address] !=
-          null) {
-        return cardHistories[_balanceStore.cards[cardHistoryIndex].address]
-            ?.expand((item) => item.result)
-            .toList();
+      if (cardHistories[_balanceStore.cards[cardHistoryIndex].address] != null) {
+        return cardHistories[_balanceStore.cards[cardHistoryIndex].address]?.expand((item) => item.result).toList();
       }
     }
     return null;
@@ -332,9 +321,7 @@ abstract class _HistoryPageStore with Store {
   List<TransactionItem>? get barsTransactions {
     if (_balanceStore.bars.isNotEmpty) {
       if (barHistories[selectedBarAddress] != null) {
-        return barHistories[selectedBarAddress]
-            ?.expand((item) => item.result)
-            .toList();
+        return barHistories[selectedBarAddress]?.expand((item) => item.result).toList();
       }
     }
     return null;
@@ -342,18 +329,12 @@ abstract class _HistoryPageStore with Store {
 
   @computed
   List<String>? get cardUniqueDates {
-    return cardsTransactions
-        ?.map((transaction) => formatDate(transaction.date.toString()))
-        .toSet()
-        .toList();
+    return cardsTransactions?.map((transaction) => formatDate(transaction.date.toString())).toSet().toList();
   }
 
   @computed
   List<String>? get barUniqueDates {
-    return barsTransactions
-        ?.map((transaction) => formatDate(transaction.date.toString()))
-        .toSet()
-        .toList();
+    return barsTransactions?.map((transaction) => formatDate(transaction.date.toString())).toSet().toList();
   }
 
   @action

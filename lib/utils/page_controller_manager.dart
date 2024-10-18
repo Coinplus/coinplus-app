@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PageControllerManager {
-  static final PageControllerManager _instance =
-      PageControllerManager._internal();
+  static final PageControllerManager _instance = PageControllerManager._internal();
 
   factory PageControllerManager() {
     return _instance;

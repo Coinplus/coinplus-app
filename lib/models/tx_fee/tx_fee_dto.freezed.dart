@@ -32,26 +32,18 @@ mixin _$TxFeeDto {
   /// Create a copy of TxFeeDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $TxFeeDtoCopyWith<TxFeeDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TxFeeDtoCopyWith<TxFeeDto> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TxFeeDtoCopyWith<$Res> {
-  factory $TxFeeDtoCopyWith(TxFeeDto value, $Res Function(TxFeeDto) then) =
-      _$TxFeeDtoCopyWithImpl<$Res, TxFeeDto>;
+  factory $TxFeeDtoCopyWith(TxFeeDto value, $Res Function(TxFeeDto) then) = _$TxFeeDtoCopyWithImpl<$Res, TxFeeDto>;
   @useResult
-  $Res call(
-      {int fastestFee,
-      int halfHourFee,
-      int hourFee,
-      int economyFee,
-      int minimumFee});
+  $Res call({int fastestFee, int halfHourFee, int hourFee, int economyFee, int minimumFee});
 }
 
 /// @nodoc
-class _$TxFeeDtoCopyWithImpl<$Res, $Val extends TxFeeDto>
-    implements $TxFeeDtoCopyWith<$Res> {
+class _$TxFeeDtoCopyWithImpl<$Res, $Val extends TxFeeDto> implements $TxFeeDtoCopyWith<$Res> {
   _$TxFeeDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -96,28 +88,18 @@ class _$TxFeeDtoCopyWithImpl<$Res, $Val extends TxFeeDto>
 }
 
 /// @nodoc
-abstract class _$$TxFeeDtoImplCopyWith<$Res>
-    implements $TxFeeDtoCopyWith<$Res> {
-  factory _$$TxFeeDtoImplCopyWith(
-          _$TxFeeDtoImpl value, $Res Function(_$TxFeeDtoImpl) then) =
+abstract class _$$TxFeeDtoImplCopyWith<$Res> implements $TxFeeDtoCopyWith<$Res> {
+  factory _$$TxFeeDtoImplCopyWith(_$TxFeeDtoImpl value, $Res Function(_$TxFeeDtoImpl) then) =
       __$$TxFeeDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int fastestFee,
-      int halfHourFee,
-      int hourFee,
-      int economyFee,
-      int minimumFee});
+  $Res call({int fastestFee, int halfHourFee, int hourFee, int economyFee, int minimumFee});
 }
 
 /// @nodoc
-class __$$TxFeeDtoImplCopyWithImpl<$Res>
-    extends _$TxFeeDtoCopyWithImpl<$Res, _$TxFeeDtoImpl>
+class __$$TxFeeDtoImplCopyWithImpl<$Res> extends _$TxFeeDtoCopyWithImpl<$Res, _$TxFeeDtoImpl>
     implements _$$TxFeeDtoImplCopyWith<$Res> {
-  __$$TxFeeDtoImplCopyWithImpl(
-      _$TxFeeDtoImpl _value, $Res Function(_$TxFeeDtoImpl) _then)
-      : super(_value, _then);
+  __$$TxFeeDtoImplCopyWithImpl(_$TxFeeDtoImpl _value, $Res Function(_$TxFeeDtoImpl) _then) : super(_value, _then);
 
   /// Create a copy of TxFeeDto
   /// with the given fields replaced by the non-null parameter values.
@@ -159,14 +141,9 @@ class __$$TxFeeDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TxFeeDtoImpl implements _TxFeeDto {
   const _$TxFeeDtoImpl(
-      {this.fastestFee = 0,
-      this.halfHourFee = 0,
-      this.hourFee = 0,
-      this.economyFee = 0,
-      this.minimumFee = 0});
+      {this.fastestFee = 0, this.halfHourFee = 0, this.hourFee = 0, this.economyFee = 0, this.minimumFee = 0});
 
-  factory _$TxFeeDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TxFeeDtoImplFromJson(json);
+  factory _$TxFeeDtoImpl.fromJson(Map<String, dynamic> json) => _$$TxFeeDtoImplFromJson(json);
 
   @override
   @JsonKey()
@@ -194,21 +171,16 @@ class _$TxFeeDtoImpl implements _TxFeeDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TxFeeDtoImpl &&
-            (identical(other.fastestFee, fastestFee) ||
-                other.fastestFee == fastestFee) &&
-            (identical(other.halfHourFee, halfHourFee) ||
-                other.halfHourFee == halfHourFee) &&
+            (identical(other.fastestFee, fastestFee) || other.fastestFee == fastestFee) &&
+            (identical(other.halfHourFee, halfHourFee) || other.halfHourFee == halfHourFee) &&
             (identical(other.hourFee, hourFee) || other.hourFee == hourFee) &&
-            (identical(other.economyFee, economyFee) ||
-                other.economyFee == economyFee) &&
-            (identical(other.minimumFee, minimumFee) ||
-                other.minimumFee == minimumFee));
+            (identical(other.economyFee, economyFee) || other.economyFee == economyFee) &&
+            (identical(other.minimumFee, minimumFee) || other.minimumFee == minimumFee));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, fastestFee, halfHourFee, hourFee, economyFee, minimumFee);
+  int get hashCode => Object.hash(runtimeType, fastestFee, halfHourFee, hourFee, economyFee, minimumFee);
 
   /// Create a copy of TxFeeDto
   /// with the given fields replaced by the non-null parameter values.
@@ -234,8 +206,7 @@ abstract class _TxFeeDto implements TxFeeDto {
       final int economyFee,
       final int minimumFee}) = _$TxFeeDtoImpl;
 
-  factory _TxFeeDto.fromJson(Map<String, dynamic> json) =
-      _$TxFeeDtoImpl.fromJson;
+  factory _TxFeeDto.fromJson(Map<String, dynamic> json) = _$TxFeeDtoImpl.fromJson;
 
   @override
   int get fastestFee;
@@ -252,6 +223,5 @@ abstract class _TxFeeDto implements TxFeeDto {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TxFeeDtoImplCopyWith<_$TxFeeDtoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TxFeeDtoImplCopyWith<_$TxFeeDtoImpl> get copyWith => throw _privateConstructorUsedError;
 }

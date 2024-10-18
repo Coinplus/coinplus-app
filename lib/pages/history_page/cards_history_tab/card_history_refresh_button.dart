@@ -24,35 +24,25 @@ class CardHistoryRefreshButton extends StatelessWidget {
           right: 16,
           child: ScaleTap(
             enableFeedback: false,
-            onPressed: state.historyPageStore.disabledButtons[state
-                        .balanceStore
-                        .cards[state.historyPageStore.cardHistoryIndex]
-                        .address] ??
+            onPressed: state.historyPageStore
+                        .disabledButtons[state.balanceStore.cards[state.historyPageStore.cardHistoryIndex].address] ??
                     false
                 ? () async {
                     unawaited(controller.forward());
                     await state.historyPageStore.getSingleCardHistory(
-                      address: state
-                          .balanceStore
-                          .cards[state.historyPageStore.cardHistoryIndex]
-                          .address,
+                      address: state.balanceStore.cards[state.historyPageStore.cardHistoryIndex].address,
                     );
                     controller.reset();
                   }
                 : () async {
                     unawaited(controller.repeat());
-                    state.historyPageStore.disabledButtons[state
-                        .balanceStore
-                        .cards[state.historyPageStore.cardHistoryIndex]
-                        .address] = true;
+                    state.historyPageStore.disabledButtons[
+                        state.balanceStore.cards[state.historyPageStore.cardHistoryIndex].address] = true;
                     await state.historyPageStore.setRefreshing(
                       value: true,
                     );
                     await state.historyPageStore.cardRefresh(
-                      state
-                          .balanceStore
-                          .cards[state.historyPageStore.cardHistoryIndex]
-                          .address,
+                      state.balanceStore.cards[state.historyPageStore.cardHistoryIndex].address,
                     );
                     controller
                       ..stop()
@@ -64,10 +54,8 @@ class CardHistoryRefreshButton extends StatelessWidget {
                     await Future.delayed(
                       const Duration(minutes: 1),
                     );
-                    state.historyPageStore.disabledButtons[state
-                        .balanceStore
-                        .cards[state.historyPageStore.cardHistoryIndex]
-                        .address] = false;
+                    state.historyPageStore.disabledButtons[
+                        state.balanceStore.cards[state.historyPageStore.cardHistoryIndex].address] = false;
                     state.historyPageStore.makeActive();
                     await recordAmplitudeEventPartTwo(
                       RefreshClicked(

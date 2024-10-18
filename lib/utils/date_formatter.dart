@@ -14,7 +14,6 @@ String formatDateString(String dateString) {
 
 String priceChangeDateFormatter(String dateString) {
   final dateTime = DateTime.parse(dateString);
-  final formattedDate =
-      DateFormat("MMMM d, yyyy 'at' hh:mm:ss a").format(dateTime);
+  final formattedDate = DateFormat("MMMM d, yyyy 'at' hh:mm:ss a").format(dateTime);
   return formattedDate;
 }
