@@ -22,12 +22,10 @@ CardsModel _$CardsModelFromJson(Map json) => CardsModel(
       nfcId: json['nfcId'] as String?,
       possibleOldCard: json['possibleOldCard'] as bool?,
       replenished: json['replenished'] as bool?,
-      replenishmentHistory: (json['replenishmentHistory'] as List<dynamic>?)
-          ?.map((e) => Map<String, dynamic>.from(e as Map))
-          .toList(),
+      replenishmentHistory:
+          (json['replenishmentHistory'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList(),
       type: json['type'] as String?,
-      verificationFailureCount:
-          (json['verificationFailureCount'] as num?)?.toInt(),
+      verificationFailureCount: (json['verificationFailureCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CardsModelToJson(CardsModel instance) {

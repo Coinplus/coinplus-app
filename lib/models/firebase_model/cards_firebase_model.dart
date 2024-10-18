@@ -44,8 +44,7 @@ class CardsModel {
     this.verificationFailureCount,
   });
 
-  factory CardsModel.fromJson(Map<String, dynamic> json) =>
-      _$CardsModelFromJson(json);
+  factory CardsModel.fromJson(Map<String, dynamic> json) => _$CardsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CardsModelToJson(this);
 }

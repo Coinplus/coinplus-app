@@ -16,6 +16,8 @@ abstract class AbstractCard {
 
   bool get isBackup;
 
+  bool get hasBackedUp;
+
   String get createdAt;
 
   num? get finalBalance;

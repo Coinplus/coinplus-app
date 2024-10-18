@@ -38,21 +38,13 @@ mixin _$Config {
 
 /// @nodoc
 abstract class $ConfigCopyWith<$Res> {
-  factory $ConfigCopyWith(Config value, $Res Function(Config) then) =
-      _$ConfigCopyWithImpl<$Res, Config>;
+  factory $ConfigCopyWith(Config value, $Res Function(Config) then) = _$ConfigCopyWithImpl<$Res, Config>;
   @useResult
-  $Res call(
-      {Flavor env,
-      bool production,
-      String apiUrl,
-      String coinsUrl,
-      String mempool,
-      String utxoUrl});
+  $Res call({Flavor env, bool production, String apiUrl, String coinsUrl, String mempool, String utxoUrl});
 }
 
 /// @nodoc
-class _$ConfigCopyWithImpl<$Res, $Val extends Config>
-    implements $ConfigCopyWith<$Res> {
+class _$ConfigCopyWithImpl<$Res, $Val extends Config> implements $ConfigCopyWith<$Res> {
   _$ConfigCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -103,27 +95,17 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
 
 /// @nodoc
 abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
-  factory _$$ConfigImplCopyWith(
-          _$ConfigImpl value, $Res Function(_$ConfigImpl) then) =
+  factory _$$ConfigImplCopyWith(_$ConfigImpl value, $Res Function(_$ConfigImpl) then) =
       __$$ConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Flavor env,
-      bool production,
-      String apiUrl,
-      String coinsUrl,
-      String mempool,
-      String utxoUrl});
+  $Res call({Flavor env, bool production, String apiUrl, String coinsUrl, String mempool, String utxoUrl});
 }
 
 /// @nodoc
-class __$$ConfigImplCopyWithImpl<$Res>
-    extends _$ConfigCopyWithImpl<$Res, _$ConfigImpl>
+class __$$ConfigImplCopyWithImpl<$Res> extends _$ConfigCopyWithImpl<$Res, _$ConfigImpl>
     implements _$$ConfigImplCopyWith<$Res> {
-  __$$ConfigImplCopyWithImpl(
-      _$ConfigImpl _value, $Res Function(_$ConfigImpl) _then)
-      : super(_value, _then);
+  __$$ConfigImplCopyWithImpl(_$ConfigImpl _value, $Res Function(_$ConfigImpl) _then) : super(_value, _then);
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
@@ -177,8 +159,7 @@ class _$ConfigImpl implements _Config {
       required this.mempool,
       required this.utxoUrl});
 
-  factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ConfigImplFromJson(json);
+  factory _$ConfigImpl.fromJson(Map<String, dynamic> json) => _$$ConfigImplFromJson(json);
 
   @override
   final Flavor env;
@@ -204,27 +185,23 @@ class _$ConfigImpl implements _Config {
         (other.runtimeType == runtimeType &&
             other is _$ConfigImpl &&
             (identical(other.env, env) || other.env == env) &&
-            (identical(other.production, production) ||
-                other.production == production) &&
+            (identical(other.production, production) || other.production == production) &&
             (identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl) &&
-            (identical(other.coinsUrl, coinsUrl) ||
-                other.coinsUrl == coinsUrl) &&
+            (identical(other.coinsUrl, coinsUrl) || other.coinsUrl == coinsUrl) &&
             (identical(other.mempool, mempool) || other.mempool == mempool) &&
             (identical(other.utxoUrl, utxoUrl) || other.utxoUrl == utxoUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, env, production, apiUrl, coinsUrl, mempool, utxoUrl);
+  int get hashCode => Object.hash(runtimeType, env, production, apiUrl, coinsUrl, mempool, utxoUrl);
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
-      __$$ConfigImplCopyWithImpl<_$ConfigImpl>(this, _$identity);
+  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith => __$$ConfigImplCopyWithImpl<_$ConfigImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -262,6 +239,5 @@ abstract class _Config implements Config {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith => throw _privateConstructorUsedError;
 }

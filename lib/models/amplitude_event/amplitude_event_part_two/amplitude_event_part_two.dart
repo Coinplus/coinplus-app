@@ -384,6 +384,5 @@ class AmplitudeEventPartTwo with _$AmplitudeEventPartTwo {
     required String txHash,
   }) = SendClicked;
 
-  factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) =>
-      _$AmplitudeEventPartTwoFromJson(json);
+  factory AmplitudeEventPartTwo.fromJson(Map<String, dynamic> json) => _$AmplitudeEventPartTwoFromJson(json);
 }

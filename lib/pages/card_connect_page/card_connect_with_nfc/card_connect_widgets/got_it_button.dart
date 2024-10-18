@@ -156,6 +156,10 @@ class GotItButton extends StatelessWidget {
                               mainCardAddress: balanceStore.mainWalletAddress,
                               backupCard: balanceStore.selectedBackupCard!,
                             );
+                            balanceStore.changeCardBackupStatusAndSave(
+                              cardAddress: balanceStore.mainWalletAddress,
+                              hasBackedUp: true,
+                            );
                             await _secureStorage.setBackupStatus(
                               isSet: true,
                               address: balanceStore.mainWalletAddress,

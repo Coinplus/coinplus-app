@@ -135,8 +135,7 @@ class SecureStorageService {
     required BalanceStore balanceStore,
     required SendToState state,
   }) async {
-    if (balanceStore.cards.isNotEmpty &&
-        balanceStore.cards.length != balanceStore.cardCurrentIndex) {
+    if (balanceStore.cards.isNotEmpty && balanceStore.cards.length != balanceStore.cardCurrentIndex) {
       return checkWalletStatus(
         balanceStore.cards[state.historyPageStore.cardHistoryIndex].address,
       );
@@ -149,8 +148,7 @@ class SecureStorageService {
     required BalanceStore balanceStore,
     required SendToState state,
   }) async {
-    if (balanceStore.bars.isNotEmpty &&
-        balanceStore.bars.length != balanceStore.barCurrentIndex) {
+    if (balanceStore.bars.isNotEmpty && balanceStore.bars.length != balanceStore.barCurrentIndex) {
       return checkWalletStatus(
         balanceStore.bars[state.historyPageStore.barHistoryIndex].address,
       );

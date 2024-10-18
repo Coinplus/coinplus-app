@@ -64,9 +64,7 @@ Future<void> receiveModal({
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          card.blockchain == 'BTC'
-                              ? 'Receive BTC'
-                              : 'Receive ETH',
+                          card.blockchain == 'BTC' ? 'Receive BTC' : 'Receive ETH',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: FontFamily.redHatMedium,
@@ -121,9 +119,7 @@ Future<void> receiveModal({
                           AddressCopied(
                             walletType: isBarList ? 'Bar' : 'Card',
                             walletAddress: card.address,
-                            activated: isBarList
-                                ? await isBarActivated
-                                : await isCardActivated,
+                            activated: isBarList ? await isBarActivated : await isCardActivated,
                             source: 'Receive',
                           ),
                         );
@@ -169,8 +165,7 @@ Future<void> receiveModal({
                                 Observer(
                                   builder: (context) {
                                     return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Your address',
@@ -185,8 +180,7 @@ Future<void> receiveModal({
                                               Text(
                                                 'Copied',
                                                 style: TextStyle(
-                                                  fontFamily:
-                                                      FontFamily.redHatMedium,
+                                                  fontFamily: FontFamily.redHatMedium,
                                                   color: Colors.green,
                                                 ),
                                               ),
@@ -201,8 +195,7 @@ Future<void> receiveModal({
                                               ? Text(
                                                   getSplitAddress(card.address),
                                                   style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 14,
                                                     color: Color(
                                                       0xFF4F6486,
@@ -212,18 +205,16 @@ Future<void> receiveModal({
                                               : Text(
                                                   getSplitAddress(card.address),
                                                   style: const TextStyle(
-                                                    fontFamily:
-                                                        FontFamily.redHatMedium,
+                                                    fontFamily: FontFamily.redHatMedium,
                                                     fontSize: 14,
                                                     color: Color(
                                                       0xFF4F6486,
                                                     ),
                                                   ),
                                                 ),
-                                          crossFadeState:
-                                              settingsState.isAddressCopied
-                                                  ? CrossFadeState.showFirst
-                                                  : CrossFadeState.showSecond,
+                                          crossFadeState: settingsState.isAddressCopied
+                                              ? CrossFadeState.showFirst
+                                              : CrossFadeState.showSecond,
                                           duration: const Duration(
                                             milliseconds: 200,
                                           ),
@@ -309,9 +300,7 @@ Future<void> receiveModal({
                     ShareAddressClicked(
                       walletType: isBarList ? 'Bar' : 'Card',
                       walletAddress: currentCard.value.card!.address,
-                      activated: isBarList
-                          ? await isBarActivated
-                          : await isCardActivated,
+                      activated: isBarList ? await isBarActivated : await isCardActivated,
                     ),
                   );
                   await Share.share(

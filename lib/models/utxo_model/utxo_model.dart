@@ -17,8 +17,7 @@ class UtxoModel with _$UtxoModel {
     @JsonKey(name: 'tx_index') required int txIndex,
   }) = _UtxoModel;
 
-  factory UtxoModel.fromJson(Map<String, dynamic> json) =>
-      _$UtxoModelFromJson(json);
+  factory UtxoModel.fromJson(Map<String, dynamic> json) => _$UtxoModelFromJson(json);
 }
 
 @freezed

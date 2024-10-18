@@ -14,6 +14,5 @@ class TxFeeDto with _$TxFeeDto {
     @Default(0) int minimumFee,
   }) = _TxFeeDto;
 
-  factory TxFeeDto.fromJson(Map<String, dynamic> json) =>
-      _$TxFeeDtoFromJson(json);
+  factory TxFeeDto.fromJson(Map<String, dynamic> json) => _$TxFeeDtoFromJson(json);
 }

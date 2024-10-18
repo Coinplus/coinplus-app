@@ -328,6 +328,7 @@ class CardSettingsPage extends HookWidget {
                               children: [
                                 const Gap(16),
                                 ListTile(
+                                  enableFeedback: false,
                                   trailing: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -671,6 +672,7 @@ class CardSettingsPage extends HookWidget {
                       ],
                     ),
                   ListTile(
+                    enableFeedback: false,
                     onTap: () async {
                       if (card.blockchain == 'BTC') {
                         final isCardActivated = isCardWalletActivated();

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -86,10 +87,7 @@ Future<void> nfcSessionIos({
 
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
-      final formattedTagId = tagId
-          .map((e) => e.toRadixString(16).padLeft(2, '0'))
-          .join(':')
-          .toUpperCase();
+      final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       Uint8List? signature;
       try {
         final response = await mifare.sendMiFareCommand(
@@ -370,10 +368,7 @@ Future<void> nfcSessionAndroid({
       }
       await router.maybePop();
       final card = await getCardData(walletAddress);
-      final formattedTagId = uid
-          .map((e) => e.toRadixString(16).padLeft(2, '0'))
-          .join(':')
-          .toUpperCase();
+      final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       if (isOriginalTag && card != null) {
         await NfcManager.instance.stopSession();
         if (card.nfcId == formattedTagId) {
@@ -553,9 +548,7 @@ Future<void> connectBackupWalletIos({
 }) async {
   await _walletProtectState.updateNfcSessionStatus(isStarted: true);
   await NfcManager.instance.startSession(
-    alertMessage: isBarList
-        ? 'Tap your backup bar on the phone.'
-        : 'Tap your backup card on the phone.',
+    alertMessage: isBarList ? 'Tap your backup bar on the phone.' : 'Tap your backup card on the phone.',
     onDiscovered: (tag) async {
       final ndef = Ndef.from(tag);
       final records = ndef!.cachedMessage?.records;
@@ -593,10 +586,7 @@ Future<void> connectBackupWalletIos({
 
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
-      final formattedTagId = tagId
-          .map((e) => e.toRadixString(16).padLeft(2, '0'))
-          .join(':')
-          .toUpperCase();
+      final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       Uint8List? signature;
       try {
         final response = await mifare.sendMiFareCommand(
@@ -614,9 +604,7 @@ Future<void> connectBackupWalletIos({
       } catch (e) {
         signature = null;
       }
-      if (isOriginalTag &&
-          backupCard != null &&
-          backupCard.nfcId == formattedTagId) {
+      if (isOriginalTag && backupCard != null && backupCard.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession();
         await Future.delayed(const Duration(milliseconds: 2700));
         if (_balanceStore.cards.isEmpty && backupCard.backup == true) {
@@ -635,6 +623,9 @@ Future<void> connectBackupWalletIos({
           );
         }
       } else {
+        log(backupCard.toString());
+        log(backupCard!.nfcId.toString());
+        log(formattedTagId);
         await NfcManager.instance.stopSession(
           errorMessage: 'Wrong card. Please tap the backup card.',
         );
@@ -674,10 +665,7 @@ Future<void> checkNfcIos({
       final card = await getCardData(walletAddress);
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
-      final formattedTagId = tagId
-          .map((e) => e.toRadixString(16).padLeft(2, '0'))
-          .join(':')
-          .toUpperCase();
+      final formattedTagId = tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       final signature = await mifare.sendMiFareCommand(
         Uint8List.fromList(
           [0x3C, 0x00],
@@ -701,9 +689,7 @@ Future<void> checkNfcIos({
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag &&
-          card != null &&
-          card.nfcId != formattedTagId) {
+      } else if (isOriginalTag && card != null && card.nfcId != formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
         await setCardsData(
@@ -734,9 +720,7 @@ Future<void> checkNfcIos({
           type: 'TRACKER',
         );
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag == false &&
-          card != null &&
-          card.nfcId == formattedTagId) {
+      } else if (isOriginalTag == false && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await Future.delayed(const Duration(milliseconds: 2500));
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
@@ -793,10 +777,7 @@ Future<void> checkNfcAndroid({
       final nfcA = NfcA.from(tag);
       final uid = nfcA!.identifier;
       final card = await getCardData(walletAddress);
-      final formattedTagId = uid
-          .map((e) => e.toRadixString(16).padLeft(2, '0'))
-          .join(':')
-          .toUpperCase();
+      final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
 
       Uint8List? signature;
 
@@ -826,9 +807,7 @@ Future<void> checkNfcAndroid({
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await router.maybePop();
         await yourCardIsOriginal(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag &&
-          card != null &&
-          card.nfcId != formattedTagId) {
+      } else if (isOriginalTag && card != null && card.nfcId != formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await setCardsData(
           documentID: walletAddress,
@@ -860,9 +839,7 @@ Future<void> checkNfcAndroid({
         await router.maybePop();
 
         await maybeCoinplusCard(router.navigatorKey.currentContext!);
-      } else if (isOriginalTag == false &&
-          card != null &&
-          card.nfcId == formattedTagId) {
+      } else if (isOriginalTag == false && card != null && card.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession(alertMessage: 'Completed');
         await router.maybePop();
 

@@ -21,8 +21,7 @@ Future<void> emailSendAlert(
   return showDialogBox(
     context,
     DialogBoxWithAction(
-      text:
-          'You’ll get the reply shortly, before that you can check out our Help Center.',
+      text: 'You’ll get the reply shortly, before that you can check out our Help Center.',
       title: const Text(
         'Success!',
         textAlign: TextAlign.center,
@@ -123,8 +122,7 @@ Future<void> emailSendFailAlert(BuildContext context) {
         },
         child: StyledText(
           textAlign: TextAlign.center,
-          text:
-              'Please try again later or contact us at <p>help@coinplus.com</p>',
+          text: 'Please try again later or contact us at <p>help@coinplus.com</p>',
           tags: {
             'p': StyledTextTag(
               style: const TextStyle(

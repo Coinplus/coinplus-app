@@ -36,8 +36,7 @@ class CardAndBarTab extends StatelessWidget {
           ),
           splashColor: Colors.transparent,
           splashHighlightColor: Colors.transparent,
-          barDecoration:
-              BoxDecoration(borderRadius: BorderRadius.circular(100)),
+          barDecoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
           indicatorDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             color: Colors.grey.withOpacity(0.1),

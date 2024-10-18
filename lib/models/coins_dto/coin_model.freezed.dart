@@ -29,14 +29,12 @@ mixin _$CoinModel {
   /// Create a copy of CoinModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CoinModelCopyWith<CoinModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CoinModelCopyWith<CoinModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CoinModelCopyWith<$Res> {
-  factory $CoinModelCopyWith(CoinModel value, $Res Function(CoinModel) then) =
-      _$CoinModelCopyWithImpl<$Res, CoinModel>;
+  factory $CoinModelCopyWith(CoinModel value, $Res Function(CoinModel) then) = _$CoinModelCopyWithImpl<$Res, CoinModel>;
   @useResult
   $Res call({List<CoinResultModel> result, Meta meta});
 
@@ -44,8 +42,7 @@ abstract class $CoinModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel>
-    implements $CoinModelCopyWith<$Res> {
+class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel> implements $CoinModelCopyWith<$Res> {
   _$CoinModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -85,10 +82,8 @@ class _$CoinModelCopyWithImpl<$Res, $Val extends CoinModel>
 }
 
 /// @nodoc
-abstract class _$$CoinModelImplCopyWith<$Res>
-    implements $CoinModelCopyWith<$Res> {
-  factory _$$CoinModelImplCopyWith(
-          _$CoinModelImpl value, $Res Function(_$CoinModelImpl) then) =
+abstract class _$$CoinModelImplCopyWith<$Res> implements $CoinModelCopyWith<$Res> {
+  factory _$$CoinModelImplCopyWith(_$CoinModelImpl value, $Res Function(_$CoinModelImpl) then) =
       __$$CoinModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -99,12 +94,9 @@ abstract class _$$CoinModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CoinModelImplCopyWithImpl<$Res>
-    extends _$CoinModelCopyWithImpl<$Res, _$CoinModelImpl>
+class __$$CoinModelImplCopyWithImpl<$Res> extends _$CoinModelCopyWithImpl<$Res, _$CoinModelImpl>
     implements _$$CoinModelImplCopyWith<$Res> {
-  __$$CoinModelImplCopyWithImpl(
-      _$CoinModelImpl _value, $Res Function(_$CoinModelImpl) _then)
-      : super(_value, _then);
+  __$$CoinModelImplCopyWithImpl(_$CoinModelImpl _value, $Res Function(_$CoinModelImpl) _then) : super(_value, _then);
 
   /// Create a copy of CoinModel
   /// with the given fields replaced by the non-null parameter values.
@@ -130,12 +122,9 @@ class __$$CoinModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
-  const _$CoinModelImpl(
-      {required final List<CoinResultModel> result, required this.meta})
-      : _result = result;
+  const _$CoinModelImpl({required final List<CoinResultModel> result, required this.meta}) : _result = result;
 
-  factory _$CoinModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CoinModelImplFromJson(json);
+  factory _$CoinModelImpl.fromJson(Map<String, dynamic> json) => _$$CoinModelImplFromJson(json);
 
   final List<CoinResultModel> _result;
   @override
@@ -173,8 +162,7 @@ class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_result), meta);
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(_result), meta);
 
   /// Create a copy of CoinModel
   /// with the given fields replaced by the non-null parameter values.
@@ -193,12 +181,9 @@ class _$CoinModelImpl with DiagnosticableTreeMixin implements _CoinModel {
 }
 
 abstract class _CoinModel implements CoinModel {
-  const factory _CoinModel(
-      {required final List<CoinResultModel> result,
-      required final Meta meta}) = _$CoinModelImpl;
+  const factory _CoinModel({required final List<CoinResultModel> result, required final Meta meta}) = _$CoinModelImpl;
 
-  factory _CoinModel.fromJson(Map<String, dynamic> json) =
-      _$CoinModelImpl.fromJson;
+  factory _CoinModel.fromJson(Map<String, dynamic> json) = _$CoinModelImpl.fromJson;
 
   @override
   List<CoinResultModel> get result;
@@ -209,8 +194,7 @@ abstract class _CoinModel implements CoinModel {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CoinModelImplCopyWith<_$CoinModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CoinModelImplCopyWith<_$CoinModelImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -220,14 +204,12 @@ mixin _$UniqueCoinModel {
   /// Create a copy of UniqueCoinModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UniqueCoinModelCopyWith<UniqueCoinModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $UniqueCoinModelCopyWith<UniqueCoinModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UniqueCoinModelCopyWith<$Res> {
-  factory $UniqueCoinModelCopyWith(
-          UniqueCoinModel value, $Res Function(UniqueCoinModel) then) =
+  factory $UniqueCoinModelCopyWith(UniqueCoinModel value, $Res Function(UniqueCoinModel) then) =
       _$UniqueCoinModelCopyWithImpl<$Res, UniqueCoinModel>;
   @useResult
   $Res call({CoinResultModel result});
@@ -236,8 +218,7 @@ abstract class $UniqueCoinModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UniqueCoinModelCopyWithImpl<$Res, $Val extends UniqueCoinModel>
-    implements $UniqueCoinModelCopyWith<$Res> {
+class _$UniqueCoinModelCopyWithImpl<$Res, $Val extends UniqueCoinModel> implements $UniqueCoinModelCopyWith<$Res> {
   _$UniqueCoinModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -272,10 +253,8 @@ class _$UniqueCoinModelCopyWithImpl<$Res, $Val extends UniqueCoinModel>
 }
 
 /// @nodoc
-abstract class _$$UniqueCoinModelImplCopyWith<$Res>
-    implements $UniqueCoinModelCopyWith<$Res> {
-  factory _$$UniqueCoinModelImplCopyWith(_$UniqueCoinModelImpl value,
-          $Res Function(_$UniqueCoinModelImpl) then) =
+abstract class _$$UniqueCoinModelImplCopyWith<$Res> implements $UniqueCoinModelCopyWith<$Res> {
+  factory _$$UniqueCoinModelImplCopyWith(_$UniqueCoinModelImpl value, $Res Function(_$UniqueCoinModelImpl) then) =
       __$$UniqueCoinModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -286,11 +265,9 @@ abstract class _$$UniqueCoinModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$UniqueCoinModelImplCopyWithImpl<$Res>
-    extends _$UniqueCoinModelCopyWithImpl<$Res, _$UniqueCoinModelImpl>
+class __$$UniqueCoinModelImplCopyWithImpl<$Res> extends _$UniqueCoinModelCopyWithImpl<$Res, _$UniqueCoinModelImpl>
     implements _$$UniqueCoinModelImplCopyWith<$Res> {
-  __$$UniqueCoinModelImplCopyWithImpl(
-      _$UniqueCoinModelImpl _value, $Res Function(_$UniqueCoinModelImpl) _then)
+  __$$UniqueCoinModelImplCopyWithImpl(_$UniqueCoinModelImpl _value, $Res Function(_$UniqueCoinModelImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of UniqueCoinModel
@@ -311,9 +288,7 @@ class __$$UniqueCoinModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UniqueCoinModelImpl
-    with DiagnosticableTreeMixin
-    implements _UniqueCoinModel {
+class _$UniqueCoinModelImpl with DiagnosticableTreeMixin implements _UniqueCoinModel {
   const _$UniqueCoinModelImpl({required this.result});
 
   @override
@@ -349,13 +324,11 @@ class _$UniqueCoinModelImpl
   @override
   @pragma('vm:prefer-inline')
   _$$UniqueCoinModelImplCopyWith<_$UniqueCoinModelImpl> get copyWith =>
-      __$$UniqueCoinModelImplCopyWithImpl<_$UniqueCoinModelImpl>(
-          this, _$identity);
+      __$$UniqueCoinModelImplCopyWithImpl<_$UniqueCoinModelImpl>(this, _$identity);
 }
 
 abstract class _UniqueCoinModel implements UniqueCoinModel {
-  const factory _UniqueCoinModel({required final CoinResultModel result}) =
-      _$UniqueCoinModelImpl;
+  const factory _UniqueCoinModel({required final CoinResultModel result}) = _$UniqueCoinModelImpl;
 
   @override
   CoinResultModel get result;
@@ -364,8 +337,7 @@ abstract class _UniqueCoinModel implements UniqueCoinModel {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UniqueCoinModelImplCopyWith<_$UniqueCoinModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UniqueCoinModelImplCopyWith<_$UniqueCoinModelImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 CoinResultModel _$CoinResultModelFromJson(Map<String, dynamic> json) {
@@ -399,14 +371,12 @@ mixin _$CoinResultModel {
   /// Create a copy of CoinResultModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CoinResultModelCopyWith<CoinResultModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CoinResultModelCopyWith<CoinResultModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CoinResultModelCopyWith<$Res> {
-  factory $CoinResultModelCopyWith(
-          CoinResultModel value, $Res Function(CoinResultModel) then) =
+  factory $CoinResultModelCopyWith(CoinResultModel value, $Res Function(CoinResultModel) then) =
       _$CoinResultModelCopyWithImpl<$Res, CoinResultModel>;
   @useResult
   $Res call(
@@ -424,8 +394,7 @@ abstract class $CoinResultModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel>
-    implements $CoinResultModelCopyWith<$Res> {
+class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel> implements $CoinResultModelCopyWith<$Res> {
   _$CoinResultModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -500,10 +469,8 @@ class _$CoinResultModelCopyWithImpl<$Res, $Val extends CoinResultModel>
 }
 
 /// @nodoc
-abstract class _$$CoinResultModelImplCopyWith<$Res>
-    implements $CoinResultModelCopyWith<$Res> {
-  factory _$$CoinResultModelImplCopyWith(_$CoinResultModelImpl value,
-          $Res Function(_$CoinResultModelImpl) then) =
+abstract class _$$CoinResultModelImplCopyWith<$Res> implements $CoinResultModelCopyWith<$Res> {
+  factory _$$CoinResultModelImplCopyWith(_$CoinResultModelImpl value, $Res Function(_$CoinResultModelImpl) then) =
       __$$CoinResultModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -522,11 +489,9 @@ abstract class _$$CoinResultModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CoinResultModelImplCopyWithImpl<$Res>
-    extends _$CoinResultModelCopyWithImpl<$Res, _$CoinResultModelImpl>
+class __$$CoinResultModelImplCopyWithImpl<$Res> extends _$CoinResultModelCopyWithImpl<$Res, _$CoinResultModelImpl>
     implements _$$CoinResultModelImplCopyWith<$Res> {
-  __$$CoinResultModelImplCopyWithImpl(
-      _$CoinResultModelImpl _value, $Res Function(_$CoinResultModelImpl) _then)
+  __$$CoinResultModelImplCopyWithImpl(_$CoinResultModelImpl _value, $Res Function(_$CoinResultModelImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of CoinResultModel
@@ -597,27 +562,21 @@ class __$$CoinResultModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CoinResultModelImpl
-    with DiagnosticableTreeMixin
-    implements _CoinResultModel {
+class _$CoinResultModelImpl with DiagnosticableTreeMixin implements _CoinResultModel {
   const _$CoinResultModelImpl(
       {required this.id,
       required this.symbol,
       required this.name,
       required this.icon,
       @JsonKey(name: 'price', defaultValue: 0) required this.price,
-      @JsonKey(name: 'priceChange1d', defaultValue: 0)
-      required this.priceChange1d,
+      @JsonKey(name: 'priceChange1d', defaultValue: 0) required this.priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) required this.marketCap,
       @JsonKey(name: 'rank', defaultValue: 0) required this.rank,
       @JsonKey(name: 'volume', defaultValue: 0) required this.volume,
-      @JsonKey(name: 'availableSupply', defaultValue: 0)
-      required this.availableSupply,
-      @JsonKey(name: 'totalSupply', defaultValue: 0)
-      required this.totalSupply});
+      @JsonKey(name: 'availableSupply', defaultValue: 0) required this.availableSupply,
+      @JsonKey(name: 'totalSupply', defaultValue: 0) required this.totalSupply});
 
-  factory _$CoinResultModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CoinResultModelImplFromJson(json);
+  factory _$CoinResultModelImpl.fromJson(Map<String, dynamic> json) => _$$CoinResultModelImplFromJson(json);
 
   @override
   final String id;
@@ -682,22 +641,18 @@ class _$CoinResultModelImpl
             (identical(other.name, name) || other.name == name) &&
             (identical(other.icon, icon) || other.icon == icon) &&
             (identical(other.price, price) || other.price == price) &&
-            (identical(other.priceChange1d, priceChange1d) ||
-                other.priceChange1d == priceChange1d) &&
-            (identical(other.marketCap, marketCap) ||
-                other.marketCap == marketCap) &&
+            (identical(other.priceChange1d, priceChange1d) || other.priceChange1d == priceChange1d) &&
+            (identical(other.marketCap, marketCap) || other.marketCap == marketCap) &&
             (identical(other.rank, rank) || other.rank == rank) &&
             (identical(other.volume, volume) || other.volume == volume) &&
-            (identical(other.availableSupply, availableSupply) ||
-                other.availableSupply == availableSupply) &&
-            (identical(other.totalSupply, totalSupply) ||
-                other.totalSupply == totalSupply));
+            (identical(other.availableSupply, availableSupply) || other.availableSupply == availableSupply) &&
+            (identical(other.totalSupply, totalSupply) || other.totalSupply == totalSupply));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, symbol, name, icon, price,
-      priceChange1d, marketCap, rank, volume, availableSupply, totalSupply);
+  int get hashCode => Object.hash(
+      runtimeType, id, symbol, name, icon, price, priceChange1d, marketCap, rank, volume, availableSupply, totalSupply);
 
   /// Create a copy of CoinResultModel
   /// with the given fields replaced by the non-null parameter values.
@@ -705,8 +660,7 @@ class _$CoinResultModelImpl
   @override
   @pragma('vm:prefer-inline')
   _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>
-      __$$CoinResultModelImplCopyWithImpl<_$CoinResultModelImpl>(
-          this, _$identity);
+      __$$CoinResultModelImplCopyWithImpl<_$CoinResultModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -723,18 +677,14 @@ abstract class _CoinResultModel implements CoinResultModel {
       required final String name,
       required final String icon,
       @JsonKey(name: 'price', defaultValue: 0) required final num price,
-      @JsonKey(name: 'priceChange1d', defaultValue: 0)
-      required final num priceChange1d,
+      @JsonKey(name: 'priceChange1d', defaultValue: 0) required final num priceChange1d,
       @JsonKey(name: 'marketCap', defaultValue: 0) required final num marketCap,
       @JsonKey(name: 'rank', defaultValue: 0) required final num rank,
       @JsonKey(name: 'volume', defaultValue: 0) required final num volume,
-      @JsonKey(name: 'availableSupply', defaultValue: 0)
-      required final num availableSupply,
-      @JsonKey(name: 'totalSupply', defaultValue: 0)
-      required final num totalSupply}) = _$CoinResultModelImpl;
+      @JsonKey(name: 'availableSupply', defaultValue: 0) required final num availableSupply,
+      @JsonKey(name: 'totalSupply', defaultValue: 0) required final num totalSupply}) = _$CoinResultModelImpl;
 
-  factory _CoinResultModel.fromJson(Map<String, dynamic> json) =
-      _$CoinResultModelImpl.fromJson;
+  factory _CoinResultModel.fromJson(Map<String, dynamic> json) = _$CoinResultModelImpl.fromJson;
 
   @override
   String get id;
@@ -770,8 +720,7 @@ abstract class _CoinResultModel implements CoinResultModel {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CoinResultModelImplCopyWith<_$CoinResultModelImpl> get copyWith => throw _privateConstructorUsedError;
 }
 
 Meta _$MetaFromJson(Map<String, dynamic> json) {
@@ -798,21 +747,13 @@ mixin _$Meta {
 
 /// @nodoc
 abstract class $MetaCopyWith<$Res> {
-  factory $MetaCopyWith(Meta value, $Res Function(Meta) then) =
-      _$MetaCopyWithImpl<$Res, Meta>;
+  factory $MetaCopyWith(Meta value, $Res Function(Meta) then) = _$MetaCopyWithImpl<$Res, Meta>;
   @useResult
-  $Res call(
-      {int page,
-      int limit,
-      int itemCount,
-      int pageCount,
-      bool hasPreviousPage,
-      bool hasNextPage});
+  $Res call({int page, int limit, int itemCount, int pageCount, bool hasPreviousPage, bool hasNextPage});
 }
 
 /// @nodoc
-class _$MetaCopyWithImpl<$Res, $Val extends Meta>
-    implements $MetaCopyWith<$Res> {
+class _$MetaCopyWithImpl<$Res, $Val extends Meta> implements $MetaCopyWith<$Res> {
   _$MetaCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -863,26 +804,15 @@ class _$MetaCopyWithImpl<$Res, $Val extends Meta>
 
 /// @nodoc
 abstract class _$$MetaImplCopyWith<$Res> implements $MetaCopyWith<$Res> {
-  factory _$$MetaImplCopyWith(
-          _$MetaImpl value, $Res Function(_$MetaImpl) then) =
-      __$$MetaImplCopyWithImpl<$Res>;
+  factory _$$MetaImplCopyWith(_$MetaImpl value, $Res Function(_$MetaImpl) then) = __$$MetaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int page,
-      int limit,
-      int itemCount,
-      int pageCount,
-      bool hasPreviousPage,
-      bool hasNextPage});
+  $Res call({int page, int limit, int itemCount, int pageCount, bool hasPreviousPage, bool hasNextPage});
 }
 
 /// @nodoc
-class __$$MetaImplCopyWithImpl<$Res>
-    extends _$MetaCopyWithImpl<$Res, _$MetaImpl>
-    implements _$$MetaImplCopyWith<$Res> {
-  __$$MetaImplCopyWithImpl(_$MetaImpl _value, $Res Function(_$MetaImpl) _then)
-      : super(_value, _then);
+class __$$MetaImplCopyWithImpl<$Res> extends _$MetaCopyWithImpl<$Res, _$MetaImpl> implements _$$MetaImplCopyWith<$Res> {
+  __$$MetaImplCopyWithImpl(_$MetaImpl _value, $Res Function(_$MetaImpl) _then) : super(_value, _then);
 
   /// Create a copy of Meta
   /// with the given fields replaced by the non-null parameter values.
@@ -936,8 +866,7 @@ class _$MetaImpl with DiagnosticableTreeMixin implements _Meta {
       required this.hasPreviousPage,
       required this.hasNextPage});
 
-  factory _$MetaImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MetaImplFromJson(json);
+  factory _$MetaImpl.fromJson(Map<String, dynamic> json) => _$$MetaImplFromJson(json);
 
   @override
   final int page;
@@ -977,28 +906,22 @@ class _$MetaImpl with DiagnosticableTreeMixin implements _Meta {
             other is _$MetaImpl &&
             (identical(other.page, page) || other.page == page) &&
             (identical(other.limit, limit) || other.limit == limit) &&
-            (identical(other.itemCount, itemCount) ||
-                other.itemCount == itemCount) &&
-            (identical(other.pageCount, pageCount) ||
-                other.pageCount == pageCount) &&
-            (identical(other.hasPreviousPage, hasPreviousPage) ||
-                other.hasPreviousPage == hasPreviousPage) &&
-            (identical(other.hasNextPage, hasNextPage) ||
-                other.hasNextPage == hasNextPage));
+            (identical(other.itemCount, itemCount) || other.itemCount == itemCount) &&
+            (identical(other.pageCount, pageCount) || other.pageCount == pageCount) &&
+            (identical(other.hasPreviousPage, hasPreviousPage) || other.hasPreviousPage == hasPreviousPage) &&
+            (identical(other.hasNextPage, hasNextPage) || other.hasNextPage == hasNextPage));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, page, limit, itemCount,
-      pageCount, hasPreviousPage, hasNextPage);
+  int get hashCode => Object.hash(runtimeType, page, limit, itemCount, pageCount, hasPreviousPage, hasNextPage);
 
   /// Create a copy of Meta
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MetaImplCopyWith<_$MetaImpl> get copyWith =>
-      __$$MetaImplCopyWithImpl<_$MetaImpl>(this, _$identity);
+  _$$MetaImplCopyWith<_$MetaImpl> get copyWith => __$$MetaImplCopyWithImpl<_$MetaImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1036,6 +959,5 @@ abstract class _Meta implements Meta {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MetaImplCopyWith<_$MetaImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MetaImplCopyWith<_$MetaImpl> get copyWith => throw _privateConstructorUsedError;
 }

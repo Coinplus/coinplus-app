@@ -23,12 +23,10 @@ class Preferences {
 class StorageUtils {
   StorageUtils._();
 
-  static Future<SharedPreferences> get sharedInstance =>
-      SharedPreferences.getInstance();
+  static Future<SharedPreferences> get sharedInstance => SharedPreferences.getInstance();
 
   static Future<List<CardModel>> getCards() async {
-    final cardsJson =
-        await _read<List>(Preferences.cards) ?? <Map<String, dynamic>>[];
+    final cardsJson = await _read<List>(Preferences.cards) ?? <Map<String, dynamic>>[];
 
     final cards = <CardModel>[];
     for (final element in cardsJson) {
@@ -41,8 +39,7 @@ class StorageUtils {
   }
 
   static Future<List<CardModel>> getBackupCards() async {
-    final cardsJson =
-        await _read<List>(Preferences.backupCards) ?? <Map<String, dynamic>>[];
+    final cardsJson = await _read<List>(Preferences.backupCards) ?? <Map<String, dynamic>>[];
 
     final backupCards = <CardModel>[];
     for (final element in cardsJson) {
@@ -55,8 +52,7 @@ class StorageUtils {
   }
 
   static Future<List<EthCardModel>> getEthCards() async {
-    final cardsJson =
-        await _read<List>(Preferences.ethCards) ?? <Map<String, dynamic>>[];
+    final cardsJson = await _read<List>(Preferences.ethCards) ?? <Map<String, dynamic>>[];
 
     final cards = <EthCardModel>[];
     for (final element in cardsJson) {
@@ -69,8 +65,7 @@ class StorageUtils {
   }
 
   static Future<List<BarModel>> getBars() async {
-    final barJson =
-        await _read<List>(Preferences.bars) ?? <Map<String, dynamic>>[];
+    final barJson = await _read<List>(Preferences.bars) ?? <Map<String, dynamic>>[];
 
     final bars = <BarModel>[];
     for (final element in barJson) {

@@ -22,11 +22,11 @@ class CardModel with _$CardModel {
     @Default('Coinplus Bitcoin Card') String name,
     @Default('BTC') String blockchain,
     @Default(false) bool isBackup,
+    @Default(false) bool hasBackedUp,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
   }) = _CardModel;
 
-  factory CardModel.fromJson(Map<String, dynamic> json) =>
-      _$CardModelFromJson(json);
+  factory CardModel.fromJson(Map<String, dynamic> json) => _$CardModelFromJson(json);
 }
 
 String timeFromJson(String a) {

@@ -81,14 +81,12 @@ abstract class _WalletProtectState with Store {
 
   @action
   Future<void> checkNotificationToggleStatus() async {
-    isSwitchedNotificationsToggle =
-        await _secureStorage.getNotificationToggleStatus();
+    isSwitchedNotificationsToggle = await _secureStorage.getNotificationToggleStatus();
   }
 
   @action
   Future<void> checkHideBalancesToggleStatus() async {
-    isSwitchedHideBalancesToggle =
-        await _secureStorage.getHideBalancesToggleStatus();
+    isSwitchedHideBalancesToggle = await _secureStorage.getHideBalancesToggleStatus();
   }
 
   @action

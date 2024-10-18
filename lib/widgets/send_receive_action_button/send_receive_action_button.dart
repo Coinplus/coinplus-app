@@ -52,9 +52,7 @@ class SendReceiveActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (_) {
-        if (isInactive.value &&
-            appLocked.value &&
-            !_walletProtectState.isNfcSessionStarted) {
+        if (isInactive.value && appLocked.value && !_walletProtectState.isNfcSessionStarted) {
           return const SizedBox();
         }
         return ScaleTap(
@@ -195,8 +193,7 @@ class SendReceiveActionButton extends StatelessWidget {
               TransactionsButtonClicked(
                 walletType: isBarList ? 'Bar' : 'Card',
                 walletAddress: currentCard.value.card!.address,
-                activated:
-                    isBarList ? await isBarActivated : await isCardActivated,
+                activated: isBarList ? await isBarActivated : await isCardActivated,
               ),
             );
           },
@@ -209,19 +206,16 @@ class SendReceiveActionButton extends StatelessWidget {
                 onPressed: null,
                 child: AnimatedCrossFade(
                   duration: const Duration(milliseconds: 1),
-                  crossFadeState: _allSettingsState.tabCurrentIndex == 0
-                      ? CrossFadeState.showFirst
-                      : CrossFadeState.showSecond,
+                  crossFadeState:
+                      _allSettingsState.tabCurrentIndex == 0 ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                   firstChild: AnimatedCrossFade(
                     duration: const Duration(milliseconds: 1),
-                    crossFadeState: _allSettingsState.currentIndex != 0
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _allSettingsState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     firstChild: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 1),
-                      crossFadeState: _allSettingsState.isInAddCard
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
+                      crossFadeState:
+                          _allSettingsState.isInAddCard ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                       firstChild: _balanceStore.cards.isEmpty
                           ? _balanceStore.ethCards.isEmpty
                               ? Assets.icons.plus.image(
@@ -248,14 +242,12 @@ class SendReceiveActionButton extends StatelessWidget {
                   ),
                   secondChild: AnimatedCrossFade(
                     duration: const Duration(milliseconds: 1),
-                    crossFadeState: _allSettingsState.currentIndex != 0
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
+                    crossFadeState:
+                        _allSettingsState.currentIndex != 0 ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     firstChild: AnimatedCrossFade(
                       duration: const Duration(milliseconds: 1),
-                      crossFadeState: _allSettingsState.isInAddBar
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
+                      crossFadeState:
+                          _allSettingsState.isInAddBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                       firstChild: _balanceStore.bars.isEmpty
                           ? Assets.icons.plus.image(
                               color: Colors.white,

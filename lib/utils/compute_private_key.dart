@@ -26,12 +26,8 @@ Future<BigInt> computePrivateKeySec256k1(
   String secret1B58arg,
   String secret2B58arg,
 ) async {
-  final secret1B58 = secret1B58arg.length == 30
-      ? secret1B58arg.substring(0, 29)
-      : secret1B58arg;
-  final secret2B58 = secret2B58arg.length == 30
-      ? secret2B58arg.substring(0, 29)
-      : secret2B58arg;
+  final secret1B58 = secret1B58arg.length == 30 ? secret1B58arg.substring(0, 29) : secret1B58arg;
+  final secret2B58 = secret2B58arg.length == 30 ? secret2B58arg.substring(0, 29) : secret2B58arg;
 
   final hashedSecret1 = await scryptHash(secret1B58);
   final hashedSecret2 = await scryptHash(secret2B58);
@@ -72,8 +68,7 @@ bool isValidPublicAddress(String? address) {
     final checksum = decoded.sublist(decoded.length - 4);
     final body = decoded.sublist(0, decoded.length - 4);
 
-    final goodChecksumBytes =
-        sha256.convert(sha256.convert(body).bytes).bytes.sublist(0, 4);
+    final goodChecksumBytes = sha256.convert(sha256.convert(body).bytes).bytes.sublist(0, 4);
     final goodChecksum = Uint8List.fromList(goodChecksumBytes);
 
     if (decoded[0] != 0x00 && decoded[0] != 0x05) {

@@ -7,8 +7,7 @@ import '../gen/fonts.gen.dart';
 class CryptoPriceFormatter extends StatelessWidget {
   final num price;
 
-  const CryptoPriceFormatter({Key? key, required this.price, this.isChartPage})
-      : super(key: key);
+  const CryptoPriceFormatter({Key? key, required this.price, this.isChartPage}) : super(key: key);
 
   final bool? isChartPage;
 
@@ -102,25 +101,21 @@ class CryptoPriceFormatter extends StatelessWidget {
         final zeros = '0' * (exponent - 1);
         final fractionalPart = parts[0].replaceAll('.', '');
         var nonZeroIndex = 0;
-        while (nonZeroIndex < fractionalPart.length &&
-            fractionalPart[nonZeroIndex] == '0') {
+        while (nonZeroIndex < fractionalPart.length && fractionalPart[nonZeroIndex] == '0') {
           nonZeroIndex++;
         }
         if (nonZeroIndex == fractionalPart.length) {
           nonZeroIndex = fractionalPart.length;
         }
         final beforeNonZeroIndex = fractionalPart.substring(0, nonZeroIndex);
-        final afterNonZeroIndex =
-            fractionalPart.substring(nonZeroIndex, nonZeroIndex + 2);
-        final formattedFractionalPart =
-            '0.$zeros$beforeNonZeroIndex$afterNonZeroIndex';
+        final afterNonZeroIndex = fractionalPart.substring(nonZeroIndex, nonZeroIndex + 2);
+        final formattedFractionalPart = '0.$zeros$beforeNonZeroIndex$afterNonZeroIndex';
         return formattedFractionalPart;
       }
     }
 
     var nonZeroIndex = 2;
-    while (
-        nonZeroIndex < stringValue.length && stringValue[nonZeroIndex] == '0') {
+    while (nonZeroIndex < stringValue.length && stringValue[nonZeroIndex] == '0') {
       nonZeroIndex++;
     }
 
@@ -129,11 +124,9 @@ class CryptoPriceFormatter extends StatelessWidget {
     }
     final beforeNonZero = stringValue.substring(0, nonZeroIndex);
     final remainingPart = stringValue.substring(nonZeroIndex);
-    final remainingDouble =
-        double.parse('0.${remainingPart.replaceAll('-', '')}');
+    final remainingDouble = double.parse('0.${remainingPart.replaceAll('-', '')}');
     final truncatedRemaining = remainingDouble.toStringAsFixed(5);
-    final formattedTruncated =
-        truncatedRemaining.substring(2).replaceAll(RegExp(r'0*$'), '');
+    final formattedTruncated = truncatedRemaining.substring(2).replaceAll(RegExp(r'0*$'), '');
     final hasNegativeSign = remainingPart.startsWith('-');
     final sign = hasNegativeSign ? '-' : '';
     final result = '$beforeNonZero$sign$formattedTruncated';

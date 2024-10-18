@@ -9,8 +9,7 @@ part of 'all_settings_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AllSettingsState on _AllSettingsState, Store {
-  late final _$currentIndexAtom =
-      Atom(name: '_AllSettingsState.currentIndex', context: context);
+  late final _$currentIndexAtom = Atom(name: '_AllSettingsState.currentIndex', context: context);
 
   @override
   int get currentIndex {
@@ -25,8 +24,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$tabCurrentIndexAtom =
-      Atom(name: '_AllSettingsState.tabCurrentIndex', context: context);
+  late final _$tabCurrentIndexAtom = Atom(name: '_AllSettingsState.tabCurrentIndex', context: context);
 
   @override
   int get tabCurrentIndex {
@@ -41,8 +39,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isInAddCardAtom =
-      Atom(name: '_AllSettingsState.isInAddCard', context: context);
+  late final _$isInAddCardAtom = Atom(name: '_AllSettingsState.isInAddCard', context: context);
 
   @override
   bool get isInAddCard {
@@ -57,8 +54,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isInAddBarAtom =
-      Atom(name: '_AllSettingsState.isInAddBar', context: context);
+  late final _$isInAddBarAtom = Atom(name: '_AllSettingsState.isInAddBar', context: context);
 
   @override
   bool get isInAddBar {
@@ -73,8 +69,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isAcceptedAtom =
-      Atom(name: '_AllSettingsState.isAccepted', context: context);
+  late final _$isAcceptedAtom = Atom(name: '_AllSettingsState.isAccepted', context: context);
 
   @override
   bool get isAccepted {
@@ -89,8 +84,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isCheckboxAcceptedAtom =
-      Atom(name: '_AllSettingsState.isCheckboxAccepted', context: context);
+  late final _$isCheckboxAcceptedAtom = Atom(name: '_AllSettingsState.isCheckboxAccepted', context: context);
 
   @override
   bool get isCheckboxAccepted {
@@ -105,8 +99,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isActiveAtom =
-      Atom(name: '_AllSettingsState.isActive', context: context);
+  late final _$isActiveAtom = Atom(name: '_AllSettingsState.isActive', context: context);
 
   @override
   bool get isActive {
@@ -121,8 +114,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isActivatedCheckBoxAtom =
-      Atom(name: '_AllSettingsState.isActivatedCheckBox', context: context);
+  late final _$isActivatedCheckBoxAtom = Atom(name: '_AllSettingsState.isActivatedCheckBox', context: context);
 
   @override
   bool get isActivatedCheckBox {
@@ -137,8 +129,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isLineVisibleAtom =
-      Atom(name: '_AllSettingsState.isLineVisible', context: context);
+  late final _$isLineVisibleAtom = Atom(name: '_AllSettingsState.isLineVisible', context: context);
 
   @override
   bool get isLineVisible {
@@ -153,8 +144,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isAddressCopiedAtom =
-      Atom(name: '_AllSettingsState.isAddressCopied', context: context);
+  late final _$isAddressCopiedAtom = Atom(name: '_AllSettingsState.isAddressCopied', context: context);
 
   @override
   bool get isAddressCopied {
@@ -169,8 +159,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isReorderingStartAtom =
-      Atom(name: '_AllSettingsState.isReorderingStart', context: context);
+  late final _$isReorderingStartAtom = Atom(name: '_AllSettingsState.isReorderingStart', context: context);
 
   @override
   bool get isReorderingStart {
@@ -185,8 +174,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isButtonEnabledAtom =
-      Atom(name: '_AllSettingsState.isButtonEnabled', context: context);
+  late final _$isButtonEnabledAtom = Atom(name: '_AllSettingsState.isButtonEnabled', context: context);
 
   @override
   bool get isButtonEnabled {
@@ -201,8 +189,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$isNfcSupportedAtom =
-      Atom(name: '_AllSettingsState.isNfcSupported', context: context);
+  late final _$isNfcSupportedAtom = Atom(name: '_AllSettingsState.isNfcSupported', context: context);
 
   @override
   bool get isNfcSupported {
@@ -217,8 +204,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$currentPageAtom =
-      Atom(name: '_AllSettingsState.currentPage', context: context);
+  late final _$currentPageAtom = Atom(name: '_AllSettingsState.currentPage', context: context);
 
   @override
   int get currentPage {
@@ -233,45 +219,39 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
-  late final _$checkNfcSupportAsyncAction =
-      AsyncAction('_AllSettingsState.checkNfcSupport', context: context);
+  late final _$checkNfcSupportAsyncAction = AsyncAction('_AllSettingsState.checkNfcSupport', context: context);
 
   @override
   Future<void> checkNfcSupport() {
     return _$checkNfcSupportAsyncAction.run(() => super.checkNfcSupport());
   }
 
-  late final _$updateIndexAsyncAction =
-      AsyncAction('_AllSettingsState.updateIndex', context: context);
+  late final _$updateIndexAsyncAction = AsyncAction('_AllSettingsState.updateIndex', context: context);
 
   @override
   Future<void> updateIndex(int index) {
     return _$updateIndexAsyncAction.run(() => super.updateIndex(index));
   }
 
-  late final _$updateTabIndexAsyncAction =
-      AsyncAction('_AllSettingsState.updateTabIndex', context: context);
+  late final _$updateTabIndexAsyncAction = AsyncAction('_AllSettingsState.updateTabIndex', context: context);
 
   @override
   Future<void> updateTabIndex(int index) {
     return _$updateTabIndexAsyncAction.run(() => super.updateTabIndex(index));
   }
 
-  late final _$copyAddressAsyncAction =
-      AsyncAction('_AllSettingsState.copyAddress', context: context);
+  late final _$copyAddressAsyncAction = AsyncAction('_AllSettingsState.copyAddress', context: context);
 
   @override
   Future<void> copyAddress() {
     return _$copyAddressAsyncAction.run(() => super.copyAddress());
   }
 
-  late final _$_AllSettingsStateActionController =
-      ActionController(name: '_AllSettingsState', context: context);
+  late final _$_AllSettingsStateActionController = ActionController(name: '_AllSettingsState', context: context);
 
   @override
   void setPage(int page) {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.setPage');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.setPage');
     try {
       return super.setPage(page);
     } finally {
@@ -281,8 +261,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   bool isEmpty() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.isEmpty');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.isEmpty');
     try {
       return super.isEmpty();
     } finally {
@@ -292,8 +271,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void makeVisible() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.makeVisible');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.makeVisible');
     try {
       return super.makeVisible();
     } finally {
@@ -303,8 +281,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void makeActiveCheckbox() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.makeActiveCheckbox');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.makeActiveCheckbox');
     try {
       return super.makeActiveCheckbox();
     } finally {
@@ -314,8 +291,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void makeActive() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.makeActive');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.makeActive');
     try {
       return super.makeActive();
     } finally {
@@ -325,8 +301,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void checkboxAccept() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.checkboxAccept');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.checkboxAccept');
     try {
       return super.checkboxAccept();
     } finally {
@@ -336,8 +311,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void accept() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.accept');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.accept');
     try {
       return super.accept();
     } finally {
@@ -347,8 +321,8 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void updateAddCardPosition({AbstractCard? card, required int tabIndex}) {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.updateAddCardPosition');
+    final _$actionInfo =
+        _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.updateAddCardPosition');
     try {
       return super.updateAddCardPosition(card: card, tabIndex: tabIndex);
     } finally {
@@ -358,8 +332,7 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
 
   @override
   void startReorder() {
-    final _$actionInfo = _$_AllSettingsStateActionController.startAction(
-        name: '_AllSettingsState.startReorder');
+    final _$actionInfo = _$_AllSettingsStateActionController.startAction(name: '_AllSettingsState.startReorder');
     try {
       return super.startReorder();
     } finally {

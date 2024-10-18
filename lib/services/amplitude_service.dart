@@ -31,8 +31,7 @@ Future<void> recordAmplitudeEventPartTwo(AmplitudeEventPartTwo event) async {
 Future<void> recordUserProperty(IdentifyModel identification) async {
   final identify = Identify();
   final properties = identification.toJson();
-  final filteredProperties = Map<String, dynamic>.from(properties)
-    ..removeWhere((key, value) => key == 'runtimeType');
+  final filteredProperties = Map<String, dynamic>.from(properties)..removeWhere((key, value) => key == 'runtimeType');
   for (final entry in filteredProperties.entries) {
     identify.set(entry.key, entry.value);
   }

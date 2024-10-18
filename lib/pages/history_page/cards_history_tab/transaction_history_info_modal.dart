@@ -134,9 +134,7 @@ class HistoryInfoModal extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: FontFamily.redHatMedium,
                           fontSize: 16,
-                          color: transaction.type != 'Sent'
-                              ? Colors.green
-                              : Colors.red,
+                          color: transaction.type != 'Sent' ? Colors.green : Colors.red,
                           fontWeight: FontWeight.w700,
                         ),
                       ),

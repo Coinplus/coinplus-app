@@ -207,15 +207,11 @@ final lightTheme = base.copyWith(
         );
       }),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
-        return states.contains(WidgetState.disabled)
-            ? Colors.white
-            : Colors.grey;
+        return states.contains(WidgetState.disabled) ? Colors.white : Colors.grey;
       }),
       backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(WidgetState.disabled)
-              ? Colors.black.withOpacity(0.4)
-              : Colors.black;
+          return states.contains(WidgetState.disabled) ? Colors.black.withOpacity(0.4) : Colors.black;
         },
       ),
       overlayColor: WidgetStateProperty.all(

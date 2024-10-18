@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_controller.dart';
@@ -90,6 +91,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _checkFirstTimeOpen();
+
     controller.addListener(() async {
       if (widget.onOpenSendReceiveModal == null) {
         return;
@@ -110,6 +112,11 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
     if (_balanceStore.bars.isNotEmpty) {
       _balanceStore.getBarsInfo();
     }
+    if (_balanceStore.backupCards.isNotEmpty) {
+      _balanceStore.getBackupCardsInfo();
+      log(_balanceStore.backupCards.toString());
+    }
+
     _rampService.configureRamp(
       address: _balanceStore.cards.isNotEmpty
           ? _balanceStore.cards[_balanceStore.cardCurrentIndex].address

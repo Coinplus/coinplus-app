@@ -13,36 +13,30 @@ mixin _$ChangeSelectedAddressState on ChangeSelectedAddressStateBase, Store {
 
   @override
   ObservableList<CardModel> get cards => (_$cardsComputed ??=
-          Computed<ObservableList<CardModel>>(() => super.cards,
-              name: 'ChangeSelectedAddressStateBase.cards'))
+          Computed<ObservableList<CardModel>>(() => super.cards, name: 'ChangeSelectedAddressStateBase.cards'))
       .value;
   Computed<ObservableList<BarModel>>? _$barsComputed;
 
   @override
-  ObservableList<BarModel> get bars =>
-      (_$barsComputed ??= Computed<ObservableList<BarModel>>(() => super.bars,
-              name: 'ChangeSelectedAddressStateBase.bars'))
-          .value;
+  ObservableList<BarModel> get bars => (_$barsComputed ??=
+          Computed<ObservableList<BarModel>>(() => super.bars, name: 'ChangeSelectedAddressStateBase.bars'))
+      .value;
   Computed<CoinResultModel?>? _$btcComputed;
 
   @override
   CoinResultModel? get btc =>
-      (_$btcComputed ??= Computed<CoinResultModel?>(() => super.btc,
-              name: 'ChangeSelectedAddressStateBase.btc'))
-          .value;
+      (_$btcComputed ??= Computed<CoinResultModel?>(() => super.btc, name: 'ChangeSelectedAddressStateBase.btc')).value;
   Computed<int>? _$selectedCardIndexComputed;
 
   @override
-  int get selectedCardIndex => (_$selectedCardIndexComputed ??= Computed<int>(
-          () => super.selectedCardIndex,
-          name: 'ChangeSelectedAddressStateBase.selectedCardIndex'))
+  int get selectedCardIndex => (_$selectedCardIndexComputed ??=
+          Computed<int>(() => super.selectedCardIndex, name: 'ChangeSelectedAddressStateBase.selectedCardIndex'))
       .value;
   Computed<int>? _$selectedBarIndexComputed;
 
   @override
-  int get selectedBarIndex => (_$selectedBarIndexComputed ??= Computed<int>(
-          () => super.selectedBarIndex,
-          name: 'ChangeSelectedAddressStateBase.selectedBarIndex'))
+  int get selectedBarIndex => (_$selectedBarIndexComputed ??=
+          Computed<int>(() => super.selectedBarIndex, name: 'ChangeSelectedAddressStateBase.selectedBarIndex'))
       .value;
 
   @override

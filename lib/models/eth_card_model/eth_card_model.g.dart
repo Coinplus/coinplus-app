@@ -10,18 +10,14 @@ _$EthCardModelImpl _$$EthCardModelImplFromJson(Map json) => _$EthCardModelImpl(
       address: json['address'] as String,
       finalBalance: json['amount'] as num?,
       totalReceived: (json['rank'] as num?)?.toInt(),
-      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ??
-          CardColor.ORANGE,
-      type:
-          $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.CARD,
+      color: $enumDecodeNullable(_$CardColorEnumMap, json['color']) ?? CardColor.ORANGE,
+      type: $enumDecodeNullable(_$CardTypeEnumMap, json['type']) ?? CardType.CARD,
       name: json['name'] as String? ?? 'Coinplus Ethereum Card',
-      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ??
-          WalletType.COINPLUS_WALLET,
+      label: $enumDecodeNullable(_$WalletTypeEnumMap, json['label']) ?? WalletType.COINPLUS_WALLET,
       blockchain: json['blockchain'] as String? ?? 'ETH',
       isBackup: json['isBackup'] as bool? ?? false,
-      createdAt: json['createdAt'] == null
-          ? ''
-          : timeFromJson(json['createdAt'] as String),
+      hasBackedUp: json['hasBackedUp'] as bool? ?? false,
+      createdAt: json['createdAt'] == null ? '' : timeFromJson(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$EthCardModelImplToJson(_$EthCardModelImpl instance) {
@@ -43,6 +39,7 @@ Map<String, dynamic> _$$EthCardModelImplToJson(_$EthCardModelImpl instance) {
   val['label'] = _$WalletTypeEnumMap[instance.label]!;
   val['blockchain'] = instance.blockchain;
   val['isBackup'] = instance.isBackup;
+  val['hasBackedUp'] = instance.hasBackedUp;
   val['createdAt'] = instance.createdAt;
   return val;
 }

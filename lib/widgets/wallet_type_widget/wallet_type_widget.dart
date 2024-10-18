@@ -21,20 +21,17 @@ class WalletTypeWidget extends StatefulWidget {
   State<WalletTypeWidget> createState() => _WalletTypeWidgetState();
 }
 
-class _WalletTypeWidgetState extends State<WalletTypeWidget>
-    with TickerProviderStateMixin {
+class _WalletTypeWidgetState extends State<WalletTypeWidget> with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 400),
   );
   late final Animation<Offset> _cardAnimation =
-      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.44, 0))
-          .animate(
+      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.44, 0)).animate(
     CurvedAnimation(parent: _controller, curve: Curves.decelerate),
   );
   late final Animation<Offset> _barAnimation =
-      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-0.73, 0))
-          .animate(
+      Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-0.73, 0)).animate(
     CurvedAnimation(parent: _controller, curve: Curves.decelerate),
   );
   final _formFactorState = WalletTypeState();

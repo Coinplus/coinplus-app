@@ -7,8 +7,7 @@ import '../widgets/custom_snack_bar/top_snack.dart';
 import 'compute_private_key.dart';
 
 String? onLinkPassed(Map<dynamic, dynamic> data) {
-  if (data.containsKey('+non_branch_link') &&
-      data['+non_branch_link'] != null) {
+  if (data.containsKey('+non_branch_link') && data['+non_branch_link'] != null) {
     final String url = data['+non_branch_link'];
     final splitting = url.split('/');
     final part = splitting[splitting.length - 1];

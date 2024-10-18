@@ -9,8 +9,7 @@ part of 'contact_us_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ContactUsStore on _ContactUsStore, Store {
-  late final _$isEmailValidAtom =
-      Atom(name: '_ContactUsStore.isEmailValid', context: context);
+  late final _$isEmailValidAtom = Atom(name: '_ContactUsStore.isEmailValid', context: context);
 
   @override
   bool get isEmailValid {
@@ -25,8 +24,7 @@ mixin _$ContactUsStore on _ContactUsStore, Store {
     });
   }
 
-  late final _$isButtonEnabledAtom =
-      Atom(name: '_ContactUsStore.isButtonEnabled', context: context);
+  late final _$isButtonEnabledAtom = Atom(name: '_ContactUsStore.isButtonEnabled', context: context);
 
   @override
   bool get isButtonEnabled {
@@ -41,13 +39,11 @@ mixin _$ContactUsStore on _ContactUsStore, Store {
     });
   }
 
-  late final _$_ContactUsStoreActionController =
-      ActionController(name: '_ContactUsStore', context: context);
+  late final _$_ContactUsStoreActionController = ActionController(name: '_ContactUsStore', context: context);
 
   @override
   bool validateEmail(String email) {
-    final _$actionInfo = _$_ContactUsStoreActionController.startAction(
-        name: '_ContactUsStore.validateEmail');
+    final _$actionInfo = _$_ContactUsStoreActionController.startAction(name: '_ContactUsStore.validateEmail');
     try {
       return super.validateEmail(email);
     } finally {
@@ -57,8 +53,7 @@ mixin _$ContactUsStore on _ContactUsStore, Store {
 
   @override
   bool isEmpty() {
-    final _$actionInfo = _$_ContactUsStoreActionController.startAction(
-        name: '_ContactUsStore.isEmpty');
+    final _$actionInfo = _$_ContactUsStoreActionController.startAction(name: '_ContactUsStore.isEmpty');
     try {
       return super.isEmpty();
     } finally {

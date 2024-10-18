@@ -33,14 +33,12 @@ mixin _$MarketCapDto {
   /// Create a copy of MarketCapDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MarketCapDtoCopyWith<MarketCapDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  $MarketCapDtoCopyWith<MarketCapDto> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $MarketCapDtoCopyWith<$Res> {
-  factory $MarketCapDtoCopyWith(
-          MarketCapDto value, $Res Function(MarketCapDto) then) =
+  factory $MarketCapDtoCopyWith(MarketCapDto value, $Res Function(MarketCapDto) then) =
       _$MarketCapDtoCopyWithImpl<$Res, MarketCapDto>;
   @useResult
   $Res call(
@@ -53,8 +51,7 @@ abstract class $MarketCapDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MarketCapDtoCopyWithImpl<$Res, $Val extends MarketCapDto>
-    implements $MarketCapDtoCopyWith<$Res> {
+class _$MarketCapDtoCopyWithImpl<$Res, $Val extends MarketCapDto> implements $MarketCapDtoCopyWith<$Res> {
   _$MarketCapDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -104,10 +101,8 @@ class _$MarketCapDtoCopyWithImpl<$Res, $Val extends MarketCapDto>
 }
 
 /// @nodoc
-abstract class _$$MarketCapDtoImplCopyWith<$Res>
-    implements $MarketCapDtoCopyWith<$Res> {
-  factory _$$MarketCapDtoImplCopyWith(
-          _$MarketCapDtoImpl value, $Res Function(_$MarketCapDtoImpl) then) =
+abstract class _$$MarketCapDtoImplCopyWith<$Res> implements $MarketCapDtoCopyWith<$Res> {
+  factory _$$MarketCapDtoImplCopyWith(_$MarketCapDtoImpl value, $Res Function(_$MarketCapDtoImpl) then) =
       __$$MarketCapDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -121,11 +116,9 @@ abstract class _$$MarketCapDtoImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MarketCapDtoImplCopyWithImpl<$Res>
-    extends _$MarketCapDtoCopyWithImpl<$Res, _$MarketCapDtoImpl>
+class __$$MarketCapDtoImplCopyWithImpl<$Res> extends _$MarketCapDtoCopyWithImpl<$Res, _$MarketCapDtoImpl>
     implements _$$MarketCapDtoImplCopyWith<$Res> {
-  __$$MarketCapDtoImplCopyWithImpl(
-      _$MarketCapDtoImpl _value, $Res Function(_$MarketCapDtoImpl) _then)
+  __$$MarketCapDtoImplCopyWithImpl(_$MarketCapDtoImpl _value, $Res Function(_$MarketCapDtoImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of MarketCapDto
@@ -180,8 +173,7 @@ class _$MarketCapDtoImpl with DiagnosticableTreeMixin implements _MarketCapDto {
       required this.volumeChange,
       required this.btcDominanceChange});
 
-  factory _$MarketCapDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MarketCapDtoImplFromJson(json);
+  factory _$MarketCapDtoImpl.fromJson(Map<String, dynamic> json) => _$$MarketCapDtoImplFromJson(json);
 
   @override
   final double marketCap;
@@ -219,23 +211,19 @@ class _$MarketCapDtoImpl with DiagnosticableTreeMixin implements _MarketCapDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarketCapDtoImpl &&
-            (identical(other.marketCap, marketCap) ||
-                other.marketCap == marketCap) &&
+            (identical(other.marketCap, marketCap) || other.marketCap == marketCap) &&
             (identical(other.volume, volume) || other.volume == volume) &&
-            (identical(other.btcDominance, btcDominance) ||
-                other.btcDominance == btcDominance) &&
-            (identical(other.marketCapChange, marketCapChange) ||
-                other.marketCapChange == marketCapChange) &&
-            (identical(other.volumeChange, volumeChange) ||
-                other.volumeChange == volumeChange) &&
+            (identical(other.btcDominance, btcDominance) || other.btcDominance == btcDominance) &&
+            (identical(other.marketCapChange, marketCapChange) || other.marketCapChange == marketCapChange) &&
+            (identical(other.volumeChange, volumeChange) || other.volumeChange == volumeChange) &&
             (identical(other.btcDominanceChange, btcDominanceChange) ||
                 other.btcDominanceChange == btcDominanceChange));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, marketCap, volume, btcDominance,
-      marketCapChange, volumeChange, btcDominanceChange);
+  int get hashCode =>
+      Object.hash(runtimeType, marketCap, volume, btcDominance, marketCapChange, volumeChange, btcDominanceChange);
 
   /// Create a copy of MarketCapDto
   /// with the given fields replaced by the non-null parameter values.
@@ -262,8 +250,7 @@ abstract class _MarketCapDto implements MarketCapDto {
       required final double volumeChange,
       required final double btcDominanceChange}) = _$MarketCapDtoImpl;
 
-  factory _MarketCapDto.fromJson(Map<String, dynamic> json) =
-      _$MarketCapDtoImpl.fromJson;
+  factory _MarketCapDto.fromJson(Map<String, dynamic> json) = _$MarketCapDtoImpl.fromJson;
 
   @override
   double get marketCap;
@@ -282,6 +269,5 @@ abstract class _MarketCapDto implements MarketCapDto {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MarketCapDtoImplCopyWith<_$MarketCapDtoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$MarketCapDtoImplCopyWith<_$MarketCapDtoImpl> get copyWith => throw _privateConstructorUsedError;
 }

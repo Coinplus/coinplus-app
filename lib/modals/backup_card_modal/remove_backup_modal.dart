@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:action_slider/action_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -84,25 +82,25 @@ class RemoveBackupCard extends StatelessWidget {
                 ),
                 action: (controller) async {
                   final backupCard = _balanceStore.backupCards.firstWhereOrNull(
-                    (card) =>
-                        card.address == _balanceStore.backupSingleCard?.address,
+                    (card) => card.address == _balanceStore.backupSingleCard?.address,
                   );
                   controller.loading();
                   await Future.delayed(const Duration(seconds: 1));
                   controller.success();
-                  await _balanceStore
-                      .getSelectedBackupCard(backupCard!.address);
-                  await _balanceStore.removeSelectedBackupCard();
+                  await _balanceStore.removeSelectedBackupCard(address: backupCard!.address);
                   await StorageUtils.deleteBackupCard(cardAddress);
                   await _secureStorage.deleteBackup(
                     mainCardAddress: cardAddress,
+                  );
+                  _balanceStore.changeCardBackupStatusAndSave(
+                    cardAddress: cardAddress,
+                    hasBackedUp: false,
                   );
                   Gaimon.success();
                   await showCustomSnackBar(
                     context: context,
                     message: 'Your backup card was removed',
                   );
-                  log(_balanceStore.backupCards.toString());
                   await router.maybePop();
                 },
                 boxShadow: [

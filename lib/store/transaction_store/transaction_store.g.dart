@@ -12,83 +12,67 @@ mixin _$TransactionStore on _TransactionStore, Store {
   Computed<String>? _$currentAddressComputed;
 
   @override
-  String get currentAddress =>
-      (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress,
-              name: '_TransactionStore.currentAddress'))
-          .value;
+  String get currentAddress => (_$currentAddressComputed ??=
+          Computed<String>(() => super.currentAddress, name: '_TransactionStore.currentAddress'))
+      .value;
   Computed<ObservableList<CardModel>>? _$cardsComputed;
 
   @override
-  ObservableList<CardModel> get cards => (_$cardsComputed ??=
-          Computed<ObservableList<CardModel>>(() => super.cards,
-              name: '_TransactionStore.cards'))
-      .value;
+  ObservableList<CardModel> get cards =>
+      (_$cardsComputed ??= Computed<ObservableList<CardModel>>(() => super.cards, name: '_TransactionStore.cards'))
+          .value;
   Computed<ObservableList<BarModel>>? _$barsComputed;
 
   @override
   ObservableList<BarModel> get bars =>
-      (_$barsComputed ??= Computed<ObservableList<BarModel>>(() => super.bars,
-              name: '_TransactionStore.bars'))
-          .value;
+      (_$barsComputed ??= Computed<ObservableList<BarModel>>(() => super.bars, name: '_TransactionStore.bars')).value;
   Computed<CoinResultModel?>? _$btcComputed;
 
   @override
   CoinResultModel? get btc =>
-      (_$btcComputed ??= Computed<CoinResultModel?>(() => super.btc,
-              name: '_TransactionStore.btc'))
-          .value;
+      (_$btcComputed ??= Computed<CoinResultModel?>(() => super.btc, name: '_TransactionStore.btc')).value;
   Computed<int>? _$selectedCardIndexComputed;
 
   @override
-  int get selectedCardIndex => (_$selectedCardIndexComputed ??= Computed<int>(
-          () => super.selectedCardIndex,
-          name: '_TransactionStore.selectedCardIndex'))
+  int get selectedCardIndex => (_$selectedCardIndexComputed ??=
+          Computed<int>(() => super.selectedCardIndex, name: '_TransactionStore.selectedCardIndex'))
       .value;
   Computed<int>? _$selectedBarIndexComputed;
 
   @override
-  int get selectedBarIndex => (_$selectedBarIndexComputed ??= Computed<int>(
-          () => super.selectedBarIndex,
-          name: '_TransactionStore.selectedBarIndex'))
+  int get selectedBarIndex => (_$selectedBarIndexComputed ??=
+          Computed<int>(() => super.selectedBarIndex, name: '_TransactionStore.selectedBarIndex'))
       .value;
   Computed<int>? _$selectedFeeComputed;
 
   @override
   int get selectedFee =>
-      (_$selectedFeeComputed ??= Computed<int>(() => super.selectedFee,
-              name: '_TransactionStore.selectedFee'))
-          .value;
+      (_$selectedFeeComputed ??= Computed<int>(() => super.selectedFee, name: '_TransactionStore.selectedFee')).value;
   Computed<int>? _$usedUtxosCountComputed;
 
   @override
   int get usedUtxosCount =>
-      (_$usedUtxosCountComputed ??= Computed<int>(() => super.usedUtxosCount,
-              name: '_TransactionStore.usedUtxosCount'))
+      (_$usedUtxosCountComputed ??= Computed<int>(() => super.usedUtxosCount, name: '_TransactionStore.usedUtxosCount'))
           .value;
   Computed<int>? _$outputByteComputed;
 
   @override
   int get outputByte =>
-      (_$outputByteComputed ??= Computed<int>(() => super.outputByte,
-              name: '_TransactionStore.outputByte'))
-          .value;
+      (_$outputByteComputed ??= Computed<int>(() => super.outputByte, name: '_TransactionStore.outputByte')).value;
   Computed<int>? _$calculatedTxFeeComputed;
 
   @override
-  int get calculatedTxFee =>
-      (_$calculatedTxFeeComputed ??= Computed<int>(() => super.calculatedTxFee,
-              name: '_TransactionStore.calculatedTxFee'))
-          .value;
+  int get calculatedTxFee => (_$calculatedTxFeeComputed ??=
+          Computed<int>(() => super.calculatedTxFee, name: '_TransactionStore.calculatedTxFee'))
+      .value;
   Computed<int>? _$calculatedFeeComputed;
 
   @override
   int get calculatedFee =>
-      (_$calculatedFeeComputed ??= Computed<int>(() => super.calculatedFee,
-              name: '_TransactionStore.calculatedFee'))
+      (_$calculatedFeeComputed ??= Computed<int>(() => super.calculatedFee, name: '_TransactionStore.calculatedFee'))
           .value;
 
-  late final _$utxoDataAtom =
-      Atom(name: '_TransactionStore.utxoData', context: context);
+  late final _$utxoDataAtom = Atom(name: '_TransactionStore.utxoData', context: context);
 
   @override
   Status? get utxoData {
@@ -103,8 +87,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$sendAmountAtom =
-      Atom(name: '_TransactionStore.sendAmount', context: context);
+  late final _$sendAmountAtom = Atom(name: '_TransactionStore.sendAmount', context: context);
 
   @override
   int get sendAmount {
@@ -119,8 +102,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$totalValueAtom =
-      Atom(name: '_TransactionStore.totalValue', context: context);
+  late final _$totalValueAtom = Atom(name: '_TransactionStore.totalValue', context: context);
 
   @override
   int get totalValue {
@@ -135,8 +117,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$usedUtxosAtom =
-      Atom(name: '_TransactionStore.usedUtxos', context: context);
+  late final _$usedUtxosAtom = Atom(name: '_TransactionStore.usedUtxos', context: context);
 
   @override
   ObservableList<UtxoModel> get usedUtxos {
@@ -151,8 +132,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$txFeeAtom =
-      Atom(name: '_TransactionStore.txFee', context: context);
+  late final _$txFeeAtom = Atom(name: '_TransactionStore.txFee', context: context);
 
   @override
   int get txFee {
@@ -167,8 +147,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$txFeeRateAtom =
-      Atom(name: '_TransactionStore.txFeeRate', context: context);
+  late final _$txFeeRateAtom = Atom(name: '_TransactionStore.txFeeRate', context: context);
 
   @override
   TxFeeDto? get txFeeRate {
@@ -183,8 +162,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$receiverWalletAddressAtom =
-      Atom(name: '_TransactionStore.receiverWalletAddress', context: context);
+  late final _$receiverWalletAddressAtom = Atom(name: '_TransactionStore.receiverWalletAddress', context: context);
 
   @override
   String get receiverWalletAddress {
@@ -194,14 +172,12 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   set receiverWalletAddress(String value) {
-    _$receiverWalletAddressAtom.reportWrite(value, super.receiverWalletAddress,
-        () {
+    _$receiverWalletAddressAtom.reportWrite(value, super.receiverWalletAddress, () {
       super.receiverWalletAddress = value;
     });
   }
 
-  late final _$txHexAtom =
-      Atom(name: '_TransactionStore.txHex', context: context);
+  late final _$txHexAtom = Atom(name: '_TransactionStore.txHex', context: context);
 
   @override
   String get txHex {
@@ -216,8 +192,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$broadcastLoadingAtom =
-      Atom(name: '_TransactionStore.broadcastLoading', context: context);
+  late final _$broadcastLoadingAtom = Atom(name: '_TransactionStore.broadcastLoading', context: context);
 
   @override
   bool get broadcastLoading {
@@ -232,8 +207,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$isTxInPendingAtom =
-      Atom(name: '_TransactionStore.isTxInPending', context: context);
+  late final _$isTxInPendingAtom = Atom(name: '_TransactionStore.isTxInPending', context: context);
 
   @override
   bool get isTxInPending {
@@ -248,8 +222,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$selectedCardAtom =
-      Atom(name: '_TransactionStore.selectedCard', context: context);
+  late final _$selectedCardAtom = Atom(name: '_TransactionStore.selectedCard', context: context);
 
   @override
   int get selectedCard {
@@ -264,8 +237,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$selectedBarAtom =
-      Atom(name: '_TransactionStore.selectedBar', context: context);
+  late final _$selectedBarAtom = Atom(name: '_TransactionStore.selectedBar', context: context);
 
   @override
   int get selectedBar {
@@ -280,8 +252,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$utxoLoadingAtom =
-      Atom(name: '_TransactionStore.utxoLoading', context: context);
+  late final _$utxoLoadingAtom = Atom(name: '_TransactionStore.utxoLoading', context: context);
 
   @override
   bool get utxoLoading {
@@ -296,8 +267,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$feeModeAtom =
-      Atom(name: '_TransactionStore.feeMode', context: context);
+  late final _$feeModeAtom = Atom(name: '_TransactionStore.feeMode', context: context);
 
   @override
   FeeRateMode get feeMode {
@@ -312,8 +282,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$sortedUtxosAtom =
-      Atom(name: '_TransactionStore.sortedUtxos', context: context);
+  late final _$sortedUtxosAtom = Atom(name: '_TransactionStore.sortedUtxos', context: context);
 
   @override
   ObservableList<UtxoModel> get sortedUtxos {
@@ -328,8 +297,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$inputQuantityAtom =
-      Atom(name: '_TransactionStore.inputQuantity', context: context);
+  late final _$inputQuantityAtom = Atom(name: '_TransactionStore.inputQuantity', context: context);
 
   @override
   int get inputQuantity {
@@ -344,16 +312,14 @@ mixin _$TransactionStore on _TransactionStore, Store {
     });
   }
 
-  late final _$findOptimalUtxoAsyncAction =
-      AsyncAction('_TransactionStore.findOptimalUtxo', context: context);
+  late final _$findOptimalUtxoAsyncAction = AsyncAction('_TransactionStore.findOptimalUtxo', context: context);
 
   @override
   Future<void> findOptimalUtxo() {
     return _$findOptimalUtxoAsyncAction.run(() => super.findOptimalUtxo());
   }
 
-  late final _$createTransactionAsyncAction =
-      AsyncAction('_TransactionStore.createTransaction', context: context);
+  late final _$createTransactionAsyncAction = AsyncAction('_TransactionStore.createTransaction', context: context);
 
   @override
   Future<void> createTransaction(
@@ -361,11 +327,8 @@ mixin _$TransactionStore on _TransactionStore, Store {
       required ({String address, int amount}) output,
       required int fee,
       required String refundAddress}) {
-    return _$createTransactionAsyncAction.run(() => super.createTransaction(
-        inputs: inputs,
-        output: output,
-        fee: fee,
-        refundAddress: refundAddress));
+    return _$createTransactionAsyncAction
+        .run(() => super.createTransaction(inputs: inputs, output: output, fee: fee, refundAddress: refundAddress));
   }
 
   late final _$broadcastTransactionAsyncAction =
@@ -373,17 +336,15 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   Future<String> broadcastTransaction() {
-    return _$broadcastTransactionAsyncAction
-        .run(() => super.broadcastTransaction());
+    return _$broadcastTransactionAsyncAction.run(() => super.broadcastTransaction());
   }
 
-  late final _$_TransactionStoreActionController =
-      ActionController(name: '_TransactionStore', context: context);
+  late final _$_TransactionStoreActionController = ActionController(name: '_TransactionStore', context: context);
 
   @override
   void createTransactionHex() {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.createTransactionHex');
+    final _$actionInfo =
+        _$_TransactionStoreActionController.startAction(name: '_TransactionStore.createTransactionHex');
     try {
       return super.createTransactionHex();
     } finally {
@@ -393,8 +354,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void onSelectCard(int index) {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.onSelectCard');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.onSelectCard');
     try {
       return super.onSelectCard(index);
     } finally {
@@ -404,8 +364,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void onSelectBar(int index) {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.onSelectBar');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.onSelectBar');
     try {
       return super.onSelectBar(index);
     } finally {
@@ -415,8 +374,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void setSortedUtxos(List<UtxoModel> newList) {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.setSortedUtxos');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.setSortedUtxos');
     try {
       return super.setSortedUtxos(newList);
     } finally {
@@ -426,8 +384,8 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void setReceiverWalletAddress(String walletAddress) {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.setReceiverWalletAddress');
+    final _$actionInfo =
+        _$_TransactionStoreActionController.startAction(name: '_TransactionStore.setReceiverWalletAddress');
     try {
       return super.setReceiverWalletAddress(walletAddress);
     } finally {
@@ -437,8 +395,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void setTotalValue(int newValue) {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.setTotalValue');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.setTotalValue');
     try {
       return super.setTotalValue(newValue);
     } finally {
@@ -448,8 +405,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void updateTxFee() {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.updateTxFee');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.updateTxFee');
     try {
       return super.updateTxFee();
     } finally {
@@ -459,8 +415,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void updateFeeRateMode(FeeRateMode mode) {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.updateFeeRateMode');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.updateFeeRateMode');
     try {
       return super.updateFeeRateMode(mode);
     } finally {
@@ -470,8 +425,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   void combineUtxos() {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.combineUtxos');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.combineUtxos');
     try {
       return super.combineUtxos();
     } finally {
@@ -481,8 +435,7 @@ mixin _$TransactionStore on _TransactionStore, Store {
 
   @override
   int findMaxUtxo() {
-    final _$actionInfo = _$_TransactionStoreActionController.startAction(
-        name: '_TransactionStore.findMaxUtxo');
+    final _$actionInfo = _$_TransactionStoreActionController.startAction(name: '_TransactionStore.findMaxUtxo');
     try {
       return super.findMaxUtxo();
     } finally {

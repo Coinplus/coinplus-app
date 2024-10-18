@@ -29,8 +29,7 @@ extension Converter on num {
     final stringValue = toString();
 
     var nonZeroIndex = 2;
-    while (
-        nonZeroIndex < stringValue.length && stringValue[nonZeroIndex] == '0') {
+    while (nonZeroIndex < stringValue.length && stringValue[nonZeroIndex] == '0') {
       nonZeroIndex++;
     }
 
@@ -39,11 +38,9 @@ extension Converter on num {
     }
     final beforeNonZero = stringValue.substring(0, nonZeroIndex);
     final remainingPart = stringValue.substring(nonZeroIndex);
-    final remainingDouble =
-        double.parse('0.${remainingPart.replaceAll('-', '')}');
+    final remainingDouble = double.parse('0.${remainingPart.replaceAll('-', '')}');
     final truncatedRemaining = remainingDouble.toStringAsFixed(5);
-    final formattedTruncated =
-        truncatedRemaining.substring(2).replaceAll(RegExp(r'0*$'), '');
+    final formattedTruncated = truncatedRemaining.substring(2).replaceAll(RegExp(r'0*$'), '');
     final hasNegativeSign = remainingPart.startsWith('-');
     final sign = hasNegativeSign ? '-' : '';
     final result = '$beforeNonZero$sign$formattedTruncated';

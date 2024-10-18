@@ -26,8 +26,7 @@ abstract class _ContactUsStore with Store {
 
   @action
   bool isEmpty() {
-    return isButtonEnabled = nameController.text.isNotEmpty &&
-        mailController.text.isNotEmpty &&
-        messageController.text.isNotEmpty;
+    return isButtonEnabled =
+        nameController.text.isNotEmpty && mailController.text.isNotEmpty && messageController.text.isNotEmpty;
   }
 }

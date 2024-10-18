@@ -8,8 +8,7 @@ final _secureStorage = SecureStorageService();
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
 Future<bool> isCardWalletActivated() async {
-  if (_balanceStore.cards.isNotEmpty &&
-      _balanceStore.cards.length != _balanceStore.cardCurrentIndex) {
+  if (_balanceStore.cards.isNotEmpty && _balanceStore.cards.length != _balanceStore.cardCurrentIndex) {
     return _secureStorage.checkWalletStatus(
       _balanceStore.cards[_balanceStore.cardCurrentIndex].address,
     );
@@ -19,7 +18,7 @@ Future<bool> isCardWalletActivated() async {
 }
 
 Future<bool> isCardWalletHasBackup({required String address}) async {
-  if (_balanceStore.backupCards.isNotEmpty) {
+  if (_balanceStore.cards.isNotEmpty && _balanceStore.cards.length != _balanceStore.cardCurrentIndex) {
     return _secureStorage.checkBackupStatus(
       address,
     );
@@ -29,11 +28,8 @@ Future<bool> isCardWalletHasBackup({required String address}) async {
 }
 
 Future<bool> isEthCardWalletActivated() async {
-  final ethCardIndex =
-      _balanceStore.cardCurrentIndex - _balanceStore.cards.length;
-  if (_balanceStore.ethCards.isNotEmpty &&
-      ethCardIndex >= 0 &&
-      ethCardIndex < _balanceStore.ethCards.length) {
+  final ethCardIndex = _balanceStore.cardCurrentIndex - _balanceStore.cards.length;
+  if (_balanceStore.ethCards.isNotEmpty && ethCardIndex >= 0 && ethCardIndex < _balanceStore.ethCards.length) {
     return _secureStorage.checkWalletStatus(
       _balanceStore.ethCards[ethCardIndex].address,
     );
@@ -43,8 +39,7 @@ Future<bool> isEthCardWalletActivated() async {
 }
 
 Future<bool> isBarWalletActivated() async {
-  if (_balanceStore.bars.isNotEmpty &&
-      _balanceStore.bars.length != _balanceStore.barCurrentIndex) {
+  if (_balanceStore.bars.isNotEmpty && _balanceStore.bars.length != _balanceStore.barCurrentIndex) {
     return _secureStorage.checkWalletStatus(
       _balanceStore.bars[_balanceStore.barCurrentIndex].address,
     );

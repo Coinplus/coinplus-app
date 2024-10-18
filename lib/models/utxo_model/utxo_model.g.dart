@@ -17,8 +17,7 @@ _$UtxoModelImpl _$$UtxoModelImplFromJson(Map json) => _$UtxoModelImpl(
       txIndex: (json['tx_index'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$UtxoModelImplToJson(_$UtxoModelImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$UtxoModelImplToJson(_$UtxoModelImpl instance) => <String, dynamic>{
       'tx_hash_big_endian': instance.txHashBigEndian,
       'tx_hash': instance.txHash,
       'tx_output_n': instance.txOutputN,
@@ -36,9 +35,7 @@ _$StatusImpl _$$StatusImplFromJson(Map json) => _$StatusImpl(
           .toList(),
     );
 
-Map<String, dynamic> _$$StatusImplToJson(_$StatusImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$StatusImplToJson(_$StatusImpl instance) => <String, dynamic>{
       'notice': instance.notice,
-      'unspent_outputs':
-          instance.unspentOutputs.map((e) => e.toJson()).toList(),
+      'unspent_outputs': instance.unspentOutputs.map((e) => e.toJson()).toList(),
     };

@@ -31,6 +31,7 @@ mixin _$BarModel {
   String get name => throw _privateConstructorUsedError;
   String get blockchain => throw _privateConstructorUsedError;
   bool get isBackup => throw _privateConstructorUsedError;
+  bool get hasBackedUp => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
 
@@ -40,14 +41,12 @@ mixin _$BarModel {
   /// Create a copy of BarModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BarModelCopyWith<BarModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $BarModelCopyWith<BarModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $BarModelCopyWith<$Res> {
-  factory $BarModelCopyWith(BarModel value, $Res Function(BarModel) then) =
-      _$BarModelCopyWithImpl<$Res, BarModel>;
+  factory $BarModelCopyWith(BarModel value, $Res Function(BarModel) then) = _$BarModelCopyWithImpl<$Res, BarModel>;
   @useResult
   $Res call(
       {String address,
@@ -59,12 +58,12 @@ abstract class $BarModelCopyWith<$Res> {
       String name,
       String blockchain,
       bool isBackup,
+      bool hasBackedUp,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
 /// @nodoc
-class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
-    implements $BarModelCopyWith<$Res> {
+class _$BarModelCopyWithImpl<$Res, $Val extends BarModel> implements $BarModelCopyWith<$Res> {
   _$BarModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -86,6 +85,7 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
     Object? name = null,
     Object? blockchain = null,
     Object? isBackup = null,
+    Object? hasBackedUp = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -125,6 +125,10 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
           ? _value.isBackup
           : isBackup // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasBackedUp: null == hasBackedUp
+          ? _value.hasBackedUp
+          : hasBackedUp // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -134,10 +138,8 @@ class _$BarModelCopyWithImpl<$Res, $Val extends BarModel>
 }
 
 /// @nodoc
-abstract class _$$BarModelImplCopyWith<$Res>
-    implements $BarModelCopyWith<$Res> {
-  factory _$$BarModelImplCopyWith(
-          _$BarModelImpl value, $Res Function(_$BarModelImpl) then) =
+abstract class _$$BarModelImplCopyWith<$Res> implements $BarModelCopyWith<$Res> {
+  factory _$$BarModelImplCopyWith(_$BarModelImpl value, $Res Function(_$BarModelImpl) then) =
       __$$BarModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -151,16 +153,14 @@ abstract class _$$BarModelImplCopyWith<$Res>
       String name,
       String blockchain,
       bool isBackup,
+      bool hasBackedUp,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
 /// @nodoc
-class __$$BarModelImplCopyWithImpl<$Res>
-    extends _$BarModelCopyWithImpl<$Res, _$BarModelImpl>
+class __$$BarModelImplCopyWithImpl<$Res> extends _$BarModelCopyWithImpl<$Res, _$BarModelImpl>
     implements _$$BarModelImplCopyWith<$Res> {
-  __$$BarModelImplCopyWithImpl(
-      _$BarModelImpl _value, $Res Function(_$BarModelImpl) _then)
-      : super(_value, _then);
+  __$$BarModelImplCopyWithImpl(_$BarModelImpl _value, $Res Function(_$BarModelImpl) _then) : super(_value, _then);
 
   /// Create a copy of BarModel
   /// with the given fields replaced by the non-null parameter values.
@@ -176,6 +176,7 @@ class __$$BarModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? blockchain = null,
     Object? isBackup = null,
+    Object? hasBackedUp = null,
     Object? createdAt = null,
   }) {
     return _then(_$BarModelImpl(
@@ -215,6 +216,10 @@ class __$$BarModelImplCopyWithImpl<$Res>
           ? _value.isBackup
           : isBackup // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasBackedUp: null == hasBackedUp
+          ? _value.hasBackedUp
+          : hasBackedUp // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -236,10 +241,10 @@ class _$BarModelImpl implements _BarModel {
       this.name = 'Coinplus Bitcoin Bar',
       this.blockchain = 'BTC',
       this.isBackup = false,
+      this.hasBackedUp = false,
       @JsonKey(fromJson: timeFromJson) this.createdAt = ''});
 
-  factory _$BarModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BarModelImplFromJson(json);
+  factory _$BarModelImpl.fromJson(Map<String, dynamic> json) => _$$BarModelImplFromJson(json);
 
   @override
   final String address;
@@ -268,12 +273,15 @@ class _$BarModelImpl implements _BarModel {
   @JsonKey()
   final bool isBackup;
   @override
+  @JsonKey()
+  final bool hasBackedUp;
+  @override
   @JsonKey(fromJson: timeFromJson)
   final String createdAt;
 
   @override
   String toString() {
-    return 'BarModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, isBackup: $isBackup, createdAt: $createdAt)';
+    return 'BarModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, isBackup: $isBackup, hasBackedUp: $hasBackedUp, createdAt: $createdAt)';
   }
 
   @override
@@ -282,26 +290,22 @@ class _$BarModelImpl implements _BarModel {
         (other.runtimeType == runtimeType &&
             other is _$BarModelImpl &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.finalBalance, finalBalance) ||
-                other.finalBalance == finalBalance) &&
-            (identical(other.totalReceived, totalReceived) ||
-                other.totalReceived == totalReceived) &&
+            (identical(other.finalBalance, finalBalance) || other.finalBalance == finalBalance) &&
+            (identical(other.totalReceived, totalReceived) || other.totalReceived == totalReceived) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.blockchain, blockchain) ||
-                other.blockchain == blockchain) &&
-            (identical(other.isBackup, isBackup) ||
-                other.isBackup == isBackup) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.blockchain, blockchain) || other.blockchain == blockchain) &&
+            (identical(other.isBackup, isBackup) || other.isBackup == isBackup) &&
+            (identical(other.hasBackedUp, hasBackedUp) || other.hasBackedUp == hasBackedUp) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, address, finalBalance,
-      totalReceived, color, type, label, name, blockchain, isBackup, createdAt);
+  int get hashCode => Object.hash(runtimeType, address, finalBalance, totalReceived, color, type, label, name,
+      blockchain, isBackup, hasBackedUp, createdAt);
 
   /// Create a copy of BarModel
   /// with the given fields replaced by the non-null parameter values.
@@ -321,20 +325,19 @@ class _$BarModelImpl implements _BarModel {
 
 abstract class _BarModel implements BarModel, AbstractCard {
   const factory _BarModel(
-          {required final String address,
-          @JsonKey(name: 'final_balance') final int? finalBalance,
-          @JsonKey(name: 'total_received') final int? totalReceived,
-          final CardColor color,
-          final CardType type,
-          final WalletType label,
-          final String name,
-          final String blockchain,
-          final bool isBackup,
-          @JsonKey(fromJson: timeFromJson) final String createdAt}) =
-      _$BarModelImpl;
+      {required final String address,
+      @JsonKey(name: 'final_balance') final int? finalBalance,
+      @JsonKey(name: 'total_received') final int? totalReceived,
+      final CardColor color,
+      final CardType type,
+      final WalletType label,
+      final String name,
+      final String blockchain,
+      final bool isBackup,
+      final bool hasBackedUp,
+      @JsonKey(fromJson: timeFromJson) final String createdAt}) = _$BarModelImpl;
 
-  factory _BarModel.fromJson(Map<String, dynamic> json) =
-      _$BarModelImpl.fromJson;
+  factory _BarModel.fromJson(Map<String, dynamic> json) = _$BarModelImpl.fromJson;
 
   @override
   String get address;
@@ -357,6 +360,8 @@ abstract class _BarModel implements BarModel, AbstractCard {
   @override
   bool get isBackup;
   @override
+  bool get hasBackedUp;
+  @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;
 
@@ -364,6 +369,5 @@ abstract class _BarModel implements BarModel, AbstractCard {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BarModelImplCopyWith<_$BarModelImpl> get copyWith => throw _privateConstructorUsedError;
 }

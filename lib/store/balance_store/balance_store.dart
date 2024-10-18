@@ -18,6 +18,7 @@ import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
+import '../../utils/wallet_activation_status.dart';
 import '../market_page_store/market_page_store.dart';
 
 part 'balance_store.g.dart';
@@ -75,6 +76,13 @@ abstract class _BalanceStore with Store {
   CardModel? backupSingleCard;
   @observable
   bool backupCardLoading = true;
+  @observable
+  bool? hasBackUp;
+
+  @action
+  Future<void> fetchHasBackUp(String address) async {
+    hasBackUp = await isCardWalletHasBackup(address: address);
+  }
 
   Future<void> signIn() async {
     final prefs = await SharedPreferences.getInstance();
@@ -108,50 +116,35 @@ abstract class _BalanceStore with Store {
   @action
   Future<void> loadBackupCard(String mainCardAddress) async {
     backupCardLoading = true;
-    backupSingleCard =
-        await StorageUtils.searchMainAndBackupCard(mainCardAddress);
+    backupSingleCard = await StorageUtils.searchMainAndBackupCard(mainCardAddress);
     backupCardLoading = false;
   }
 
   Future<void> getCardsFromStorage() async {
     final allCards = await StorageUtils.getCards();
-    _cards = allCards
-        .where((element) => element.type == CardType.CARD)
-        .toList()
-        .asObservable();
+    _cards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
   }
 
   Future<void> getBackupCardsFromStorage() async {
     final allCards = await StorageUtils.getBackupCards();
-    _backupCards = allCards
-        .where((element) => element.type == CardType.CARD)
-        .toList()
-        .asObservable();
+    _backupCards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
   }
 
   Future<void> getEthCardsFromStorage() async {
     final allCards = await StorageUtils.getEthCards();
-    _ethCards = allCards
-        .where((element) => element.type == CardType.CARD)
-        .toList()
-        .asObservable();
+    _ethCards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
   }
 
   Future<void> getBarsFromStorage() async {
     final allCards = await StorageUtils.getBars();
-    _bars = allCards
-        .where((element) => element.type == CardType.BAR)
-        .toList()
-        .asObservable();
+    _bars = allCards.where((element) => element.type == CardType.BAR).toList().asObservable();
   }
 
   @computed
   num? get btcPrice => _marketPageStore.singleCoin?.result.first.price;
 
   @computed
-  num? get ethPrice => _marketPageStore.singleCoin?.result
-      .firstWhereOrNull((e) => e.symbol == 'ETH')
-      ?.price;
+  num? get ethPrice => _marketPageStore.singleCoin?.result.firstWhereOrNull((e) => e.symbol == 'ETH')?.price;
 
   @computed
   num get allCardsBalances {
@@ -182,25 +175,19 @@ abstract class _BalanceStore with Store {
 
   @computed
   num get cardBalance {
-    return cardCurrentIndex != _cards.length
-        ? (_cards[cardCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice!
-        : 0;
+    return cardCurrentIndex != _cards.length ? (_cards[cardCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice! : 0;
   }
 
   @computed
   num get backupCardBalance {
     return cardCurrentIndex != _backupCards.length
-        ? (_backupCards[cardCurrentIndex].finalBalance ?? 0) /
-            100000000 *
-            btcPrice!
+        ? (_backupCards[cardCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice!
         : 0;
   }
 
   @computed
   num? get barBalance {
-    return barCurrentIndex != _bars.length
-        ? (_bars[barCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice!
-        : null;
+    return barCurrentIndex != _bars.length ? (_bars[barCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice! : null;
   }
 
   @action
@@ -415,8 +402,7 @@ abstract class _BalanceStore with Store {
       address: address,
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
     );
-    final res =
-        (await balanceRepo.getCards(addresses: address)).data.entries.first;
+    final res = (await balanceRepo.getCards(addresses: address)).data.entries.first;
     final cardJson = {
       'address': res.key,
       'final_balance': (res.value as Map)['final_balance'],
@@ -431,8 +417,7 @@ abstract class _BalanceStore with Store {
       address: address,
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
     );
-    final res =
-        (await balanceRepo.getCards(addresses: address)).data.entries.first;
+    final res = (await balanceRepo.getCards(addresses: address)).data.entries.first;
     final cardJson = {
       'address': res.key,
       'final_balance': (res.value as Map)['final_balance'],
@@ -484,8 +469,7 @@ abstract class _BalanceStore with Store {
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
     );
 
-    final res =
-        (await balanceRepo.getBars(addresses: address)).data.entries.first;
+    final res = (await balanceRepo.getBars(addresses: address)).data.entries.first;
     final barJson = {
       'address': res.key,
       'final_balance': (res.value as Map)['final_balance'],
@@ -495,28 +479,21 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<void> removeSelectedCard() async {
-    if (_selectedCard == null) {
-      return;
-    }
-    final index = _cards
-        .indexWhere((element) => element.address == _selectedCard!.address);
+  Future<void> removeSelectedCard({required String address}) async {
+    final index = _cards.indexWhere((element) => element.address == address);
     _cards.removeAt(index);
-    await StorageUtils.removeCard(_selectedCard!.address);
-    await _secureStorage.delete(key: _selectedCard!.address);
+    await StorageUtils.removeCard(address);
+    await _secureStorage.delete(key: address);
   }
 
   @action
-  Future<void> removeSelectedBackupCard() async {
-    if (_selectedBackupCard == null) {
-      return;
-    }
+  Future<void> removeSelectedBackupCard({required String address}) async {
     final index = _backupCards.indexWhere(
-      (element) => element.address == _selectedBackupCard!.address,
+      (element) => element.address == address,
     );
     _backupCards.removeAt(index);
-    await StorageUtils.removeBackupCard(_selectedBackupCard!.address);
-    await _secureStorage.delete(key: _selectedBackupCard!.address);
+    await StorageUtils.removeBackupCard(address);
+    await _secureStorage.delete(key: address);
   }
 
   @action
@@ -524,8 +501,7 @@ abstract class _BalanceStore with Store {
     if (_selectedEthCard == null) {
       return;
     }
-    final index = _ethCards
-        .indexWhere((element) => element.address == _selectedEthCard!.address);
+    final index = _ethCards.indexWhere((element) => element.address == _selectedEthCard!.address);
     _ethCards.removeAt(index);
     await StorageUtils.removeEthCard(_selectedEthCard!.address);
     await _secureStorage.delete(key: _selectedEthCard!.address);
@@ -536,8 +512,7 @@ abstract class _BalanceStore with Store {
     if (_selectedBar == null) {
       return;
     }
-    final index =
-        _bars.indexWhere((element) => element.address == _selectedBar!.address);
+    final index = _bars.indexWhere((element) => element.address == _selectedBar!.address);
     _bars.removeAt(index);
     await StorageUtils.removeBar(_selectedBar!.address);
     await _secureStorage.delete(key: _selectedBar!.address);
@@ -548,12 +523,8 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isCardNotExist = _cards
-        .indexWhere((element) => element.address == _selectedCard?.address)
-        .isNegative;
-    final isBarNotExist = _bars
-        .indexWhere((element) => element.address == _selectedCard?.address)
-        .isNegative;
+    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
 
     if (isCardNotExist && isBarNotExist) {
       _selectedCard = _selectedCard!.copyWith(
@@ -590,7 +561,7 @@ abstract class _BalanceStore with Store {
       StorageUtils.addBackupCard(backup);
     } else {
       if (kDebugMode) {
-        print('Backup card already exists for this main card');
+        print('Backup card is already added');
       }
     }
   }
@@ -600,9 +571,7 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isCardNotExist = _ethCards
-        .indexWhere((element) => element.address == _selectedEthCard?.address)
-        .isNegative;
+    final isCardNotExist = _ethCards.indexWhere((element) => element.address == _selectedEthCard?.address).isNegative;
 
     if (isCardNotExist) {
       _selectedEthCard = _selectedEthCard!.copyWith(
@@ -629,12 +598,8 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isCardNotExist = _cards
-        .indexWhere((element) => element.address == _selectedCard!.address)
-        .isNegative;
-    final isBarNotExist = _bars
-        .indexWhere((element) => element.address == _selectedCard?.address)
-        .isNegative;
+    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard!.address).isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
 
     if (isCardNotExist && isBarNotExist) {
       _selectedCard = _selectedCard!.copyWith(
@@ -659,9 +624,7 @@ abstract class _BalanceStore with Store {
       return;
     }
 
-    final isBarNotExist = _bars
-        .indexWhere((element) => element.address == _selectedBar?.address)
-        .isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedBar?.address).isNegative;
 
     if (isBarNotExist) {
       _selectedBar = _selectedBar!.copyWith(
@@ -716,11 +679,27 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required CardColor color,
   }) {
-    final cardIndex =
-        _cards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _cards[cardIndex].copyWith(color: color);
+      _cards[cardIndex] = updatedCard;
+
+      StorageUtils.replaceCard(cardAddress, updatedCard);
+    } else {
+      throw Exception('Card not found');
+    }
+  }
+
+  @action
+  void changeCardBackupStatusAndSave({
+    required String cardAddress,
+    required bool hasBackedUp,
+  }) {
+    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
+
+    if (cardIndex != -1) {
+      final updatedCard = _cards[cardIndex].copyWith(hasBackedUp: hasBackedUp);
       _cards[cardIndex] = updatedCard;
 
       StorageUtils.replaceCard(cardAddress, updatedCard);
@@ -734,8 +713,7 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required CardColor color,
   }) {
-    final cardIndex =
-        _ethCards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex = _ethCards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _ethCards[cardIndex].copyWith(color: color);
@@ -752,8 +730,7 @@ abstract class _BalanceStore with Store {
     required String barAddress,
     required CardColor color,
   }) {
-    final barIndex =
-        _bars.indexWhere((element) => element.address == barAddress);
+    final barIndex = _bars.indexWhere((element) => element.address == barAddress);
 
     if (barIndex != -1) {
       final updatedCard = _bars[barIndex].copyWith(color: color);
@@ -770,8 +747,7 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required String newName,
   }) {
-    final cardIndex =
-        _cards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex = _cards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _cards[cardIndex].copyWith(name: newName);
@@ -788,8 +764,7 @@ abstract class _BalanceStore with Store {
     required String cardAddress,
     required String newName,
   }) {
-    final cardIndex =
-        _ethCards.indexWhere((element) => element.address == cardAddress);
+    final cardIndex = _ethCards.indexWhere((element) => element.address == cardAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _ethCards[cardIndex].copyWith(name: newName);
@@ -806,8 +781,7 @@ abstract class _BalanceStore with Store {
     required String barAddress,
     required String newName,
   }) {
-    final cardIndex =
-        _bars.indexWhere((element) => element.address == barAddress);
+    final cardIndex = _bars.indexWhere((element) => element.address == barAddress);
 
     if (cardIndex != -1) {
       final updatedCard = _bars[cardIndex].copyWith(name: newName);

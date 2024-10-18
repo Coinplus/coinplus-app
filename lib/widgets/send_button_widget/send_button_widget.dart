@@ -239,12 +239,9 @@ Future<void> showSendFromWalletModal({
     ..clearAmountControllers()
     ..isUseMaxClicked = false
     ..shouldValidateReceiverAddress = false
-    ..transactionsStore.selectedCard =
-        _sendToState.historyPageStore.cardHistoryIndex
+    ..transactionsStore.selectedCard = _sendToState.historyPageStore.cardHistoryIndex
     ..setAmount('0');
   isBarList
-      ? _sendToState.transactionsStore.selectedBar =
-          _balanceStore.cardCurrentIndex
-      : _sendToState.transactionsStore.selectedCard =
-          _balanceStore.cardCurrentIndex;
+      ? _sendToState.transactionsStore.selectedBar = _balanceStore.cardCurrentIndex
+      : _sendToState.transactionsStore.selectedCard = _balanceStore.cardCurrentIndex;
 }
