@@ -31,6 +31,7 @@ mixin _$CardModel {
   String get name => throw _privateConstructorUsedError;
   String get blockchain => throw _privateConstructorUsedError;
   bool get isBackup => throw _privateConstructorUsedError;
+  bool get hasBackedUp => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timeFromJson)
   String get createdAt => throw _privateConstructorUsedError;
 
@@ -40,14 +41,12 @@ mixin _$CardModel {
   /// Create a copy of CardModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CardModelCopyWith<CardModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  $CardModelCopyWith<CardModel> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CardModelCopyWith<$Res> {
-  factory $CardModelCopyWith(CardModel value, $Res Function(CardModel) then) =
-      _$CardModelCopyWithImpl<$Res, CardModel>;
+  factory $CardModelCopyWith(CardModel value, $Res Function(CardModel) then) = _$CardModelCopyWithImpl<$Res, CardModel>;
   @useResult
   $Res call(
       {String address,
@@ -59,12 +58,12 @@ abstract class $CardModelCopyWith<$Res> {
       String name,
       String blockchain,
       bool isBackup,
+      bool hasBackedUp,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
 /// @nodoc
-class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
-    implements $CardModelCopyWith<$Res> {
+class _$CardModelCopyWithImpl<$Res, $Val extends CardModel> implements $CardModelCopyWith<$Res> {
   _$CardModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -86,6 +85,7 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
     Object? name = null,
     Object? blockchain = null,
     Object? isBackup = null,
+    Object? hasBackedUp = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -125,6 +125,10 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
           ? _value.isBackup
           : isBackup // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasBackedUp: null == hasBackedUp
+          ? _value.hasBackedUp
+          : hasBackedUp // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -134,10 +138,8 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
 }
 
 /// @nodoc
-abstract class _$$CardModelImplCopyWith<$Res>
-    implements $CardModelCopyWith<$Res> {
-  factory _$$CardModelImplCopyWith(
-          _$CardModelImpl value, $Res Function(_$CardModelImpl) then) =
+abstract class _$$CardModelImplCopyWith<$Res> implements $CardModelCopyWith<$Res> {
+  factory _$$CardModelImplCopyWith(_$CardModelImpl value, $Res Function(_$CardModelImpl) then) =
       __$$CardModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -151,16 +153,14 @@ abstract class _$$CardModelImplCopyWith<$Res>
       String name,
       String blockchain,
       bool isBackup,
+      bool hasBackedUp,
       @JsonKey(fromJson: timeFromJson) String createdAt});
 }
 
 /// @nodoc
-class __$$CardModelImplCopyWithImpl<$Res>
-    extends _$CardModelCopyWithImpl<$Res, _$CardModelImpl>
+class __$$CardModelImplCopyWithImpl<$Res> extends _$CardModelCopyWithImpl<$Res, _$CardModelImpl>
     implements _$$CardModelImplCopyWith<$Res> {
-  __$$CardModelImplCopyWithImpl(
-      _$CardModelImpl _value, $Res Function(_$CardModelImpl) _then)
-      : super(_value, _then);
+  __$$CardModelImplCopyWithImpl(_$CardModelImpl _value, $Res Function(_$CardModelImpl) _then) : super(_value, _then);
 
   /// Create a copy of CardModel
   /// with the given fields replaced by the non-null parameter values.
@@ -176,6 +176,7 @@ class __$$CardModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? blockchain = null,
     Object? isBackup = null,
+    Object? hasBackedUp = null,
     Object? createdAt = null,
   }) {
     return _then(_$CardModelImpl(
@@ -215,6 +216,10 @@ class __$$CardModelImplCopyWithImpl<$Res>
           ? _value.isBackup
           : isBackup // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasBackedUp: null == hasBackedUp
+          ? _value.hasBackedUp
+          : hasBackedUp // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -236,10 +241,10 @@ class _$CardModelImpl implements _CardModel {
       this.name = 'Coinplus Bitcoin Card',
       this.blockchain = 'BTC',
       this.isBackup = false,
+      this.hasBackedUp = false,
       @JsonKey(fromJson: timeFromJson) this.createdAt = ''});
 
-  factory _$CardModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CardModelImplFromJson(json);
+  factory _$CardModelImpl.fromJson(Map<String, dynamic> json) => _$$CardModelImplFromJson(json);
 
   @override
   final String address;
@@ -268,12 +273,15 @@ class _$CardModelImpl implements _CardModel {
   @JsonKey()
   final bool isBackup;
   @override
+  @JsonKey()
+  final bool hasBackedUp;
+  @override
   @JsonKey(fromJson: timeFromJson)
   final String createdAt;
 
   @override
   String toString() {
-    return 'CardModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, isBackup: $isBackup, createdAt: $createdAt)';
+    return 'CardModel(address: $address, finalBalance: $finalBalance, totalReceived: $totalReceived, color: $color, type: $type, label: $label, name: $name, blockchain: $blockchain, isBackup: $isBackup, hasBackedUp: $hasBackedUp, createdAt: $createdAt)';
   }
 
   @override
@@ -282,26 +290,22 @@ class _$CardModelImpl implements _CardModel {
         (other.runtimeType == runtimeType &&
             other is _$CardModelImpl &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.finalBalance, finalBalance) ||
-                other.finalBalance == finalBalance) &&
-            (identical(other.totalReceived, totalReceived) ||
-                other.totalReceived == totalReceived) &&
+            (identical(other.finalBalance, finalBalance) || other.finalBalance == finalBalance) &&
+            (identical(other.totalReceived, totalReceived) || other.totalReceived == totalReceived) &&
             (identical(other.color, color) || other.color == color) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.blockchain, blockchain) ||
-                other.blockchain == blockchain) &&
-            (identical(other.isBackup, isBackup) ||
-                other.isBackup == isBackup) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.blockchain, blockchain) || other.blockchain == blockchain) &&
+            (identical(other.isBackup, isBackup) || other.isBackup == isBackup) &&
+            (identical(other.hasBackedUp, hasBackedUp) || other.hasBackedUp == hasBackedUp) &&
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, address, finalBalance,
-      totalReceived, color, type, label, name, blockchain, isBackup, createdAt);
+  int get hashCode => Object.hash(runtimeType, address, finalBalance, totalReceived, color, type, label, name,
+      blockchain, isBackup, hasBackedUp, createdAt);
 
   /// Create a copy of CardModel
   /// with the given fields replaced by the non-null parameter values.
@@ -321,20 +325,19 @@ class _$CardModelImpl implements _CardModel {
 
 abstract class _CardModel implements CardModel, AbstractCard {
   const factory _CardModel(
-          {required final String address,
-          @JsonKey(name: 'final_balance') final num? finalBalance,
-          @JsonKey(name: 'total_received') final int? totalReceived,
-          final CardColor color,
-          final CardType type,
-          final WalletType label,
-          final String name,
-          final String blockchain,
-          final bool isBackup,
-          @JsonKey(fromJson: timeFromJson) final String createdAt}) =
-      _$CardModelImpl;
+      {required final String address,
+      @JsonKey(name: 'final_balance') final num? finalBalance,
+      @JsonKey(name: 'total_received') final int? totalReceived,
+      final CardColor color,
+      final CardType type,
+      final WalletType label,
+      final String name,
+      final String blockchain,
+      final bool isBackup,
+      final bool hasBackedUp,
+      @JsonKey(fromJson: timeFromJson) final String createdAt}) = _$CardModelImpl;
 
-  factory _CardModel.fromJson(Map<String, dynamic> json) =
-      _$CardModelImpl.fromJson;
+  factory _CardModel.fromJson(Map<String, dynamic> json) = _$CardModelImpl.fromJson;
 
   @override
   String get address;
@@ -357,6 +360,8 @@ abstract class _CardModel implements CardModel, AbstractCard {
   @override
   bool get isBackup;
   @override
+  bool get hasBackedUp;
+  @override
   @JsonKey(fromJson: timeFromJson)
   String get createdAt;
 
@@ -364,6 +369,5 @@ abstract class _CardModel implements CardModel, AbstractCard {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CardModelImplCopyWith<_$CardModelImpl> get copyWith => throw _privateConstructorUsedError;
 }

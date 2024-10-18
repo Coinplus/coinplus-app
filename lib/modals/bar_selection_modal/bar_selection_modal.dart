@@ -74,10 +74,8 @@ class BarSelectionModal extends StatelessWidget {
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             final bar = _balanceStore.bars[index];
-                            final formattedAddress =
-                                getSplitAddress(bar.address);
-                            final data =
-                                _marketPageStore.singleCoin?.result.first;
+                            final formattedAddress = getSplitAddress(bar.address);
+                            final data = _marketPageStore.singleCoin?.result.first;
                             final myFormat = NumberFormat.decimalPatternDigits(
                               locale: 'en_us',
                               decimalDigits: 2,
@@ -89,22 +87,15 @@ class BarSelectionModal extends StatelessWidget {
                                     _historyPageStore
                                       ..setBarHistoryIndex(index)
                                       ..setBarSelectedAddress(
-                                        _balanceStore
-                                            .bars[_historyPageStore
-                                                .barHistoryIndex]
-                                            .address,
+                                        _balanceStore.bars[_historyPageStore.barHistoryIndex].address,
                                       )
                                       ..getSingleBarHistory(
-                                        address: _balanceStore
-                                            .bars[_historyPageStore
-                                                .barHistoryIndex]
-                                            .address,
+                                        address: _balanceStore.bars[_historyPageStore.barHistoryIndex].address,
                                       );
                                     recordAmplitudeEventPartTwo(
                                       WalletSelected(
                                         walletType: 'bar',
-                                        address: _historyPageStore
-                                            .selectedBarAddress,
+                                        address: _historyPageStore.selectedBarAddress,
                                       ),
                                     );
                                     router.maybePop();
@@ -112,17 +103,14 @@ class BarSelectionModal extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
-                                      color:
-                                          _historyPageStore.barHistoryIndex ==
-                                                  index
-                                              ? const Color(0xFFF7F7FA)
-                                              : Colors.transparent,
+                                      color: _historyPageStore.barHistoryIndex == index
+                                          ? const Color(0xFFF7F7FA)
+                                          : Colors.transparent,
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
@@ -131,23 +119,19 @@ class BarSelectionModal extends StatelessWidget {
                                                 width: 30,
                                                 decoration: BoxDecoration(
                                                   image: DecorationImage(
-                                                    image: bar.color.image
-                                                        .image()
-                                                        .image,
+                                                    image: bar.color.image.image().image,
                                                   ),
                                                 ),
                                               ),
                                               const Gap(12),
                                               Column(
                                                 mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     bar.name,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 15,
                                                       color: AppColors.primary,
                                                     ),
@@ -155,11 +139,9 @@ class BarSelectionModal extends StatelessWidget {
                                                   Text(
                                                     formattedAddress,
                                                     style: const TextStyle(
-                                                      fontFamily: FontFamily
-                                                          .redHatMedium,
+                                                      fontFamily: FontFamily.redHatMedium,
                                                       fontSize: 14,
-                                                      color: AppColors
-                                                          .textHintsColor,
+                                                      color: AppColors.textHintsColor,
                                                     ),
                                                   ),
                                                 ],
@@ -170,8 +152,7 @@ class BarSelectionModal extends StatelessWidget {
                                             '\$${myFormat.format((bar.finalBalance ?? 0) / 100000000 * data!.price)}',
                                             style: const TextStyle(
                                               fontSize: 16,
-                                              fontFamily:
-                                                  FontFamily.redHatMedium,
+                                              fontFamily: FontFamily.redHatMedium,
                                               color: AppColors.textHintsColor,
                                               fontWeight: FontWeight.w700,
                                             ),

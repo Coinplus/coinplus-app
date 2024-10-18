@@ -16,8 +16,7 @@ Future<void> transactionSubmittedAlert({
   return showDialogBox(
     context,
     DialogBoxWithAction(
-      text:
-          'Your transaction is submitted and is currently pending. You can track the status in the History tab.',
+      text: 'Your transaction is submitted and is currently pending. You can track the status in the History tab.',
       title: const Text(
         'Submitted',
         textAlign: TextAlign.center,

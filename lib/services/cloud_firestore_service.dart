@@ -9,8 +9,7 @@ import '../models/old_card_model/old_card_model.dart';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 Future<CardsModel?> getCardData(String documentId) async {
-  final DocumentSnapshot documentSnapshot =
-      await _firestore.collection('cards').doc(documentId).get();
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('cards').doc(documentId).get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;
@@ -24,8 +23,7 @@ Future<CardsModel?> getCardData(String documentId) async {
 }
 
 Future<CardsModel?> getBackupCardData(String documentId) async {
-  final DocumentSnapshot documentSnapshot =
-      await _firestore.collection('backup_cards').doc(documentId).get();
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('backup_cards').doc(documentId).get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;
@@ -44,8 +42,7 @@ Future<void> setCardsData({
   required String type,
 }) async {
   final firestore = FirebaseFirestore.instance;
-  final CollectionReference collectionReference =
-      firestore.collection('authenticity_check');
+  final CollectionReference collectionReference = firestore.collection('authenticity_check');
 
   final customDocumentId = documentID;
 
@@ -156,8 +153,7 @@ Future<void> verificationFailureCount(String documentId) async {
 }
 
 Future<BuyCardModel?> getBuyCardData() async {
-  final DocumentSnapshot documentSnapshot =
-      await _firestore.collection('links').doc('buy_card').get();
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('links').doc('buy_card').get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;
@@ -171,8 +167,7 @@ Future<BuyCardModel?> getBuyCardData() async {
 }
 
 Future<BuyCardModel?> getBuyCardPlusButtonLink() async {
-  final DocumentSnapshot documentSnapshot =
-      await _firestore.collection('links').doc('buy_card_plus_button').get();
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('links').doc('buy_card_plus_button').get();
 
   if (documentSnapshot.exists) {
     final documentData = documentSnapshot.data() as Map<String, dynamic>?;

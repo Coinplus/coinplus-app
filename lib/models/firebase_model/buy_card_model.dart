@@ -12,8 +12,7 @@ class BuyCardModel {
     this.price,
   });
 
-  factory BuyCardModel.fromJson(Map<String, dynamic> json) =>
-      _$BuyCardModelFromJson(json);
+  factory BuyCardModel.fromJson(Map<String, dynamic> json) => _$BuyCardModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BuyCardModelToJson(this);
 }

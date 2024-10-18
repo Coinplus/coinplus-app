@@ -247,6 +247,5 @@ class AmplitudeEvent with _$AmplitudeEvent {
     @Default('WALLET_OPENED') String eventType,
   }) = WalletOpened;
 
-  factory AmplitudeEvent.fromJson(Map<String, dynamic> json) =>
-      _$AmplitudeEventFromJson(json);
+  factory AmplitudeEvent.fromJson(Map<String, dynamic> json) => _$AmplitudeEventFromJson(json);
 }

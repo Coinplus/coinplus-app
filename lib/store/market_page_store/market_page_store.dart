@@ -113,8 +113,7 @@ abstract class _MarketPageStore with Store {
   bool isFavorite = false;
 
   @observable
-  ObservableList<CoinResultModel> favoriteCoinsList =
-      ObservableList<CoinResultModel>();
+  ObservableList<CoinResultModel> favoriteCoinsList = ObservableList<CoinResultModel>();
 
   @action
   Future<void> getFavoriteCoins({required String coinId}) async {
@@ -322,9 +321,7 @@ abstract class _MarketPageStore with Store {
       if (response.statusCode == 200) {
         final chartData = (response.data as List<dynamic>)
             .map(
-              (item) => (item as List<dynamic>)
-                  .map((numItem) => numItem as num)
-                  .toList(),
+              (item) => (item as List<dynamic>).map((numItem) => numItem as num).toList(),
             )
             .toList();
         setChartData(chartData);

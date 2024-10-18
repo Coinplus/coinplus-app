@@ -23,11 +23,11 @@ class EthCardModel with _$EthCardModel {
     @Default(WalletType.COINPLUS_WALLET) WalletType label,
     @Default('ETH') String blockchain,
     @Default(false) bool isBackup,
+    @Default(false) bool hasBackedUp,
     @JsonKey(fromJson: timeFromJson) @Default('') String createdAt,
   }) = _EthCardModel;
 
-  factory EthCardModel.fromJson(Map<String, dynamic> json) =>
-      _$EthCardModelFromJson(json);
+  factory EthCardModel.fromJson(Map<String, dynamic> json) => _$EthCardModelFromJson(json);
 }
 
 String timeFromJson(String a) {
@@ -40,8 +40,7 @@ class CoinStatsRepo {
   Future<List<dynamic>?> getWalletData({required String address}) async {
     dio.interceptors.add(LoggingInterceptor());
     try {
-      final url =
-          'https://openapiv1.coinstats.app/wallet/balance?address=$address&connectionId=ethereum';
+      final url = 'https://openapiv1.coinstats.app/wallet/balance?address=$address&connectionId=ethereum';
 
       final response = await dio.get(
         url,

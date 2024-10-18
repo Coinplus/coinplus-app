@@ -53,8 +53,7 @@ Future<void> cardActivationAlert({
                 isStarted: true,
               );
               await NfcManager.instance.startSession(
-                alertMessage:
-                    "Please tap your card on the phone to verify it's legitimacy",
+                alertMessage: "Please tap your card on the phone to verify it's legitimacy",
                 onDiscovered: (tag) async {
                   final ndef = Ndef.from(tag);
                   final records = ndef!.cachedMessage!.records;
@@ -83,10 +82,8 @@ Future<void> cardActivationAlert({
                     final card = await getCardData(walletAddress);
                     final mifare = MiFare.from(tag);
                     final tagId = mifare!.identifier;
-                    final formattedTagId = tagId
-                        .map((e) => e.toRadixString(16).padLeft(2, '0'))
-                        .join(':')
-                        .toUpperCase();
+                    final formattedTagId =
+                        tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
                     final signature = await mifare.sendMiFareCommand(
                       Uint8List.fromList(
                         [0x3C, 0x00],
@@ -137,8 +134,7 @@ Future<void> cardActivationAlert({
                       }
                     } else {
                       await NfcManager.instance.stopSession();
-                      if (card!.possibleOldCard == true &&
-                          card.nfcId == formattedTagId) {
+                      if (card!.possibleOldCard == true && card.nfcId == formattedTagId) {
                         await Future.delayed(
                           const Duration(
                             milliseconds: 2900,
@@ -169,8 +165,7 @@ Future<void> cardActivationAlert({
                     );
 
                     await NfcManager.instance.stopSession(
-                      errorMessage:
-                          'You tapped the wrong card. Please check the wallet address of the card.',
+                      errorMessage: 'You tapped the wrong card. Please check the wallet address of the card.',
                     );
                   }
                 },
@@ -239,10 +234,7 @@ Future<void> cardActivationAlert({
                       signature = null;
                     }
                     final card = await getCardData(walletAddress);
-                    final formattedTagId = uid
-                        .map((e) => e.toRadixString(16).padLeft(2, '0'))
-                        .join(':')
-                        .toUpperCase();
+                    final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
 
                     if (isOriginalTag && card != null) {
                       await router.maybePop();
@@ -269,8 +261,7 @@ Future<void> cardActivationAlert({
                         );
                       }
                     } else {
-                      if (card!.possibleOldCard == true &&
-                          card.nfcId == formattedTagId) {
+                      if (card!.possibleOldCard == true && card.nfcId == formattedTagId) {
                         await router.maybePop();
                         await router.push(
                           CardActivationRoute(

@@ -12,12 +12,9 @@ part 'coins_repo.g.dart';
 class _Paths {
   static const allCoins = '/coins';
   static const marketCap = '/markets';
-  static const transactions =
-      '/wallet/transactions?page={page}&limit=20&address={address}&connectionId=bitcoin';
-  static const walletStatus =
-      '/wallet/status?address={address}&connectionId=bitcoin';
-  static const patchTransactions =
-      '/wallet/transactions?address={address}&connectionId=bitcoin';
+  static const transactions = '/wallet/transactions?page={page}&limit=20&address={address}&connectionId=bitcoin';
+  static const walletStatus = '/wallet/status?address={address}&connectionId=bitcoin';
+  static const patchTransactions = '/wallet/transactions?address={address}&connectionId=bitcoin';
 }
 
 final coinStatsRepo = CoinsClient(coinStatsDio);

@@ -53,8 +53,7 @@ class BarScanMethodsPage extends HookWidget {
                   ),
                 )
                 .copyWith(
-                  backgroundColor:
-                      WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                  backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
                 ),
             onPressed: Platform.isIOS
                 ? () async {
@@ -157,8 +156,7 @@ class BarScanMethodsPage extends HookWidget {
                                         ),
                                       )
                                       .copyWith(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
+                                        backgroundColor: WidgetStateProperty.all(
                                           Colors.grey.withOpacity(0.3),
                                         ),
                                       ),
@@ -202,8 +200,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor:
-                    WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
             unawaited(
@@ -257,8 +254,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor:
-                    WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () {
             router
@@ -301,8 +297,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor:
-                    WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
               ),
           onPressed: () async {
             unawaited(

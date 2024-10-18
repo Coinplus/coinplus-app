@@ -12,60 +12,53 @@ mixin _$BalanceStore on _BalanceStore, Store {
   Computed<num?>? _$btcPriceComputed;
 
   @override
-  num? get btcPrice => (_$btcPriceComputed ??=
-          Computed<num?>(() => super.btcPrice, name: '_BalanceStore.btcPrice'))
-      .value;
+  num? get btcPrice =>
+      (_$btcPriceComputed ??= Computed<num?>(() => super.btcPrice, name: '_BalanceStore.btcPrice')).value;
   Computed<num?>? _$ethPriceComputed;
 
   @override
-  num? get ethPrice => (_$ethPriceComputed ??=
-          Computed<num?>(() => super.ethPrice, name: '_BalanceStore.ethPrice'))
-      .value;
+  num? get ethPrice =>
+      (_$ethPriceComputed ??= Computed<num?>(() => super.ethPrice, name: '_BalanceStore.ethPrice')).value;
   Computed<num>? _$allCardsBalancesComputed;
 
   @override
-  num get allCardsBalances => (_$allCardsBalancesComputed ??= Computed<num>(
-          () => super.allCardsBalances,
-          name: '_BalanceStore.allCardsBalances'))
+  num get allCardsBalances => (_$allCardsBalancesComputed ??=
+          Computed<num>(() => super.allCardsBalances, name: '_BalanceStore.allCardsBalances'))
       .value;
   Computed<num>? _$allEthCardsBalancesComputed;
 
   @override
   num get allEthCardsBalances => (_$allEthCardsBalancesComputed ??=
-          Computed<num>(() => super.allEthCardsBalances,
-              name: '_BalanceStore.allEthCardsBalances'))
+          Computed<num>(() => super.allEthCardsBalances, name: '_BalanceStore.allEthCardsBalances'))
       .value;
   Computed<CoinModel?>? _$singleCoinComputed;
 
   @override
   CoinModel? get singleCoin =>
-      (_$singleCoinComputed ??= Computed<CoinModel?>(() => super.singleCoin,
-              name: '_BalanceStore.singleCoin'))
-          .value;
+      (_$singleCoinComputed ??= Computed<CoinModel?>(() => super.singleCoin, name: '_BalanceStore.singleCoin')).value;
   Computed<num>? _$cardBalanceComputed;
 
   @override
   num get cardBalance =>
-      (_$cardBalanceComputed ??= Computed<num>(() => super.cardBalance,
-              name: '_BalanceStore.cardBalance'))
-          .value;
+      (_$cardBalanceComputed ??= Computed<num>(() => super.cardBalance, name: '_BalanceStore.cardBalance')).value;
+  Computed<num>? _$backupCardBalanceComputed;
+
+  @override
+  num get backupCardBalance => (_$backupCardBalanceComputed ??=
+          Computed<num>(() => super.backupCardBalance, name: '_BalanceStore.backupCardBalance'))
+      .value;
   Computed<num?>? _$barBalanceComputed;
 
   @override
   num? get barBalance =>
-      (_$barBalanceComputed ??= Computed<num?>(() => super.barBalance,
-              name: '_BalanceStore.barBalance'))
-          .value;
+      (_$barBalanceComputed ??= Computed<num?>(() => super.barBalance, name: '_BalanceStore.barBalance')).value;
   Computed<List<Object>>? _$allCardsComputed;
 
   @override
   List<Object> get allCards =>
-      (_$allCardsComputed ??= Computed<List<Object>>(() => super.allCards,
-              name: '_BalanceStore.allCards'))
-          .value;
+      (_$allCardsComputed ??= Computed<List<Object>>(() => super.allCards, name: '_BalanceStore.allCards')).value;
 
-  late final _$_cardsAtom =
-      Atom(name: '_BalanceStore._cards', context: context);
+  late final _$_cardsAtom = Atom(name: '_BalanceStore._cards', context: context);
 
   ObservableList<CardModel> get cards {
     _$_cardsAtom.reportRead();
@@ -82,8 +75,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_backupCardsAtom =
-      Atom(name: '_BalanceStore._backupCards', context: context);
+  late final _$_backupCardsAtom = Atom(name: '_BalanceStore._backupCards', context: context);
 
   ObservableList<CardModel> get backupCards {
     _$_backupCardsAtom.reportRead();
@@ -100,8 +92,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_ethCardsAtom =
-      Atom(name: '_BalanceStore._ethCards', context: context);
+  late final _$_ethCardsAtom = Atom(name: '_BalanceStore._ethCards', context: context);
 
   ObservableList<EthCardModel> get ethCards {
     _$_ethCardsAtom.reportRead();
@@ -135,8 +126,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$cardMapResultAtom =
-      Atom(name: '_BalanceStore.cardMapResult', context: context);
+  late final _$cardMapResultAtom = Atom(name: '_BalanceStore.cardMapResult', context: context);
 
   @override
   MapResult? get cardMapResult {
@@ -151,8 +141,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$listResultAtom =
-      Atom(name: '_BalanceStore.listResult', context: context);
+  late final _$listResultAtom = Atom(name: '_BalanceStore.listResult', context: context);
 
   @override
   List<dynamic>? get listResult {
@@ -167,8 +156,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$barMapResultAtom =
-      Atom(name: '_BalanceStore.barMapResult', context: context);
+  late final _$barMapResultAtom = Atom(name: '_BalanceStore.barMapResult', context: context);
 
   @override
   MapResult? get barMapResult {
@@ -183,8 +171,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_selectedCardAtom =
-      Atom(name: '_BalanceStore._selectedCard', context: context);
+  late final _$_selectedCardAtom = Atom(name: '_BalanceStore._selectedCard', context: context);
 
   CardModel? get selectedCard {
     _$_selectedCardAtom.reportRead();
@@ -201,8 +188,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_selectedBackupCardAtom =
-      Atom(name: '_BalanceStore._selectedBackupCard', context: context);
+  late final _$_selectedBackupCardAtom = Atom(name: '_BalanceStore._selectedBackupCard', context: context);
 
   CardModel? get selectedBackupCard {
     _$_selectedBackupCardAtom.reportRead();
@@ -219,8 +205,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_selectedEthCardAtom =
-      Atom(name: '_BalanceStore._selectedEthCard', context: context);
+  late final _$_selectedEthCardAtom = Atom(name: '_BalanceStore._selectedEthCard', context: context);
 
   EthCardModel? get selectedEthCard {
     _$_selectedEthCardAtom.reportRead();
@@ -237,8 +222,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$_selectedBarAtom =
-      Atom(name: '_BalanceStore._selectedBar', context: context);
+  late final _$_selectedBarAtom = Atom(name: '_BalanceStore._selectedBar', context: context);
 
   BarModel? get selectedBar {
     _$_selectedBarAtom.reportRead();
@@ -255,8 +239,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$loadingsAtom =
-      Atom(name: '_BalanceStore.loadings', context: context);
+  late final _$loadingsAtom = Atom(name: '_BalanceStore.loadings', context: context);
 
   @override
   ObservableMap<String, bool> get loadings {
@@ -271,8 +254,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$balanceLoadingAtom =
-      Atom(name: '_BalanceStore.balanceLoading', context: context);
+  late final _$balanceLoadingAtom = Atom(name: '_BalanceStore.balanceLoading', context: context);
 
   @override
   bool get balanceLoading {
@@ -287,8 +269,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$cardCurrentIndexAtom =
-      Atom(name: '_BalanceStore.cardCurrentIndex', context: context);
+  late final _$cardCurrentIndexAtom = Atom(name: '_BalanceStore.cardCurrentIndex', context: context);
 
   @override
   int get cardCurrentIndex {
@@ -303,8 +284,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$barCurrentIndexAtom =
-      Atom(name: '_BalanceStore.barCurrentIndex', context: context);
+  late final _$barCurrentIndexAtom = Atom(name: '_BalanceStore.barCurrentIndex', context: context);
 
   @override
   int get barCurrentIndex {
@@ -319,8 +299,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$barActivationAtom =
-      Atom(name: '_BalanceStore.barActivation', context: context);
+  late final _$barActivationAtom = Atom(name: '_BalanceStore.barActivation', context: context);
 
   @override
   bool get barActivation {
@@ -335,8 +314,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$cardActivationAtom =
-      Atom(name: '_BalanceStore.cardActivation', context: context);
+  late final _$cardActivationAtom = Atom(name: '_BalanceStore.cardActivation', context: context);
 
   @override
   bool get cardActivation {
@@ -351,8 +329,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$inAppWebViewLoadingAtom =
-      Atom(name: '_BalanceStore.inAppWebViewLoading', context: context);
+  late final _$inAppWebViewLoadingAtom = Atom(name: '_BalanceStore.inAppWebViewLoading', context: context);
 
   @override
   bool get inAppWebViewLoading {
@@ -367,8 +344,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$cardIndicatorIndexAtom =
-      Atom(name: '_BalanceStore.cardIndicatorIndex', context: context);
+  late final _$cardIndicatorIndexAtom = Atom(name: '_BalanceStore.cardIndicatorIndex', context: context);
 
   @override
   int get cardIndicatorIndex {
@@ -383,8 +359,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$isCardIndicatorTappedAtom =
-      Atom(name: '_BalanceStore.isCardIndicatorTapped', context: context);
+  late final _$isCardIndicatorTappedAtom = Atom(name: '_BalanceStore.isCardIndicatorTapped', context: context);
 
   @override
   bool get isCardIndicatorTapped {
@@ -394,14 +369,12 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   set isCardIndicatorTapped(bool value) {
-    _$isCardIndicatorTappedAtom.reportWrite(value, super.isCardIndicatorTapped,
-        () {
+    _$isCardIndicatorTappedAtom.reportWrite(value, super.isCardIndicatorTapped, () {
       super.isCardIndicatorTapped = value;
     });
   }
 
-  late final _$chainTypeAtom =
-      Atom(name: '_BalanceStore.chainType', context: context);
+  late final _$chainTypeAtom = Atom(name: '_BalanceStore.chainType', context: context);
 
   @override
   BlockchainType get chainType {
@@ -416,8 +389,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$mainWalletAddressAtom =
-      Atom(name: '_BalanceStore.mainWalletAddress', context: context);
+  late final _$mainWalletAddressAtom = Atom(name: '_BalanceStore.mainWalletAddress', context: context);
 
   @override
   String get mainWalletAddress {
@@ -432,8 +404,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$backupSingleCardAtom =
-      Atom(name: '_BalanceStore.backupSingleCard', context: context);
+  late final _$backupSingleCardAtom = Atom(name: '_BalanceStore.backupSingleCard', context: context);
 
   @override
   CardModel? get backupSingleCard {
@@ -448,8 +419,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$backupCardLoadingAtom =
-      Atom(name: '_BalanceStore.backupCardLoading', context: context);
+  late final _$backupCardLoadingAtom = Atom(name: '_BalanceStore.backupCardLoading', context: context);
 
   @override
   bool get backupCardLoading {
@@ -464,54 +434,68 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
-  late final _$loadBackupCardAsyncAction =
-      AsyncAction('_BalanceStore.loadBackupCard', context: context);
+  late final _$hasBackUpAtom = Atom(name: '_BalanceStore.hasBackUp', context: context);
+
+  @override
+  bool? get hasBackUp {
+    _$hasBackUpAtom.reportRead();
+    return super.hasBackUp;
+  }
+
+  @override
+  set hasBackUp(bool? value) {
+    _$hasBackUpAtom.reportWrite(value, super.hasBackUp, () {
+      super.hasBackUp = value;
+    });
+  }
+
+  late final _$fetchHasBackUpAsyncAction = AsyncAction('_BalanceStore.fetchHasBackUp', context: context);
+
+  @override
+  Future<void> fetchHasBackUp(String address) {
+    return _$fetchHasBackUpAsyncAction.run(() => super.fetchHasBackUp(address));
+  }
+
+  late final _$loadBackupCardAsyncAction = AsyncAction('_BalanceStore.loadBackupCard', context: context);
 
   @override
   Future<void> loadBackupCard(String mainCardAddress) {
-    return _$loadBackupCardAsyncAction
-        .run(() => super.loadBackupCard(mainCardAddress));
+    return _$loadBackupCardAsyncAction.run(() => super.loadBackupCard(mainCardAddress));
   }
 
-  late final _$getCardsInfoAsyncAction =
-      AsyncAction('_BalanceStore.getCardsInfo', context: context);
+  late final _$getCardsInfoAsyncAction = AsyncAction('_BalanceStore.getCardsInfo', context: context);
 
   @override
   Future<void> getCardsInfo() {
     return _$getCardsInfoAsyncAction.run(() => super.getCardsInfo());
   }
 
-  late final _$getBarsInfoAsyncAction =
-      AsyncAction('_BalanceStore.getBarsInfo', context: context);
+  late final _$getBarsInfoAsyncAction = AsyncAction('_BalanceStore.getBarsInfo', context: context);
 
   @override
   Future<void> getBarsInfo() {
     return _$getBarsInfoAsyncAction.run(() => super.getBarsInfo());
   }
 
-  late final _$getEthCardAsyncAction =
-      AsyncAction('_BalanceStore.getEthCard', context: context);
+  late final _$getEthCardAsyncAction = AsyncAction('_BalanceStore.getEthCard', context: context);
 
   @override
   Future<EthCardModel> getEthCard({required int index}) {
     return _$getEthCardAsyncAction.run(() => super.getEthCard(index: index));
   }
 
-  late final _$getEthCardsInfoAsyncAction =
-      AsyncAction('_BalanceStore.getEthCardsInfo', context: context);
+  late final _$getEthCardsInfoAsyncAction = AsyncAction('_BalanceStore.getEthCardsInfo', context: context);
 
   @override
   Future<void> getEthCardsInfo() {
     return _$getEthCardsInfoAsyncAction.run(() => super.getEthCardsInfo());
   }
 
-  late final _$getBackupCardsInfoAsyncAction =
-      AsyncAction('_BalanceStore.getBackupCardsInfo', context: context);
+  late final _$getBackupCardsInfoAsyncAction = AsyncAction('_BalanceStore.getBackupCardsInfo', context: context);
 
   @override
   Future<void> getBackupCardsInfo() {
-    return _$getBackupCardsInfoAsyncAction
-        .run(() => super.getBackupCardsInfo());
+    return _$getBackupCardsInfoAsyncAction.run(() => super.getBackupCardsInfo());
   }
 
   late final _$updateCardIndicatorIndexAsyncAction =
@@ -519,8 +503,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   Future<void> updateCardIndicatorIndex(int index) {
-    return _$updateCardIndicatorIndexAsyncAction
-        .run(() => super.updateCardIndicatorIndex(index));
+    return _$updateCardIndicatorIndexAsyncAction.run(() => super.updateCardIndicatorIndex(index));
   }
 
   late final _$cardIndicatorTapStatusAsyncAction =
@@ -528,159 +511,141 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   Future<void> cardIndicatorTapStatus({required bool status}) {
-    return _$cardIndicatorTapStatusAsyncAction
-        .run(() => super.cardIndicatorTapStatus(status: status));
+    return _$cardIndicatorTapStatusAsyncAction.run(() => super.cardIndicatorTapStatus(status: status));
   }
 
-  late final _$getSelectedCardAsyncAction =
-      AsyncAction('_BalanceStore.getSelectedCard', context: context);
+  late final _$getSelectedCardAsyncAction = AsyncAction('_BalanceStore.getSelectedCard', context: context);
 
   @override
   Future<void> getSelectedCard(String address) {
-    return _$getSelectedCardAsyncAction
-        .run(() => super.getSelectedCard(address));
+    return _$getSelectedCardAsyncAction.run(() => super.getSelectedCard(address));
   }
 
-  late final _$getSelectedBackupCardAsyncAction =
-      AsyncAction('_BalanceStore.getSelectedBackupCard', context: context);
+  late final _$getSelectedBackupCardAsyncAction = AsyncAction('_BalanceStore.getSelectedBackupCard', context: context);
 
   @override
   Future<void> getSelectedBackupCard(String address) {
-    return _$getSelectedBackupCardAsyncAction
-        .run(() => super.getSelectedBackupCard(address));
+    return _$getSelectedBackupCardAsyncAction.run(() => super.getSelectedBackupCard(address));
   }
 
-  late final _$getSelectedBarAsyncAction =
-      AsyncAction('_BalanceStore.getSelectedBar', context: context);
+  late final _$getSelectedBarAsyncAction = AsyncAction('_BalanceStore.getSelectedBar', context: context);
 
   @override
   Future<void> getSelectedBar(String address) {
     return _$getSelectedBarAsyncAction.run(() => super.getSelectedBar(address));
   }
 
-  late final _$removeSelectedCardAsyncAction =
-      AsyncAction('_BalanceStore.removeSelectedCard', context: context);
+  late final _$removeSelectedCardAsyncAction = AsyncAction('_BalanceStore.removeSelectedCard', context: context);
 
   @override
-  Future<void> removeSelectedCard() {
-    return _$removeSelectedCardAsyncAction
-        .run(() => super.removeSelectedCard());
+  Future<void> removeSelectedCard({required String address}) {
+    return _$removeSelectedCardAsyncAction.run(() => super.removeSelectedCard(address: address));
   }
 
-  late final _$removeSelectedEthCardAsyncAction =
-      AsyncAction('_BalanceStore.removeSelectedEthCard', context: context);
+  late final _$removeSelectedBackupCardAsyncAction =
+      AsyncAction('_BalanceStore.removeSelectedBackupCard', context: context);
+
+  @override
+  Future<void> removeSelectedBackupCard({required String address}) {
+    return _$removeSelectedBackupCardAsyncAction.run(() => super.removeSelectedBackupCard(address: address));
+  }
+
+  late final _$removeSelectedEthCardAsyncAction = AsyncAction('_BalanceStore.removeSelectedEthCard', context: context);
 
   @override
   Future<void> removeSelectedEthCard() {
-    return _$removeSelectedEthCardAsyncAction
-        .run(() => super.removeSelectedEthCard());
+    return _$removeSelectedEthCardAsyncAction.run(() => super.removeSelectedEthCard());
   }
 
-  late final _$removeSelectedBarAsyncAction =
-      AsyncAction('_BalanceStore.removeSelectedBar', context: context);
+  late final _$removeSelectedBarAsyncAction = AsyncAction('_BalanceStore.removeSelectedBar', context: context);
 
   @override
   Future<void> removeSelectedBar() {
     return _$removeSelectedBarAsyncAction.run(() => super.removeSelectedBar());
   }
 
-  late final _$getCardAsyncAction =
-      AsyncAction('_BalanceStore.getCard', context: context);
+  late final _$getCardAsyncAction = AsyncAction('_BalanceStore.getCard', context: context);
 
   @override
-  Future<bool?> getCard(
-      {required String? receivedData,
-      required TextEditingController textEditingController}) {
-    return _$getCardAsyncAction.run(() => super.getCard(
-        receivedData: receivedData,
-        textEditingController: textEditingController));
+  Future<bool?> getCard({required String? receivedData, required TextEditingController textEditingController}) {
+    return _$getCardAsyncAction
+        .run(() => super.getCard(receivedData: receivedData, textEditingController: textEditingController));
   }
 
-  late final _$setCardCurrentIndexAsyncAction =
-      AsyncAction('_BalanceStore.setCardCurrentIndex', context: context);
+  late final _$setCardCurrentIndexAsyncAction = AsyncAction('_BalanceStore.setCardCurrentIndex', context: context);
 
   @override
   Future<void> setCardCurrentIndex(int index) {
-    return _$setCardCurrentIndexAsyncAction
-        .run(() => super.setCardCurrentIndex(index));
+    return _$setCardCurrentIndexAsyncAction.run(() => super.setCardCurrentIndex(index));
   }
 
-  late final _$setBarCurrentIndexAsyncAction =
-      AsyncAction('_BalanceStore.setBarCurrentIndex', context: context);
+  late final _$setBarCurrentIndexAsyncAction = AsyncAction('_BalanceStore.setBarCurrentIndex', context: context);
 
   @override
   Future<void> setBarCurrentIndex(int index) {
-    return _$setBarCurrentIndexAsyncAction
-        .run(() => super.setBarCurrentIndex(index));
+    return _$setBarCurrentIndexAsyncAction.run(() => super.setBarCurrentIndex(index));
   }
 
-  late final _$setMainWalletAddressAsyncAction =
-      AsyncAction('_BalanceStore.setMainWalletAddress', context: context);
+  late final _$setMainWalletAddressAsyncAction = AsyncAction('_BalanceStore.setMainWalletAddress', context: context);
 
   @override
   Future<void> setMainWalletAddress({required String walletAddress}) {
-    return _$setMainWalletAddressAsyncAction
-        .run(() => super.setMainWalletAddress(walletAddress: walletAddress));
+    return _$setMainWalletAddressAsyncAction.run(() => super.setMainWalletAddress(walletAddress: walletAddress));
   }
 
-  late final _$setChainTypeAsyncAction =
-      AsyncAction('_BalanceStore.setChainType', context: context);
+  late final _$setChainTypeAsyncAction = AsyncAction('_BalanceStore.setChainType', context: context);
 
   @override
   Future<void> setChainType({required BlockchainType blockchain}) {
-    return _$setChainTypeAsyncAction
-        .run(() => super.setChainType(blockchain: blockchain));
+    return _$setChainTypeAsyncAction.run(() => super.setChainType(blockchain: blockchain));
   }
 
-  late final _$_BalanceStoreActionController =
-      ActionController(name: '_BalanceStore', context: context);
+  late final _$_BalanceStoreActionController = ActionController(name: '_BalanceStore', context: context);
 
   @override
-  void changeBarIndexAndSave(
-      {required int oldIndex,
-      required String cardAddress,
-      required int newIndex}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeBarIndexAndSave');
+  void changeBarIndexAndSave({required int oldIndex, required String cardAddress, required int newIndex}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeBarIndexAndSave');
     try {
-      return super.changeBarIndexAndSave(
-          oldIndex: oldIndex, cardAddress: cardAddress, newIndex: newIndex);
+      return super.changeBarIndexAndSave(oldIndex: oldIndex, cardAddress: cardAddress, newIndex: newIndex);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void changeCardColorAndSave(
-      {required String cardAddress, required CardColor color}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeCardColorAndSave');
+  void changeCardColorAndSave({required String cardAddress, required CardColor color}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeCardColorAndSave');
     try {
-      return super
-          .changeCardColorAndSave(cardAddress: cardAddress, color: color);
+      return super.changeCardColorAndSave(cardAddress: cardAddress, color: color);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void changeEthCardColorAndSave(
-      {required String cardAddress, required CardColor color}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeEthCardColorAndSave');
+  void changeCardBackupStatusAndSave({required String cardAddress, required bool hasBackedUp}) {
+    final _$actionInfo =
+        _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeCardBackupStatusAndSave');
     try {
-      return super
-          .changeEthCardColorAndSave(cardAddress: cardAddress, color: color);
+      return super.changeCardBackupStatusAndSave(cardAddress: cardAddress, hasBackedUp: hasBackedUp);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void changeBarColorAndSave(
-      {required String barAddress, required CardColor color}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeBarColorAndSave');
+  void changeEthCardColorAndSave({required String cardAddress, required CardColor color}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeEthCardColorAndSave');
+    try {
+      return super.changeEthCardColorAndSave(cardAddress: cardAddress, color: color);
+    } finally {
+      _$_BalanceStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeBarColorAndSave({required String barAddress, required CardColor color}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeBarColorAndSave');
     try {
       return super.changeBarColorAndSave(barAddress: barAddress, color: color);
     } finally {
@@ -689,39 +654,30 @@ mixin _$BalanceStore on _BalanceStore, Store {
   }
 
   @override
-  void changeCardNameAndSave(
-      {required String cardAddress, required String newName}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeCardNameAndSave');
+  void changeCardNameAndSave({required String cardAddress, required String newName}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeCardNameAndSave');
     try {
-      return super
-          .changeCardNameAndSave(cardAddress: cardAddress, newName: newName);
+      return super.changeCardNameAndSave(cardAddress: cardAddress, newName: newName);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void changeEthCardNameAndSave(
-      {required String cardAddress, required String newName}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeEthCardNameAndSave');
+  void changeEthCardNameAndSave({required String cardAddress, required String newName}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeEthCardNameAndSave');
     try {
-      return super
-          .changeEthCardNameAndSave(cardAddress: cardAddress, newName: newName);
+      return super.changeEthCardNameAndSave(cardAddress: cardAddress, newName: newName);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void changeBarNameAndSave(
-      {required String barAddress, required String newName}) {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.changeBarNameAndSave');
+  void changeBarNameAndSave({required String barAddress, required String newName}) {
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.changeBarNameAndSave');
     try {
-      return super
-          .changeBarNameAndSave(barAddress: barAddress, newName: newName);
+      return super.changeBarNameAndSave(barAddress: barAddress, newName: newName);
     } finally {
       _$_BalanceStoreActionController.endAction(_$actionInfo);
     }
@@ -729,8 +685,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void activateBar() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.activateBar');
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.activateBar');
     try {
       return super.activateBar();
     } finally {
@@ -740,8 +695,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void activateCard() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.activateCard');
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.activateCard');
     try {
       return super.activateCard();
     } finally {
@@ -751,8 +705,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void reActivateBar() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.reActivateBar');
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.reActivateBar');
     try {
       return super.reActivateBar();
     } finally {
@@ -762,8 +715,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void reActivateCard() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.reActivateCard');
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.reActivateCard');
     try {
       return super.reActivateCard();
     } finally {
@@ -773,8 +725,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void webViewStartLoading() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.webViewStartLoading');
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.webViewStartLoading');
     try {
       return super.webViewStartLoading();
     } finally {
@@ -784,8 +735,7 @@ mixin _$BalanceStore on _BalanceStore, Store {
 
   @override
   void webViewStopLoading() {
-    final _$actionInfo = _$_BalanceStoreActionController.startAction(
-        name: '_BalanceStore.webViewStopLoading');
+    final _$actionInfo = _$_BalanceStoreActionController.startAction(name: '_BalanceStore.webViewStopLoading');
     try {
       return super.webViewStopLoading();
     } finally {
@@ -812,12 +762,14 @@ chainType: ${chainType},
 mainWalletAddress: ${mainWalletAddress},
 backupSingleCard: ${backupSingleCard},
 backupCardLoading: ${backupCardLoading},
+hasBackUp: ${hasBackUp},
 btcPrice: ${btcPrice},
 ethPrice: ${ethPrice},
 allCardsBalances: ${allCardsBalances},
 allEthCardsBalances: ${allEthCardsBalances},
 singleCoin: ${singleCoin},
 cardBalance: ${cardBalance},
+backupCardBalance: ${backupCardBalance},
 barBalance: ${barBalance},
 allCards: ${allCards}
     ''';

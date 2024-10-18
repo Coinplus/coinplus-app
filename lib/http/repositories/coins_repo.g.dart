@@ -164,8 +164,7 @@ class _CoinsClient implements CoinsClient {
   }
 
   @override
-  Future<PatchTransactionsModel> patchTransactions(
-      {required String address}) async {
+  Future<PatchTransactionsModel> patchTransactions({required String address}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -199,8 +198,7 @@ class _CoinsClient implements CoinsClient {
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {

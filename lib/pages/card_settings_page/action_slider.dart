@@ -62,8 +62,7 @@ class ActionSliderForCardDelete extends StatelessWidget {
               activated: await isCardActivated,
             ),
           );
-          unawaited(balanceStore.getSelectedCard(card.address));
-          unawaited(balanceStore.removeSelectedCard());
+          unawaited(balanceStore.removeSelectedCard(address: card.address));
         } else if (card.blockchain == 'ETH') {
           final isCardActivated = isEthCardWalletActivated();
           await recordAmplitudeEventPartTwo(

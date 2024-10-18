@@ -13,39 +13,34 @@ mixin _$CardHistoryListState on _CardHistoryListState, Store {
 
   @override
   HistoryPageStore get historyPageStore => (_$historyPageStoreComputed ??=
-          Computed<HistoryPageStore>(() => super.historyPageStore,
-              name: '_CardHistoryListState.historyPageStore'))
+          Computed<HistoryPageStore>(() => super.historyPageStore, name: '_CardHistoryListState.historyPageStore'))
       .value;
   Computed<BalanceStore>? _$balanceStoreComputed;
 
   @override
   BalanceStore get balanceStore => (_$balanceStoreComputed ??=
-          Computed<BalanceStore>(() => super.balanceStore,
-              name: '_CardHistoryListState.balanceStore'))
+          Computed<BalanceStore>(() => super.balanceStore, name: '_CardHistoryListState.balanceStore'))
       .value;
   Computed<AccelerometerStore>? _$accelerometerStoreComputed;
 
   @override
-  AccelerometerStore get accelerometerStore => (_$accelerometerStoreComputed ??=
-          Computed<AccelerometerStore>(() => super.accelerometerStore,
+  AccelerometerStore get accelerometerStore =>
+      (_$accelerometerStoreComputed ??= Computed<AccelerometerStore>(() => super.accelerometerStore,
               name: '_CardHistoryListState.accelerometerStore'))
-      .value;
+          .value;
   Computed<bool>? _$hasPerformedActionComputed;
 
   @override
   bool get hasPerformedAction => (_$hasPerformedActionComputed ??=
-          Computed<bool>(() => super.hasPerformedAction,
-              name: '_CardHistoryListState.hasPerformedAction'))
+          Computed<bool>(() => super.hasPerformedAction, name: '_CardHistoryListState.hasPerformedAction'))
       .value;
 
-  late final _$loadCardWalletStatusFromStorageAsyncAction = AsyncAction(
-      '_CardHistoryListState.loadCardWalletStatusFromStorage',
-      context: context);
+  late final _$loadCardWalletStatusFromStorageAsyncAction =
+      AsyncAction('_CardHistoryListState.loadCardWalletStatusFromStorage', context: context);
 
   @override
   Future<void> loadCardWalletStatusFromStorage(String address) {
-    return _$loadCardWalletStatusFromStorageAsyncAction
-        .run(() => super.loadCardWalletStatusFromStorage(address));
+    return _$loadCardWalletStatusFromStorageAsyncAction.run(() => super.loadCardWalletStatusFromStorage(address));
   }
 
   late final _$_CardHistoryListStateActionController =
@@ -53,8 +48,8 @@ mixin _$CardHistoryListState on _CardHistoryListState, Store {
 
   @override
   void getNextPageTransactions() {
-    final _$actionInfo = _$_CardHistoryListStateActionController.startAction(
-        name: '_CardHistoryListState.getNextPageTransactions');
+    final _$actionInfo =
+        _$_CardHistoryListStateActionController.startAction(name: '_CardHistoryListState.getNextPageTransactions');
     try {
       return super.getNextPageTransactions();
     } finally {

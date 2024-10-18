@@ -11,8 +11,7 @@ class PatchTransactionsModel {
     required this.status,
   });
 
-  factory PatchTransactionsModel.fromJson(Map<String, dynamic> json) =>
-      _$PatchTransactionsModelFromJson(json);
+  factory PatchTransactionsModel.fromJson(Map<String, dynamic> json) => _$PatchTransactionsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PatchTransactionsModelToJson(this);
 }
