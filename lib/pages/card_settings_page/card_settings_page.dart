@@ -38,6 +38,7 @@ import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/background.dart';
 import 'change_card_name.dart';
+import 'lost_my_card_modal.dart';
 import 'remove_card_modal.dart';
 
 @RoutePage()
@@ -187,6 +188,61 @@ class CardSettingsPage extends HookWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  ListTile(
+                    enableFeedback: false,
+                    onTap: () async {
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: true,
+                      );
+                      await showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return LostMyCardWidget(
+                            card: card,
+                          );
+                        },
+                      );
+                      await _walletProtectState.updateModalStatus(
+                        isOpened: false,
+                      );
+                    },
+                    trailing: Assets.icons.creditCardOff.image(
+                      height: 24,
+                    ),
+                    title: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lost my card',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFFFD5340),
+                          ),
+                        ),
+                        Gap(6),
+                        Text(
+                          'In case you lost your card',
+                          style: TextStyle(
+                            fontFamily: FontFamily.redHatMedium,
+                            fontSize: 14,
+                            color: AppColors.primaryTextColor,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Gap(16),
                   ListTile(
                     onTap: () async {
                       await _walletProtectState.updateModalStatus(

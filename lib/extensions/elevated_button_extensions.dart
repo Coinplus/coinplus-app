@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/button_settings.dart';
 import '../gen/colors.gen.dart';
+import '../gen/fonts.gen.dart';
 
 extension ElevatedButtonExtensions on ThemeData {
   ButtonStyle buttonStyle({
@@ -59,6 +60,7 @@ extension ElevatedButtonExtensions on ThemeData {
       textStyle: WidgetStateProperty.all(
         textStyle ??
             const TextStyle(
+              fontFamily: FontFamily.redHatMedium,
               fontWeight: FontWeight.w700,
               fontSize: 18,
               height: 1,

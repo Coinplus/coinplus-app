@@ -24,6 +24,14 @@ abstract class _ValidationState with Store {
   @observable
   String walletAddress = '';
 
+  @observable
+  String color = '';
+
+  @action
+  Future<void> initColor(String cardColor) async {
+    color = cardColor;
+  }
+
   @action
   void validate() {
     isValid = !isValid;

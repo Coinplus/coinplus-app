@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:action_slider/action_slider.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -50,42 +51,49 @@ class ActionSliderForCardDelete extends StatelessWidget {
         color: Colors.white,
       ),
       action: (controller) async {
+        await _balanceStore.loadBackupCard(card.address);
+        final backupCard = _balanceStore.backupCards.firstWhereOrNull(
+          (card) => card.address == _balanceStore.backupSingleCard?.address,
+        );
+
         controller.loading();
         await Future.delayed(const Duration(seconds: 1));
         controller.success();
         if (card.blockchain == 'BTC') {
-          final isCardActivated = isCardWalletActivated();
+          final isCardActivated = await isCardWalletActivated();
           await recordAmplitudeEventPartTwo(
             CardDeleted(
               walletAddress: card.address,
               walletType: 'Card',
-              activated: await isCardActivated,
+              activated: isCardActivated,
             ),
           );
-          unawaited(balanceStore.removeSelectedCard(address: card.address));
+          unawaited(_balanceStore.removeSelectedCard(address: card.address));
         } else if (card.blockchain == 'ETH') {
-          final isCardActivated = isEthCardWalletActivated();
+          final isCardActivated = await isEthCardWalletActivated();
           await recordAmplitudeEventPartTwo(
             CardDeleted(
               walletAddress: card.address,
               walletType: 'Card',
-              activated: await isCardActivated,
+              activated: isCardActivated,
             ),
           );
-          await balanceStore.getSelectedEthCard(card.address);
-          await balanceStore.removeSelectedEthCard();
+          await _balanceStore.getSelectedEthCard(card.address);
+          await _balanceStore.removeSelectedEthCard();
         }
+        if (backupCard != null) {
+          await _balanceStore.removeSelectedBackupCard(address: backupCard.address);
+          await StorageUtils.deleteBackupCard(card.address);
+        }
+        await _secureStorage.deleteBackup(mainCardAddress: card.address);
         await _secureStorage.deleteCard(card: card);
-        await StorageUtils.deleteBackupCard(card.address);
         await _historyPageStore.deleteAddressFromHistoryMap(
           address: card.address,
         );
         unawaited(deleteCount(card.address));
         await router.maybePop();
         _historyPageStore.cardHistories[card.address]?.clear();
-        _balanceStore.onCardDeleted(
-          card.address,
-        );
+        _balanceStore.onCardDeleted(card.address);
         await _historyPageStore.setCardHistoryIndex(0);
 
         router.popUntilRouteWithName(DashboardRoute.name);

@@ -550,6 +550,15 @@ mixin _$BalanceStore on _BalanceStore, Store {
     return _$removeSelectedBackupCardAsyncAction.run(() => super.removeSelectedBackupCard(address: address));
   }
 
+  late final _$replaceMainCardWithBackupAsyncAction =
+      AsyncAction('_BalanceStore.replaceMainCardWithBackup', context: context);
+
+  @override
+  Future<void> replaceMainCardWithBackup({required String mainCardAddress, required CardModel? backedUpCard}) {
+    return _$replaceMainCardWithBackupAsyncAction
+        .run(() => super.replaceMainCardWithBackup(mainCardAddress: mainCardAddress, backedUpCard: backedUpCard));
+  }
+
   late final _$removeSelectedEthCardAsyncAction = AsyncAction('_BalanceStore.removeSelectedEthCard', context: context);
 
   @override

@@ -426,9 +426,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/coinpluslogo.png
   AssetGenImage get coinpluslogo => const AssetGenImage('assets/images/coinpluslogo.png');
 
-  /// File path: assets/images/contactless.png
-  AssetGenImage get contactless => const AssetGenImage('assets/images/contactless.png');
-
   /// File path: assets/images/pending.png
   AssetGenImage get pending => const AssetGenImage('assets/images/pending.png');
 
@@ -436,8 +433,7 @@ class $AssetsImagesGen {
   AssetGenImage get walletProtectImage => const AssetGenImage('assets/images/wallet_protect_image.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [addCard, appLogo, cardAndBarForms, coinpluslogo, contactless, pending, walletProtectImage];
+  List<AssetGenImage> get values => [addCard, appLogo, cardAndBarForms, coinpluslogo, pending, walletProtectImage];
 }
 
 class $AssetsLottieAnimationsGen {
@@ -623,9 +619,6 @@ class $AssetsImagesCardGen {
   /// File path: assets/images/card/empty_card.png
   AssetGenImage get emptyCard => const AssetGenImage('assets/images/card/empty_card.png');
 
-  /// File path: assets/images/card/ethereum_card.png
-  AssetGenImage get ethereumCard => const AssetGenImage('assets/images/card/ethereum_card.png');
-
   /// File path: assets/images/card/filled_back.png
   AssetGenImage get filledBack => const AssetGenImage('assets/images/card/filled_back.png');
 
@@ -640,9 +633,6 @@ class $AssetsImagesCardGen {
 
   /// File path: assets/images/card/orange_card_front.png
   AssetGenImage get orangeCardFront => const AssetGenImage('assets/images/card/orange_card_front.png');
-
-  /// File path: assets/images/card/tracker_color_card.png
-  AssetGenImage get trackerColorCard => const AssetGenImage('assets/images/card/tracker_color_card.png');
 
   /// File path: assets/images/card/white_card_front.png
   AssetGenImage get whiteCardFront => const AssetGenImage('assets/images/card/white_card_front.png');
@@ -661,13 +651,11 @@ class $AssetsImagesCardGen {
         cardForm,
         cardStickers,
         emptyCard,
-        ethereumCard,
         filledBack,
         filledBackBrown,
         filledBackWhite,
         formCardSelected,
         orangeCardFront,
-        trackerColorCard,
         whiteCardFront
       ];
 }
@@ -711,7 +699,7 @@ class AssetGenImage {
     ImageRepeat repeat = ImageRepeat.noRepeat,
     Rect? centerSlice,
     bool matchTextDirection = false,
-    bool gaplessPlayback = false,
+    bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
     FilterQuality filterQuality = FilterQuality.low,

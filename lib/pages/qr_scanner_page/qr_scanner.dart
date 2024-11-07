@@ -15,7 +15,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 import '../../gen/assets.gen.dart';
-import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -115,7 +114,7 @@ class QrScannerPage extends HookWidget {
                 return Container(
                   decoration: ShapeDecoration(
                     shape: QrOverlayShape(
-                      overlayColor: AppColors.primary.withOpacity(0.9),
+                      overlayColor: Colors.black.withOpacity(0.8),
                       borderColor: qrDetect.isDetected ? (qrDetect.isValid ? Colors.green : Colors.red) : Colors.blue,
                       borderRadius: 12,
                       borderLength: 20,
@@ -145,7 +144,7 @@ class QrScannerPage extends HookWidget {
             top: MediaQuery.of(context).size.height * 0.08,
             right: 137,
             child: const Text(
-              'Scan a QR code',
+              'Scan the QR code',
               style: TextStyle(
                 fontFamily: 'RedHatMedium',
                 fontSize: 17,

@@ -132,6 +132,7 @@ abstract class $Router extends _i27.RootStackRouter {
           key: args.key,
           receivedData: args.receivedData,
           hasBackup: args.hasBackup,
+          s: args.s,
         ),
       );
     },
@@ -143,6 +144,7 @@ abstract class $Router extends _i27.RootStackRouter {
           key: args.key,
           receivedData: args.receivedData,
           onChangeCard: args.onChangeCard,
+          cardColor: args.cardColor,
         ),
       );
     },
@@ -556,6 +558,7 @@ class CardActivationRoute extends _i27.PageRouteInfo<CardActivationRouteArgs> {
     _i28.Key? key,
     String? receivedData,
     bool? hasBackup,
+    int? s,
     List<_i27.PageRouteInfo>? children,
   }) : super(
           CardActivationRoute.name,
@@ -563,6 +566,7 @@ class CardActivationRoute extends _i27.PageRouteInfo<CardActivationRouteArgs> {
             key: key,
             receivedData: receivedData,
             hasBackup: hasBackup,
+            s: s,
           ),
           initialChildren: children,
         );
@@ -577,6 +581,7 @@ class CardActivationRouteArgs {
     this.key,
     this.receivedData,
     this.hasBackup,
+    this.s,
   });
 
   final _i28.Key? key;
@@ -585,9 +590,11 @@ class CardActivationRouteArgs {
 
   final bool? hasBackup;
 
+  final int? s;
+
   @override
   String toString() {
-    return 'CardActivationRouteArgs{key: $key, receivedData: $receivedData, hasBackup: $hasBackup}';
+    return 'CardActivationRouteArgs{key: $key, receivedData: $receivedData, hasBackup: $hasBackup, s: $s}';
   }
 }
 
@@ -598,6 +605,7 @@ class CardConnectRoute extends _i27.PageRouteInfo<CardConnectRouteArgs> {
     _i28.Key? key,
     String? receivedData,
     void Function(({_i34.AbstractCard? card, int index}))? onChangeCard,
+    String? cardColor,
     List<_i27.PageRouteInfo>? children,
   }) : super(
           CardConnectRoute.name,
@@ -605,6 +613,7 @@ class CardConnectRoute extends _i27.PageRouteInfo<CardConnectRouteArgs> {
             key: key,
             receivedData: receivedData,
             onChangeCard: onChangeCard,
+            cardColor: cardColor,
           ),
           initialChildren: children,
         );
@@ -619,6 +628,7 @@ class CardConnectRouteArgs {
     this.key,
     this.receivedData,
     this.onChangeCard,
+    this.cardColor,
   });
 
   final _i28.Key? key;
@@ -627,9 +637,11 @@ class CardConnectRouteArgs {
 
   final void Function(({_i34.AbstractCard? card, int index}))? onChangeCard;
 
+  final String? cardColor;
+
   @override
   String toString() {
-    return 'CardConnectRouteArgs{key: $key, receivedData: $receivedData, onChangeCard: $onChangeCard}';
+    return 'CardConnectRouteArgs{key: $key, receivedData: $receivedData, onChangeCard: $onChangeCard, cardColor: $cardColor}';
   }
 }
 

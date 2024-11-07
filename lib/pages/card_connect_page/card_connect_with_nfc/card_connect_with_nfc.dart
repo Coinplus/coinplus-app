@@ -9,7 +9,6 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
@@ -23,7 +22,6 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
-import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/address_and_balance_state/address_and_balance_state.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
@@ -35,6 +33,7 @@ import '../../../store/qr_detect_state/qr_detect_state.dart';
 import '../../../utils/card_color_detecting.dart';
 import '../../../utils/card_nfc_session.dart';
 import '../../../utils/custom_paint_lines.dart';
+import '../../../utils/responsive_gaps.dart';
 import '../../splash_screen/splash_screen.dart';
 import 'card_connect_widgets/card_front.dart';
 import 'card_connect_widgets/got_it_button.dart';
@@ -146,6 +145,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
 
   @override
   Widget build(BuildContext context) {
+    final gaps = ResponsiveGaps(context);
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -165,6 +165,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                 highlightColor: Colors.transparent,
               ),
               child: IconButton(
+                highlightColor: Colors.transparent,
                 onPressed: () async {
                   unawaited(
                     _flipCardController.controller!.value == 1 && _allSettingsState.isLineVisible
@@ -183,9 +184,10 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
             const Text(
               'Virtual card',
               style: TextStyle(
-                fontSize: 32,
-                fontFamily: FontFamily.redHatBold,
-                color: Colors.black,
+                fontSize: 28,
+                fontFamily: FontFamily.redHatMedium,
+                color: AppColors.primary,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -264,24 +266,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                     child: !_addressState.isAddressVisible
                                         ? Row(
                                             children: [
-                                              if (context.height < 932)
-                                                if (context.height < 867.4)
-                                                  if (context.height > 844)
-                                                    Gap(context.width * 0.08)
-                                                  else if (context.height > 667)
-                                                    Gap(context.width * 0.075)
-                                                  else
-                                                    Gap(
-                                                      context.width * 0.125,
-                                                    ) //iPhone 13 Pro
-                                                else
-                                                  Gap(
-                                                    context.width * 0.103,
-                                                  ) //Samsung large display
-                                              else
-                                                Gap(
-                                                  context.width * 0.115,
-                                                ), //iPhone 13 Pro Max
+                                              Gap(gaps.secretStickersGap),
                                               Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -310,13 +295,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                                       opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
-                                                          context.height > 852
-                                                              ? context.height > 844
-                                                                  ? 42
-                                                                  : context.height > 667
-                                                                      ? 28
-                                                                      : 38
-                                                              : 30,
+                                                          gaps.dynamicGap,
                                                           265,
                                                         ),
                                                         painter: LineCustomPaint(),
@@ -364,35 +343,13 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                   );
                                 },
                               ),
-                              if (context.height < 932)
-                                if (context.height < 867.4)
-                                  if (context.height > 844)
-                                    Gap(context.width * 0.114)
-                                  else if (context.height > 667)
-                                    Gap(context.width * 0.1175)
-                                  else
-                                    Gap(context.width * 0.065)
-                                else
-                                  Gap(context.height * 0.05)
-                              else
-                                Gap(context.height * 0.049),
+                              Gap(gaps.betweenStickersAndTextFieldGap),
                               Opacity(
                                 opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    if (context.height < 932)
-                                      if (context.height < 867.4)
-                                        if (context.height > 844)
-                                          Gap(context.height * 0.035)
-                                        else if (context.height > 667)
-                                          Gap(context.height * 0.04)
-                                        else
-                                          Gap(context.height * 0.03)
-                                      else
-                                        Gap(context.height * 0.035)
-                                    else
-                                      Gap(context.height * 0.035),
+                                    Gap(gaps.logoPositionGap),
                                     Row(
                                       children: [
                                         const Gap(15),
@@ -408,13 +365,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                       child: Stack(
                                         children: [
                                           Container(
-                                            height: context.height < 932
-                                                ? context.height < 867.4
-                                                    ? context.height > 844
-                                                        ? context.height * 0.26
-                                                        : context.height * 0.265
-                                                    : context.height * 0.24
-                                                : context.height * 0.24,
+                                            height: gaps.containerHeight,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.all(
@@ -437,15 +388,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 SizedBox(
-                                                  width: context.height < 932
-                                                      ? context.height < 867.4
-                                                          ? context.height > 844
-                                                              ? context.width * 0.241
-                                                              : context.height > 667
-                                                                  ? context.width * 0.25
-                                                                  : context.width * 0.21
-                                                          : context.width * 0.23
-                                                      : context.width * 0.225,
+                                                  width: gaps.containerWidth,
                                                   height: context.height * 0.14,
                                                   child: Observer(
                                                     builder: (context) {
@@ -577,74 +520,13 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                                 left: 0,
                                                 right: 0,
                                                 child: _validationStore.isValid
-                                                    ? ScaleTap(
-                                                        onPressed: () async {
-                                                          unawaited(
-                                                            recordAmplitudeEvent(
-                                                              const QrButtonClicked(
-                                                                walletType: 'Card',
-                                                                source: 'Connect',
-                                                              ),
-                                                            ),
-                                                          );
-                                                          _focusNode.unfocus();
-                                                          await Future.delayed(
-                                                            const Duration(
-                                                              milliseconds: 300,
-                                                            ),
-                                                          );
-                                                          final res = await context.pushRoute<String?>(
-                                                            QrScannerRoute(),
-                                                          );
-                                                          if (res == null) {
-                                                            return;
-                                                          }
-                                                          await hasShownWallet().then(
-                                                            (hasShown) async {
-                                                              if (hasShown) {
-                                                                unawaited(
-                                                                  recordAmplitudeEvent(
-                                                                    QrScanned(
-                                                                      source: 'Wallet',
-                                                                      walletAddress: res,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              } else {
-                                                                unawaited(
-                                                                  recordAmplitudeEvent(
-                                                                    QrScanned(
-                                                                      source: 'Onboarding',
-                                                                      walletAddress: res,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
-                                                          );
-                                                          setState(() {
-                                                            _addressController.text = res;
-                                                          });
-                                                          if (widget.receivedData!.startsWith(
-                                                            '0',
-                                                          )) {
-                                                            _addressState.ethAddress = res;
-                                                            await _addressState.validateETHAddress();
-                                                          } else {
-                                                            _addressState.btcAddress = res;
-                                                            await _addressState.validateBTCAddress();
-                                                          }
-                                                        },
-                                                        child: SizedBox(
-                                                          height: 50,
-                                                          child: Image.asset(
-                                                            'assets/icons/qr_code.png',
-                                                          ),
-                                                        ),
+                                                    ? Image.asset(
+                                                        height: 35,
+                                                        'assets/icons/qr_code.png',
                                                       )
                                                     : Lottie.asset(
                                                         'assets/lottie_animations/address_validation_success.json',
-                                                        height: 40,
+                                                        height: 35,
                                                         controller: _lottieController,
                                                         onLoaded: (composition) {
                                                           Future.delayed(
@@ -1101,7 +983,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
   }
 
   Future<void> _toggleCard() async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 500));
     await _flipCardController.toggleCard();
   }
 

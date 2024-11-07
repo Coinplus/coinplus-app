@@ -17,6 +17,7 @@ import 'package:mobx/mobx.dart';
 import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
+import '../../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
 import '../../constants/card_color.dart';
 import '../../constants/card_record.dart';
 import '../../constants/card_type.dart';
@@ -38,10 +39,14 @@ import '../../store/connectivity_store/connectivity_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import '../../store/qr_detect_state/qr_detect_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/card_color_detecting.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../utils/custom_paint_lines.dart';
 import '../../utils/data_utils.dart';
+import '../../utils/responsive_gaps.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
+import '../../widgets/custom_snack_bar/snack_bar_method.dart';
 import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/splash_screen.dart';
@@ -52,10 +57,12 @@ class CardConnectPage extends StatefulWidget {
     super.key,
     this.receivedData,
     this.onChangeCard,
+    this.cardColor,
   });
 
   final String? receivedData;
   final CardChangeCallBack? onChangeCard;
+  final String? cardColor;
 
   @override
   State<CardConnectPage> createState() => _CardConnectPageState();
@@ -85,9 +92,12 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
 
   HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
+  WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
+
   @override
   void initState() {
     super.initState();
+    _validationStore.initColor(widget.cardColor ?? '');
     _connectivityStore.initConnectivity();
     if (Platform.isAndroid) {
       nfcStop();
@@ -136,6 +146,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    final gaps = ResponsiveGaps(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -155,6 +166,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                 highlightColor: Colors.transparent,
               ),
               child: IconButton(
+                highlightColor: Colors.transparent,
                 onPressed: () async {
                   unawaited(
                     _flipCardController.controller!.value == 1 && _allSettingsState.isLineVisible
@@ -166,16 +178,17 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                     ..isActive = false
                     ..isAccepted = true;
                 },
-                icon: Assets.icons.arrowBackIos.image(height: 22),
+                icon: Assets.icons.arrowBackIos.image(height: 30),
               ),
             ),
             const Gap(10),
             const Text(
               'Virtual card',
               style: TextStyle(
-                fontSize: 32,
-                fontFamily: FontFamily.redHatBold,
-                color: Colors.black,
+                fontSize: 28,
+                fontFamily: FontFamily.redHatMedium,
+                color: AppColors.primary,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -190,15 +203,13 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                   return reaction(
                     (p0) => _addressState.isAddressValid,
                     (p0) async {
+                      await _validationStore.initColor(_validationStore.color);
                       _validationStore.validate();
                       await Future.delayed(
                         const Duration(seconds: 1),
                       );
                       _focusNode.unfocus();
-                      Future.delayed(
-                        const Duration(milliseconds: 700),
-                        _toggleCard,
-                      );
+                      Future.delayed(const Duration(milliseconds: 700), _toggleCard);
                       Future.delayed(
                         const Duration(milliseconds: 1400),
                         () => _addressState.isAddressVisible = true,
@@ -222,7 +233,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                         ),
                       ],
                       image: DecorationImage(
-                        image: Assets.images.card.orangeCardFront.image().image,
+                        image: getFrontImageForCardColor(_validationStore.color).image,
                       ),
                     ),
                     child: Center(
@@ -524,8 +535,10 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                             ],
                             image: DecorationImage(
                               image: !_addressState.isAddressVisible
-                                  ? Assets.images.card.back.image().image
-                                  : Assets.images.card.filledBack.image().image,
+                                  ? getBackImageForCardColor(_validationStore.color).image
+                                  : getFilledBackImageForCardColor(
+                                      _validationStore.color,
+                                    ).image,
                             ),
                           ),
                           child: Row(
@@ -538,24 +551,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                     child: !_addressState.isAddressVisible
                                         ? Row(
                                             children: [
-                                              if (context.height < 932)
-                                                if (context.height < 867.4)
-                                                  if (context.height > 844)
-                                                    Gap(context.width * 0.08)
-                                                  else if (context.height > 667)
-                                                    Gap(context.width * 0.075)
-                                                  else
-                                                    Gap(
-                                                      context.width * 0.125,
-                                                    ) //iPhone 13 Pro
-                                                else
-                                                  Gap(
-                                                    context.width * 0.103,
-                                                  ) //Samsung large display
-                                              else
-                                                Gap(
-                                                  context.width * 0.115,
-                                                ), //iPhone 13 Pro Max
+                                              Gap(gaps.secretStickersGap),
                                               Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -584,13 +580,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                                       opacity: _allSettingsState.isLineVisible ? 1 : 0,
                                                       child: CustomPaint(
                                                         size: Size(
-                                                          context.height > 852
-                                                              ? context.height > 844
-                                                                  ? 42
-                                                                  : context.height > 667
-                                                                      ? 28
-                                                                      : 38
-                                                              : 30,
+                                                          gaps.dynamicGap,
                                                           265,
                                                         ),
                                                         painter: LineCustomPaint(),
@@ -638,39 +628,20 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                   );
                                 },
                               ),
-                              if (context.height < 932)
-                                if (context.height < 867.4)
-                                  if (context.height > 844)
-                                    Gap(context.width * 0.114)
-                                  else if (context.height > 667)
-                                    Gap(context.width * 0.1175)
-                                  else
-                                    Gap(context.width * 0.065)
-                                else
-                                  Gap(context.height * 0.05)
-                              else
-                                Gap(context.height * 0.049),
+                              Gap(gaps.betweenStickersAndTextFieldGap),
                               Opacity(
                                 opacity: _allSettingsState.isLineVisible ? 0 : 1,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    if (context.height < 932)
-                                      if (context.height < 867.4)
-                                        if (context.height > 844)
-                                          Gap(context.height * 0.035)
-                                        else if (context.height > 667)
-                                          Gap(context.height * 0.04)
-                                        else
-                                          Gap(context.height * 0.03)
-                                      else
-                                        Gap(context.height * 0.035)
-                                    else
-                                      Gap(context.height * 0.035),
+                                    Gap(gaps.logoPositionGap),
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        Assets.icons.coinplusLogo.image(height: 32),
+                                        if (!(_validationStore.color == '1' || _validationStore.color == 'WHITE'))
+                                          Assets.icons.coinplusLogo.image(height: 32)
+                                        else
+                                          Assets.icons.coinplusLogoBlack.image(height: 32),
                                       ],
                                     ),
                                     if (context.height > 844) const Gap(24) else const Gap(21.5),
@@ -679,13 +650,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                       child: Stack(
                                         children: [
                                           Container(
-                                            height: context.height < 932
-                                                ? context.height < 867.4
-                                                    ? context.height > 844
-                                                        ? context.height * 0.26
-                                                        : context.height * 0.265
-                                                    : context.height * 0.255
-                                                : context.height * 0.24,
+                                            height: gaps.containerHeight,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.all(
@@ -700,15 +665,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
                                                 SizedBox(
-                                                  width: context.height < 932
-                                                      ? context.height < 867.4
-                                                          ? context.height > 844
-                                                              ? context.width * 0.241
-                                                              : context.height > 667
-                                                                  ? context.width * 0.25
-                                                                  : context.width * 0.21
-                                                          : context.width * 0.23
-                                                      : context.width * 0.225,
+                                                  width: gaps.containerWidth,
                                                   height: context.height * 0.14,
                                                   child: Observer(
                                                     builder: (context) {
@@ -819,79 +776,100 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                                 top: 25,
                                                 left: 0,
                                                 right: 0,
-                                                child: _validationStore.isValid
-                                                    ? ScaleTap(
-                                                        onPressed: () async {
-                                                          unawaited(
-                                                            recordAmplitudeEvent(
-                                                              const QrButtonClicked(
-                                                                walletType: 'Card',
-                                                                source: 'Connect',
+                                                child: AnimatedSwitcher(
+                                                  duration: const Duration(milliseconds: 200),
+                                                  transitionBuilder: (child, animation) {
+                                                    return ScaleTransition(scale: animation, child: child);
+                                                  },
+                                                  child: _validationStore.isValid
+                                                      ? ScaleTap(
+                                                          enableFeedback: false,
+                                                          onPressed: () async {
+                                                            unawaited(
+                                                              recordAmplitudeEvent(
+                                                                const QrButtonClicked(
+                                                                  walletType: 'Card',
+                                                                  source: 'Connect',
+                                                                ),
                                                               ),
-                                                            ),
-                                                          );
-                                                          _focusNode.unfocus();
-                                                          await Future.delayed(
-                                                            const Duration(
-                                                              milliseconds: 300,
-                                                            ),
-                                                          );
-                                                          final res = await context.pushRoute<String?>(
-                                                            QrScannerRoute(),
-                                                          );
-                                                          if (res == null) {
-                                                            return;
-                                                          }
-                                                          await hasShownWallet().then(
-                                                            (hasShown) async {
-                                                              if (hasShown) {
-                                                                unawaited(
-                                                                  recordAmplitudeEvent(
-                                                                    QrScanned(
-                                                                      source: 'Wallet',
-                                                                      walletAddress: res,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              } else {
-                                                                unawaited(
-                                                                  recordAmplitudeEvent(
-                                                                    QrScanned(
-                                                                      source: 'Onboarding',
-                                                                      walletAddress: res,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
-                                                          );
-                                                          setState(() {
-                                                            _btcAddressController.text = res;
-                                                          });
-                                                          _addressState.btcAddress = res;
+                                                            );
+                                                            _focusNode.unfocus();
+                                                            await Future.delayed(
+                                                              const Duration(
+                                                                milliseconds: 300,
+                                                              ),
+                                                            );
+                                                            final res = await context.pushRoute<String?>(
+                                                              QrScannerRoute(),
+                                                            );
+                                                            if (res == null) {
+                                                              return;
+                                                            } else {
+                                                              _walletProtectState.onAddressChanges(res);
+                                                            }
+                                                            if (_walletProtectState.isValidWalletAddress) {
+                                                              final cardData = await getCardData(res);
 
-                                                          await _addressState.validateBTCAddress();
-                                                        },
-                                                        child: SizedBox(
-                                                          height: 50,
-                                                          child: Image.asset(
-                                                            'assets/icons/qr_code.png',
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Lottie.asset(
-                                                        'assets/lottie_animations/address_validation_success.json',
-                                                        height: 40,
-                                                        controller: _lottieController,
-                                                        onLoaded: (composition) {
-                                                          Future.delayed(
-                                                            const Duration(
-                                                              milliseconds: 1000,
+                                                              if (cardData!.lost == null || cardData.lost == false) {
+                                                                await hasShownWallet().then(
+                                                                  (hasShown) async {
+                                                                    if (hasShown) {
+                                                                      unawaited(
+                                                                        recordAmplitudeEvent(
+                                                                          QrScanned(
+                                                                            source: 'Wallet',
+                                                                            walletAddress: res,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    } else {
+                                                                      unawaited(
+                                                                        recordAmplitudeEvent(
+                                                                          QrScanned(
+                                                                            source: 'Onboarding',
+                                                                            walletAddress: res,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                );
+                                                                _btcAddressController.text = res;
+                                                                _validationStore.color = cardData.color!;
+                                                                _addressState.btcAddress = res;
+                                                                await _addressState.validateBTCAddress();
+                                                              } else {
+                                                                await lostCardDialog(context);
+                                                              }
+                                                            } else {
+                                                              await Future.delayed(const Duration(milliseconds: 400));
+                                                              await showCustomSnackBar(
+                                                                message: 'This is not a valid bitcoin address',
+                                                                context: context,
+                                                              );
+                                                            }
+                                                          },
+                                                          child: SizedBox(
+                                                            height: 50,
+                                                            child: Image.asset(
+                                                              'assets/icons/qr_code.png',
                                                             ),
-                                                          );
-                                                          _lottieController.duration = composition.duration;
-                                                        },
-                                                      ),
+                                                          ),
+                                                        )
+                                                      : Lottie.asset(
+                                                          'assets/lottie_animations/address_validation_success.json',
+                                                          height: 35,
+                                                          controller: _lottieController,
+                                                          onLoaded: (composition) {
+                                                            Future.delayed(
+                                                              const Duration(
+                                                                milliseconds: 1000,
+                                                              ),
+                                                            );
+                                                            _lottieController.duration = composition.duration;
+                                                          },
+                                                        ),
+                                                ),
                                               );
                                             },
                                           ),
@@ -956,12 +934,21 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    Assets.icons.cardBackText.image(height: 55),
+                                    if (!(_validationStore.color == '1' || _validationStore.color == 'WHITE'))
+                                      Assets.icons.cardBackText.image(height: 55)
+                                    else
+                                      Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
-                                    SizedBox(
-                                      width: 115,
-                                      child: Assets.icons.cardBackLink.image(),
-                                    ),
+                                    if (!(_validationStore.color == '1' || _validationStore.color == 'WHITE'))
+                                      SizedBox(
+                                        width: 115,
+                                        child: Assets.icons.cardBackLink.image(),
+                                      )
+                                    else
+                                      SizedBox(
+                                        width: 115,
+                                        child: Assets.icons.cardBackLinkBlack.image(),
+                                      ),
                                     Gap(context.height * 0.025),
                                   ],
                                 ),
@@ -1365,11 +1352,25 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                               unawaited(
                                 connectedCount(_btcAddressController.text),
                               );
-                              _balanceStore.saveSelectedCardManually(
-                                color: CardColor.ORANGE,
-                                label: WalletType.COINPLUS_WALLET,
-                                name: 'Coinplus Bitcoin Wallet',
-                              );
+                              if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else if (_validationStore.color == '1' || _validationStore.color == 'WHITE') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.WHITE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else if (_validationStore.color == '2' || _validationStore.color == 'BLACK') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.BLACK,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              }
                             } else {
                               _balanceStore.saveSelectedCardManually(
                                 color: CardColor.ORANGE,
@@ -1381,11 +1382,25 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                             final card = await getCardData(widget.receivedData!);
                             if (card != null) {
                               unawaited(connectedCount(widget.receivedData!));
-                              _balanceStore.saveSelectedCardManually(
-                                color: CardColor.ORANGE,
-                                label: WalletType.COINPLUS_WALLET,
-                                name: 'Coinplus Bitcoin Wallet',
-                              );
+                              if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else if (_validationStore.color == '1' || _validationStore.color == 'WHITE') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.WHITE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else if (_validationStore.color == '2' || _validationStore.color == 'BLACK') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.BLACK,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              }
                             } else {
                               _balanceStore.saveSelectedCardManually(
                                 color: CardColor.ORANGE,
@@ -1547,7 +1562,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
   }
 
   Future<void> _toggleCard() async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 500));
     await _flipCardController.toggleCard();
   }
 

@@ -135,6 +135,28 @@ mixin _$ValidationState on _ValidationState, Store {
     });
   }
 
+  late final _$colorAtom = Atom(name: '_ValidationState.color', context: context);
+
+  @override
+  String get color {
+    _$colorAtom.reportRead();
+    return super.color;
+  }
+
+  @override
+  set color(String value) {
+    _$colorAtom.reportWrite(value, super.color, () {
+      super.color = value;
+    });
+  }
+
+  late final _$initColorAsyncAction = AsyncAction('_ValidationState.initColor', context: context);
+
+  @override
+  Future<void> initColor(String cardColor) {
+    return _$initColorAsyncAction.run(() => super.initColor(cardColor));
+  }
+
   late final _$_ValidationStateActionController = ActionController(name: '_ValidationState', context: context);
 
   @override
@@ -244,7 +266,8 @@ isValid: ${isValid},
 isInvalidAddress: ${isInvalidAddress},
 secretOneVisibility: ${secretOneVisibility},
 secretTwoVisibility: ${secretTwoVisibility},
-walletAddress: ${walletAddress}
+walletAddress: ${walletAddress},
+color: ${color}
     ''';
   }
 }

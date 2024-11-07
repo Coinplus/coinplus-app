@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../constants/card_color.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
+import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../models/abstract_card/abstract_card.dart';
 import '../../../../services/ramp_service.dart';
@@ -50,7 +51,7 @@ class CardReorderWidget extends StatelessWidget {
       height: 600,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 130,
+          toolbarHeight: 150,
           automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -58,24 +59,28 @@ class CardReorderWidget extends StatelessWidget {
             children: <Widget>[
               const Gap(15),
               Assets.icons.notch.image(height: 4),
-              const Gap(10),
+              const Gap(20),
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Re-order cards',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: FontFamily.redHatMedium,
-                        fontSize: 30,
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 3),
+                      child: Text(
+                        'Re-order cards',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontFamily: FontFamily.redHatMedium,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                     const Gap(10),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
+                        horizontal: 10,
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
@@ -118,9 +123,13 @@ class CardReorderWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: _settingsState.isReorderingStart
-                          ? Colors.grey.withOpacity(0.1)
-                          : Colors.grey.withOpacity(0.3),
+                      boxShadow: [
+                        if (!_settingsState.isReorderingStart)
+                          BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 5, blurRadius: 10)
+                        else
+                          const BoxShadow(color: Colors.transparent),
+                      ],
+                      color: Colors.white,
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

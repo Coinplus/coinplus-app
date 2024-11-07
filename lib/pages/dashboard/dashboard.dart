@@ -15,6 +15,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
+import '../../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
 import '../../constants/card_record.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/fonts.gen.dart';
@@ -26,6 +27,7 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../services/ramp_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -60,6 +62,7 @@ class DashboardPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final deepLinkRes = useRef<String?>(null);
+    final cardColorRes = useRef<String?>(null);
     final _settingsState = AllSettingsState();
     final isModalOpened = useState(false);
     final currentIndex = useState(0);
@@ -158,6 +161,7 @@ class DashboardPage extends HookWidget {
           await router.maybePop();
         }
         appLocked.value = await _secureStorage.getIsPinCodeSet();
+
         if (isPaused.value &&
             router.current.name == DashboardRoute.name &&
             !_walletProtectState.isBiometricsRunning &&
@@ -176,11 +180,18 @@ class DashboardPage extends HookWidget {
                     walletType: 'Card',
                   ),
                 );
+                final cardDataFromDb = await getCardData(deepLinkRes.value.toString());
+
                 final cardExists = _balanceStore.cards.any(
                   (element) => element.address == deepLinkRes.value.toString(),
                 );
                 if (!cardExists) {
-                  await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
+                  if (cardDataFromDb?.lost != null && cardDataFromDb?.lost == true) {
+                    await lostCardDialog(context);
+                  } else {
+                    await router.push(CardConnectRoute(receivedData: deepLinkRes.value, cardColor: cardColorRes.value));
+                    deepLinkRes.value = null;
+                  }
                   deepLinkRes.value = null;
                 } else {
                   Future.delayed(
@@ -211,6 +222,8 @@ class DashboardPage extends HookWidget {
         final streamSubscription = FlutterBranchSdk.initSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
+            final cardDataFromDb = await getCardData(deepLinkRes.value.toString());
+            cardColorRes.value = cardDataFromDb?.color ?? '';
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardConnectRoute.name) {
               await recordAmplitudeEvent(
                 DeeplinkClicked(
@@ -223,7 +236,12 @@ class DashboardPage extends HookWidget {
                 (element) => element.address == deepLinkRes.value.toString(),
               );
               if (!cardExists) {
-                await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
+                if (cardDataFromDb?.lost != null && cardDataFromDb?.lost == true) {
+                  await lostCardDialog(context);
+                } else {
+                  await router.push(CardConnectRoute(receivedData: deepLinkRes.value, cardColor: cardColorRes.value));
+                  deepLinkRes.value = null;
+                }
                 deepLinkRes.value = null;
               } else {
                 Future.delayed(
@@ -252,7 +270,12 @@ class DashboardPage extends HookWidget {
                 (element) => element.address == deepLinkRes.value.toString(),
               );
               if (!cardExists) {
-                await router.push(CardConnectRoute(receivedData: deepLinkRes.value));
+                if (cardDataFromDb?.lost != null && cardDataFromDb?.lost == true) {
+                  await lostCardDialog(context);
+                } else {
+                  await router.push(CardConnectRoute(receivedData: deepLinkRes.value, cardColor: cardColorRes.value));
+                  deepLinkRes.value = null;
+                }
                 deepLinkRes.value = null;
               } else {
                 Future.delayed(

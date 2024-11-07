@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -494,6 +496,45 @@ abstract class _BalanceStore with Store {
     _backupCards.removeAt(index);
     await StorageUtils.removeBackupCard(address);
     await _secureStorage.delete(key: address);
+  }
+
+  @action
+  Future<void> replaceMainCardWithBackup({required String mainCardAddress, required CardModel? backedUpCard}) async {
+    final backupCardIndex = _backupCards.indexWhere(
+      (element) => element.address == backedUpCard?.address,
+    );
+
+    log(_backupCards.toString());
+
+    if (backupCardIndex.isNegative) {
+      throw Exception('No backup card available to replace the main card');
+    }
+    final mainCardIndex = _cards.indexWhere(
+      (element) => element.address == mainCardAddress,
+    );
+
+    if (mainCardIndex.isNegative) {
+      throw Exception('Main card not found');
+    }
+    _cards.removeAt(mainCardIndex);
+    await StorageUtils.removeCard(mainCardAddress);
+    await _secureStorage.delete(key: mainCardAddress);
+    final backupCard = _backupCards[backupCardIndex];
+    final updatedCard = backupCard.copyWith(
+      isBackup: false,
+      createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+      color: backedUpCard!.color,
+    );
+    await updateCardBackupStatus(cardAddress: updatedCard.address, backupStatus: false);
+    _cards.add(updatedCard);
+    await StorageUtils.addCard(updatedCard);
+    _backupCards.removeAt(backupCardIndex);
+    await StorageUtils.removeBackupCard(backupCard.address);
+    await _secureStorage.delete(key: backedUpCard.address);
+
+    if (kDebugMode) {
+      print('Main card successfully replaced with backup card.');
+    }
   }
 
   @action

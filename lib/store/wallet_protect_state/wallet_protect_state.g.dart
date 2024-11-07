@@ -9,6 +9,13 @@ part of 'wallet_protect_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$WalletProtectState on _WalletProtectState, Store {
+  Computed<bool>? _$isValidWalletAddressComputed;
+
+  @override
+  bool get isValidWalletAddress => (_$isValidWalletAddressComputed ??=
+          Computed<bool>(() => super.isValidWalletAddress, name: '_WalletProtectState.isValidWalletAddress'))
+      .value;
+
   late final _$isCreatedPinMatchAtom = Atom(name: '_WalletProtectState.isCreatedPinMatch', context: context);
 
   @override
@@ -165,6 +172,38 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
     });
   }
 
+  late final _$walletAddressForValidationAtom =
+      Atom(name: '_WalletProtectState.walletAddressForValidation', context: context);
+
+  @override
+  String get walletAddressForValidation {
+    _$walletAddressForValidationAtom.reportRead();
+    return super.walletAddressForValidation;
+  }
+
+  @override
+  set walletAddressForValidation(String value) {
+    _$walletAddressForValidationAtom.reportWrite(value, super.walletAddressForValidation, () {
+      super.walletAddressForValidation = value;
+    });
+  }
+
+  late final _$shouldValidateWalletAddressAtom =
+      Atom(name: '_WalletProtectState.shouldValidateWalletAddress', context: context);
+
+  @override
+  bool get shouldValidateWalletAddress {
+    _$shouldValidateWalletAddressAtom.reportRead();
+    return super.shouldValidateWalletAddress;
+  }
+
+  @override
+  set shouldValidateWalletAddress(bool value) {
+    _$shouldValidateWalletAddressAtom.reportWrite(value, super.shouldValidateWalletAddress, () {
+      super.shouldValidateWalletAddress = value;
+    });
+  }
+
   late final _$availableBiometricAtom = Atom(name: '_WalletProtectState.availableBiometric', context: context);
 
   @override
@@ -311,6 +350,28 @@ mixin _$WalletProtectState on _WalletProtectState, Store {
   late final _$_WalletProtectStateActionController = ActionController(name: '_WalletProtectState', context: context);
 
   @override
+  void setReceiverWalletAddress(String walletAddress) {
+    final _$actionInfo =
+        _$_WalletProtectStateActionController.startAction(name: '_WalletProtectState.setReceiverWalletAddress');
+    try {
+      return super.setReceiverWalletAddress(walletAddress);
+    } finally {
+      _$_WalletProtectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onAddressChanges(String val) {
+    final _$actionInfo =
+        _$_WalletProtectStateActionController.startAction(name: '_WalletProtectState.onAddressChanges');
+    try {
+      return super.onAddressChanges(val);
+    } finally {
+      _$_WalletProtectStateActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void openLink() {
     final _$actionInfo = _$_WalletProtectStateActionController.startAction(name: '_WalletProtectState.openLink');
     try {
@@ -331,7 +392,10 @@ isSetPinCode: ${isSetPinCode},
 isSwitchedNotificationsToggle: ${isSwitchedNotificationsToggle},
 isLinkOpened: ${isLinkOpened},
 canCheckBiometrics: ${canCheckBiometrics},
-availableBiometric: ${availableBiometric}
+walletAddressForValidation: ${walletAddressForValidation},
+shouldValidateWalletAddress: ${shouldValidateWalletAddress},
+availableBiometric: ${availableBiometric},
+isValidWalletAddress: ${isValidWalletAddress}
     ''';
   }
 }

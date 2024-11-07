@@ -22,20 +22,6 @@ Future<CardsModel?> getCardData(String documentId) async {
   return null;
 }
 
-Future<CardsModel?> getBackupCardData(String documentId) async {
-  final DocumentSnapshot documentSnapshot = await _firestore.collection('backup_cards').doc(documentId).get();
-
-  if (documentSnapshot.exists) {
-    final documentData = documentSnapshot.data() as Map<String, dynamic>?;
-
-    if (documentData != null) {
-      final card = CardsModel.fromJson(documentData);
-      return card;
-    }
-  } else {}
-  return null;
-}
-
 Future<void> setCardsData({
   required String? documentID,
   required String? tagId,
@@ -178,6 +164,30 @@ Future<BuyCardModel?> getBuyCardPlusButtonLink() async {
     }
   } else {}
   return null;
+}
+
+Future<void> updateCardLostStatus({required String cardAddress, required bool? lostStatus}) async {
+  final card = await getCardData(cardAddress);
+  if (card != null) {
+    if (card.lost == false || card.lost == null) {
+      card.lost = lostStatus;
+      await _firestore.collection('cards').doc(cardAddress).update({
+        'lost': lostStatus,
+      });
+    }
+  }
+}
+
+Future<void> updateCardBackupStatus({required String cardAddress, required bool? backupStatus}) async {
+  final card = await getCardData(cardAddress);
+  if (card != null) {
+    if (card.backup == true || card.backup == null) {
+      card.backup = backupStatus;
+      await _firestore.collection('cards').doc(cardAddress).update({
+        'backup': backupStatus,
+      });
+    }
+  }
 }
 
 Future<void> addReplenishmentHistory({
