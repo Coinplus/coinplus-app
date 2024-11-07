@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:btc_address_validate_swan/btc_address_validate_swan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
@@ -38,6 +39,7 @@ abstract class _WalletProtectState with Store {
 
   @observable
   bool isSwitchedHideBalancesToggle = false;
+
   @readonly
   bool _isNfcSessionStarted = false;
 
@@ -55,9 +57,41 @@ abstract class _WalletProtectState with Store {
   @observable
   bool canCheckBiometrics = false;
 
+  @observable
+  String walletAddressForValidation = '';
+
+  @observable
+  bool shouldValidateWalletAddress = false;
+
   @action
   Future<void> checkBiometrics() async {
     canCheckBiometrics = await _auth.canCheckBiometrics;
+  }
+
+  @action
+  void setReceiverWalletAddress(String walletAddress) {
+    if (walletAddress != '') {
+      walletAddressForValidation = walletAddress.replaceAll(' ', '');
+    }
+  }
+
+  @action
+  void onAddressChanges(String val) {
+    setReceiverWalletAddress(val);
+    shouldValidateWalletAddress = val.length >= 27;
+  }
+
+  @computed
+  bool get isValidWalletAddress {
+    if (!shouldValidateWalletAddress) {
+      return true;
+    }
+    try {
+      validate(walletAddressForValidation);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @action

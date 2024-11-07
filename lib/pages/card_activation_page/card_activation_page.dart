@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -47,10 +46,12 @@ class CardActivationPage extends StatefulWidget {
     super.key,
     this.receivedData,
     this.hasBackup,
+    this.s,
   });
 
   final String? receivedData;
   final bool? hasBackup;
+  final int? s;
 
   @override
   State<CardActivationPage> createState() => _CardActivationPageState();
@@ -86,8 +87,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
     _toggleCard();
     _secretOneTextField();
 
-    if (widget.receivedData!.startsWith('0')) {
-      log(_historyPageStore.cardActivationIndex.toString());
+    if (widget.receivedData != null && widget.receivedData!.startsWith('0')) {
       final ethCardIndex = _historyPageStore.cardActivationIndex - _balanceStore.cards.length;
       if (ethCardIndex >= 0 && ethCardIndex < _balanceStore.ethCards.length) {
         card = _balanceStore.ethCards[ethCardIndex] as AbstractCard?;
@@ -337,9 +337,12 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                   height: 100,
                                                                   child: TextField(
                                                                     inputFormatters: [
-                                                                      LengthLimitingTextInputFormatter(
-                                                                        card is CardModel ? 30 : 28,
-                                                                      ),
+                                                                      if (widget.s != 29)
+                                                                        LengthLimitingTextInputFormatter(
+                                                                          card is CardModel ? 30 : 28,
+                                                                        )
+                                                                      else
+                                                                        LengthLimitingTextInputFormatter(29),
                                                                     ],
                                                                     textAlignVertical: TextAlignVertical.top,
                                                                     autocorrect: false,
@@ -347,15 +350,25 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                     textAlign: TextAlign.center,
                                                                     onChanged: (value) {
                                                                       if (card is CardModel) {
-                                                                        if (value.length == 30) {
-                                                                          _validateSecretOne(
-                                                                            card!.address,
-                                                                          );
-                                                                        } else if (value.length < 30) {
-                                                                          _validationStore.invalidSecretOne();
-                                                                          _secretOneLottieController.reset();
+                                                                        if (widget.s != 29) {
+                                                                          if (value.length == 30) {
+                                                                            _validateSecretOne(
+                                                                              card!.address,
+                                                                            );
+                                                                          } else if (value.length < 30) {
+                                                                            _validationStore.invalidSecretOne();
+                                                                            _secretOneLottieController.reset();
+                                                                          }
+                                                                        } else {
+                                                                          if (value.length == 29) {
+                                                                            _validateSecretOne(
+                                                                              card!.address,
+                                                                            );
+                                                                          } else if (value.length < 29) {
+                                                                            _validationStore.invalidSecretOne();
+                                                                            _secretOneLottieController.reset();
+                                                                          }
                                                                         }
-
                                                                         secret1B58 = value;
                                                                       } else {
                                                                         if (value.length == 28) {
@@ -436,6 +449,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                 right: 0,
                                                                 child: !_validationStore.isSecret1Valid
                                                                     ? ScaleTap(
+                                                                        enableFeedback: false,
                                                                         onPressed: () async {
                                                                           _secretOneFocusNode.unfocus();
                                                                           await Future.delayed(
@@ -475,7 +489,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                       )
                                                                     : Lottie.asset(
                                                                         'assets/lottie_animations/address_validation_success.json',
-                                                                        height: 40,
+                                                                        height: 35,
                                                                         controller: _secretOneLottieController,
                                                                         onLoaded: (composition) {
                                                                           Future.delayed(
@@ -534,9 +548,14 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                   height: 100,
                                                                   child: TextField(
                                                                     inputFormatters: [
-                                                                      LengthLimitingTextInputFormatter(
-                                                                        card is CardModel ? 30 : 28,
-                                                                      ),
+                                                                      if (widget.s != 29)
+                                                                        LengthLimitingTextInputFormatter(
+                                                                          card is CardModel ? 30 : 14,
+                                                                        )
+                                                                      else
+                                                                        LengthLimitingTextInputFormatter(
+                                                                          29,
+                                                                        ),
                                                                     ],
                                                                     textAlignVertical: TextAlignVertical.top,
                                                                     autocorrect: false,
@@ -544,15 +563,25 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                     textAlign: TextAlign.center,
                                                                     onChanged: (value) {
                                                                       if (card is CardModel) {
-                                                                        if (value.length == 30) {
-                                                                          _validateSecretTwo(
-                                                                            card!.address,
-                                                                          );
-                                                                        } else if (value.length < 30) {
-                                                                          _validationStore.invalidSecretTwo();
-                                                                          _secretTwoLottieController.reset();
+                                                                        if (widget.s != 29) {
+                                                                          if (value.length == 30) {
+                                                                            _validateSecretTwo(
+                                                                              card!.address,
+                                                                            );
+                                                                          } else if (value.length < 30) {
+                                                                            _validationStore.invalidSecretTwo();
+                                                                            _secretTwoLottieController.reset();
+                                                                          }
+                                                                        } else {
+                                                                          if (value.length == 29) {
+                                                                            _validateSecretTwo(
+                                                                              card!.address,
+                                                                            );
+                                                                          } else if (value.length < 29) {
+                                                                            _validationStore.invalidSecretTwo();
+                                                                            _secretTwoLottieController.reset();
+                                                                          }
                                                                         }
-
                                                                         secret2B58 = value;
                                                                       } else {
                                                                         if (value.length == 14) {
@@ -669,7 +698,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                       )
                                                                     : Lottie.asset(
                                                                         'assets/lottie_animations/address_validation_success.json',
-                                                                        height: 40,
+                                                                        height: 35,
                                                                         controller: _secretTwoLottieController,
                                                                         onLoaded: (composition) {
                                                                           Future.delayed(
@@ -1041,18 +1070,34 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
   Future<void> _validateSecretOne(String walletAddress) async {
     final secretOne = _secretOneController.text.trim();
     if (card is CardModel) {
-      if (isValidSecret(secretOne)) {
-        _secretOneFocusNode.unfocus();
-        _validationStore.validateSecretOne();
-        await Future.delayed(const Duration());
-        await _secretOneLottieController.forward(from: 0);
-        _validationStore.makeSecretTwoVisible();
-        await Future.delayed(const Duration(milliseconds: 100));
-        _secretTwoFocusNode.requestFocus();
+      if (widget.s != 29) {
+        if (isValidSecret(secretOne)) {
+          _secretOneFocusNode.unfocus();
+          _validationStore.validateSecretOne();
+          await Future.delayed(const Duration(milliseconds: 500));
+          await _secretOneLottieController.forward(from: 0);
+          _validationStore.makeSecretTwoVisible();
+          await Future.delayed(const Duration(milliseconds: 100));
+          _secretTwoFocusNode.requestFocus();
 
-        await recordAmplitudeEvent(
-          Secret1Validated(walletAddress: walletAddress, walletType: 'Card'),
-        );
+          await recordAmplitudeEvent(
+            Secret1Validated(walletAddress: walletAddress, walletType: 'Card'),
+          );
+        }
+      } else {
+        if (isValidSecret29(secretOne)) {
+          _secretOneFocusNode.unfocus();
+          _validationStore.validateSecretOne();
+          await Future.delayed(const Duration(milliseconds: 500));
+          await _secretOneLottieController.forward(from: 0);
+          _validationStore.makeSecretTwoVisible();
+          await Future.delayed(const Duration(milliseconds: 100));
+          _secretTwoFocusNode.requestFocus();
+
+          await recordAmplitudeEvent(
+            Secret1Validated(walletAddress: walletAddress, walletType: 'Card'),
+          );
+        }
       }
     } else {
       if (isValidEthSecretOne(secretOne)) {
@@ -1073,18 +1118,28 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
   Future<void> _validateSecretTwo(String walletAddress) async {
     final secretTwo = _secretTwoController.text.trim();
     if (card is CardModel) {
-      if (isValidSecret(secretTwo)) {
-        _validationStore.validateSecretTwo();
-        await Future.delayed(
-          const Duration(),
-        );
-        _secretTwoFocusNode.unfocus();
-        await recordAmplitudeEvent(
-          Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
-        );
-
-        await _secretTwoLottieController.forward(from: 0);
+      if (widget.s != 29) {
+        if (isValidSecret(secretTwo)) {
+          _validationStore.validateSecretTwo();
+          await Future.delayed(
+            const Duration(milliseconds: 500),
+          );
+          await _secretTwoLottieController.forward(from: 0);
+          _secretTwoFocusNode.unfocus();
+        }
+      } else {
+        if (isValidSecret29(secretTwo)) {
+          _validationStore.validateSecretTwo();
+          await Future.delayed(
+            const Duration(milliseconds: 500),
+          );
+          await _secretTwoLottieController.forward(from: 0);
+          _secretTwoFocusNode.unfocus();
+        }
       }
+      await recordAmplitudeEvent(
+        Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
+      );
     } else {
       if (isValidEthSecretTwo(secretTwo)) {
         _validationStore.validateSecretTwo();

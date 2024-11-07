@@ -21,6 +21,7 @@ import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
+import '../../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../loading_button/loading_button.dart';
@@ -216,9 +217,19 @@ class CardScanMethodsPage extends HookWidget {
                   QrScanned(source: 'Wallet', walletAddress: res),
                 ),
               );
-              await router.push(
-                CardConnectRoute(receivedData: res),
-              );
+              _walletProtectState.onAddressChanges(res);
+
+              final cardData = await getCardData(res);
+
+              if (_walletProtectState.isValidWalletAddress) {
+                if (cardData!.lost != null && cardData.lost == true) {
+                  await lostCardDialog(router.navigatorKey.currentContext!);
+                } else {
+                  await router.push(
+                    CardConnectRoute(receivedData: res, cardColor: cardData.color),
+                  );
+                }
+              }
             }
           },
           child: Row(

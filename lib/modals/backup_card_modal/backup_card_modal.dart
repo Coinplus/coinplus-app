@@ -1,50 +1,43 @@
+import 'package:action_slider/action_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lottie/lottie.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../constants/button_settings.dart';
 import '../../constants/card_color.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
-import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/balance_store/balance_store.dart';
-
-// import '../../store/market_page_store/market_page_store.dart';
 import '../../utils/data_utils.dart';
+import '../../utils/secure_storage_utils.dart';
+import '../../utils/storage_utils.dart';
+import '../../widgets/custom_snack_bar/snack_bar_method.dart';
 import '../../widgets/loading_button/loading_button.dart';
-import 'remove_backup_modal.dart';
-
-class MainBackupCardWidget extends StatefulWidget {
-  final String mainCardAddress;
-
-  const MainBackupCardWidget({required this.mainCardAddress, Key? key}) : super(key: key);
-
-  @override
-  _MainBackupCardWidgetState createState() => _MainBackupCardWidgetState();
-}
 
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-// MarketPageStore get _marketPageStore => GetIt.I<MarketPageStore>();
-
 AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
 
-class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
-  @override
-  void initState() {
-    super.initState();
-    _balanceStore.loadBackupCard(widget.mainCardAddress);
-  }
+final pageIndexNotifier = ValueNotifier(0);
 
-  @override
-  Widget build(BuildContext context) {
-    return Observer(
+WoltModalSheetPage modalPage1(
+  BuildContext modalSheetContext,
+) {
+  return WoltModalSheetPage(
+    backgroundColor: Colors.white,
+    sabGradientColor: Colors.white,
+    hasTopBarLayer: false,
+    isTopBarLayerAlwaysVisible: true,
+    child: Observer(
       builder: (context) {
         final backupCard = _balanceStore.backupCards.firstWhereOrNull(
           (card) => card.address == _balanceStore.backupSingleCard?.address,
@@ -52,8 +45,7 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Gap(12),
-            Assets.icons.notch.image(height: 4),
+            const Gap(20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -191,23 +183,7 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
                       buttonType: ButtonTypes.TRANSPARENT,
                     ),
                     onPressed: () async {
-                      await router.maybePop();
-                      await showModalBottomSheet(
-                        backgroundColor: Colors.white,
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        context: context,
-                        builder: (_) {
-                          return RemoveBackupCard(
-                            cardAddress: widget.mainCardAddress,
-                          );
-                        },
-                      );
+                      pageIndexNotifier.value = pageIndexNotifier.value + 1;
                     },
                     child: const Text(
                       'Remove backup',
@@ -219,13 +195,148 @@ class _MainBackupCardWidgetState extends State<MainBackupCardWidget> {
                       ),
                     ),
                   ).paddingHorizontal(60),
-                  const Gap(30),
                 ],
               ),
             ),
           ],
         );
       },
-    );
-  }
+    ),
+  );
+}
+
+WoltModalSheetPage modalPage2(
+  BuildContext modalSheetContext,
+  String mainCardAddress,
+) {
+  final _secureStorage = SecureStorageService();
+  return WoltModalSheetPage(
+    leadingNavBarWidget: Column(
+      children: [
+        const Gap(10),
+        Row(
+          children: [
+            Column(
+              children: [
+                IconButton(
+                  padding: const EdgeInsets.all(16),
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  onPressed: () => pageIndexNotifier.value = pageIndexNotifier.value - 1,
+                ),
+              ],
+            ),
+            const Row(
+              children: [
+                Text(
+                  'Remove Backup',
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatMedium,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  'This will permanently delete your backup from the wallet.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: FontFamily.redHatMedium,
+                    color: AppColors.primary,
+                  ),
+                ),
+              ),
+              const Gap(20),
+              ActionSlider.standard(
+                height: 60,
+                loadingIcon: Lottie.asset(
+                  'assets/lottie_animations/loading_animation.json',
+                  repeat: true,
+                  height: 30,
+                ),
+                successIcon: const Icon(
+                  Icons.check_rounded,
+                  color: Colors.white,
+                ),
+                action: (controller) async {
+                  final backupCard = _balanceStore.backupCards.firstWhereOrNull(
+                    (card) => card.address == _balanceStore.backupSingleCard?.address,
+                  );
+                  controller.loading();
+                  await Future.delayed(const Duration(seconds: 1));
+                  controller.success();
+                  await _balanceStore.removeSelectedBackupCard(address: backupCard!.address);
+                  await StorageUtils.deleteBackupCard(mainCardAddress);
+                  await _secureStorage.deleteBackup(
+                    mainCardAddress: mainCardAddress,
+                  );
+                  _balanceStore.changeCardBackupStatusAndSave(
+                    cardAddress: mainCardAddress,
+                    hasBackedUp: false,
+                  );
+                  Gaimon.success();
+                  await showCustomSnackBar(
+                    context: modalSheetContext,
+                    message: 'Your backup card was removed',
+                  );
+                  await router.maybePop();
+                },
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                  ),
+                ],
+                toggleColor: Colors.red,
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.white,
+                ),
+                child: const Text(
+                  'Slide to delete',
+                  style: TextStyle(fontFamily: FontFamily.redHatMedium),
+                ),
+              ),
+              const Gap(20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 60),
+                child: LoadingButton(
+                  style: modalSheetContext.theme.buttonStyle(
+                    buttonType: ButtonTypes.TRANSPARENT,
+                  ),
+                  onPressed: router.maybePop,
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: FontFamily.redHatMedium,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.primaryTextColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }

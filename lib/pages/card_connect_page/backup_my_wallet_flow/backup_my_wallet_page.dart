@@ -10,6 +10,7 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/cloud_firestore_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../utils/card_nfc_session.dart';
 import '../../../widgets/loading_button/loading_button.dart';
@@ -263,10 +264,12 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                       )
                       .copyWith(),
                   onPressed: () async {
+                    final cardData = await getCardData(widget.walletAddress);
                     await router.push(
                       CardActivationRoute(
                         receivedData: widget.walletAddress,
                         hasBackup: widget.hasBackup,
+                        s: cardData?.s == null ? null : 29,
                       ),
                     );
                   },

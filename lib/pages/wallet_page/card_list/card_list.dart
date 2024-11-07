@@ -10,6 +10,7 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ios_smooth_page_indicator/ios_smooth_page_indicator.dart';
 import 'package:mobx/mobx.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
 import '../../../constants/card_color.dart';
@@ -37,9 +38,9 @@ import 'card_empty_state/card_empty_state.dart';
 import 'card_lists_widgets/add_new_card_modal.dart';
 import 'card_lists_widgets/card_address_field.dart';
 import 'card_lists_widgets/card_balance_field.dart';
-import 'card_lists_widgets/card_eth_address_field.dart';
-import 'card_lists_widgets/card_eth_balance_field.dart';
 import 'card_lists_widgets/card_reorder_widget.dart';
+import 'card_lists_widgets/eth_card_address_field.dart';
+import 'card_lists_widgets/eth_card_balance_field.dart';
 
 typedef CardSelectedCallback = void Function(int index);
 
@@ -73,8 +74,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   SendToState get _sendToState => GetIt.I<SendToState>();
 
   RampService get _rampService => GetIt.I<RampService>();
-
-  bool? hasBackUp;
 
   final _nfcState = AllSettingsState();
 
@@ -421,27 +420,34 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                             enableFeedback: false,
                                                             onPressed: card.label == WalletType.COINPLUS_WALLET
                                                                 ? () async {
+                                                                    await _balanceStore.loadBackupCard(card.address);
                                                                     final isWalletActivated =
                                                                         await isCardWalletActivated();
                                                                     final hasBackUp = await isCardWalletHasBackup(
                                                                       address: card.address,
                                                                     );
-
                                                                     if (isWalletActivated && hasBackUp) {
-                                                                      await showModalBottomSheet(
-                                                                        isScrollControlled: true,
-                                                                        backgroundColor: Colors.white,
-                                                                        shape: const RoundedRectangleBorder(
-                                                                          borderRadius: BorderRadius.only(
-                                                                            topLeft: Radius.circular(20),
-                                                                            topRight: Radius.circular(20),
-                                                                          ),
-                                                                        ),
+                                                                      await WoltModalSheet.show<void>(
+                                                                        pageIndexNotifier: pageIndexNotifier,
                                                                         context: context,
-                                                                        builder: (_) {
-                                                                          return MainBackupCardWidget(
-                                                                            mainCardAddress: card.address,
-                                                                          );
+                                                                        pageListBuilder: (modalSheetContext) {
+                                                                          return [
+                                                                            modalPage1(modalSheetContext),
+                                                                            modalPage2(modalSheetContext, card.address),
+                                                                          ];
+                                                                        },
+                                                                        modalTypeBuilder: (context) {
+                                                                          final size =
+                                                                              MediaQuery.of(context).size.width;
+                                                                          if (size < 768) {
+                                                                            return WoltModalType.bottomSheet();
+                                                                          } else {
+                                                                            return WoltModalType.dialog();
+                                                                          }
+                                                                        },
+                                                                        onModalDismissedWithBarrierTap: () {
+                                                                          Navigator.of(context).maybePop();
+                                                                          pageIndexNotifier.value = 0;
                                                                         },
                                                                       );
                                                                     } else if (isWalletActivated && !hasBackUp) {
@@ -474,6 +480,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                         ),
                                                                       );
                                                                     }
+                                                                    pageIndexNotifier.value = 0;
                                                                   }
                                                                 : () async {
                                                                     await maybeCoinplusCard(

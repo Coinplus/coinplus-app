@@ -15,18 +15,13 @@ import '../../services/amplitude_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/loading_button/loading_button.dart';
-import 'action_slider.dart';
+import 'action_slider_for_delete.dart';
 
-class RemoveCard extends StatefulWidget {
+class RemoveCard extends StatelessWidget {
   const RemoveCard({super.key, required this.card});
 
   final AbstractCard card;
 
-  @override
-  State<RemoveCard> createState() => _RemoveCardState();
-}
-
-class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
@@ -73,25 +68,25 @@ class _RemoveCardState extends State<RemoveCard> with TickerProviderStateMixin {
           const Gap(25),
           ActionSliderForCardDelete(
             balanceStore: _balanceStore,
-            card: widget.card,
+            card: card,
           ).paddingHorizontal(50),
           const Gap(15),
           LoadingButton(
             onPressed: () async {
-              if (widget.card.blockchain == 'BTC') {
+              if (card.blockchain == 'BTC') {
                 final isCardActivated = isCardWalletActivated();
                 await recordAmplitudeEventPartTwo(
                   NotSureClicked(
-                    walletAddress: widget.card.address,
+                    walletAddress: card.address,
                     walletType: 'Card',
                     activated: await isCardActivated,
                   ),
                 );
-              } else if (widget.card.blockchain == 'ETH') {
+              } else if (card.blockchain == 'ETH') {
                 final isCardActivated = isEthCardWalletActivated();
                 await recordAmplitudeEventPartTwo(
                   NotSureClicked(
-                    walletAddress: widget.card.address,
+                    walletAddress: card.address,
                     walletType: 'EthCard',
                     activated: await isCardActivated,
                   ),

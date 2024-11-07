@@ -24,8 +24,8 @@ extension CardColorHelper on CardColor {
         CardColor.ORANGE => Assets.images.card.orangeCardFront,
         CardColor.WHITE => Assets.images.card.whiteCardFront,
         CardColor.BLACK => Assets.images.card.brownCardFront,
-        CardColor.TRACKER => Assets.images.card.trackerColorCard,
-        CardColor.ETHEREUM => Assets.images.card.ethereumCard,
+        CardColor.TRACKER => Assets.images.card.orangeCardFront,
+        CardColor.ETHEREUM => Assets.images.card.orangeCardFront,
         CardColor.SILVER => Assets.images.bar.barFill,
         CardColor.GOLD => Assets.images.bar.barFill,
       };

@@ -38,9 +38,10 @@ class AddNewCardModal extends StatelessWidget {
                 'Add new wallet',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: FontFamily.redHatBold,
+                  fontFamily: FontFamily.redHatMedium,
                   fontSize: 17,
                   color: AppColors.primaryTextColor,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

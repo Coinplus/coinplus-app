@@ -9,6 +9,7 @@ import '../../../router.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
+import '../../services/cloud_firestore_service.dart';
 
 Future<void> recommendedActivateByTap({
   required BuildContext context,
@@ -31,6 +32,7 @@ Future<void> recommendedActivateByTap({
       primaryActionText: 'Activate',
       primaryAction: () async {
         await router.maybePop();
+        final cardData = await getCardData(walletAddress);
         unawaited(
           recordAmplitudeEventPartTwo(
             TroubleActivateClicked(
@@ -40,7 +42,11 @@ Future<void> recommendedActivateByTap({
             ),
           ),
         );
-        await router.push(CardActivationRoute());
+        await router.push(
+          CardActivationRoute(
+            s: cardData?.s == null ? null : 29,
+          ),
+        );
       },
       text:
           'To be able to check the validity of the card we need you to tap the card. In case you can’t tap, we can’t validate that your card is authentic.',

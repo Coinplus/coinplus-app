@@ -36,9 +36,10 @@ class TotalBalance extends StatelessWidget {
                     const Text(
                       'Wallet',
                       style: TextStyle(
-                        fontFamily: FontFamily.redHatBold,
+                        fontFamily: FontFamily.redHatMedium,
                         fontSize: 28,
                         color: Colors.white,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const Gap(14),
@@ -47,11 +48,11 @@ class TotalBalance extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Text(
+                Text(
                   'Total balance',
                   style: TextStyle(
-                    fontFamily: FontFamily.redHatLight,
-                    color: Colors.white,
+                    fontFamily: FontFamily.redHatMedium,
+                    color: Colors.white.withOpacity(0.9),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -104,8 +105,9 @@ class TotalBalance extends StatelessWidget {
                               child: Text(
                                 '\$${myFormat.format((balance / 100000000 * (data.price)) + ethBalance)}',
                                 style: TextStyle(
-                                  fontFamily: FontFamily.redHatBold,
+                                  fontFamily: FontFamily.redHatMedium,
                                   color: Colors.white,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: balance > 1000000000 ? (balance > 100000000 ? 24 : 26) : 28,
                                 ),
                               ),

@@ -9,6 +9,7 @@ import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
+import '../../services/cloud_firestore_service.dart';
 
 Future<void> recommendedByTapAlert({
   required BuildContext context,
@@ -46,6 +47,7 @@ Future<void> recommendedByTapAlert({
       secondaryActionText: 'Activate now',
       secondaryAction: () async {
         await router.maybePop();
+        final cardData = await getCardData(walletAddress);
         unawaited(
           recordAmplitudeEventPartTwo(
             TroubleActivateNowClicked(
@@ -55,7 +57,11 @@ Future<void> recommendedByTapAlert({
             ),
           ),
         );
-        await router.push(CardActivationRoute());
+        await router.push(
+          CardActivationRoute(
+            s: cardData?.s == null ? null : 29,
+          ),
+        );
       },
     ),
     isDismissible: true,

@@ -111,6 +111,7 @@ Future<void> cardRecommendedToWaitDialog({
                         await router.push(
                           CardActivationRoute(
                             receivedData: walletAddress.toString(),
+                            s: card.s == null ? null : 29,
                           ),
                         );
                       } else {
@@ -243,6 +244,7 @@ Future<void> cardRecommendedToWaitDialog({
                         await router.push(
                           CardActivationRoute(
                             receivedData: walletAddress,
+                            s: card.s == null ? null : 29,
                           ),
                         );
                       } else {

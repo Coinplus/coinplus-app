@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -10,7 +9,9 @@ import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
 import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
+import '../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
+import '../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
 import '../all_alert_dialogs/maybe_coinplus_card/maybe_coinplus_card.dart';
 import '../all_alert_dialogs/not_coinplus_card_alert/not_coinplus_card_alert.dart';
 import '../all_alert_dialogs/tapped_backup_card/tapped_backup_card.dart';
@@ -83,7 +84,6 @@ Future<void> nfcSessionIos({
       );
       await signInAnonymously();
       final card = await getCardData(walletAddress);
-      final backupCard = await getBackupCardData(walletAddress);
 
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
@@ -105,84 +105,100 @@ Future<void> nfcSessionIos({
       } catch (e) {
         signature = null;
       }
-      if (isOriginalTag && card != null) {
+
+      final cardIndex = _balanceStore.backupCards.indexWhere(
+        (element) => element.address == walletAddress,
+      );
+      if (cardIndex != -1) {
         await NfcManager.instance.stopSession();
-        if (card.hasBackup == true) {
-          await _balanceStore.setMainWalletAddress(
-            walletAddress: walletAddress,
-          );
-        }
-        if (card.nfcId == formattedTagId) {
-          await Future.delayed(const Duration(milliseconds: 2700));
-          if (formFactor == 'c') {
-            final cardIndex = _balanceStore.cards.indexWhere(
-              (element) => element.address == walletAddress,
+        await Future.delayed(const Duration(milliseconds: 2700));
+        await alreadyBackedUpAlert(router.navigatorKey.currentContext!, walletAddress);
+        return;
+      }
+      if (isOriginalTag && card != null) {
+        if (card.lost != true) {
+          await NfcManager.instance.stopSession();
+          if (card.hasBackup == true) {
+            await _balanceStore.setMainWalletAddress(
+              walletAddress: walletAddress,
             );
-            if (cardIndex != -1) {
-              await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(
-                router.navigatorKey.currentContext!,
-                walletAddress,
+          }
+          if (card.nfcId == formattedTagId) {
+            await Future.delayed(const Duration(milliseconds: 2700));
+            if (formFactor == 'c') {
+              final cardIndex = _balanceStore.cards.indexWhere(
+                (element) => element.address == walletAddress,
               );
-              _balanceStore.onCardAdded(walletAddress);
-              await _walletProtectState.updateModalStatus(isOpened: false);
-            } else {
-              await router.push(
-                CardConnectWithNfc(
-                  isOriginalNxp: isOriginalTag,
-                  receivedData: walletAddress,
-                  cardColor: cardColor,
-                  isActivated: card.activated,
-                  backup: backupCard?.backup ?? false,
-                  hasBackup: card.hasBackup ?? false,
-                ),
+              if (cardIndex != -1) {
+                await _walletProtectState.updateModalStatus(isOpened: true);
+                await alreadySavedWallet(
+                  router.navigatorKey.currentContext!,
+                  walletAddress,
+                );
+                _balanceStore.onCardAdded(walletAddress);
+                await _walletProtectState.updateModalStatus(isOpened: false);
+              } else {
+                await router.push(
+                  CardConnectWithNfc(
+                    isOriginalNxp: isOriginalTag,
+                    receivedData: walletAddress,
+                    cardColor: cardColor,
+                    isActivated: card.activated,
+                    backup: card.backup ?? false,
+                    hasBackup: card.hasBackup ?? false,
+                  ),
+                );
+              }
+            } else if (formFactor == 'b') {
+              final cardIndex = _balanceStore.bars.indexWhere(
+                (element) => element.address == walletAddress,
               );
+              if (cardIndex != -1) {
+                await _walletProtectState.updateModalStatus(isOpened: true);
+                await alreadySavedWallet(
+                  router.navigatorKey.currentContext!,
+                  walletAddress,
+                );
+                _balanceStore.onBarAdded(walletAddress);
+                await _walletProtectState.updateModalStatus(isOpened: false);
+              } else {
+                await router.push(
+                  BarConnectWithNfc(
+                    isOriginalTag: isOriginalTag,
+                    receivedData: walletAddress,
+                    barColor: cardColor,
+                    isActivated: card.activated,
+                  ),
+                );
+              }
             }
-          } else if (formFactor == 'b') {
-            final cardIndex = _balanceStore.bars.indexWhere(
-              (element) => element.address == walletAddress,
+          } else {
+            await NfcManager.instance.stopSession();
+            Future.delayed(
+              Duration.zero,
+              () => _walletProtectState.updateModalStatus(isOpened: true),
             );
-            if (cardIndex != -1) {
-              await _walletProtectState.updateModalStatus(isOpened: true);
-              await alreadySavedWallet(
-                router.navigatorKey.currentContext!,
-                walletAddress,
-              );
-              _balanceStore.onBarAdded(walletAddress);
-              await _walletProtectState.updateModalStatus(isOpened: false);
-            } else {
-              await router.push(
-                BarConnectWithNfc(
-                  isOriginalTag: isOriginalTag,
-                  receivedData: walletAddress,
-                  barColor: cardColor,
-                  isActivated: card.activated,
-                ),
-              );
-            }
+            await Future.delayed(const Duration(milliseconds: 2700));
+            await notCoinplusCardAlert(
+              context: router.navigatorKey.currentContext!,
+              walletAddress: walletAddress,
+              walletType: 'Card',
+              source: 'Wallet',
+            );
+            Future.delayed(
+              Duration.zero,
+              () => _walletProtectState.updateModalStatus(isOpened: false),
+            );
           }
         } else {
           await NfcManager.instance.stopSession();
-          Future.delayed(
-            Duration.zero,
-            () => _walletProtectState.updateModalStatus(isOpened: true),
-          );
           await Future.delayed(const Duration(milliseconds: 2700));
-          await notCoinplusCardAlert(
-            context: router.navigatorKey.currentContext!,
-            walletAddress: walletAddress,
-            walletType: 'Card',
-            source: 'Wallet',
-          );
-          Future.delayed(
-            Duration.zero,
-            () => _walletProtectState.updateModalStatus(isOpened: false),
-          );
+          await lostCardDialog(router.navigatorKey.currentContext!);
         }
-      } else if (isOriginalTag && backupCard != null) {
+      } else if (isOriginalTag && card != null) {
         await NfcManager.instance.stopSession();
         await Future.delayed(const Duration(milliseconds: 2700));
-        if (_balanceStore.cards.isEmpty && backupCard.backup == true) {
+        if (_balanceStore.cards.isEmpty && card.backup == true) {
           await tappedBackupCard(router.navigatorKey.currentContext!);
         } else {
           await router.push(
@@ -190,9 +206,9 @@ Future<void> nfcSessionIos({
               isOriginalNxp: isOriginalTag,
               receivedData: walletAddress,
               cardColor: cardColor,
-              backup: backupCard.backup ?? false,
-              hasBackup: card?.hasBackup ?? false,
-              isActivated: backupCard.activated,
+              backup: card.backup ?? false,
+              hasBackup: card.hasBackup ?? false,
+              isActivated: card.activated,
             ),
           );
         }
@@ -223,7 +239,7 @@ Future<void> nfcSessionIos({
                     isOriginalNxp: false,
                     receivedData: walletAddress,
                     isActivated: card.activated,
-                    backup: backupCard?.backup ?? false,
+                    backup: card.backup ?? false,
                     hasBackup: card.hasBackup ?? false,
                   ),
                 );
@@ -267,7 +283,7 @@ Future<void> nfcSessionIos({
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalNxp: false,
                   receivedData: walletAddress,
-                  backup: backupCard?.backup ?? false,
+                  backup: card?.backup ?? false,
                   hasBackup: card?.hasBackup ?? false,
                   isActivated: card?.activated,
                 ),
@@ -293,7 +309,7 @@ Future<void> nfcSessionIos({
                 isOriginalNxp: false,
                 isMiFareUltralight: false,
                 receivedData: walletAddress,
-                backup: backupCard?.backup ?? false,
+                backup: card?.backup ?? false,
                 hasBackup: card?.hasBackup ?? false,
               ),
             );
@@ -582,7 +598,7 @@ Future<void> connectBackupWalletIos({
       );
       await signInAnonymously();
 
-      final backupCard = await getBackupCardData(walletAddress);
+      final backupCard = await getCardData(walletAddress);
 
       final mifare = MiFare.from(tag);
       final tagId = mifare!.identifier;
@@ -604,6 +620,29 @@ Future<void> connectBackupWalletIos({
       } catch (e) {
         signature = null;
       }
+
+      final backupCardIndex = _balanceStore.backupCards.indexWhere(
+        (element) => element.address == walletAddress,
+      );
+
+      final cardIndex = _balanceStore.cards.indexWhere(
+        (element) => element.address == walletAddress,
+      );
+
+      if (backupCardIndex != -1) {
+        await NfcManager.instance.stopSession();
+        await Future.delayed(const Duration(milliseconds: 2700));
+        await alreadyBackedUpAlert(router.navigatorKey.currentContext!, walletAddress);
+        return;
+      }
+
+      if (cardIndex != -1) {
+        await NfcManager.instance.stopSession();
+        await Future.delayed(const Duration(milliseconds: 2700));
+        await alreadySavedWallet(router.navigatorKey.currentContext!, walletAddress);
+        return;
+      }
+
       if (isOriginalTag && backupCard != null && backupCard.nfcId == formattedTagId) {
         await NfcManager.instance.stopSession();
         await Future.delayed(const Duration(milliseconds: 2700));
@@ -623,9 +662,6 @@ Future<void> connectBackupWalletIos({
           );
         }
       } else {
-        log(backupCard.toString());
-        log(backupCard!.nfcId.toString());
-        log(formattedTagId);
         await NfcManager.instance.stopSession(
           errorMessage: 'Wrong card. Please tap the backup card.',
         );
