@@ -39,6 +39,13 @@ abstract class _AllSettingsState with Store {
   bool isNfcSupported = false;
   @observable
   int currentPage = 0;
+  @observable
+  bool activationStatusFromDb = false;
+
+  @action
+  Future<void> initActivationStatus({required bool status}) async {
+    activationStatusFromDb = status;
+  }
 
   @action
   void setPage(int page) {

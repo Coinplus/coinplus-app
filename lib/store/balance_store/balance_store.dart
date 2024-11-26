@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -74,6 +72,8 @@ abstract class _BalanceStore with Store {
   BlockchainType chainType = BlockchainType.BITCOIN;
   @observable
   String mainWalletAddress = '';
+  @observable
+  String backupWalletAddress = '';
   @observable
   CardModel? backupSingleCard;
   @observable
@@ -503,16 +503,12 @@ abstract class _BalanceStore with Store {
     final backupCardIndex = _backupCards.indexWhere(
       (element) => element.address == backedUpCard?.address,
     );
-
-    log(_backupCards.toString());
-
     if (backupCardIndex.isNegative) {
       throw Exception('No backup card available to replace the main card');
     }
     final mainCardIndex = _cards.indexWhere(
       (element) => element.address == mainCardAddress,
     );
-
     if (mainCardIndex.isNegative) {
       throw Exception('Main card not found');
     }
@@ -523,18 +519,15 @@ abstract class _BalanceStore with Store {
     final updatedCard = backupCard.copyWith(
       isBackup: false,
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-      color: backedUpCard!.color,
+      color: CardColor.BACKUP,
     );
     await updateCardBackupStatus(cardAddress: updatedCard.address, backupStatus: false);
-    _cards.add(updatedCard);
-    await StorageUtils.addCard(updatedCard);
+    _cards.insert(0, updatedCard);
+    await StorageUtils.saveUpdatedCards(_cards);
     _backupCards.removeAt(backupCardIndex);
     await StorageUtils.removeBackupCard(backupCard.address);
-    await _secureStorage.delete(key: backedUpCard.address);
-
-    if (kDebugMode) {
-      print('Main card successfully replaced with backup card.');
-    }
+    await _secureStorage.delete(key: backedUpCard!.address);
+    onCardAdded(updatedCard.address);
   }
 
   @action
@@ -862,6 +855,11 @@ abstract class _BalanceStore with Store {
   @action
   Future<void> setMainWalletAddress({required String walletAddress}) async {
     mainWalletAddress = walletAddress;
+  }
+
+  @action
+  Future<void> setBackupWalletAddress({required String walletAddress}) async {
+    backupWalletAddress = walletAddress;
   }
 
   @action

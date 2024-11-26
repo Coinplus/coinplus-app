@@ -1,4 +1,4 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -16,49 +16,49 @@ void registerGetIt(Flavor flavorMode) {
   utxoDio.interceptors.addAll(
     <Interceptor>[
       UTXOInterceptor(),
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        logPrint: (res) {
-          log(res.toString(), name: 'BE');
-        },
-      ),
+      // LogInterceptor(
+      //   requestBody: true,
+      //   responseBody: true,
+      //   logPrint: (res) {
+      //     log(res.toString(), name: 'BE');
+      //   },
+      // ),
     ],
   );
   broadcastDio.interceptors.addAll(
     <Interceptor>[
       BlockStreamInterceptor(),
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        logPrint: (res) {
-          log(res.toString(), name: 'BE');
-        },
-      ),
+      // LogInterceptor(
+      //   requestBody: true,
+      //   responseBody: true,
+      //   logPrint: (res) {
+      //     log(res.toString(), name: 'BE');
+      //   },
+      // ),
     ],
   );
   coinStatsDio.interceptors.addAll(
     <Interceptor>[
       CoinStatsAuthInterceptor(),
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        logPrint: (res) {
-          log(res.toString(), name: 'BE');
-        },
-      ),
+      // LogInterceptor(
+      //   requestBody: true,
+      //   responseBody: true,
+      //   logPrint: (res) {
+      //     log(res.toString(), name: 'BE');
+      //   },
+      // ),
     ],
   );
   mempoolDio.interceptors.addAll(
     <Interceptor>[
       MempoolInterceptor(),
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        logPrint: (res) {
-          log(res.toString(), name: 'BE');
-        },
-      ),
+      // LogInterceptor(
+      //   requestBody: true,
+      //   responseBody: true,
+      //   logPrint: (res) {
+      //     log(res.toString(), name: 'BE');
+      //   },
+      // ),
     ],
   );
   GetIt.I.registerLazySingleton<FlavorService>(

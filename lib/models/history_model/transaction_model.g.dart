@@ -32,23 +32,14 @@ _$TransactionItemImpl _$$TransactionItemImplFromJson(Map json) => _$TransactionI
           .toList(),
     );
 
-Map<String, dynamic> _$$TransactionItemImplToJson(_$TransactionItemImpl instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('type', instance.type);
-  writeNotNull('date', instance.date);
-  writeNotNull('mainContent', instance.mainContent?.toJson());
-  writeNotNull('coinData', instance.coinData?.toJson());
-  writeNotNull('profitLoss', instance.profitLoss?.toJson());
-  writeNotNull('transactions', instance.transactions?.map((e) => e.toJson()).toList());
-  return val;
-}
+Map<String, dynamic> _$$TransactionItemImplToJson(_$TransactionItemImpl instance) => <String, dynamic>{
+      if (instance.type case final value?) 'type': value,
+      if (instance.date case final value?) 'date': value,
+      if (instance.mainContent?.toJson() case final value?) 'mainContent': value,
+      if (instance.coinData?.toJson() case final value?) 'coinData': value,
+      if (instance.profitLoss?.toJson() case final value?) 'profitLoss': value,
+      if (instance.transactions?.map((e) => e.toJson()).toList() case final value?) 'transactions': value,
+    };
 
 _$MainContentImpl _$$MainContentImplFromJson(Map json) => _$MainContentImpl(
       coinIcons: (json['coinIcons'] as List<dynamic>).map((e) => e as String).toList(),

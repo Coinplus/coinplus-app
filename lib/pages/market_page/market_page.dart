@@ -10,9 +10,9 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../services/amplitude_service.dart';
 import '../../store/market_page_store/market_page_store.dart';
 import 'coins_data/coins_list_widget.dart';
-import 'market_data/favorite_coins_list.dart';
+// import 'market_data/favorite_coins_list.dart';
 import 'market_data/market_data.dart';
-import 'market_data/overview_widget.dart';
+// import 'market_data/overview_widget.dart';
 
 class MarketPage extends StatefulWidget {
   const MarketPage({
@@ -331,52 +331,58 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
               ),
               title: MarketDataWidget(),
             ),
-            SliverAppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              pinned: true,
-              toolbarHeight: 0,
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                systemNavigationBarColor: Colors.white,
-                statusBarColor: Colors.transparent,
-              ),
-              bottom: TabBar(
-                controller: _tabController,
-                indicatorColor: AppColors.primaryButtonColor,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
-                tabAlignment: TabAlignment.fill,
-                tabs: const [
-                  Tab(text: 'Coins List'),
-                  Tab(text: 'Overview'),
-                  Tab(text: 'Favorites'),
-                ],
-                labelStyle: const TextStyle(
-                  fontFamily: FontFamily.redHatMedium,
-                  color: AppColors.primary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-                unselectedLabelColor: const Color(0xFF838995),
-                splashFactory: NoSplash.splashFactory,
-              ),
-            ),
+            // SliverAppBar(
+            //   backgroundColor: Colors.white,
+            //   elevation: 0,
+            //   pinned: true,
+            //   toolbarHeight: 0,
+            //   systemOverlayStyle: const SystemUiOverlayStyle(
+            //     systemNavigationBarColor: Colors.white,
+            //     statusBarColor: Colors.transparent,
+            //   ),
+            //   bottom: TabBar(
+            //     controller: _tabController,
+            //     indicatorColor: AppColors.primaryButtonColor,
+            //     indicatorSize: TabBarIndicatorSize.tab,
+            //     indicatorPadding: const EdgeInsets.symmetric(horizontal: 20),
+            //     tabAlignment: TabAlignment.fill,
+            //     tabs: const [
+            //       Tab(text: 'Coins List'),
+            //       Tab(text: 'Overview'),
+            //       Tab(text: 'Favorites'),
+            //     ],
+            //     labelStyle: const TextStyle(
+            //       fontFamily: FontFamily.redHatMedium,
+            //       color: AppColors.primary,
+            //       fontSize: 14,
+            //       fontWeight: FontWeight.w700,
+            //     ),
+            //     unselectedLabelColor: const Color(0xFF838995),
+            //     splashFactory: NoSplash.splashFactory,
+            //   ),
+            // ),
             const SliverToBoxAdapter(
               child: Gap(10),
             ),
             SliverFillRemaining(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  CoinsListWidget(
-                    pullToRefresh: widget.pullToRefresh,
-                    secondScrollController: _secondScrollController,
-                  ),
-                  const OverviewWidget(),
-                  const FavoriteCoinsList(),
-                ],
+              child: CoinsListWidget(
+                pullToRefresh: widget.pullToRefresh,
+                secondScrollController: _secondScrollController,
               ),
             ),
+            // SliverFillRemaining(
+            //   child: TabBarView(
+            //     controller: _tabController,
+            //     children: [
+            //       CoinsListWidget(
+            //         pullToRefresh: widget.pullToRefresh,
+            //         secondScrollController: _secondScrollController,
+            //       ),
+            //       const OverviewWidget(),
+            //       const FavoriteCoinsList(),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

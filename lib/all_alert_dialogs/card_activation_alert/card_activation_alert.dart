@@ -33,8 +33,9 @@ Future<void> cardActivationAlert({
   await showDialogBox(
     context,
     DialogBoxWithAction(
-      text:
-          'To send from your card (bar) you will need to remove Security Stickers. To maintain the highest level of security, we encourage you to not remove stickers if you don’t need to Send now.',
+      text: isBarList
+          ? 'To send from your bar you will need to remove Security Stickers. To maintain the highest level of security, we encourage you to not remove stickers if you don’t need to Send now.'
+          : 'To send from your card you will need to remove Security Stickers. To maintain the highest level of security, we encourage you to not remove stickers if you don’t need to Send now.',
       title: const Text(
         'Your card is not activated!',
         textAlign: TextAlign.center,

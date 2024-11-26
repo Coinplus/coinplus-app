@@ -20,6 +20,7 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../modals/backup_card_modal/backup_card_modal.dart';
+import '../../../modals/lost_card_info_modal/lost_card_info_modal.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
@@ -384,10 +385,269 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                           child: Center(
                                                             child: Column(
                                                               mainAxisSize: MainAxisSize.min,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                                 SizedBox(
-                                                                  height: context.height * 0.2,
+                                                                  height: context.height * 0.15,
                                                                 ),
+                                                                if (card.label == WalletType.COINPLUS_WALLET)
+                                                                  if (card.color == CardColor.BACKUP)
+                                                                    ScaleTap(
+                                                                      enableFeedback: false,
+                                                                      onPressed: () async {
+                                                                        final cardData =
+                                                                            await getCardData(card.address);
+                                                                        await showModalBottomSheet(
+                                                                          isScrollControlled: true,
+                                                                          context: context,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(
+                                                                              topLeft: Radius.circular(
+                                                                                20,
+                                                                              ),
+                                                                              topRight: Radius.circular(
+                                                                                20,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          builder: (context) {
+                                                                            return LostCardInfoModal(
+                                                                              cardData: cardData,
+                                                                            );
+                                                                          },
+                                                                        );
+                                                                      },
+                                                                      child: Padding(
+                                                                        padding: EdgeInsets.symmetric(
+                                                                          horizontal: context.height > 667
+                                                                              ? context.height * 0.035
+                                                                              : context.height * 0.043,
+                                                                        ),
+                                                                        child: ClipRRect(
+                                                                          child: BackdropFilter(
+                                                                            filter: ImageFilter.blur(
+                                                                              sigmaX: 10,
+                                                                              sigmaY: 10,
+                                                                            ),
+                                                                            child: Container(
+                                                                              decoration: BoxDecoration(
+                                                                                borderRadius: BorderRadius.circular(6),
+                                                                                color: Colors.black.withOpacity(0.5),
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.symmetric(
+                                                                                  vertical: 10,
+                                                                                  horizontal: 8,
+                                                                                ),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.min,
+                                                                                  children: [
+                                                                                    Assets.icons.addBackupIcon
+                                                                                        .image(height: 28),
+                                                                                    const Gap(2),
+                                                                                    const Text(
+                                                                                      'Primary card',
+                                                                                      style: TextStyle(
+                                                                                        fontFamily:
+                                                                                            FontFamily.redHatMedium,
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 12,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  else
+                                                                    ScaleTap(
+                                                                      enableFeedback: false,
+                                                                      onPressed: card.label ==
+                                                                              WalletType.COINPLUS_WALLET
+                                                                          ? () async {
+                                                                              await _balanceStore
+                                                                                  .loadBackupCard(card.address);
+                                                                              final isWalletActivated =
+                                                                                  await isCardWalletActivated();
+                                                                              final hasBackUp =
+                                                                                  await isCardWalletHasBackup(
+                                                                                address: card.address,
+                                                                              );
+                                                                              if (isWalletActivated && hasBackUp) {
+                                                                                await WoltModalSheet.show<void>(
+                                                                                  pageIndexNotifier: pageIndexNotifier,
+                                                                                  context: context,
+                                                                                  pageListBuilder: (modalSheetContext) {
+                                                                                    return [
+                                                                                      modalPage1(modalSheetContext),
+                                                                                      modalPage2(
+                                                                                        modalSheetContext,
+                                                                                        card.address,
+                                                                                      ),
+                                                                                    ];
+                                                                                  },
+                                                                                  modalTypeBuilder: (context) {
+                                                                                    final size = MediaQuery.of(context)
+                                                                                        .size
+                                                                                        .width;
+                                                                                    if (size < 768) {
+                                                                                      return WoltModalType
+                                                                                          .bottomSheet();
+                                                                                    } else {
+                                                                                      return WoltModalType.dialog();
+                                                                                    }
+                                                                                  },
+                                                                                  onModalDismissedWithBarrierTap: () {
+                                                                                    Navigator.of(context).maybePop();
+                                                                                    pageIndexNotifier.value = 0;
+                                                                                  },
+                                                                                );
+                                                                              } else if (isWalletActivated &&
+                                                                                  !hasBackUp) {
+                                                                                final cardData = await getCardData(
+                                                                                  card.address,
+                                                                                );
+                                                                                await _balanceStore
+                                                                                    .setMainWalletAddress(
+                                                                                  walletAddress: card.address,
+                                                                                );
+
+                                                                                await router.push(
+                                                                                  BackupMyWalletRoute(
+                                                                                    walletAddress: card.address,
+                                                                                    backupPack: cardData?.backupPack,
+                                                                                    isWalletActivated:
+                                                                                        isWalletActivated,
+                                                                                    cardColor: card.color.toString(),
+                                                                                  ),
+                                                                                );
+                                                                              } else if (!isWalletActivated) {
+                                                                                final cardData = await getCardData(
+                                                                                  card.address,
+                                                                                );
+                                                                                await _balanceStore
+                                                                                    .setMainWalletAddress(
+                                                                                  walletAddress: card.address,
+                                                                                );
+                                                                                await router.push(
+                                                                                  BackupMyWalletRoute(
+                                                                                    walletAddress: card.address,
+                                                                                    backupPack: cardData?.backupPack,
+                                                                                    isWalletActivated:
+                                                                                        isWalletActivated,
+                                                                                    cardColor: card.color.toString(),
+                                                                                  ),
+                                                                                );
+                                                                              }
+                                                                              pageIndexNotifier.value = 0;
+                                                                            }
+                                                                          : () async {
+                                                                              await maybeCoinplusCard(
+                                                                                context,
+                                                                              );
+                                                                            },
+                                                                      child: AnimatedCrossFade(
+                                                                        firstChild: Padding(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                            horizontal: context.height > 667
+                                                                                ? context.height * 0.035
+                                                                                : context.height * 0.043,
+                                                                          ),
+                                                                          child: Container(
+                                                                            decoration: BoxDecoration(
+                                                                              image: DecorationImage(
+                                                                                image: Assets.icons.backedUpField
+                                                                                    .image()
+                                                                                    .image,
+                                                                              ),
+                                                                            ),
+                                                                            child: Padding(
+                                                                              padding: const EdgeInsets.symmetric(
+                                                                                vertical: 10,
+                                                                                horizontal: 8,
+                                                                              ),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                children: [
+                                                                                  Assets.icons.backedUpIcon
+                                                                                      .image(height: 24),
+                                                                                  const Gap(6),
+                                                                                  const Text(
+                                                                                    'Backed Up',
+                                                                                    style: TextStyle(
+                                                                                      fontFamily:
+                                                                                          FontFamily.redHatMedium,
+                                                                                      color: Colors.white,
+                                                                                      fontSize: 12,
+                                                                                    ),
+                                                                                  ),
+                                                                                  const Gap(16),
+                                                                                  Assets.icons.backupInfoIcon
+                                                                                      .image(height: 22),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        secondChild: Padding(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                            horizontal: context.height > 667
+                                                                                ? context.height * 0.035
+                                                                                : context.height * 0.043,
+                                                                          ),
+                                                                          child: ClipRRect(
+                                                                            child: BackdropFilter(
+                                                                              filter: ImageFilter.blur(
+                                                                                sigmaX: 10,
+                                                                                sigmaY: 10,
+                                                                              ),
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  borderRadius:
+                                                                                      BorderRadius.circular(6),
+                                                                                  color: Colors.black.withOpacity(0.5),
+                                                                                ),
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.symmetric(
+                                                                                    vertical: 10,
+                                                                                    horizontal: 8,
+                                                                                  ),
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      Assets.icons.addBackupIcon
+                                                                                          .image(height: 28),
+                                                                                      const Gap(2),
+                                                                                      const Text(
+                                                                                        'Add backup',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily:
+                                                                                              FontFamily.redHatMedium,
+                                                                                          color: Colors.white,
+                                                                                          fontSize: 12,
+                                                                                        ),
+                                                                                      ),
+                                                                                      const Spacer(),
+                                                                                      Assets.icons.arrowRight
+                                                                                          .image(height: 28),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        firstCurve: Curves.easeInOutBack,
+                                                                        secondCurve: Curves.easeInOutBack,
+                                                                        crossFadeState: card.hasBackedUp
+                                                                            ? CrossFadeState.showFirst
+                                                                            : CrossFadeState.showSecond,
+                                                                        duration: const Duration(milliseconds: 50),
+                                                                      ),
+                                                                    ),
+                                                                const Gap(10),
                                                                 if (card.blockchain == 'BTC')
                                                                   CardAddressField(
                                                                     index: index,
@@ -410,116 +670,6 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                     index: index,
                                                                   ),
                                                               ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Positioned(
-                                                          left: 33,
-                                                          top: 15,
-                                                          child: ScaleTap(
-                                                            enableFeedback: false,
-                                                            onPressed: card.label == WalletType.COINPLUS_WALLET
-                                                                ? () async {
-                                                                    await _balanceStore.loadBackupCard(card.address);
-                                                                    final isWalletActivated =
-                                                                        await isCardWalletActivated();
-                                                                    final hasBackUp = await isCardWalletHasBackup(
-                                                                      address: card.address,
-                                                                    );
-                                                                    if (isWalletActivated && hasBackUp) {
-                                                                      await WoltModalSheet.show<void>(
-                                                                        pageIndexNotifier: pageIndexNotifier,
-                                                                        context: context,
-                                                                        pageListBuilder: (modalSheetContext) {
-                                                                          return [
-                                                                            modalPage1(modalSheetContext),
-                                                                            modalPage2(modalSheetContext, card.address),
-                                                                          ];
-                                                                        },
-                                                                        modalTypeBuilder: (context) {
-                                                                          final size =
-                                                                              MediaQuery.of(context).size.width;
-                                                                          if (size < 768) {
-                                                                            return WoltModalType.bottomSheet();
-                                                                          } else {
-                                                                            return WoltModalType.dialog();
-                                                                          }
-                                                                        },
-                                                                        onModalDismissedWithBarrierTap: () {
-                                                                          Navigator.of(context).maybePop();
-                                                                          pageIndexNotifier.value = 0;
-                                                                        },
-                                                                      );
-                                                                    } else if (isWalletActivated && !hasBackUp) {
-                                                                      final cardData = await getCardData(
-                                                                        card.address,
-                                                                      );
-                                                                      await _balanceStore.setMainWalletAddress(
-                                                                        walletAddress: card.address,
-                                                                      );
-
-                                                                      await router.push(
-                                                                        BackupMyWalletRoute(
-                                                                          walletAddress: card.address,
-                                                                          hasBackup: cardData?.hasBackup,
-                                                                          isWalletActivated: isWalletActivated,
-                                                                        ),
-                                                                      );
-                                                                    } else if (!isWalletActivated) {
-                                                                      final cardData = await getCardData(
-                                                                        card.address,
-                                                                      );
-                                                                      await _balanceStore.setMainWalletAddress(
-                                                                        walletAddress: card.address,
-                                                                      );
-                                                                      await router.push(
-                                                                        BackupMyWalletRoute(
-                                                                          walletAddress: card.address,
-                                                                          hasBackup: cardData?.hasBackup,
-                                                                          isWalletActivated: isWalletActivated,
-                                                                        ),
-                                                                      );
-                                                                    }
-                                                                    pageIndexNotifier.value = 0;
-                                                                  }
-                                                                : () async {
-                                                                    await maybeCoinplusCard(
-                                                                      context,
-                                                                    );
-                                                                  },
-                                                            child: ClipRRect(
-                                                              child: BackdropFilter(
-                                                                filter: ImageFilter.blur(
-                                                                  sigmaX: 3,
-                                                                  sigmaY: 3,
-                                                                ),
-                                                                child: Container(
-                                                                  height: 40,
-                                                                  width: 40,
-                                                                  decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(
-                                                                      8,
-                                                                    ),
-                                                                    border: Border.all(
-                                                                      color: Colors.white,
-                                                                    ),
-                                                                    color: Colors.black.withOpacity(
-                                                                      0.6,
-                                                                    ),
-                                                                  ),
-                                                                  child: Center(
-                                                                    child: card.hasBackedUp
-                                                                        ? Assets.icons.cloudDone.image(
-                                                                            height: 25,
-                                                                            color: Colors.greenAccent,
-                                                                          )
-                                                                        : Assets.icons.backupIcon.image(
-                                                                            height: 25,
-                                                                            color: Colors.white,
-                                                                          ),
-                                                                  ),
-                                                                ),
-                                                              ),
                                                             ),
                                                           ),
                                                         ),

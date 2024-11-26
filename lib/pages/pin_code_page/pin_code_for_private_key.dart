@@ -9,9 +9,9 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -41,7 +41,7 @@ class PinCodeForPrivateKey extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _shakeAnimationController = useMemoized(ShakeAnimationController.new);
+    final _shakeAnimationController = useMemoized(ShakerController.new);
     final _pinController = useTextEditingController();
     final _secureStorage = SecureStorageService();
 
@@ -102,10 +102,8 @@ class PinCodeForPrivateKey extends HookWidget {
           const Gap(30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: ShakeAnimationWidget(
-              shakeAnimationController: _shakeAnimationController,
-              shakeAnimationType: ShakeAnimationType.LeftRightShake,
-              isForward: false,
+            child: Shaker(
+              controller: _shakeAnimationController,
               child: PinCodeTextField(
                 focusNode: _walletProtectState.pinFocusNode,
                 controller: _pinController,
@@ -125,9 +123,7 @@ class PinCodeForPrivateKey extends HookWidget {
                     unawaited(_walletProtectState.dontMatch());
                     Gaimon.error();
                     _pinController.text = '';
-                    _shakeAnimationController.start();
-                    await Future.delayed(const Duration(milliseconds: 600));
-                    _shakeAnimationController.stop();
+                    await _shakeAnimationController.shake();
                     _walletProtectState.pinFocusNode.requestFocus();
                   }
                 },

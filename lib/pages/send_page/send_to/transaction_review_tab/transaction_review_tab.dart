@@ -14,26 +14,31 @@ import '../../../../extensions/num_extension.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../gen/fonts.gen.dart';
+import '../../../../models/abstract_card/abstract_card.dart';
 import '../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
+import '../../../../models/card_model/card_model.dart';
 import '../../../../providers/screen_service.dart';
 import '../../../../services/amplitude_service.dart';
-import '../../../../store/all_settings_state/all_settings_state.dart';
+import '../../../../services/cloud_firestore_service.dart';
+import '../../../../store/balance_store/balance_store.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../send_to_state.dart';
 
 class TransactionReviewTab extends HookWidget {
   const TransactionReviewTab({
     super.key,
-    required this.tabController,
-    required this.allSettingsState,
-    required this.isBarList,
+    this.isFromLostCardPage,
+    this.backupCard,
+    this.mainCard,
   });
 
-  final TabController tabController;
-  final AllSettingsState allSettingsState;
-  final bool isBarList;
+  final bool? isFromLostCardPage;
+  final CardModel? backupCard;
+  final AbstractCard? mainCard;
 
   SendToState get _sendToState => GetIt.I<SendToState>();
+
+  BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -392,10 +397,14 @@ class TransactionReviewTab extends HookWidget {
                       );
                       await _sendToState.transactionsStore.broadcastTransaction();
                       await router.maybePop();
-                      await transactionSubmittedAlert(
-                        context: context,
-                        allSettingsState: allSettingsState,
-                      );
+                      await transactionSubmittedAlert(context: context);
+                      if (isFromLostCardPage == true && mainCard != null) {
+                        await _balanceStore.replaceMainCardWithBackup(
+                          mainCardAddress: mainCard!.address,
+                          backedUpCard: backupCard,
+                        );
+                        await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
+                      }
                     } catch (e) {
                       await broadcastFailAlertDialog(context);
                     }

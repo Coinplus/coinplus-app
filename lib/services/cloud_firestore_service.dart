@@ -138,6 +138,54 @@ Future<void> verificationFailureCount(String documentId) async {
   }
 }
 
+Future<void> addBackupAddressToDb({required String mainWalletAddress, required String backupWalletAddress}) async {
+  final card = await getCardData(mainWalletAddress);
+
+  if (card != null) {
+    await _firestore.collection('cards').doc(mainWalletAddress).update({
+      'backupAddress': backupWalletAddress,
+    });
+  }
+}
+
+Future<void> addPrimaryCardAddressToDb({required String mainWalletAddress, required String backupWalletAddress}) async {
+  final card = await getCardData(backupWalletAddress);
+
+  if (card != null) {
+    await _firestore.collection('cards').doc(backupWalletAddress).update({
+      'primaryWalletAddress': mainWalletAddress,
+    });
+  }
+}
+
+Future<void> addPrimaryCardColorToDb({required String mainWalletColor, required String backupWalletAddress}) async {
+  final card = await getCardData(backupWalletAddress);
+
+  if (card != null) {
+    await _firestore.collection('cards').doc(backupWalletAddress).update({
+      'primaryWalletColor': mainWalletColor,
+    });
+  }
+}
+
+Future<void> deletePrimaryWalletColorFromDb({required String backupWalletAddress}) async {
+  await FirebaseFirestore.instance.collection('cards').doc(backupWalletAddress).update({
+    'primaryWalletColor': FieldValue.delete(),
+  });
+}
+
+Future<void> deleteBackupAddressFromDb({required String mainWalletAddress}) async {
+  await FirebaseFirestore.instance.collection('cards').doc(mainWalletAddress).update({
+    'backupAddress': FieldValue.delete(),
+  });
+}
+
+Future<void> deletePrimaryAddressFromDb({required String backupWalletAddress}) async {
+  await FirebaseFirestore.instance.collection('cards').doc(backupWalletAddress).update({
+    'primaryWalletAddress': FieldValue.delete(),
+  });
+}
+
 Future<BuyCardModel?> getBuyCardData() async {
   final DocumentSnapshot documentSnapshot = await _firestore.collection('links').doc('buy_card').get();
 
@@ -169,12 +217,19 @@ Future<BuyCardModel?> getBuyCardPlusButtonLink() async {
 Future<void> updateCardLostStatus({required String cardAddress, required bool? lostStatus}) async {
   final card = await getCardData(cardAddress);
   if (card != null) {
-    if (card.lost == false || card.lost == null) {
-      card.lost = lostStatus;
-      await _firestore.collection('cards').doc(cardAddress).update({
-        'lost': lostStatus,
-      });
-    }
+    card.lost = lostStatus;
+    await _firestore.collection('cards').doc(cardAddress).update({
+      'lost': lostStatus,
+    });
+  }
+}
+
+Future<void> updateCardHasBackupStatus({required String cardAddress, required bool? hasBackupStatus}) async {
+  final card = await getCardData(cardAddress);
+  if (card != null) {
+    await _firestore.collection('cards').doc(cardAddress).update({
+      'hasBackup': hasBackupStatus,
+    });
   }
 }
 

@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -32,7 +32,7 @@ class _CreatePinCodeState extends State<CreatePinCode> {
   late PageController _pageController = PageController(keepPage: false);
   final _enterPinCodeController = TextEditingController();
   final _repeatPinCodeController = TextEditingController();
-  late final _shakeAnimationController = ShakeAnimationController();
+  late final _shakeAnimationController = ShakerController();
   final _secureStorage = SecureStorageService();
   final _enterFocusNode = FocusNode();
   final _reEnterFocusNode = FocusNode();
@@ -235,11 +235,8 @@ class _CreatePinCodeState extends State<CreatePinCode> {
               const Gap(30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: ShakeAnimationWidget(
-                  isForward: false,
-                  shakeRange: 0.4,
-                  shakeAnimationController: _shakeAnimationController,
-                  shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                child: Shaker(
+                  controller: _shakeAnimationController,
                   child: PinCodeTextField(
                     autoDismissKeyboard: false,
                     focusNode: _reEnterFocusNode,
@@ -262,13 +259,11 @@ class _CreatePinCodeState extends State<CreatePinCode> {
                         );
                       } else {
                         Gaimon.error();
-                        _shakeAnimationController.start();
+                        await _shakeAnimationController.shake();
                         unawaited(_walletProtectState.dontMatch());
                         _pageController.jumpToPage(0);
                         _reEnterFocusNode.unfocus();
                         _enterFocusNode.requestFocus();
-                        await Future.delayed(const Duration(milliseconds: 600));
-                        _shakeAnimationController.stop();
                       }
                     },
                     textCapitalization: TextCapitalization.characters,

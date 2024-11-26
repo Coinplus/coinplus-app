@@ -11,9 +11,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../../constants/card_type.dart';
 import '../../../extensions/extensions.dart';
@@ -47,11 +47,12 @@ class CardConnectWithNfc extends StatefulWidget {
     this.isOriginalNxp,
     this.isMiFareUltralight,
     this.isOldCard,
-    this.hasBackup,
+    this.backupPack,
     this.backup,
     this.isActivated,
     this.isBackupCard,
     this.mainWalletAddress,
+    this.isFromBackupConnect,
   });
 
   final String? receivedData;
@@ -60,10 +61,11 @@ class CardConnectWithNfc extends StatefulWidget {
   final bool? isMiFareUltralight;
   final bool? isOldCard;
   final bool? isActivated;
-  final bool? hasBackup;
+  final bool? backupPack;
   final bool? backup;
   final bool? isBackupCard;
   final String? mainWalletAddress;
+  final bool? isFromBackupConnect;
 
   @override
   State<CardConnectWithNfc> createState() => _CardConnectWithNfcState();
@@ -81,7 +83,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
   late String ethAddress = '';
   late final TextEditingController _addressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
-  final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  final ShakerController _shakeAnimationController = ShakerController();
 
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
@@ -353,7 +355,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        if (!(widget.cardColor == '1'))
+                                        if (!(widget.cardColor == '1' || widget.cardColor == 'WHITE'))
                                           Assets.icons.coinplusLogo.image(height: 32)
                                         else
                                           Assets.icons.coinplusLogoBlack.image(height: 32),
@@ -371,7 +373,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                               border: Border.all(
                                                 color: _focusNode.hasFocus
                                                     ? Colors.blue
-                                                    : widget.cardColor == '1'
+                                                    : widget.cardColor == '1' || widget.cardColor == 'WHITE'
                                                         ? const Color(
                                                             0xFFF0563C,
                                                           )
@@ -573,12 +575,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    if (!(widget.cardColor == '1'))
+                                    if (!(widget.cardColor == '1' || widget.cardColor == 'WHITE'))
                                       Assets.icons.cardBackText.image(height: 55)
                                     else
                                       Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
-                                    if (!(widget.cardColor == '1'))
+                                    if (!(widget.cardColor == '1' || widget.cardColor == 'WHITE'))
                                       SizedBox(
                                         width: 115,
                                         child: Assets.icons.cardBackLink.image(),
@@ -605,11 +607,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
           if (context.height > 667) const Gap(10) else const SizedBox(),
           Observer(
             builder: (context) {
-              return ShakeAnimationWidget(
-                shakeRange: 0.3,
-                isForward: false,
-                shakeAnimationController: _shakeAnimationController,
-                shakeAnimationType: ShakeAnimationType.LeftRightShake,
+              return Shaker(
+                controller: _shakeAnimationController,
                 child: Stack(
                   children: [
                     Column(
@@ -970,11 +969,12 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
             historyPageStore: _historyPageStore,
             connectivityStore: _connectivityStore,
             addressState: _addressState,
-            hasBackup: widget.hasBackup,
+            backupPack: widget.backupPack,
             backup: widget.backup ?? false,
             toggleCard: _toggleCard,
             flipCardController: _flipCardController,
             mainWalletAddress: widget.mainWalletAddress ?? '',
+            isFromBackupConnect: widget.isFromBackupConnect ?? false,
           ),
           const Spacer(flex: 2),
         ],

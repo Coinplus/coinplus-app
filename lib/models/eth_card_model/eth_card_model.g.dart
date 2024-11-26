@@ -20,34 +20,25 @@ _$EthCardModelImpl _$$EthCardModelImplFromJson(Map json) => _$EthCardModelImpl(
       createdAt: json['createdAt'] == null ? '' : timeFromJson(json['createdAt'] as String),
     );
 
-Map<String, dynamic> _$$EthCardModelImplToJson(_$EthCardModelImpl instance) {
-  final val = <String, dynamic>{
-    'address': instance.address,
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('amount', instance.finalBalance);
-  writeNotNull('rank', instance.totalReceived);
-  val['color'] = _$CardColorEnumMap[instance.color]!;
-  val['type'] = _$CardTypeEnumMap[instance.type]!;
-  val['name'] = instance.name;
-  val['label'] = _$WalletTypeEnumMap[instance.label]!;
-  val['blockchain'] = instance.blockchain;
-  val['isBackup'] = instance.isBackup;
-  val['hasBackedUp'] = instance.hasBackedUp;
-  val['createdAt'] = instance.createdAt;
-  return val;
-}
+Map<String, dynamic> _$$EthCardModelImplToJson(_$EthCardModelImpl instance) => <String, dynamic>{
+      'address': instance.address,
+      if (instance.finalBalance case final value?) 'amount': value,
+      if (instance.totalReceived case final value?) 'rank': value,
+      'color': _$CardColorEnumMap[instance.color]!,
+      'type': _$CardTypeEnumMap[instance.type]!,
+      'name': instance.name,
+      'label': _$WalletTypeEnumMap[instance.label]!,
+      'blockchain': instance.blockchain,
+      'isBackup': instance.isBackup,
+      'hasBackedUp': instance.hasBackedUp,
+      'createdAt': instance.createdAt,
+    };
 
 const _$CardColorEnumMap = {
   CardColor.ORANGE: 'ORANGE',
   CardColor.WHITE: 'WHITE',
   CardColor.BLACK: 'BLACK',
+  CardColor.BACKUP: 'BACKUP',
   CardColor.TRACKER: 'TRACKER',
   CardColor.SILVER: 'SILVER',
   CardColor.GOLD: 'GOLD',

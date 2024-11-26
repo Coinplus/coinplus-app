@@ -13,6 +13,7 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:styled_text/styled_text.dart';
 
 import '../../constants/card_color.dart';
@@ -28,9 +29,11 @@ import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_pa
 import '../../providers/screen_service.dart';
 import '../../router.dart';
 import '../../services/amplitude_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/card_color_state/card_setting_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../utils/card_nfc_session.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../../widgets/custom_snack_bar/snack_bar.dart';
@@ -38,7 +41,7 @@ import '../../widgets/custom_snack_bar/top_snack.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../splash_screen/background.dart';
 import 'change_card_name.dart';
-import 'lost_my_card_modal.dart';
+import 'lost_card_action_slider.dart';
 import 'remove_card_modal.dart';
 
 @RoutePage()
@@ -188,61 +191,160 @@ class CardSettingsPage extends HookWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ListTile(
-                    enableFeedback: false,
-                    onTap: () async {
-                      await _walletProtectState.updateModalStatus(
-                        isOpened: true,
-                      );
-                      await showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        backgroundColor: Colors.transparent,
-                        builder: (context) {
-                          return LostMyCardWidget(
-                            card: card,
-                          );
-                        },
-                      );
-                      await _walletProtectState.updateModalStatus(
-                        isOpened: false,
-                      );
-                    },
-                    trailing: Assets.icons.creditCardOff.image(
-                      height: 24,
-                    ),
-                    title: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  if ((card.label == WalletType.COINPLUS_WALLET) && (card.color != CardColor.BACKUP))
+                    Column(
                       children: [
-                        Text(
-                          'Lost my card',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFFFD5340),
-                          ),
+                        FutureBuilder(
+                          future: getCardData(card.address),
+                          builder: (context, snapshot) {
+                            return AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              transitionBuilder: (child, animation) {
+                                return FadeTransition(opacity: animation, child: child);
+                              },
+                              child: snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData
+                                  ? Padding(
+                                      key: const ValueKey('loading'),
+                                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(16),
+                                          color: Colors.grey.withOpacity(0.08),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(12),
+                                          child: Column(
+                                            children: [
+                                              Shimmer.fromColors(
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor: Colors.grey[100]!,
+                                                child: Row(
+                                                  children: [
+                                                    Shimmer.fromColors(
+                                                      baseColor: Colors.grey[300]!,
+                                                      highlightColor: Colors.grey[100]!,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          color: Colors.grey,
+                                                        ),
+                                                        child: Assets.icons.lostCardIcon.image(height: 26),
+                                                      ),
+                                                    ),
+                                                    const Gap(8),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        color: Colors.white,
+                                                      ),
+                                                      child: const Text(
+                                                        'Lost my card',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                          fontSize: 16,
+                                                          color: Colors.transparent,
+                                                          fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const Gap(16),
+                                              Shimmer.fromColors(
+                                                baseColor: Colors.grey[300]!,
+                                                highlightColor: Colors.grey[100]!,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(50),
+                                                    color: Colors.grey,
+                                                  ),
+                                                  height: 60,
+                                                  width: double.infinity,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Padding(
+                                      key: const ValueKey('loaded'),
+                                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(16),
+                                              color: Colors.grey.withOpacity(0.09),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(12),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Assets.icons.lostCardIcon.image(height: 26),
+                                                      const Gap(8),
+                                                      Text(
+                                                        snapshot.data!.lost ?? false ? 'Card is lost' : 'Lost my card',
+                                                        style: const TextStyle(
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                          fontSize: 16,
+                                                          color: AppColors.primary,
+                                                          fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const Gap(16),
+                                                  LostCardActionSlider(
+                                                    card: card,
+                                                    lostStatus: snapshot.data!.lost ?? false,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            right: 10,
+                                            top: 10,
+                                            child: snapshot.data?.lost == true
+                                                ? ScaleTap(
+                                                    enableFeedback: false,
+                                                    onPressed: () {
+                                                      checkFoundCard(mainWalletAddress: card.address);
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        color: Colors.greenAccent,
+                                                      ),
+                                                      child: const Padding(
+                                                        padding: EdgeInsets.all(8),
+                                                        child: Text(
+                                                          'Card found',
+                                                          style: TextStyle(
+                                                            fontFamily: FontFamily.redHatMedium,
+                                                            fontSize: 14,
+                                                            color: AppColors.primary,
+                                                            fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const SizedBox(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            );
+                          },
                         ),
-                        Gap(6),
-                        Text(
-                          'In case you lost your card',
-                          style: TextStyle(
-                            fontFamily: FontFamily.redHatMedium,
-                            fontSize: 14,
-                            color: AppColors.primaryTextColor,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
+                        const Gap(16),
                       ],
                     ),
-                  ),
-                  const Gap(16),
                   ListTile(
                     onTap: () async {
                       await _walletProtectState.updateModalStatus(
@@ -679,54 +781,55 @@ class CardSettingsPage extends HookWidget {
                     endIndent: 5,
                     color: Colors.grey.withOpacity(0.2),
                   ),
-                  if (card.label != WalletType.TRACKER)
-                    Column(
-                      children: [
-                        const Gap(16),
-                        ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Appearance',
-                                style: TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.primaryTextColor,
+                  if (card.color != CardColor.BACKUP)
+                    if (card.label != WalletType.TRACKER)
+                      Column(
+                        children: [
+                          const Gap(16),
+                          ListTile(
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Appearance',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.primaryTextColor,
+                                  ),
                                 ),
-                              ),
-                              const Gap(6),
-                              const Text(
-                                'Choose a color theme for your card',
-                                style: TextStyle(
-                                  fontFamily: FontFamily.redHatMedium,
-                                  fontSize: 14,
-                                  color: AppColors.primaryTextColor,
-                                  fontWeight: FontWeight.w300,
+                                const Gap(6),
+                                const Text(
+                                  'Choose a color theme for your card',
+                                  style: TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                    color: AppColors.primaryTextColor,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
-                              ),
-                              const Gap(25),
-                              Observer(
-                                builder: (_) {
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: getColorWidgets(),
-                                  );
-                                },
-                              ),
-                            ],
+                                const Gap(25),
+                                Observer(
+                                  builder: (_) {
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: getColorWidgets(),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Gap(10),
-                        Divider(
-                          indent: 5,
-                          endIndent: 5,
-                          color: Colors.grey.withOpacity(0.2),
-                        ),
-                        const Gap(10),
-                      ],
-                    ),
+                          const Gap(10),
+                          Divider(
+                            indent: 5,
+                            endIndent: 5,
+                            color: Colors.grey.withOpacity(0.2),
+                          ),
+                          const Gap(10),
+                        ],
+                      ),
                   ListTile(
                     enableFeedback: false,
                     onTap: () async {

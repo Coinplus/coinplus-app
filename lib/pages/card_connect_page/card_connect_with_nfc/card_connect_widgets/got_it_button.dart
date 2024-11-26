@@ -5,7 +5,7 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 
 import '../../../../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../../../../constants/card_color.dart';
@@ -47,9 +47,10 @@ class GotItButton extends StatelessWidget {
     required this.addressState,
     required this.toggleCard,
     required this.flipCardController,
-    required this.hasBackup,
+    required this.backupPack,
     required this.backup,
     required this.mainWalletAddress,
+    required this.isFromBackupConnect,
   });
 
   final AllSettingsState allSettingsState;
@@ -57,11 +58,11 @@ class GotItButton extends StatelessWidget {
   final BalanceStore balanceStore;
   final String? cardColor;
   final bool isOriginalNxp;
-  final ShakeAnimationController shakeAnimationController;
+  final ShakerController shakeAnimationController;
   final bool? isMiFareUltralight;
   final bool? isOldCard;
   final bool? isActivated;
-  final bool? hasBackup;
+  final bool? backupPack;
   final bool backup;
   final HistoryPageStore historyPageStore;
   final ConnectivityStore connectivityStore;
@@ -69,6 +70,7 @@ class GotItButton extends StatelessWidget {
   final Future<void> Function()? toggleCard;
   final FlipCardController flipCardController;
   final String mainWalletAddress;
+  final bool isFromBackupConnect;
 
   @override
   Widget build(BuildContext context) {
@@ -110,13 +112,7 @@ class GotItButton extends StatelessWidget {
                       } else {
                         await HapticFeedback.vibrate();
                         allSettingsState.accept();
-                        shakeAnimationController.start();
-                        await Future.delayed(
-                          const Duration(
-                            milliseconds: 600,
-                          ),
-                        );
-                        shakeAnimationController.stop();
+                        await shakeAnimationController.shake();
                       }
                       await cardAddedEvent(
                         walletAddress: balanceStore.selectedEthCard!.address,
@@ -164,16 +160,20 @@ class GotItButton extends StatelessWidget {
                               isSet: true,
                               address: balanceStore.mainWalletAddress,
                             );
+                            await addBackupAddressToDb(
+                              mainWalletAddress: balanceStore.mainWalletAddress,
+                              backupWalletAddress: balanceStore.selectedBackupCard!.address,
+                            );
                           } else {
-                            if (cardColor == '0') {
+                            if (cardColor == '0' || cardColor == 'ORANGE') {
                               balanceStore.saveSelectedCard(
                                 color: CardColor.ORANGE,
                               );
-                            } else if (cardColor == '1') {
+                            } else if (cardColor == '1' || cardColor == 'WHITE') {
                               balanceStore.saveSelectedCard(
                                 color: CardColor.WHITE,
                               );
-                            } else if (cardColor == '2') {
+                            } else if (cardColor == '2' || cardColor == 'BLACK') {
                               balanceStore.saveSelectedCard(
                                 color: CardColor.BLACK,
                               );
@@ -234,22 +234,33 @@ class GotItButton extends StatelessWidget {
                           );
                           recordUserProperty(const CardTap());
                           if (hasShown) {
-                            hasBackup == true
+                            isFromBackupConnect
                                 ? router.push(
                                     BackupMyWalletRoute(
                                       walletAddress: receivedData,
-                                      hasBackup: hasBackup,
+                                      backupPack: backupPack,
                                       isWalletActivated: false,
+                                      cardColor: cardColor,
                                     ),
                                   )
-                                : router.maybePop();
+                                : backupPack == true
+                                    ? router.push(
+                                        BackupMyWalletRoute(
+                                          walletAddress: receivedData,
+                                          backupPack: backupPack,
+                                          isWalletActivated: false,
+                                          cardColor: cardColor,
+                                        ),
+                                      )
+                                    : router.maybePop();
                           } else {
-                            hasBackup == true
+                            backupPack == true
                                 ? router.push(
                                     BackupMyWalletRoute(
                                       walletAddress: receivedData,
-                                      hasBackup: hasBackup,
+                                      backupPack: backupPack,
                                       isWalletActivated: false,
+                                      cardColor: cardColor,
                                     ),
                                   )
                                 : router.pushAndPopAll(
@@ -265,13 +276,7 @@ class GotItButton extends StatelessWidget {
                       } else {
                         await HapticFeedback.vibrate();
                         allSettingsState.accept();
-                        shakeAnimationController.start();
-                        await Future.delayed(
-                          const Duration(
-                            milliseconds: 600,
-                          ),
-                        );
-                        shakeAnimationController.stop();
+                        await shakeAnimationController.shake();
                       }
                       await hasShownWallet().then(
                         (hasShown) async {
@@ -384,13 +389,7 @@ class GotItButton extends StatelessWidget {
                                           if (isActivated == true) {
                                             await HapticFeedback.vibrate();
                                             allSettingsState.checkboxAccept();
-                                            shakeAnimationController.start();
-                                            await Future.delayed(
-                                              const Duration(
-                                                milliseconds: 600,
-                                              ),
-                                            );
-                                            shakeAnimationController.stop();
+                                            await shakeAnimationController.shake();
                                           } else {
                                             final cardIndex = balanceStore.cards.indexWhere(
                                               (element) => element.address == balanceStore.selectedEthCard?.address,
@@ -494,13 +493,7 @@ class GotItButton extends StatelessWidget {
                                           if (isActivated == true) {
                                             await HapticFeedback.vibrate();
                                             allSettingsState.checkboxAccept();
-                                            shakeAnimationController.start();
-                                            await Future.delayed(
-                                              const Duration(
-                                                milliseconds: 600,
-                                              ),
-                                            );
-                                            shakeAnimationController.stop();
+                                            await shakeAnimationController.shake();
                                           } else {
                                             final cardIndex = balanceStore.cards.indexWhere(
                                               (element) => element.address == balanceStore.selectedCard?.address,

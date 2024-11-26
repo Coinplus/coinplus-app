@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../extensions/context_extension.dart';
 import '../../../extensions/elevated_button_extensions.dart';
@@ -14,19 +15,22 @@ import '../../../services/cloud_firestore_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../utils/card_nfc_session.dart';
 import '../../../widgets/loading_button/loading_button.dart';
+import '../../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class BackupMyWalletPage extends StatefulWidget {
   const BackupMyWalletPage({
     super.key,
     required this.walletAddress,
-    required this.hasBackup,
+    required this.backupPack,
     required this.isWalletActivated,
+    required this.cardColor,
   });
 
   final String walletAddress;
-  final bool? hasBackup;
+  final bool? backupPack;
   final bool? isWalletActivated;
+  final String? cardColor;
 
   @override
   State<BackupMyWalletPage> createState() => _BackupMyWalletPageState();
@@ -65,31 +69,42 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
           builder: (context) {
             return Row(
               children: [
-                if (_settingsState.currentPage == 0)
-                  IconButton(
-                    splashRadius: 30,
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      router.pushAndPopAll(const DashboardRoute());
-                    },
-                    icon: Assets.icons.close.image(),
-                  )
-                else
-                  IconButton(
-                    splashRadius: 30,
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      _pageController.animateToPage(
-                        0,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    icon: Assets.icons.arrowBackIos.image(height: 25),
-                  ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  transitionBuilder: (child, animation) {
+                    return ScaleTransition(scale: animation, child: child);
+                  },
+                  child: _settingsState.currentPage == 0
+                      ? IconButton(
+                          splashRadius: 30,
+                          splashColor: Colors.transparent,
+                          onPressed: () async {
+                            await hasShownWallet().then((hasShown) {
+                              if (hasShown) {
+                                router.popUntilRouteWithName(DashboardRoute.name);
+                              } else {
+                                router.pushAndPopAll(const WalletProtectionRoute());
+                              }
+                            });
+                          },
+                          icon: Assets.icons.close.image(),
+                        )
+                      : IconButton(
+                          splashRadius: 30,
+                          splashColor: Colors.transparent,
+                          onPressed: () {
+                            _pageController.animateToPage(
+                              0,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          },
+                          icon: Assets.icons.arrowBackIos.image(height: 30),
+                        ),
+                ),
                 const Gap(5),
                 const Text(
-                  'Backup my wallet',
+                  'Let’s backup your wallet',
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     color: AppColors.primary,
@@ -113,10 +128,17 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
-              Center(
-                child: Assets.icons.backupWalletIllustration.image(
-                  height: 212,
-                ),
+              Lottie.asset(
+                widget.cardColor == '0' || widget.cardColor == 'ORANGE' || widget.cardColor == 'CardColor.ORANGE'
+                    ? 'assets/lottie_animations/card_twist_orange.json'
+                    : widget.cardColor == '1' || widget.cardColor == 'WHITE' || widget.cardColor == 'CardColor.WHITE'
+                        ? 'assets/lottie_animations/card_twist_white.json'
+                        : widget.cardColor == '2' ||
+                                widget.cardColor == 'BLACK' ||
+                                widget.cardColor == 'CardColor.BLACK'
+                            ? 'assets/lottie_animations/card_twist_black.json'
+                            : 'assets/lottie_animations/card_twist_orange.json',
+                repeat: false,
               ),
               const Gap(11),
               const Padding(
@@ -148,7 +170,6 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                         )
                         .copyWith(),
                     onPressed: () async {
-                      await router.pushAndPopAll(const DashboardRoute());
                       await connectBackupWalletIos(
                         mainWalletAddress: widget.walletAddress,
                       );
@@ -184,7 +205,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                       );
                     },
                     child: const Text(
-                      'Activate card',
+                      'Backup card',
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -193,36 +214,43 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                     ),
                   ),
                 ),
-              if (widget.isWalletActivated == true)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 60),
-                  child: Column(
-                    children: [
-                      const Gap(14),
-                      LoadingButton(
-                        onPressed: () async {},
-                        style: context.theme
-                            .buttonStyle(
-                              textStyle: const TextStyle(
-                                fontFamily: FontFamily.redHatMedium,
-                                color: AppColors.primaryTextColor,
-                                fontSize: 15,
-                              ),
-                            )
-                            .copyWith(
-                              overlayColor: WidgetStateProperty.all(
-                                Colors.grey.withOpacity(0.1),
-                              ),
-                              splashFactory: NoSplash.splashFactory,
-                              backgroundColor: WidgetStateProperty.all(
-                                Colors.grey.withOpacity(0.2),
-                              ),
-                            ),
-                        child: const Text('Get a backup card'),
+              const Gap(14),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 64),
+                child: LoadingButton(
+                  style: context.theme
+                      .buttonStyle(
+                        textStyle: const TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          color: AppColors.primaryTextColor,
+                          fontSize: 15,
+                        ),
+                      )
+                      .copyWith(
+                        backgroundColor: WidgetStateProperty.all(
+                          Colors.grey.withOpacity(0.1),
+                        ),
                       ),
-                    ],
+                  onPressed: () async {
+                    await hasShownWallet().then((hasShown) {
+                      if (hasShown) {
+                        router.popUntilRouteWithName(DashboardRoute.name);
+                      } else {
+                        router.pushAndPopAll(const WalletProtectionRoute());
+                      }
+                    });
+                  },
+                  child: const Text(
+                    'Remind later',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: FontFamily.redHatMedium,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.primaryTextColor,
+                    ),
                   ),
                 ),
+              ),
               const Gap(40),
             ],
           ),
@@ -230,11 +258,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
-              Center(
-                child: Assets.icons.activateWalletIllustration.image(
-                  height: 212,
-                ),
-              ),
+              Assets.images.card.secretsScratchImage.image(),
               const Gap(11),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 31),
@@ -268,7 +292,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                     await router.push(
                       CardActivationRoute(
                         receivedData: widget.walletAddress,
-                        hasBackup: widget.hasBackup,
+                        backupPack: true,
                         s: cardData?.s == null ? null : 29,
                       ),
                     );

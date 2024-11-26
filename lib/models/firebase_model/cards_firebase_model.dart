@@ -15,11 +15,14 @@ class CardsModel {
   late int? deleted;
   late int? s;
   final String? email;
-  final bool? hasBackup;
+  final bool? backupPack;
+  late bool? hasBackup;
   late bool? backup;
   final String? nfcId;
   final bool? possibleOldCard;
   late bool? replenished;
+  late String? primaryWalletAddress;
+  late String? primaryWalletColor;
   late bool? lost;
   late List<Map<String, dynamic>>? replenishmentHistory;
   final String? type;
@@ -38,9 +41,12 @@ class CardsModel {
     this.email,
     this.s,
     this.hasBackup,
+    this.backupPack,
     this.backup,
     this.nfcId,
     this.possibleOldCard,
+    this.primaryWalletAddress,
+    this.primaryWalletColor,
     this.lost,
     this.replenished,
     this.replenishmentHistory,

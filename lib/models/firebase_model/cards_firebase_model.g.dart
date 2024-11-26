@@ -19,9 +19,12 @@ CardsModel _$CardsModelFromJson(Map json) => CardsModel(
       email: json['email'] as String?,
       s: (json['s'] as num?)?.toInt(),
       hasBackup: json['hasBackup'] as bool?,
+      backupPack: json['backupPack'] as bool?,
       backup: json['backup'] as bool?,
       nfcId: json['nfcId'] as String?,
       possibleOldCard: json['possibleOldCard'] as bool?,
+      primaryWalletAddress: json['primaryWalletAddress'] as String?,
+      primaryWalletColor: json['primaryWalletColor'] as String?,
       lost: json['lost'] as bool?,
       replenished: json['replenished'] as bool?,
       replenishmentHistory:
@@ -30,34 +33,28 @@ CardsModel _$CardsModelFromJson(Map json) => CardsModel(
       verificationFailureCount: (json['verificationFailureCount'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$CardsModelToJson(CardsModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('activated', instance.activated);
-  writeNotNull('activationCount', instance.activationCount);
-  writeNotNull('activationFailureCount', instance.activationFailureCount);
-  writeNotNull('address', instance.address);
-  writeNotNull('approved', instance.approved);
-  writeNotNull('barcodeId', instance.barcodeId);
-  writeNotNull('color', instance.color);
-  writeNotNull('connected', instance.connected);
-  writeNotNull('deleted', instance.deleted);
-  writeNotNull('s', instance.s);
-  writeNotNull('email', instance.email);
-  writeNotNull('hasBackup', instance.hasBackup);
-  writeNotNull('backup', instance.backup);
-  writeNotNull('nfcId', instance.nfcId);
-  writeNotNull('possibleOldCard', instance.possibleOldCard);
-  writeNotNull('replenished', instance.replenished);
-  writeNotNull('lost', instance.lost);
-  writeNotNull('replenishmentHistory', instance.replenishmentHistory);
-  writeNotNull('type', instance.type);
-  writeNotNull('verificationFailureCount', instance.verificationFailureCount);
-  return val;
-}
+Map<String, dynamic> _$CardsModelToJson(CardsModel instance) => <String, dynamic>{
+      if (instance.activated case final value?) 'activated': value,
+      if (instance.activationCount case final value?) 'activationCount': value,
+      if (instance.activationFailureCount case final value?) 'activationFailureCount': value,
+      if (instance.address case final value?) 'address': value,
+      if (instance.approved case final value?) 'approved': value,
+      if (instance.barcodeId case final value?) 'barcodeId': value,
+      if (instance.color case final value?) 'color': value,
+      if (instance.connected case final value?) 'connected': value,
+      if (instance.deleted case final value?) 'deleted': value,
+      if (instance.s case final value?) 's': value,
+      if (instance.email case final value?) 'email': value,
+      if (instance.backupPack case final value?) 'backupPack': value,
+      if (instance.hasBackup case final value?) 'hasBackup': value,
+      if (instance.backup case final value?) 'backup': value,
+      if (instance.nfcId case final value?) 'nfcId': value,
+      if (instance.possibleOldCard case final value?) 'possibleOldCard': value,
+      if (instance.replenished case final value?) 'replenished': value,
+      if (instance.primaryWalletAddress case final value?) 'primaryWalletAddress': value,
+      if (instance.primaryWalletColor case final value?) 'primaryWalletColor': value,
+      if (instance.lost case final value?) 'lost': value,
+      if (instance.replenishmentHistory case final value?) 'replenishmentHistory': value,
+      if (instance.type case final value?) 'type': value,
+      if (instance.verificationFailureCount case final value?) 'verificationFailureCount': value,
+    };

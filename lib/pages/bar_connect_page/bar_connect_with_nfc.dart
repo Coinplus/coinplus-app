@@ -11,9 +11,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../../constants/card_color.dart';
@@ -67,7 +67,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   late TextEditingController _btcAddressController = TextEditingController();
-  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  late final ShakerController _shakeAnimationController = ShakerController();
   late AnimationController _textFieldAnimationController;
   final _validationStore = ValidationState();
   final _allSettingsState = AllSettingsState();
@@ -705,11 +705,8 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
           ),
           Observer(
             builder: (context) {
-              return ShakeAnimationWidget(
-                shakeRange: 0.3,
-                isForward: false,
-                shakeAnimationController: _shakeAnimationController,
-                shakeAnimationType: ShakeAnimationType.LeftRightShake,
+              return Shaker(
+                controller: _shakeAnimationController,
                 child: Stack(
                   children: [
                     Column(
@@ -1045,13 +1042,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                         } else {
                           await HapticFeedback.vibrate();
                           _allSettingsState.accept();
-                          _shakeAnimationController.start();
-                          await Future.delayed(
-                            const Duration(
-                              milliseconds: 600,
-                            ),
-                          );
-                          _shakeAnimationController.stop();
+                          await _shakeAnimationController.shake();
                         }
                         await hasShownWallet().then(
                           (hasShown) async {
@@ -1163,13 +1154,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                               if (isActivated == true) {
                                                 await HapticFeedback.vibrate();
                                                 _allSettingsState.checkboxAccept();
-                                                _shakeAnimationController.start();
-                                                await Future.delayed(
-                                                  const Duration(
-                                                    milliseconds: 600,
-                                                  ),
-                                                );
-                                                _shakeAnimationController.stop();
+                                                await _shakeAnimationController.shake();
                                               } else {
                                                 final cardIndex = _balanceStore.cards.indexWhere(
                                                   (element) => element.address == _balanceStore.selectedBar?.address,

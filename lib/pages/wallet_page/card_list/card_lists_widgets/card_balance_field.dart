@@ -122,7 +122,13 @@ class CardBalanceField extends HookWidget {
                                               );
                                             } else {
                                               return Text(
-                                                '\$${myFormat.format(_balanceStore.cardBalance)}',
+                                                '\$${myFormat.format(
+                                                  _balanceStore.cardCurrentIndex != _balanceStore.cards.length
+                                                      ? (_balanceStore.cards[index].finalBalance ?? 0) /
+                                                          100000000 *
+                                                          _balanceStore.btcPrice!
+                                                      : 0,
+                                                )}',
                                                 style: const TextStyle(
                                                   fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,

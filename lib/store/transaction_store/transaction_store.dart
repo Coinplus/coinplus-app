@@ -260,11 +260,6 @@ abstract class _TransactionStore with Store {
     if (mostOptimalSingleUtxo != null) {
       txFee = initialFee;
       usedUtxos = [mostOptimalSingleUtxo].asObservable();
-      if (kDebugMode) {
-        print(
-          'Smallest UTXO (1 input, 1 output, without change): ${mostOptimalSingleUtxo.txHash}',
-        );
-      }
       return;
     }
 
@@ -273,11 +268,6 @@ abstract class _TransactionStore with Store {
       usedUtxos = [utxo].asObservable();
       txFee = newFee;
       if (utxo.value >= sendAmount + newFee) {
-        if (kDebugMode) {
-          print(
-            'Smallest UTXO (1 input, 2 outputs, with change): ${utxo.txHash}',
-          );
-        }
         return;
       }
     }
@@ -307,13 +297,7 @@ abstract class _TransactionStore with Store {
         }
 
         if (totalValue >= sendAmount + calculatedFee) {
-          if (kDebugMode) {
-            print(
-              'Combined UTXOs ($inputQuantity inputs): ${combination.map((utxo) => utxo.txHash).join(', ')}',
-            );
-            txFee = calculatedFee;
-          }
-
+          txFee = calculatedFee;
           selectedUtxos.addAll(combination);
           break;
         }
@@ -344,10 +328,6 @@ abstract class _TransactionStore with Store {
     final newFeeWithoutChange = calculateFee(sortedUtxos.length, 1, selectedFee);
     selectedUtxos.addAll(sortedUtxos);
     txFee = newFeeWithoutChange;
-    final utxoHashes = sortedUtxos.map((utxo) => utxo.txHash).toList();
-    if (kDebugMode) {
-      print('Max UTXOs Without Change: $utxoHashes');
-    }
     usedUtxos = selectedUtxos.asObservable();
     return totalValue;
   }

@@ -5,18 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "coinplus-app",
+      "name": "coinplus_app",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "coinplus-app (profile mode)",
+      "name": "coinplus_app (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile"
     },
     {
-      "name": "coinplus-app (release mode)",
+      "name": "coinplus_app (release mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"

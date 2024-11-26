@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio_interceptor_plus/dio_interceptor_plus.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
@@ -38,7 +37,6 @@ class CoinStatsRepo {
   final Dio dio = Dio();
 
   Future<List<dynamic>?> getWalletData({required String address}) async {
-    dio.interceptors.add(LoggingInterceptor());
     try {
       final url = 'https://openapiv1.coinstats.app/wallet/balance?address=$address&connectionId=ethereum';
 

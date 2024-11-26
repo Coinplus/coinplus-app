@@ -84,17 +84,20 @@ class DialogBoxWithAction extends HookWidget {
         ],
       ),
       actions: [
-        LoadingButton(
-          onPressed: primaryAction,
-          child: Text(
-            primaryActionText,
-            style: const TextStyle(
-              fontFamily: FontFamily.redHatMedium,
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
+        Padding(
+          padding: EdgeInsets.only(bottom: secondaryActionText == null ? 10 : 0),
+          child: LoadingButton(
+            onPressed: primaryAction,
+            child: Text(
+              primaryActionText,
+              style: const TextStyle(
+                fontFamily: FontFamily.redHatMedium,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-        ).paddingHorizontal(44),
+          ).paddingHorizontal(44),
+        ),
         const SizedBox(
           height: 10,
         ),

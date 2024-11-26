@@ -7,8 +7,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -32,8 +32,8 @@ class ChangePinCode extends StatelessWidget {
     final _changePinCodeState = ChangePinCodeState();
     final _secureStorage = SecureStorageService();
     final _pageController = PageController();
-    final _enteredPinShakeController = ShakeAnimationController();
-    final _reEnteredPinShakeController = ShakeAnimationController();
+    final _enteredPinShakeController = ShakerController();
+    final _reEnteredPinShakeController = ShakerController();
     final _enterPinCodeController = TextEditingController();
     final _enteredPinFocusNode = FocusNode();
     final _repeatPinCodeController = TextEditingController();
@@ -119,10 +119,8 @@ class ChangePinCode extends StatelessWidget {
               const Gap(30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: ShakeAnimationWidget(
-                  shakeAnimationController: _enteredPinShakeController,
-                  shakeAnimationType: ShakeAnimationType.LeftRightShake,
-                  isForward: false,
+                child: Shaker(
+                  controller: _enteredPinShakeController,
                   child: PinCodeTextField(
                     controller: _enterPinCodeController,
                     focusNode: _enteredPinFocusNode,
@@ -139,15 +137,9 @@ class ChangePinCode extends StatelessWidget {
                       } else {
                         Gaimon.error();
                         _enteredPinFocusNode.requestFocus();
-                        _enteredPinShakeController.start();
+                        await _enteredPinShakeController.shake();
                         _enterPinCodeController.text = '';
                         unawaited(_changePinCodeState.newPinMatch());
-                        await Future.delayed(
-                          const Duration(
-                            milliseconds: 600,
-                          ),
-                        );
-                        _enteredPinShakeController.stop();
                       }
                     },
                     textCapitalization: TextCapitalization.characters,
@@ -321,10 +313,8 @@ class ChangePinCode extends StatelessWidget {
               const Gap(30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: ShakeAnimationWidget(
-                  shakeAnimationController: _reEnteredPinShakeController,
-                  shakeAnimationType: ShakeAnimationType.LeftRightShake,
-                  isForward: false,
+                child: Shaker(
+                  controller: _reEnteredPinShakeController,
                   child: PinCodeTextField(
                     obscuringWidget: const Text(
                       '●',
@@ -342,11 +332,9 @@ class ChangePinCode extends StatelessWidget {
                         );
                       } else {
                         Gaimon.error();
-                        _reEnteredPinShakeController.start();
+                        await _reEnteredPinShakeController.shake();
                         await _changePinCodeState.newPinMatch();
                         _pageController.jumpToPage(1);
-                        await Future.delayed(const Duration(milliseconds: 600));
-                        _reEnteredPinShakeController.stop();
                       }
                     },
                     textCapitalization: TextCapitalization.characters,
