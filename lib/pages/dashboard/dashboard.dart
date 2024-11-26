@@ -15,12 +15,15 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
-import '../../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
 import '../../constants/card_record.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/already_used_backup_card_modal/already_used_backup_card_modal.dart';
 import '../../modals/buy_bitcoin_modal/buy_bitcoin_modal.dart';
+import '../../modals/card_blocked_modal/card_blocked_modal.dart';
+import '../../modals/primary_card_selection_modal/primary_card_selection_modal.dart';
 import '../../modals/send_receive_modal/send_receive_modal.dart';
+import '../../modals/tapped_backup_card_modal/tapped_backup_card_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
@@ -134,6 +137,7 @@ class DashboardPage extends HookWidget {
       });
 
       if (prefs.getBool('show_modal') == true || prefs.getString('package_info') != packageInfo.version.toString()) {
+        await Future.delayed(const Duration(milliseconds: 600));
         await openModalBottomSheet();
         await prefs.setBool('show_modal', false);
         await prefs.setString('package_info', packageInfo.version.toString());
@@ -187,9 +191,83 @@ class DashboardPage extends HookWidget {
                 );
                 if (!cardExists) {
                   if (cardDataFromDb?.lost != null && cardDataFromDb?.lost == true) {
-                    await lostCardDialog(context);
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return const CardBlockedModal();
+                      },
+                    );
                   } else {
-                    await router.push(CardConnectRoute(receivedData: deepLinkRes.value, cardColor: cardColorRes.value));
+                    if (cardDataFromDb?.backup != null &&
+                        cardDataFromDb?.backup == true &&
+                        _balanceStore.cards.isEmpty) {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: router.navigatorKey.currentContext!,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(
+                              20,
+                            ),
+                            topRight: Radius.circular(
+                              20,
+                            ),
+                          ),
+                        ),
+                        builder: (context) {
+                          return const BackupCardTapped();
+                        },
+                      );
+                    } else if (cardDataFromDb?.backup != null &&
+                        cardDataFromDb?.backup == true &&
+                        _balanceStore.cards.isNotEmpty) {
+                      if (cardDataFromDb?.backup != null &&
+                          cardDataFromDb?.backup == true &&
+                          _balanceStore.cards.isNotEmpty) {
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: router.navigatorKey.currentContext!,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(
+                                20,
+                              ),
+                              topRight: Radius.circular(
+                                20,
+                              ),
+                            ),
+                          ),
+                          builder: (context) {
+                            return PrimaryCardSelectionModal(
+                              backupWalletAddress: deepLinkRes.value ?? '',
+                            );
+                          },
+                        );
+                      }
+                    } else {
+                      await router.push(
+                        CardConnectWithNfc(
+                          receivedData: deepLinkRes.value,
+                          cardColor: cardColorRes.value,
+                          backupPack: cardDataFromDb?.backupPack ?? false,
+                          backup: cardDataFromDb?.backup ?? false,
+                          isOriginalNxp: true,
+                          isActivated: cardDataFromDb?.activated,
+                        ),
+                      );
+                    }
+
                     deepLinkRes.value = null;
                   }
                   deepLinkRes.value = null;
@@ -219,10 +297,34 @@ class DashboardPage extends HookWidget {
         _pageController.addListener(() {
           _allSettingsState.updateIndex((_pageController.page ?? 0).ceil());
         });
-        final streamSubscription = FlutterBranchSdk.initSession().listen(
+        final streamSubscription = FlutterBranchSdk.listSession().listen(
           (data) async {
             deepLinkRes.value = onLinkPassed(data);
             final cardDataFromDb = await getCardData(deepLinkRes.value.toString());
+
+            final backedUp = _balanceStore.backupCards.any(
+              (element) => element.address == deepLinkRes.value.toString(),
+            );
+            if (backedUp) {
+              await showModalBottomSheet(
+                isScrollControlled: true,
+                context: router.navigatorKey.currentContext!,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(
+                      20,
+                    ),
+                    topRight: Radius.circular(
+                      20,
+                    ),
+                  ),
+                ),
+                builder: (context) {
+                  return const AlreadyUsedBackupModal(walletAddress: '', pageController: null);
+                },
+              );
+              return;
+            }
             cardColorRes.value = cardDataFromDb?.color ?? '';
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardConnectRoute.name) {
               await recordAmplitudeEvent(
@@ -237,12 +339,77 @@ class DashboardPage extends HookWidget {
               );
               if (!cardExists) {
                 if (cardDataFromDb?.lost != null && cardDataFromDb?.lost == true) {
-                  await lostCardDialog(context);
+                  await showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: router.navigatorKey.currentContext!,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          20,
+                        ),
+                        topRight: Radius.circular(
+                          20,
+                        ),
+                      ),
+                    ),
+                    builder: (context) {
+                      return const CardBlockedModal();
+                    },
+                  );
                 } else {
-                  await router.push(CardConnectRoute(receivedData: deepLinkRes.value, cardColor: cardColorRes.value));
-                  deepLinkRes.value = null;
+                  if (cardDataFromDb?.backup != null &&
+                      cardDataFromDb?.backup == true &&
+                      _balanceStore.cards.isNotEmpty) {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return PrimaryCardSelectionModal(
+                          backupWalletAddress: deepLinkRes.value ?? '',
+                        );
+                      },
+                    );
+                  } else if (cardDataFromDb?.backup == true && _balanceStore.cards.isEmpty) {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return const BackupCardTapped();
+                      },
+                    );
+                  } else {
+                    await router.push(
+                      CardConnectWithNfc(
+                        receivedData: deepLinkRes.value,
+                        cardColor: cardColorRes.value,
+                        backupPack: cardDataFromDb?.backupPack ?? false,
+                        backup: cardDataFromDb?.backup ?? false,
+                        isOriginalNxp: true,
+                        isActivated: cardDataFromDb?.activated,
+                      ),
+                    );
+                  }
                 }
-                deepLinkRes.value = null;
               } else {
                 Future.delayed(
                   Duration.zero,
@@ -271,12 +438,77 @@ class DashboardPage extends HookWidget {
               );
               if (!cardExists) {
                 if (cardDataFromDb?.lost != null && cardDataFromDb?.lost == true) {
-                  await lostCardDialog(context);
+                  await showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: router.navigatorKey.currentContext!,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          20,
+                        ),
+                        topRight: Radius.circular(
+                          20,
+                        ),
+                      ),
+                    ),
+                    builder: (context) {
+                      return const CardBlockedModal();
+                    },
+                  );
                 } else {
-                  await router.push(CardConnectRoute(receivedData: deepLinkRes.value, cardColor: cardColorRes.value));
-                  deepLinkRes.value = null;
+                  if (cardDataFromDb?.backup != null && cardDataFromDb?.backup == true && _balanceStore.cards.isEmpty) {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return const BackupCardTapped();
+                      },
+                    );
+                  } else if (cardDataFromDb?.backup != null &&
+                      cardDataFromDb?.backup == true &&
+                      _balanceStore.cards.isNotEmpty) {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return PrimaryCardSelectionModal(
+                          backupWalletAddress: deepLinkRes.value ?? '',
+                        );
+                      },
+                    );
+                  } else {
+                    await router.push(
+                      CardConnectWithNfc(
+                        receivedData: deepLinkRes.value,
+                        cardColor: cardColorRes.value,
+                        backupPack: cardDataFromDb?.backupPack ?? false,
+                        backup: cardDataFromDb?.backup ?? false,
+                        isOriginalNxp: true,
+                        isActivated: cardDataFromDb?.activated,
+                      ),
+                    );
+                  }
                 }
-                deepLinkRes.value = null;
               } else {
                 Future.delayed(
                   Duration.zero,
@@ -356,8 +588,6 @@ class DashboardPage extends HookWidget {
         );
         await Future.delayed(const Duration(milliseconds: 300));
         await onRefreshed();
-      } else {
-        debugPrint('ScrollController is not attached to any scroll views.');
       }
     }
 

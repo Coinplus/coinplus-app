@@ -781,7 +781,6 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
                               walletAddress: walletAddress,
                               walletType: 'Bar',
                               isBarList: true,
-                              hasBackup: widget.hasBackup,
                               bar: bar,
                               balanceStore: _balanceStore,
                             );

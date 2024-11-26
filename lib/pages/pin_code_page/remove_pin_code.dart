@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -25,7 +25,7 @@ class PinRemove extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _walletProtectState = WalletProtectState();
-    late final _shakeAnimationController = ShakeAnimationController();
+    late final _shakeAnimationController = ShakerController();
     final _pinController = TextEditingController();
     final _secureStorage = SecureStorageService();
 
@@ -100,10 +100,8 @@ class PinRemove extends StatelessWidget {
           const Gap(30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: ShakeAnimationWidget(
-              shakeAnimationController: _shakeAnimationController,
-              shakeAnimationType: ShakeAnimationType.LeftRightShake,
-              isForward: false,
+            child: Shaker(
+              controller: _shakeAnimationController,
               child: PinCodeTextField(
                 focusNode: _walletProtectState.pinFocusNode,
                 controller: _pinController,
@@ -124,9 +122,7 @@ class PinRemove extends StatelessWidget {
                     unawaited(_walletProtectState.dontMatch());
                     Gaimon.error();
                     _pinController.text = '';
-                    _shakeAnimationController.start();
-                    await Future.delayed(const Duration(milliseconds: 600));
-                    _shakeAnimationController.stop();
+                    await _shakeAnimationController.shake();
                     _walletProtectState.pinFocusNode.requestFocus();
                   }
                 },

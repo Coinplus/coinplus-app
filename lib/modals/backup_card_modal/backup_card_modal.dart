@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:action_slider/action_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
@@ -12,10 +16,14 @@ import '../../constants/button_settings.dart';
 import '../../constants/card_color.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
+import '../../extensions/num_extension.dart';
+import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
+import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../utils/data_utils.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -26,6 +34,8 @@ import '../../widgets/loading_button/loading_button.dart';
 BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
 AccelerometerStore get _accelerometerStore => GetIt.I<AccelerometerStore>();
+
+final settingsState = AllSettingsState();
 
 final pageIndexNotifier = ValueNotifier(0);
 
@@ -56,9 +66,19 @@ WoltModalSheetPage modalPage1(
                     'Your wallet is securely backed up',
                     style: TextStyle(
                       fontFamily: FontFamily.redHatMedium,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
                       color: AppColors.primary,
+                    ),
+                  ).expandedHorizontally(),
+                  const Gap(4),
+                  const Text(
+                    'Backup card details',
+                    style: TextStyle(
+                      fontFamily: FontFamily.redHatMedium,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textHintsColor,
                     ),
                   ).expandedHorizontally(),
                   const Gap(30),
@@ -67,51 +87,91 @@ WoltModalSheetPage modalPage1(
                     child: Builder(
                       builder: (context) {
                         if (backupCard != null) {
-                          final formattedAddress = getSplitAddress(backupCard.address);
                           return Observer(
                             builder: (context) {
                               return _balanceStore.backupCardLoading
                                   ? const CircularProgressIndicator()
-                                  : Row(
-                                      children: [
-                                        backupCard.color.image.image(height: 45),
-                                        const Gap(10),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                  : ScaleTap(
+                                      scaleMinValue: 0.98,
+                                      enableFeedback: false,
+                                      onPressed: () async {
+                                        await Clipboard.setData(
+                                          ClipboardData(
+                                            text: backupCard.address.toString(),
+                                          ),
+                                        ).then(
+                                          (_) {
+                                            HapticFeedback.mediumImpact();
+                                            settingsState.copyAddress();
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
+                                        child: Row(
                                           children: [
-                                            Text(
-                                              backupCard.name,
-                                              style: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.primary,
-                                                fontSize: 15,
-                                              ),
+                                            backupCard.color.image.image(height: 45),
+                                            const Gap(10),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  backupCard.name,
+                                                  style: const TextStyle(
+                                                    fontFamily: FontFamily.redHatMedium,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.primary,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                AnimatedCrossFade(
+                                                  firstChild: const Row(
+                                                    children: [
+                                                      Text(
+                                                        'Copied',
+                                                        style: TextStyle(
+                                                          fontFamily: FontFamily.redHatMedium,
+                                                          color: Colors.green,
+                                                        ),
+                                                      ),
+                                                      Icon(
+                                                        Icons.check,
+                                                        color: Colors.green,
+                                                        size: 18,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  secondChild: Text(
+                                                    getSplitAddress(backupCard.address),
+                                                    style: const TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ),
+                                                  crossFadeState: settingsState.isAddressCopied
+                                                      ? CrossFadeState.showFirst
+                                                      : CrossFadeState.showSecond,
+                                                  duration: const Duration(
+                                                    milliseconds: 200,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              formattedAddress,
-                                              style: const TextStyle(
-                                                fontFamily: FontFamily.redHatMedium,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.textHintsColor,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Observer(
-                                          builder: (context) {
-                                            final myFormat = NumberFormat.decimalPatternDigits(
-                                              locale: 'en_us',
-                                              decimalDigits: 2,
-                                            );
-                                            return AnimatedSwitcher(
-                                              duration: const Duration(
-                                                milliseconds: 400,
-                                              ),
-                                              child:
-                                                  _balanceStore.btcPrice == null || _balanceStore.cardMapResult == null
+                                            const Spacer(),
+                                            Observer(
+                                              builder: (context) {
+                                                final myFormat = NumberFormat.decimalPatternDigits(
+                                                  locale: 'en_us',
+                                                  decimalDigits: 2,
+                                                );
+                                                return AnimatedSwitcher(
+                                                  duration: const Duration(
+                                                    milliseconds: 400,
+                                                  ),
+                                                  child: _balanceStore.btcPrice == null ||
+                                                          _balanceStore.cardMapResult == null
                                                       ? const Padding(
                                                           padding: EdgeInsets.symmetric(
                                                             vertical: 4,
@@ -143,21 +203,36 @@ WoltModalSheetPage modalPage1(
                                                                 ),
                                                               );
                                                             } else {
-                                                              return Text(
-                                                                '\$${myFormat.format(backupCard.finalBalance ?? 0 / 100000000 * _balanceStore.btcPrice!)}',
-                                                                style: const TextStyle(
-                                                                  fontFamily: FontFamily.redHatMedium,
-                                                                  color: AppColors.primary,
-                                                                  fontSize: 15,
-                                                                ),
+                                                              return Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                children: [
+                                                                  Text(
+                                                                    '\$${myFormat.format(backupCard.finalBalance! / 100000000 * _balanceStore.btcPrice!)}',
+                                                                    style: const TextStyle(
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      color: AppColors.primary,
+                                                                      fontSize: 15,
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    'BTC ${backupCard.finalBalance?.satoshiToBtc()}',
+                                                                    style: const TextStyle(
+                                                                      fontFamily: FontFamily.redHatMedium,
+                                                                      color: AppColors.textHintsColor,
+                                                                      fontSize: 14,
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               );
                                                             }
                                                           },
                                                         ),
-                                            );
-                                          },
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     );
                             },
                           );
@@ -166,7 +241,7 @@ WoltModalSheetPage modalPage1(
                       },
                     ),
                   ),
-                  const Gap(30),
+                  const Gap(32),
                   LoadingButton(
                     onPressed: router.maybePop,
                     child: const Text(
@@ -231,8 +306,8 @@ WoltModalSheetPage modalPage2(
                   'Remove Backup',
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
                     color: AppColors.primary,
                   ),
                 ),
@@ -250,6 +325,8 @@ WoltModalSheetPage modalPage2(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Assets.images.card.backupCardFront.image(height: 120),
+              const Gap(20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
@@ -279,23 +356,19 @@ WoltModalSheetPage modalPage2(
                     (card) => card.address == _balanceStore.backupSingleCard?.address,
                   );
                   controller.loading();
-                  await Future.delayed(const Duration(seconds: 1));
+                  await Future.delayed(const Duration(milliseconds: 500));
                   controller.success();
                   await _balanceStore.removeSelectedBackupCard(address: backupCard!.address);
                   await StorageUtils.deleteBackupCard(mainCardAddress);
-                  await _secureStorage.deleteBackup(
-                    mainCardAddress: mainCardAddress,
-                  );
-                  _balanceStore.changeCardBackupStatusAndSave(
-                    cardAddress: mainCardAddress,
-                    hasBackedUp: false,
-                  );
-                  Gaimon.success();
-                  await showCustomSnackBar(
-                    context: modalSheetContext,
-                    message: 'Your backup card was removed',
-                  );
+                  await _secureStorage.deleteBackup(mainCardAddress: mainCardAddress);
+                  _balanceStore.changeCardBackupStatusAndSave(cardAddress: mainCardAddress, hasBackedUp: false);
+                  unawaited(deleteBackupAddressFromDb(mainWalletAddress: mainCardAddress));
+                  unawaited(deletePrimaryAddressFromDb(backupWalletAddress: backupCard.address));
+                  unawaited(deletePrimaryWalletColorFromDb(backupWalletAddress: backupCard.address));
+                  unawaited(updateCardHasBackupStatus(cardAddress: mainCardAddress, hasBackupStatus: false));
+                  await showCustomSnackBar(context: modalSheetContext, message: 'Your backup card was removed');
                   await router.maybePop();
+                  Gaimon.success();
                 },
                 boxShadow: [
                   BoxShadow(

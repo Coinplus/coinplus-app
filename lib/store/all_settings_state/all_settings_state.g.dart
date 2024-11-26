@@ -219,6 +219,29 @@ mixin _$AllSettingsState on _AllSettingsState, Store {
     });
   }
 
+  late final _$activationStatusFromDbAtom = Atom(name: '_AllSettingsState.activationStatusFromDb', context: context);
+
+  @override
+  bool get activationStatusFromDb {
+    _$activationStatusFromDbAtom.reportRead();
+    return super.activationStatusFromDb;
+  }
+
+  @override
+  set activationStatusFromDb(bool value) {
+    _$activationStatusFromDbAtom.reportWrite(value, super.activationStatusFromDb, () {
+      super.activationStatusFromDb = value;
+    });
+  }
+
+  late final _$initActivationStatusAsyncAction =
+      AsyncAction('_AllSettingsState.initActivationStatus', context: context);
+
+  @override
+  Future<void> initActivationStatus({required bool status}) {
+    return _$initActivationStatusAsyncAction.run(() => super.initActivationStatus(status: status));
+  }
+
   late final _$checkNfcSupportAsyncAction = AsyncAction('_AllSettingsState.checkNfcSupport', context: context);
 
   @override
@@ -356,7 +379,8 @@ isAddressCopied: ${isAddressCopied},
 isReorderingStart: ${isReorderingStart},
 isButtonEnabled: ${isButtonEnabled},
 isNfcSupported: ${isNfcSupported},
-currentPage: ${currentPage}
+currentPage: ${currentPage},
+activationStatusFromDb: ${activationStatusFromDb}
     ''';
   }
 }

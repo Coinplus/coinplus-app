@@ -50,9 +50,7 @@ Future<void> cardRecommendedToWaitDialog({
           ? () async {
               await recordAmplitudeEvent(const IneedToSendNow());
               await router.maybePop();
-              await _walletProtectState.updateNfcSessionStatus(
-                isStarted: true,
-              );
+              await _walletProtectState.updateNfcSessionStatus(isStarted: true);
               await NfcManager.instance.startSession(
                 alertMessage: "Please tap your card on the phone to verify it's legitimacy",
                 onDiscovered: (tag) async {
@@ -62,21 +60,13 @@ Future<void> cardRecommendedToWaitDialog({
                   dynamic isOriginalTag = false;
                   if (records.length >= 2) {
                     final hasJson = records[1].payload;
-                    final payloadString = String.fromCharCodes(
-                      hasJson,
-                    );
-                    final Map payloadData = await json.decode(
-                      payloadString,
-                    );
+                    final payloadString = String.fromCharCodes(hasJson);
+                    final Map payloadData = await json.decode(payloadString);
                     walletAddress = payloadData['a'];
                   } else {
                     final hasUrl = records[0].payload;
-                    final payloadString = String.fromCharCodes(
-                      hasUrl,
-                    );
-                    final parts = payloadString.split(
-                      'air.coinplus.com/btc/',
-                    );
+                    final payloadString = String.fromCharCodes(hasUrl);
+                    final parts = payloadString.split('air.coinplus.com/btc/');
                     walletAddress = parts[1];
                   }
                   if (card.address == walletAddress) {
@@ -86,9 +76,7 @@ Future<void> cardRecommendedToWaitDialog({
                     final formattedTagId =
                         tagId.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
                     final signature = await mifare.sendMiFareCommand(
-                      Uint8List.fromList(
-                        [0x3C, 0x00],
-                      ),
+                      Uint8List.fromList([0x3C, 0x00]),
                     );
 
                     if (signature.length > 2) {

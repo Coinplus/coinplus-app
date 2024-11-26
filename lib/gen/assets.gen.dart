@@ -40,6 +40,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/activate_wallet_illustration.png
   AssetGenImage get activateWalletIllustration => const AssetGenImage('assets/icons/activate_wallet_illustration.png');
 
+  /// File path: assets/icons/add_backup_icon.png
+  AssetGenImage get addBackupIcon => const AssetGenImage('assets/icons/add_backup_icon.png');
+
   /// File path: assets/icons/arrow_back.png
   AssetGenImage get arrowBack => const AssetGenImage('assets/icons/arrow_back.png');
 
@@ -55,8 +58,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_forward_ios.png
   AssetGenImage get arrowForwardIos => const AssetGenImage('assets/icons/arrow_forward_ios.png');
 
+  /// File path: assets/icons/arrow_right.png
+  AssetGenImage get arrowRight => const AssetGenImage('assets/icons/arrow_right.png');
+
+  /// File path: assets/icons/backed_up_field.png
+  AssetGenImage get backedUpField => const AssetGenImage('assets/icons/backed_up_field.png');
+
+  /// File path: assets/icons/backed_up_icon.png
+  AssetGenImage get backedUpIcon => const AssetGenImage('assets/icons/backed_up_icon.png');
+
   /// File path: assets/icons/backup_icon.png
   AssetGenImage get backupIcon => const AssetGenImage('assets/icons/backup_icon.png');
+
+  /// File path: assets/icons/backup_info_icon.png
+  AssetGenImage get backupInfoIcon => const AssetGenImage('assets/icons/backup_info_icon.png');
 
   /// File path: assets/icons/backup_wallet_illustration.png
   AssetGenImage get backupWalletIllustration => const AssetGenImage('assets/icons/backup_wallet_illustration.png');
@@ -178,6 +193,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/lock.png
   AssetGenImage get lock => const AssetGenImage('assets/icons/lock.png');
 
+  /// File path: assets/icons/lost_card_icon.png
+  AssetGenImage get lostCardIcon => const AssetGenImage('assets/icons/lost_card_icon.png');
+
   /// File path: assets/icons/market.png
   AssetGenImage get market => const AssetGenImage('assets/icons/market.png');
 
@@ -259,6 +277,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/success_email.png
   AssetGenImage get successEmail => const AssetGenImage('assets/icons/success_email.png');
 
+  /// File path: assets/icons/successfully_activated.png
+  AssetGenImage get successfullyActivated => const AssetGenImage('assets/icons/successfully_activated.png');
+
   /// File path: assets/icons/swap_button.png
   AssetGenImage get swapButton => const AssetGenImage('assets/icons/swap_button.png');
 
@@ -314,12 +335,17 @@ class $AssetsIconsGen {
         faceIDSuccess,
         notch,
         activateWalletIllustration,
+        addBackupIcon,
         arrowBack,
         arrowBackIos,
         arrowDropDown,
         arrowDropUp,
         arrowForwardIos,
+        arrowRight,
+        backedUpField,
+        backedUpIcon,
         backupIcon,
+        backupInfoIcon,
         backupWalletIllustration,
         barAddressField,
         binIcon,
@@ -360,6 +386,7 @@ class $AssetsIconsGen {
         iphoneTouchId,
         linkedin,
         lock,
+        lostCardIcon,
         market,
         nfcIcon,
         notifications,
@@ -387,6 +414,7 @@ class $AssetsIconsGen {
         star,
         stylus,
         successEmail,
+        successfullyActivated,
         swapButton,
         sync,
         taskAlt,
@@ -426,14 +454,21 @@ class $AssetsImagesGen {
   /// File path: assets/images/coinpluslogo.png
   AssetGenImage get coinpluslogo => const AssetGenImage('assets/images/coinpluslogo.png');
 
+  /// File path: assets/images/lost_card_illustration.png
+  AssetGenImage get lostCardIllustration => const AssetGenImage('assets/images/lost_card_illustration.png');
+
   /// File path: assets/images/pending.png
   AssetGenImage get pending => const AssetGenImage('assets/images/pending.png');
 
   /// File path: assets/images/wallet_protect_image.png
   AssetGenImage get walletProtectImage => const AssetGenImage('assets/images/wallet_protect_image.png');
 
+  /// File path: assets/images/warning.jpg
+  AssetGenImage get warning => const AssetGenImage('assets/images/warning.jpg');
+
   /// List of all assets
-  List<AssetGenImage> get values => [addCard, appLogo, cardAndBarForms, coinpluslogo, pending, walletProtectImage];
+  List<AssetGenImage> get values =>
+      [addCard, appLogo, cardAndBarForms, coinpluslogo, lostCardIllustration, pending, walletProtectImage, warning];
 }
 
 class $AssetsLottieAnimationsGen {
@@ -451,6 +486,15 @@ class $AssetsLottieAnimationsGen {
   /// File path: assets/lottie_animations/card_hovering_transaction.json
   String get cardHoveringTransaction => 'assets/lottie_animations/card_hovering_transaction.json';
 
+  /// File path: assets/lottie_animations/card_twist_black.json
+  String get cardTwistBlack => 'assets/lottie_animations/card_twist_black.json';
+
+  /// File path: assets/lottie_animations/card_twist_orange.json
+  String get cardTwistOrange => 'assets/lottie_animations/card_twist_orange.json';
+
+  /// File path: assets/lottie_animations/card_twist_white.json
+  String get cardTwistWhite => 'assets/lottie_animations/card_twist_white.json';
+
   /// File path: assets/lottie_animations/fake_card.json
   String get fakeCard => 'assets/lottie_animations/fake_card.json';
 
@@ -459,6 +503,9 @@ class $AssetsLottieAnimationsGen {
 
   /// File path: assets/lottie_animations/loading_animation.json
   String get loadingAnimation => 'assets/lottie_animations/loading_animation.json';
+
+  /// File path: assets/lottie_animations/lost_card_animation.json
+  String get lostCardAnimation => 'assets/lottie_animations/lost_card_animation.json';
 
   /// File path: assets/lottie_animations/nfcanimation.json
   String get nfcanimation => 'assets/lottie_animations/nfcanimation.json';
@@ -499,9 +546,13 @@ class $AssetsLottieAnimationsGen {
         animatedLogo,
         arrow,
         cardHoveringTransaction,
+        cardTwistBlack,
+        cardTwistOrange,
+        cardTwistWhite,
         fakeCard,
         info,
         loadingAnimation,
+        lostCardAnimation,
         nfcanimation,
         pending,
         phoneCoinSplash,
@@ -592,6 +643,9 @@ class $AssetsImagesCardGen {
   /// File path: assets/images/card/Secret2.png
   AssetGenImage get secret2 => const AssetGenImage('assets/images/card/Secret2.png');
 
+  /// File path: assets/images/card/backup_card_front.png
+  AssetGenImage get backupCardFront => const AssetGenImage('assets/images/card/backup_card_front.png');
+
   /// File path: assets/images/card/brown_card_front.png
   AssetGenImage get brownCardFront => const AssetGenImage('assets/images/card/brown_card_front.png');
 
@@ -634,6 +688,9 @@ class $AssetsImagesCardGen {
   /// File path: assets/images/card/orange_card_front.png
   AssetGenImage get orangeCardFront => const AssetGenImage('assets/images/card/orange_card_front.png');
 
+  /// File path: assets/images/card/secrets_scratch_image.png
+  AssetGenImage get secretsScratchImage => const AssetGenImage('assets/images/card/secrets_scratch_image.png');
+
   /// File path: assets/images/card/white_card_front.png
   AssetGenImage get whiteCardFront => const AssetGenImage('assets/images/card/white_card_front.png');
 
@@ -642,6 +699,7 @@ class $AssetsImagesCardGen {
         back,
         secret1,
         secret2,
+        backupCardFront,
         brownCardFront,
         buyCardText,
         buyCards,
@@ -656,6 +714,7 @@ class $AssetsImagesCardGen {
         filledBackWhite,
         formCardSelected,
         orangeCardFront,
+        secretsScratchImage,
         whiteCardFront
       ];
 }

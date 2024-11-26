@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio_interceptor_plus/dio_interceptor_plus.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -118,7 +117,6 @@ abstract class _MarketPageStore with Store {
   @action
   Future<void> getFavoriteCoins({required String coinId}) async {
     final dio = Dio();
-    dio.interceptors.add(LoggingInterceptor());
     isLoadingFavorites = true;
     try {
       final response = await dio.get(
@@ -306,7 +304,6 @@ abstract class _MarketPageStore with Store {
     required CoinResultModel? data,
   }) async {
     final dio = Dio();
-    dio.interceptors.add(LoggingInterceptor());
     chartLoading = true;
     try {
       final response = await dio.get(

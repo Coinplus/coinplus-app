@@ -11,16 +11,7 @@ BuyCardModel _$BuyCardModelFromJson(Map json) => BuyCardModel(
       price: json['price'] as String?,
     );
 
-Map<String, dynamic> _$BuyCardModelToJson(BuyCardModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('link', instance.link);
-  writeNotNull('price', instance.price);
-  return val;
-}
+Map<String, dynamic> _$BuyCardModelToJson(BuyCardModel instance) => <String, dynamic>{
+      if (instance.link case final value?) 'link': value,
+      if (instance.price case final value?) 'price': value,
+    };

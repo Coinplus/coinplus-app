@@ -21,7 +21,6 @@ import '../../constants/card_type.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../pages/send_page/send_to/send_to_modal.dart';
 import '../../pages/send_page/send_to/send_to_state.dart';
-import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../utils/wallet_activation_status.dart';
 import '../loading_button/loading_button.dart';
@@ -35,7 +34,6 @@ class SendButtonWidget extends HookWidget {
     required this.isModalOpened,
     required this.tabController,
     required this.walletContext,
-    required this.allSettingsState,
   });
 
   final bool isBarList;
@@ -43,7 +41,6 @@ class SendButtonWidget extends HookWidget {
   final ValueNotifier<bool> isModalOpened;
   final TabController tabController;
   final BuildContext walletContext;
-  final AllSettingsState allSettingsState;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +86,6 @@ class SendButtonWidget extends HookWidget {
                         );
                         isModalOpened.value = true;
                         await showSendFromWalletModal(
-                          allSettingsState: allSettingsState,
                           isBarList: isBarList,
                         );
                         isModalOpened.value = false;
@@ -128,7 +124,6 @@ class SendButtonWidget extends HookWidget {
                         isModalOpened.value = true;
                         if (card.blockchain == 'BTC') {
                           await showSendFromWalletModal(
-                            allSettingsState: allSettingsState,
                             isBarList: isBarList,
                           );
                         } else {
@@ -215,8 +210,8 @@ BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 SendToState get _sendToState => GetIt.I<SendToState>();
 
 Future<void> showSendFromWalletModal({
-  required AllSettingsState allSettingsState,
   required bool isBarList,
+  bool? fromLostPage,
 }) async {
   await showModalBottomSheet(
     isScrollControlled: true,
@@ -229,8 +224,8 @@ Future<void> showSendFromWalletModal({
     context: router.navigatorKey.currentContext!,
     builder: (_) {
       return SendToModal(
-        allSettingsState: allSettingsState,
         isBarList: isBarList,
+        fromLostPage: fromLostPage,
       );
     },
   );

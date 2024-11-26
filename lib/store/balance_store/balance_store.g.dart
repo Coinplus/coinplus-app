@@ -404,6 +404,21 @@ mixin _$BalanceStore on _BalanceStore, Store {
     });
   }
 
+  late final _$backupWalletAddressAtom = Atom(name: '_BalanceStore.backupWalletAddress', context: context);
+
+  @override
+  String get backupWalletAddress {
+    _$backupWalletAddressAtom.reportRead();
+    return super.backupWalletAddress;
+  }
+
+  @override
+  set backupWalletAddress(String value) {
+    _$backupWalletAddressAtom.reportWrite(value, super.backupWalletAddress, () {
+      super.backupWalletAddress = value;
+    });
+  }
+
   late final _$backupSingleCardAtom = Atom(name: '_BalanceStore.backupSingleCard', context: context);
 
   @override
@@ -602,6 +617,14 @@ mixin _$BalanceStore on _BalanceStore, Store {
     return _$setMainWalletAddressAsyncAction.run(() => super.setMainWalletAddress(walletAddress: walletAddress));
   }
 
+  late final _$setBackupWalletAddressAsyncAction =
+      AsyncAction('_BalanceStore.setBackupWalletAddress', context: context);
+
+  @override
+  Future<void> setBackupWalletAddress({required String walletAddress}) {
+    return _$setBackupWalletAddressAsyncAction.run(() => super.setBackupWalletAddress(walletAddress: walletAddress));
+  }
+
   late final _$setChainTypeAsyncAction = AsyncAction('_BalanceStore.setChainType', context: context);
 
   @override
@@ -769,6 +792,7 @@ cardIndicatorIndex: ${cardIndicatorIndex},
 isCardIndicatorTapped: ${isCardIndicatorTapped},
 chainType: ${chainType},
 mainWalletAddress: ${mainWalletAddress},
+backupWalletAddress: ${backupWalletAddress},
 backupSingleCard: ${backupSingleCard},
 backupCardLoading: ${backupCardLoading},
 hasBackUp: ${hasBackUp},

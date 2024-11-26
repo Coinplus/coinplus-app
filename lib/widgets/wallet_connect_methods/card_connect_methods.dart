@@ -21,7 +21,7 @@ import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
-import '../../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
+import '../../modals/card_blocked_modal/card_blocked_modal.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../loading_button/loading_button.dart';
@@ -222,11 +222,33 @@ class CardScanMethodsPage extends HookWidget {
               final cardData = await getCardData(res);
 
               if (_walletProtectState.isValidWalletAddress) {
-                if (cardData!.lost != null && cardData.lost == true) {
-                  await lostCardDialog(router.navigatorKey.currentContext!);
+                if (cardData != null) {
+                  if (cardData.lost != true) {
+                    await router.push(
+                      CardConnectRoute(receivedData: res, cardColor: cardData.color),
+                    );
+                  } else {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return const CardBlockedModal();
+                      },
+                    );
+                  }
                 } else {
                   await router.push(
-                    CardConnectRoute(receivedData: res, cardColor: cardData.color),
+                    CardConnectRoute(receivedData: res, cardColor: cardData?.color ?? '0'),
                   );
                 }
               }

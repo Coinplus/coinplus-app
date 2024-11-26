@@ -11,9 +11,9 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -34,7 +34,7 @@ class PinCodePage extends HookWidget {
     final _pinController = useTextEditingController();
     final isResumed = useState(false);
     final isFirstTime = useState(true);
-    final _enteredPinShakeController = useMemoized(ShakeAnimationController.new);
+    final _enteredPinShakeController = useMemoized(ShakerController.new);
     final _secureStorage = SecureStorageService();
 
     final isLocalAuthChanged = useCallback<Future<bool> Function()>(
@@ -128,10 +128,8 @@ class PinCodePage extends HookWidget {
             const Gap(30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: ShakeAnimationWidget(
-                shakeAnimationController: _enteredPinShakeController,
-                shakeAnimationType: ShakeAnimationType.LeftRightShake,
-                isForward: false,
+              child: Shaker(
+                controller: _enteredPinShakeController,
                 child: PinCodeTextField(
                   focusNode: _walletProtectState.pinFocusNode,
                   controller: _pinController,
@@ -149,9 +147,7 @@ class PinCodePage extends HookWidget {
                       unawaited(_walletProtectState.dontMatch());
                       Gaimon.error();
                       _pinController.text = '';
-                      _enteredPinShakeController.start();
-                      await Future.delayed(const Duration(milliseconds: 600));
-                      _enteredPinShakeController.stop();
+                      await _enteredPinShakeController.shake();
                       _walletProtectState.pinFocusNode.requestFocus();
                     }
                   },

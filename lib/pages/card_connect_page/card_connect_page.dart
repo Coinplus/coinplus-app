@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
-import '../../all_alert_dialogs/lost_card_dialog/lost_card_dialog.dart';
 import '../../constants/card_color.dart';
 import '../../constants/card_record.dart';
 import '../../constants/card_type.dart';
@@ -25,6 +25,8 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/card_blocked_modal/card_blocked_modal.dart';
+import '../../modals/tapped_backup_card_modal/tapped_backup_card_modal.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
@@ -80,7 +82,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
   late String btcAddress = '';
   late AnimationController _textFieldAnimationController;
   late final TextEditingController _btcAddressController = TextEditingController();
-  final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  final ShakerController _shakeAnimationController = ShakerController();
 
   late AnimationController _lottieController;
 
@@ -203,18 +205,54 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                   return reaction(
                     (p0) => _addressState.isAddressValid,
                     (p0) async {
-                      await _validationStore.initColor(_validationStore.color);
-                      _validationStore.validate();
-                      await Future.delayed(
-                        const Duration(seconds: 1),
-                      );
-                      _focusNode.unfocus();
-                      Future.delayed(const Duration(milliseconds: 700), _toggleCard);
-                      Future.delayed(
-                        const Duration(milliseconds: 1400),
-                        () => _addressState.isAddressVisible = true,
-                      );
-                      await _lottieController.forward(from: 0);
+                      final cardData = await getCardData(_addressState.btcAddress);
+                      if (cardData != null) {
+                        if (cardData.backup != true) {
+                          if (cardData.lost != true) {
+                            await _validationStore.initColor(_validationStore.color);
+                            _validationStore.validate();
+                            await Future.delayed(
+                              const Duration(seconds: 1),
+                            );
+                            _focusNode.unfocus();
+                            Future.delayed(const Duration(milliseconds: 700), _toggleCard);
+                            Future.delayed(
+                              const Duration(milliseconds: 1400),
+                              () => _addressState.isAddressVisible = true,
+                            );
+                            await _lottieController.forward(from: 0);
+                          } else {
+                            Gaimon.error();
+                            await hasShownWallet().then((hasShown) {
+                              if (hasShown) {
+                                router.popUntilRouteWithName(DashboardRoute.name);
+                              } else {
+                                router.popUntilRouteWithName(OnboardingRoute.name);
+                              }
+                            });
+                            _focusNode.unfocus();
+                            _btcAddressController.clear();
+                            return;
+                          }
+                        } else {
+                          _focusNode.unfocus();
+                          _btcAddressController.clear();
+                          return;
+                        }
+                      } else {
+                        await _validationStore.initColor(_validationStore.color);
+                        _validationStore.validate();
+                        await Future.delayed(
+                          const Duration(seconds: 1),
+                        );
+                        _focusNode.unfocus();
+                        Future.delayed(const Duration(milliseconds: 700), _toggleCard);
+                        Future.delayed(
+                          const Duration(milliseconds: 1400),
+                          () => _addressState.isAddressVisible = true,
+                        );
+                        await _lottieController.forward(from: 0);
+                      }
                     },
                   );
                 },
@@ -680,13 +718,12 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                                         autocorrect: false,
                                                         keyboardType: TextInputType.text,
                                                         textAlign: TextAlign.center,
-                                                        onChanged: (value) {
+                                                        onChanged: (value) async {
                                                           if (value.length > 25) {
-                                                            _addressState
-                                                              ..btcAddress = value
-                                                              ..validateBTCAddress();
+                                                            _addressState.btcAddress = value;
                                                             btcAddress = value;
-                                                            hasShownWallet().then(
+                                                            await _addressState.validateBTCAddress();
+                                                            await hasShownWallet().then(
                                                               (hasShown) async {
                                                                 if (hasShown) {
                                                                   await recordAmplitudeEvent(
@@ -707,6 +744,65 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                                                 }
                                                               },
                                                             );
+                                                            if (_walletProtectState.isValidWalletAddress) {
+                                                              final cardData = await getCardData(value);
+                                                              if (cardData != null) {
+                                                                if (cardData.backup != true) {
+                                                                  if (cardData.lost == true) {
+                                                                    Gaimon.error();
+                                                                    _focusNode.unfocus();
+                                                                    _btcAddressController.clear();
+                                                                    await hasShownWallet().then((hasShown) {
+                                                                      if (hasShown) {
+                                                                        router.popUntilRouteWithName(
+                                                                          DashboardRoute.name,
+                                                                        );
+                                                                      } else {
+                                                                        router.popUntilRouteWithName(
+                                                                          OnboardingRoute.name,
+                                                                        );
+                                                                      }
+                                                                    });
+                                                                    await showModalBottomSheet(
+                                                                      isScrollControlled: true,
+                                                                      context: router.navigatorKey.currentContext!,
+                                                                      shape: const RoundedRectangleBorder(
+                                                                        borderRadius: BorderRadius.only(
+                                                                          topLeft: Radius.circular(20),
+                                                                          topRight: Radius.circular(20),
+                                                                        ),
+                                                                      ),
+                                                                      builder: (context) {
+                                                                        return const CardBlockedModal();
+                                                                      },
+                                                                    );
+                                                                  } else {
+                                                                    _validationStore.color = cardData.color!;
+                                                                    _addressState.btcAddress = value;
+                                                                    await _allSettingsState.initActivationStatus(
+                                                                      status: cardData.activated ?? false,
+                                                                    );
+                                                                    await _addressState.validateBTCAddress();
+                                                                  }
+                                                                } else {
+                                                                  _focusNode.unfocus();
+                                                                  _btcAddressController.clear();
+                                                                  await showModalBottomSheet(
+                                                                    isScrollControlled: true,
+                                                                    context: router.navigatorKey.currentContext!,
+                                                                    shape: const RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.only(
+                                                                        topLeft: Radius.circular(20),
+                                                                        topRight: Radius.circular(20),
+                                                                      ),
+                                                                    ),
+                                                                    builder: (context) {
+                                                                      return const BackupCardTapped();
+                                                                    },
+                                                                  );
+                                                                }
+                                                              }
+                                                            }
                                                           }
                                                         },
                                                         onEditingComplete: () {
@@ -808,38 +904,93 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                                               _walletProtectState.onAddressChanges(res);
                                                             }
                                                             if (_walletProtectState.isValidWalletAddress) {
-                                                              final cardData = await getCardData(res);
-
-                                                              if (cardData!.lost == null || cardData.lost == false) {
+                                                              if (res.length > 25) {
+                                                                _addressState.btcAddress = res;
+                                                                btcAddress = res;
+                                                                _btcAddressController.text = res;
+                                                                await _addressState.validateBTCAddress();
+                                                                await _balanceStore.setMainWalletAddress(
+                                                                  walletAddress: res,
+                                                                );
                                                                 await hasShownWallet().then(
                                                                   (hasShown) async {
                                                                     if (hasShown) {
-                                                                      unawaited(
-                                                                        recordAmplitudeEvent(
-                                                                          QrScanned(
-                                                                            source: 'Wallet',
-                                                                            walletAddress: res,
-                                                                          ),
+                                                                      await recordAmplitudeEvent(
+                                                                        QrScanned(
+                                                                          source: 'Wallet',
+                                                                          walletAddress: btcAddress,
                                                                         ),
                                                                       );
                                                                     } else {
-                                                                      unawaited(
-                                                                        recordAmplitudeEvent(
-                                                                          QrScanned(
-                                                                            source: 'Onboarding',
-                                                                            walletAddress: res,
-                                                                          ),
+                                                                      await recordAmplitudeEvent(
+                                                                        QrScanned(
+                                                                          source: 'Onboarding',
+                                                                          walletAddress: btcAddress,
                                                                         ),
                                                                       );
                                                                     }
                                                                   },
                                                                 );
-                                                                _btcAddressController.text = res;
-                                                                _validationStore.color = cardData.color!;
-                                                                _addressState.btcAddress = res;
-                                                                await _addressState.validateBTCAddress();
-                                                              } else {
-                                                                await lostCardDialog(context);
+                                                                if (_walletProtectState.isValidWalletAddress) {
+                                                                  final cardData = await getCardData(res);
+                                                                  if (cardData != null) {
+                                                                    if (cardData.backup != true) {
+                                                                      if (cardData.lost == true) {
+                                                                        _focusNode.unfocus();
+                                                                        _btcAddressController.clear();
+                                                                        Gaimon.error();
+                                                                        await hasShownWallet().then((hasShown) {
+                                                                          if (hasShown) {
+                                                                            router.popUntilRouteWithName(
+                                                                              DashboardRoute.name,
+                                                                            );
+                                                                          } else {
+                                                                            router.popUntilRouteWithName(
+                                                                              OnboardingRoute.name,
+                                                                            );
+                                                                          }
+                                                                        });
+                                                                        await showModalBottomSheet(
+                                                                          isScrollControlled: true,
+                                                                          context: router.navigatorKey.currentContext!,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(
+                                                                              topLeft: Radius.circular(20),
+                                                                              topRight: Radius.circular(20),
+                                                                            ),
+                                                                          ),
+                                                                          builder: (context) {
+                                                                            return const CardBlockedModal();
+                                                                          },
+                                                                        );
+                                                                      } else {
+                                                                        _validationStore.color = cardData.color!;
+                                                                        _addressState.btcAddress = res;
+                                                                        _btcAddressController.text = res;
+                                                                        await _allSettingsState.initActivationStatus(
+                                                                          status: cardData.activated ?? false,
+                                                                        );
+                                                                        await _addressState.validateBTCAddress();
+                                                                      }
+                                                                    } else {
+                                                                      _focusNode.unfocus();
+                                                                      _btcAddressController.clear();
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled: true,
+                                                                        context: router.navigatorKey.currentContext!,
+                                                                        shape: const RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.only(
+                                                                            topLeft: Radius.circular(20),
+                                                                            topRight: Radius.circular(20),
+                                                                          ),
+                                                                        ),
+                                                                        builder: (context) {
+                                                                          return const BackupCardTapped();
+                                                                        },
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }
                                                               }
                                                             } else {
                                                               await Future.delayed(const Duration(milliseconds: 400));
@@ -969,241 +1120,251 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
             children: [
               Observer(
                 builder: (context) {
-                  return ShakeAnimationWidget(
-                    shakeRange: 0.3,
-                    isForward: false,
-                    shakeAnimationController: _shakeAnimationController,
-                    shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                  return Shaker(
+                    controller: _shakeAnimationController,
                     child: Stack(
                       children: [
-                        AnimatedCrossFade(
-                          firstChild: FutureBuilder<bool?>(
-                            future: _balanceStore.getCard(
-                              receivedData: widget.receivedData,
-                              textEditingController: _btcAddressController,
-                            ),
-                            builder: (context, snapshot) {
-                              bool? isActivated = false;
-                              isActivated = snapshot.data;
-                              return AnimatedCrossFade(
-                                firstChild: Observer(
+                        FutureBuilder<bool?>(
+                          future: _balanceStore.getCard(
+                            receivedData: widget.receivedData,
+                            textEditingController: _btcAddressController,
+                          ),
+                          builder: (context, snapshot) {
+                            return AnimatedCrossFade(
+                              firstChild: ReactionBuilder(
+                                builder: (context) {
+                                  return reaction((p1) => _allSettingsState.activationStatusFromDb, (p1) async {
+                                    final cardData = await getCardData(btcAddress);
+                                    if (cardData?.lost != null && cardData?.lost != true) {
+                                      await _allSettingsState.initActivationStatus(status: p1);
+                                    }
+                                  });
+                                },
+                                child: Observer(
                                   builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        hasShownWallet().then(
-                                          (hasShown) async {
-                                            if (hasShown) {
-                                              unawaited(
-                                                recordAmplitudeEvent(
-                                                  ActivatedCheckboxClicked(
-                                                    source: 'Wallet',
-                                                    walletType: 'Card',
-                                                    walletAddress: _balanceStore.selectedCard!.address,
-                                                  ),
-                                                ),
+                                    return AnimatedCrossFade(
+                                      firstChild: Observer(
+                                        builder: (context) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              hasShownWallet().then(
+                                                (hasShown) async {
+                                                  if (hasShown) {
+                                                    unawaited(
+                                                      recordAmplitudeEvent(
+                                                        ActivatedCheckboxClicked(
+                                                          source: 'Wallet',
+                                                          walletType: 'Card',
+                                                          walletAddress: _balanceStore.selectedCard!.address,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    unawaited(
+                                                      recordAmplitudeEvent(
+                                                        ActivatedCheckboxClicked(
+                                                          source: 'Onboarding',
+                                                          walletType: 'Card',
+                                                          walletAddress: _balanceStore.selectedCard!.address,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
                                               );
-                                            } else {
-                                              unawaited(
-                                                recordAmplitudeEvent(
-                                                  ActivatedCheckboxClicked(
-                                                    source: 'Onboarding',
-                                                    walletType: 'Card',
-                                                    walletAddress: _balanceStore.selectedCard!.address,
-                                                  ),
+                                              _allSettingsState.makeActiveCheckbox();
+                                              HapticFeedback.heavyImpact();
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color: _allSettingsState.isActivatedCheckBox
+                                                      ? const Color(0xFF73C3A6)
+                                                      : const Color(0xFFFF2E00).withOpacity(0.6),
                                                 ),
-                                              );
-                                            }
-                                          },
-                                        );
-                                        _allSettingsState.makeActiveCheckbox();
-                                        HapticFeedback.heavyImpact();
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
-                                          border: Border.all(
-                                            color: _allSettingsState.isActivatedCheckBox
-                                                ? const Color(0xFF73C3A6)
-                                                : const Color(0xFFFF2E00).withOpacity(0.6),
-                                          ),
-                                          color: _allSettingsState.isActivatedCheckBox
-                                              ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                              : const Color(0xFFFF2E00).withOpacity(0.05),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(14),
-                                          child: Column(
-                                            children: [
-                                              const Text(
-                                                'This card was previously activated!',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppColors.textHintsColor,
+                                                color: _allSettingsState.isActivatedCheckBox
+                                                    ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                                    : const Color(0xFFFF2E00).withOpacity(0.05),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(14),
+                                                child: Column(
+                                                  children: [
+                                                    const Text(
+                                                      'This card was previously activated!',
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontWeight: FontWeight.w700,
+                                                        fontSize: 16,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ).expandedHorizontally(),
+                                                    const Gap(4),
+                                                    const Text(
+                                                      "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontSize: 14,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ).expandedHorizontally(),
+                                                  ],
                                                 ),
-                                              ).expandedHorizontally(),
-                                              const Gap(4),
-                                              const Text(
-                                                "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontSize: 14,
-                                                  color: AppColors.textHintsColor,
-                                                ),
-                                              ).expandedHorizontally(),
-                                            ],
-                                          ),
-                                        ),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
+                                      secondChild: Observer(
+                                        builder: (context) {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: Colors.grey.withOpacity(0.3),
+                                              ),
+                                              color: Colors.white.withOpacity(0.7),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(14),
+                                              child: Column(
+                                                children: [
+                                                  AnimatedCrossFade(
+                                                    firstChild: const Text(
+                                                      'Fill in the address of your physical card wallet',
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontWeight: FontWeight.w700,
+                                                        fontSize: 16,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ).expandedHorizontally(),
+                                                    secondChild: const Text(
+                                                      'Coinplus Virtual Card',
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontWeight: FontWeight.w700,
+                                                        fontSize: 16,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ).expandedHorizontally(),
+                                                    crossFadeState: _addressState.isAddressVisible
+                                                        ? CrossFadeState.showSecond
+                                                        : CrossFadeState.showFirst,
+                                                    duration: const Duration(
+                                                      milliseconds: 400,
+                                                    ),
+                                                  ),
+                                                  const Gap(4),
+                                                  AnimatedCrossFade(
+                                                    firstChild: const Text(
+                                                      'Please fill the address from your physical card into the address input field, or scan the QR code.',
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontSize: 14,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ).expandedHorizontally(),
+                                                    secondChild: const Text(
+                                                      'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                                      style: TextStyle(
+                                                        fontFamily: FontFamily.redHatMedium,
+                                                        fontSize: 14,
+                                                        color: AppColors.textHintsColor,
+                                                      ),
+                                                    ).expandedHorizontally(),
+                                                    crossFadeState: _addressState.isAddressVisible
+                                                        ? CrossFadeState.showSecond
+                                                        : CrossFadeState.showFirst,
+                                                    duration: const Duration(
+                                                      milliseconds: 400,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      crossFadeState: _allSettingsState.activationStatusFromDb == true
+                                          ? CrossFadeState.showFirst
+                                          : CrossFadeState.showSecond,
+                                      duration: const Duration(milliseconds: 400),
                                     );
                                   },
                                 ),
-                                secondChild: Observer(
+                              ),
+                              secondChild: GestureDetector(
+                                onTap: () {
+                                  unawaited(
+                                    recordAmplitudeEvent(
+                                      const WarningCheckboxClicked(),
+                                    ),
+                                  );
+                                  _allSettingsState.makeActive();
+                                  HapticFeedback.heavyImpact();
+                                },
+                                child: Observer(
                                   builder: (context) {
                                     return Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
-                                          color: Colors.grey.withOpacity(0.3),
+                                          color: _allSettingsState.isActive
+                                              ? const Color(0xFF73C3A6)
+                                              : _allSettingsState.isAccepted
+                                                  ? Colors.grey.withOpacity(0.3)
+                                                  : const Color(0xFFFF2E00).withOpacity(0.6),
                                         ),
-                                        color: Colors.white.withOpacity(0.7),
+                                        color: _allSettingsState.isActive
+                                            ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                            : _allSettingsState.isAccepted
+                                                ? Colors.white.withOpacity(0.7)
+                                                : const Color(0xFFFF2E00).withOpacity(0.05),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(14),
                                         child: Column(
                                           children: [
-                                            AnimatedCrossFade(
-                                              firstChild: const Text(
-                                                'Fill in the address of your physical card wallet',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppColors.textHintsColor,
-                                                ),
-                                              ).expandedHorizontally(),
-                                              secondChild: const Text(
-                                                'Coinplus Virtual Card',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: AppColors.textHintsColor,
-                                                ),
-                                              ).expandedHorizontally(),
-                                              crossFadeState: _addressState.isAddressVisible
-                                                  ? CrossFadeState.showSecond
-                                                  : CrossFadeState.showFirst,
-                                              duration: const Duration(
-                                                milliseconds: 400,
+                                            const Text(
+                                              'Keep your card safe!',
+                                              style: TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16,
+                                                color: AppColors.textHintsColor,
                                               ),
-                                            ),
+                                            ).expandedHorizontally(),
                                             const Gap(4),
-                                            AnimatedCrossFade(
-                                              firstChild: const Text(
-                                                'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontSize: 14,
-                                                  color: AppColors.textHintsColor,
-                                                ),
-                                              ).expandedHorizontally(),
-                                              secondChild: const Text(
-                                                'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                                style: TextStyle(
-                                                  fontFamily: FontFamily.redHatMedium,
-                                                  fontSize: 14,
-                                                  color: AppColors.textHintsColor,
-                                                ),
-                                              ).expandedHorizontally(),
-                                              crossFadeState: _addressState.isAddressVisible
-                                                  ? CrossFadeState.showSecond
-                                                  : CrossFadeState.showFirst,
-                                              duration: const Duration(
-                                                milliseconds: 400,
+                                            const Text(
+                                              'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
+                                              style: TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontSize: 14,
+                                                color: AppColors.textHintsColor,
                                               ),
-                                            ),
+                                            ).expandedHorizontally(),
                                           ],
                                         ),
                                       ),
                                     );
                                   },
                                 ),
-                                crossFadeState:
-                                    isActivated == true ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                                duration: const Duration(milliseconds: 400),
-                              );
-                            },
-                          ),
-                          secondChild: GestureDetector(
-                            onTap: () {
-                              unawaited(
-                                recordAmplitudeEvent(
-                                  const WarningCheckboxClicked(),
-                                ),
-                              );
-                              _allSettingsState.makeActive();
-                              HapticFeedback.heavyImpact();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: _allSettingsState.isActive
-                                      ? const Color(0xFF73C3A6)
-                                      : _allSettingsState.isAccepted
-                                          ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00).withOpacity(0.6),
-                                ),
-                                color: _allSettingsState.isActive
-                                    ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                    : _allSettingsState.isAccepted
-                                        ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00).withOpacity(0.05),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(14),
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      'Keep your card safe!',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                    const Gap(4),
-                                    const Text(
-                                      'Make sure to keep your card safe! You will need your Secret 1 and Secret 2 in the future to manage your crypto.',
-                                      style: TextStyle(
-                                        fontFamily: FontFamily.redHatMedium,
-                                        fontSize: 14,
-                                        color: AppColors.textHintsColor,
-                                      ),
-                                    ).expandedHorizontally(),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          crossFadeState:
-                              !_allSettingsState.isLineVisible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                          duration: const Duration(milliseconds: 400),
-                        ).paddingHorizontal(16),
+                              crossFadeState: !_allSettingsState.isLineVisible
+                                  ? CrossFadeState.showFirst
+                                  : CrossFadeState.showSecond,
+                              duration: const Duration(milliseconds: 400),
+                            ).paddingHorizontal(16);
+                          },
+                        ),
                         Visibility(
                           visible: !_allSettingsState.isLineVisible,
-                          child: FutureBuilder<bool?>(
-                            future: _balanceStore.getCard(
-                              receivedData: widget.receivedData,
-                              textEditingController: _btcAddressController,
-                            ),
-                            builder: (context, snapshot) {
-                              final isActivated = snapshot.data;
+                          child: Observer(
+                            builder: (context) {
                               return Visibility(
-                                visible: isActivated == true,
+                                visible: _allSettingsState.activationStatusFromDb,
                                 child: Positioned(
                                   right: 16,
                                   child: Transform.scale(
@@ -1343,6 +1504,9 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                           },
                         );
                         if (_allSettingsState.isActive) {
+                          final card = await getCardData(
+                            _balanceStore.selectedCard!.address,
+                          );
                           await _balanceStore.updateCardIndicatorIndex(
                             _balanceStore.cardCurrentIndex,
                           );
@@ -1370,6 +1534,18 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
+                              } else if (_validationStore.color == 'OLD CARD') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
                               }
                             } else {
                               _balanceStore.saveSelectedCardManually(
@@ -1379,7 +1555,6 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                               );
                             }
                           } else {
-                            final card = await getCardData(widget.receivedData!);
                             if (card != null) {
                               unawaited(connectedCount(widget.receivedData!));
                               if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
@@ -1397,6 +1572,18 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                               } else if (_validationStore.color == '2' || _validationStore.color == 'BLACK') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.BLACK,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else if (_validationStore.color == 'OLD CARD') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.ORANGE,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.ORANGE,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
@@ -1423,24 +1610,29 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                             _historyPageStore.saveAndPatchCardAddress(
                               _balanceStore.selectedCard!.address,
                             );
-                            if (hasShown) {
-                              router.maybePop();
-                            } else {
-                              router.pushAndPopAll(
-                                const WalletProtectionRoute(),
+                            if (card?.backupPack == true) {
+                              router.push(
+                                BackupMyWalletRoute(
+                                  walletAddress: _balanceStore.selectedCard!.address,
+                                  backupPack: card?.backupPack ?? false,
+                                  isWalletActivated: false,
+                                  cardColor: card?.color ?? '0',
+                                ),
                               );
+                            } else {
+                              if (hasShown) {
+                                router.maybePop();
+                              } else {
+                                router.pushAndPopAll(
+                                  const WalletProtectionRoute(),
+                                );
+                              }
                             }
                           });
                         } else {
                           await HapticFeedback.vibrate();
                           _allSettingsState.accept();
-                          _shakeAnimationController.start();
-                          await Future.delayed(
-                            const Duration(
-                              milliseconds: 600,
-                            ),
-                          );
-                          _shakeAnimationController.stop();
+                          await _shakeAnimationController.shake();
                         }
                       },
                       child: const Text(
@@ -1451,106 +1643,91 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                         ),
                       ),
                     ).paddingHorizontal(49)
-                  : FutureBuilder<bool?>(
-                      future: _balanceStore.getCard(
-                        receivedData: widget.receivedData,
-                        textEditingController: _btcAddressController,
-                      ),
-                      builder: (context, snapshot) {
-                        final isActivated = snapshot.data;
-                        return Observer(
-                          builder: (context) {
-                            return LoadingButton(
-                              onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
-                                  ? null
-                                  : _addressState.isAddressVisible
-                                      ? _allSettingsState.isActivatedCheckBox
-                                          ? () async {
-                                              await hasShownWallet().then(
-                                                (hasShown) async {
-                                                  if (hasShown) {
-                                                    await recordAmplitudeEvent(
-                                                      SaveToWalletClicked(
-                                                        source: 'Wallet',
-                                                        walletType: 'Card',
-                                                        walletAddress: _balanceStore.selectedCard!.address,
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    await recordAmplitudeEvent(
-                                                      SaveToWalletClicked(
-                                                        source: 'Onboarding',
-                                                        walletType: 'Card',
-                                                        walletAddress: _balanceStore.selectedCard!.address,
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                              );
-                                              final cardIndex = _balanceStore.cards.indexWhere(
-                                                (element) => element.address == _balanceStore.selectedCard?.address,
-                                              );
-
-                                              final barIndex = _balanceStore.bars.indexWhere(
-                                                (element) => element.address == _balanceStore.selectedCard?.address,
-                                              );
-                                              if (cardIndex != -1 || barIndex != -1) {
-                                                await alreadySavedCard(
-                                                  context,
-                                                  _balanceStore.selectedCard!.address,
-                                                );
-                                              } else {
-                                                await _toggleCard();
-                                                await Future.delayed(
-                                                  const Duration(
-                                                    milliseconds: 300,
+                  : Observer(
+                      builder: (context) {
+                        return LoadingButton(
+                          onPressed: _connectivityStore.connectionStatus == ConnectivityResult.none
+                              ? null
+                              : _addressState.isAddressVisible
+                                  ? _allSettingsState.isActivatedCheckBox
+                                      ? () async {
+                                          await hasShownWallet().then(
+                                            (hasShown) async {
+                                              if (hasShown) {
+                                                await recordAmplitudeEvent(
+                                                  SaveToWalletClicked(
+                                                    source: 'Wallet',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
                                                   ),
                                                 );
+                                              } else {
+                                                await recordAmplitudeEvent(
+                                                  SaveToWalletClicked(
+                                                    source: 'Onboarding',
+                                                    walletType: 'Card',
+                                                    walletAddress: _balanceStore.selectedCard!.address,
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          );
+                                          final cardIndex = _balanceStore.cards.indexWhere(
+                                            (element) => element.address == _balanceStore.selectedCard?.address,
+                                          );
+
+                                          final barIndex = _balanceStore.bars.indexWhere(
+                                            (element) => element.address == _balanceStore.selectedCard?.address,
+                                          );
+                                          if (cardIndex != -1 || barIndex != -1) {
+                                            await alreadySavedCard(
+                                              context,
+                                              _balanceStore.selectedCard!.address,
+                                            );
+                                          } else {
+                                            await _toggleCard();
+                                            await Future.delayed(
+                                              const Duration(
+                                                milliseconds: 300,
+                                              ),
+                                            );
+                                            _allSettingsState.makeVisible();
+                                          }
+                                        }
+                                      : () async {
+                                          if (_allSettingsState.activationStatusFromDb == true) {
+                                            await HapticFeedback.vibrate();
+                                            _allSettingsState.checkboxAccept();
+                                            await _shakeAnimationController.shake();
+                                          } else {
+                                            final cardIndex = _balanceStore.cards.indexWhere(
+                                              (element) => element.address == _balanceStore.selectedCard?.address,
+                                            );
+                                            final barIndex = _balanceStore.bars.indexWhere(
+                                              (element) => element.address == _balanceStore.selectedCard?.address,
+                                            );
+                                            if (cardIndex != -1 || barIndex != -1) {
+                                              await alreadySavedCard(
+                                                context,
+                                                _balanceStore.selectedCard!.address,
+                                              );
+                                            } else {
+                                              if (_flipCardController.state!.isFront) {
+                                                await _toggleCard();
                                                 _allSettingsState.makeVisible();
                                               }
                                             }
-                                          : () async {
-                                              if (isActivated == true) {
-                                                await HapticFeedback.vibrate();
-                                                _allSettingsState.checkboxAccept();
-                                                _shakeAnimationController.start();
-                                                await Future.delayed(
-                                                  const Duration(
-                                                    milliseconds: 600,
-                                                  ),
-                                                );
-                                                _shakeAnimationController.stop();
-                                              } else {
-                                                final cardIndex = _balanceStore.cards.indexWhere(
-                                                  (element) => element.address == _balanceStore.selectedCard?.address,
-                                                );
-                                                final barIndex = _balanceStore.bars.indexWhere(
-                                                  (element) => element.address == _balanceStore.selectedCard?.address,
-                                                );
-                                                if (cardIndex != -1 || barIndex != -1) {
-                                                  await alreadySavedCard(
-                                                    context,
-                                                    _balanceStore.selectedCard!.address,
-                                                  );
-                                                } else {
-                                                  if (_flipCardController.state!.isFront) {
-                                                    await _toggleCard();
-                                                    _allSettingsState.makeVisible();
-                                                  }
-                                                }
-                                              }
-                                            }
-                                      : null,
-                              child: const Text(
-                                'Save to wallet',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontFamily: FontFamily.redHatSemiBold,
-                                ),
-                              ),
-                            ).paddingHorizontal(49);
-                          },
-                        );
+                                          }
+                                        }
+                                  : null,
+                          child: const Text(
+                            'Save to wallet',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: FontFamily.redHatSemiBold,
+                            ),
+                          ),
+                        ).paddingHorizontal(49);
                       },
                     );
             },

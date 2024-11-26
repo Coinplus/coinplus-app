@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:action_slider/action_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
@@ -59,6 +60,15 @@ class ActionSliderForCardDelete extends StatelessWidget {
         controller.loading();
         await Future.delayed(const Duration(seconds: 1));
         controller.success();
+        if (backupCard != null) {
+          await _balanceStore.removeSelectedBackupCard(address: backupCard.address);
+          await StorageUtils.deleteBackupCard(card.address);
+          _balanceStore.changeCardBackupStatusAndSave(cardAddress: card.address, hasBackedUp: false);
+          unawaited(deletePrimaryAddressFromDb(backupWalletAddress: backupCard.address));
+          unawaited(deletePrimaryWalletColorFromDb(backupWalletAddress: backupCard.address));
+          unawaited(deleteBackupAddressFromDb(mainWalletAddress: card.address));
+          unawaited(updateCardHasBackupStatus(cardAddress: card.address, hasBackupStatus: false));
+        }
         if (card.blockchain == 'BTC') {
           final isCardActivated = await isCardWalletActivated();
           await recordAmplitudeEventPartTwo(
@@ -81,12 +91,11 @@ class ActionSliderForCardDelete extends StatelessWidget {
           await _balanceStore.getSelectedEthCard(card.address);
           await _balanceStore.removeSelectedEthCard();
         }
-        if (backupCard != null) {
-          await _balanceStore.removeSelectedBackupCard(address: backupCard.address);
-          await StorageUtils.deleteBackupCard(card.address);
-        }
-        await _secureStorage.deleteBackup(mainCardAddress: card.address);
-        await _secureStorage.deleteCard(card: card);
+
+        await Future.wait({
+          _secureStorage.deleteBackup(mainCardAddress: card.address),
+          _secureStorage.deleteCard(card: card),
+        });
         await _historyPageStore.deleteAddressFromHistoryMap(
           address: card.address,
         );
@@ -95,7 +104,7 @@ class ActionSliderForCardDelete extends StatelessWidget {
         _historyPageStore.cardHistories[card.address]?.clear();
         _balanceStore.onCardDeleted(card.address);
         await _historyPageStore.setCardHistoryIndex(0);
-
+        Gaimon.success();
         router.popUntilRouteWithName(DashboardRoute.name);
         await showCustomSnackBar(
           context: context,

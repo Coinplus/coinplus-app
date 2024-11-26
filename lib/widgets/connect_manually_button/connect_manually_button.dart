@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../../../extensions/elevated_button_extensions.dart';
@@ -15,7 +16,11 @@ import '../../../models/amplitude_event/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
+import '../../modals/card_blocked_modal/card_blocked_modal.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
+import '../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../custom_snack_bar/snack_bar_method.dart';
 import '../loading_button/loading_button.dart';
 import '../wallet_type_widget/wallet_type_widget.dart';
 
@@ -25,6 +30,8 @@ class ConnectManuallyButton extends StatefulWidget {
   @override
   State<ConnectManuallyButton> createState() => _ConnectManuallyButtonState();
 }
+
+WalletProtectState get _walletProtectState => GetIt.I<WalletProtectState>();
 
 class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
   final pageIndexNotifier = ValueNotifier(0);
@@ -90,14 +97,48 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                   final res = await context.pushRoute<String?>(
                     QrScannerRoute(),
                   );
-                  if (res != null) {
-                    unawaited(
-                      recordAmplitudeEvent(
-                        QrScanned(source: 'Onboarding', walletAddress: res),
-                      ),
-                    );
-                    await router.push(
-                      CardConnectRoute(receivedData: res),
+                  if (res == null) {
+                    return;
+                  } else {
+                    _walletProtectState.onAddressChanges(res);
+                  }
+                  if (_walletProtectState.isValidWalletAddress) {
+                    final cardData = await getCardData(res);
+
+                    if (cardData!.lost == null || cardData.lost == false) {
+                      unawaited(
+                        recordAmplitudeEvent(
+                          QrScanned(
+                            source: 'Onboarding',
+                            walletAddress: res,
+                          ),
+                        ),
+                      );
+                      await router.push(CardConnectRoute(receivedData: res, cardColor: cardData.color ?? '0'));
+                    } else {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: router.navigatorKey.currentContext!,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(
+                              20,
+                            ),
+                            topRight: Radius.circular(
+                              20,
+                            ),
+                          ),
+                        ),
+                        builder: (context) {
+                          return const CardBlockedModal();
+                        },
+                      );
+                    }
+                  } else {
+                    await Future.delayed(const Duration(milliseconds: 400));
+                    await showCustomSnackBar(
+                      message: 'This is not a valid bitcoin address',
+                      context: context,
                     );
                   }
                 },

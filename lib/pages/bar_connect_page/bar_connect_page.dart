@@ -11,9 +11,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:iosish_shaker/iosish_shaker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:shake_animation_widget/shake_animation_widget.dart';
 
 import '../../all_alert_dialogs/already_saved_card_dialog/already_saved_card_dialog.dart';
 import '../../constants/card_color.dart';
@@ -56,7 +56,7 @@ class BarConnectPage extends StatefulWidget {
 class _BarConnectPageState extends State<BarConnectPage> with TickerProviderStateMixin {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  late final ShakeAnimationController _shakeAnimationController = ShakeAnimationController();
+  late final ShakerController _shakeAnimationController = ShakerController();
   late final TextEditingController _btcAddressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   late AnimationController _lottieController;
@@ -711,11 +711,8 @@ class _BarConnectPageState extends State<BarConnectPage> with TickerProviderStat
                 children: [
                   Observer(
                     builder: (context) {
-                      return ShakeAnimationWidget(
-                        shakeRange: 0.3,
-                        isForward: false,
-                        shakeAnimationController: _shakeAnimationController,
-                        shakeAnimationType: ShakeAnimationType.LeftRightShake,
+                      return Shaker(
+                        controller: _shakeAnimationController,
                         child: Stack(
                           children: [
                             AnimatedCrossFade(
@@ -1096,13 +1093,7 @@ class _BarConnectPageState extends State<BarConnectPage> with TickerProviderStat
                             } else {
                               await HapticFeedback.vibrate();
                               _allSettingsState.accept();
-                              _shakeAnimationController.start();
-                              await Future.delayed(
-                                const Duration(
-                                  milliseconds: 600,
-                                ),
-                              );
-                              _shakeAnimationController.stop();
+                              await _shakeAnimationController.shake();
                             }
                             await hasShownWallet().then(
                               (hasShown) async {
@@ -1214,13 +1205,7 @@ class _BarConnectPageState extends State<BarConnectPage> with TickerProviderStat
                                                   if (isActivated == true) {
                                                     await HapticFeedback.vibrate();
                                                     _allSettingsState.checkboxAccept();
-                                                    _shakeAnimationController.start();
-                                                    await Future.delayed(
-                                                      const Duration(
-                                                        milliseconds: 600,
-                                                      ),
-                                                    );
-                                                    _shakeAnimationController.stop();
+                                                    await _shakeAnimationController.shake();
                                                   } else {
                                                     final cardIndex = _balanceStore.cards.indexWhere(
                                                       (element) =>

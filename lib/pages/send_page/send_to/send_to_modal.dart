@@ -10,7 +10,6 @@ import '../../../extensions/context_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../providers/screen_service.dart';
-import '../../../store/all_settings_state/all_settings_state.dart';
 import 'provided_amount_tab/provided_amount_tab.dart';
 import 'select_wallet_tab/select_wallet_tab.dart';
 import 'send_to_state.dart';
@@ -19,12 +18,12 @@ import 'transaction_review_tab/transaction_review_tab.dart';
 class SendToModal extends HookWidget {
   const SendToModal({
     super.key,
-    required this.allSettingsState,
     required this.isBarList,
+    this.fromLostPage,
   });
 
-  final AllSettingsState allSettingsState;
   final bool isBarList;
+  final bool? fromLostPage;
 
   SendToState get _sendToState => GetIt.I<SendToState>();
 
@@ -37,9 +36,14 @@ class SendToModal extends HookWidget {
 
     useEffect(
       () {
+        if (fromLostPage == true) {
+          tabController.animateTo(2);
+        }
+
         tabController.addListener(() {
           _sendToState.setSelectedIndex(tabController.index);
         });
+
         Timer.periodic(const Duration(minutes: 1), (timer) {
           _sendToState.transactionsStore.getRecommendedFee();
         });
@@ -127,11 +131,7 @@ class SendToModal extends HookWidget {
                     usdFocusNode: usdFocusNode,
                     btcFocusNode: btcFocusNode,
                   ),
-                  TransactionReviewTab(
-                    tabController: tabController,
-                    allSettingsState: allSettingsState,
-                    isBarList: isBarList,
-                  ),
+                  const TransactionReviewTab(),
                 ],
               ),
             ),

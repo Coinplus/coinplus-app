@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:gaimon/gaimon.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +11,7 @@ import '../../../../../gen/fonts.gen.dart';
 import '../../../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../../../services/amplitude_service.dart';
 import '../../send_to_state.dart';
+import '../use_max_action/use_max_action.dart';
 import 'btc_amount_text_field/btc_amount_text_field.dart';
 import 'usd_amount_text_field/usd_amount_text_field.dart';
 
@@ -170,52 +170,7 @@ class AmountInputField extends HookWidget {
                     (states) => Colors.grey.withOpacity(0.2),
                   ),
                 ),
-                onPressed: () {
-                  final res = _sendToState.onUseMax();
-                  if (res == 0) {
-                    _sendToState.usdController.text = '0';
-                    _sendToState.btcController.text = '0';
-                    recordAmplitudeEventPartTwo(
-                      const UseMaxClicked(amount: '0', enoughFunds: 'false'),
-                    );
-                    Gaimon.error();
-                    return;
-                  }
-                  if (res != 0 &&
-                      res >
-                          _sendToState.transactionsStore.txFee.satoshiToUsd(
-                            btcCurrentPrice: _sendToState.btcPrice,
-                          )) {
-                    final maxSendAmount = res -
-                        _sendToState.transactionsStore.txFee.satoshiToUsd(
-                          btcCurrentPrice: _sendToState.btcPrice,
-                        );
-                    _sendToState.setAmount(maxSendAmount.toString());
-                    recordAmplitudeEventPartTwo(
-                      UseMaxClicked(
-                        amount: maxSendAmount.toString(),
-                        enoughFunds: 'true',
-                      ),
-                    );
-                    _sendToState.usdController.text = maxSendAmount.toStringAsFixed(3);
-                    final btcAmount = res.usdToBtc(btcCurrentPrice: _sendToState.btcPrice);
-
-                    final txFeeInBtc = _sendToState.transactionsStore.txFee.satoshiToBtc();
-
-                    final maxSendAmountInBtc = btcAmount - txFeeInBtc;
-                    _sendToState.setAmount(
-                      maxSendAmountInBtc.btcToUsd(btcCurrentPrice: _sendToState.btcPrice).toString(),
-                    );
-                    _sendToState.btcController.text = maxSendAmountInBtc.toStringAsFixed(8).toString();
-                  } else {
-                    _sendToState.usdController.text = '0';
-                    _sendToState.btcController.text = '0';
-                    recordAmplitudeEventPartTwo(
-                      const UseMaxClicked(amount: '0', enoughFunds: 'false'),
-                    );
-                    Gaimon.error();
-                  }
-                },
+                onPressed: useMaxAction,
                 child: Text(
                   !_sendToState.isUseMaxClicked ? 'Use max' : '',
                   style: const TextStyle(

@@ -45,12 +45,12 @@ class CardActivationPage extends StatefulWidget {
   const CardActivationPage({
     super.key,
     this.receivedData,
-    this.hasBackup,
+    this.backupPack,
     this.s,
   });
 
   final String? receivedData;
-  final bool? hasBackup;
+  final bool? backupPack;
   final int? s;
 
   @override
@@ -206,13 +206,14 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                 highlightColor: Colors.transparent,
               ),
               child: IconButton(
+                highlightColor: Colors.transparent,
                 onPressed: () {
                   recordAmplitudeEvent(
                     const BackButtonClicked(source: 'Card Secrets Screen'),
                   );
                   router.maybePop();
                 },
-                icon: Assets.icons.arrowBackIos.image(height: 22),
+                icon: Assets.icons.arrowBackIos.image(height: 30),
               ),
             ),
             const Gap(10),
@@ -883,7 +884,6 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                               walletAddress: _validationStore.walletAddress,
                               walletType: 'Card',
                               isBarList: false,
-                              hasBackup: widget.hasBackup,
                               card: card,
                               balanceStore: _balanceStore,
                             );
@@ -936,15 +936,18 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                 ),
                               );
 
-                              await secretsSuccessAlert(
-                                context: context,
-                                walletAddress: _validationStore.walletAddress,
-                                walletType: 'Card',
-                                isBarList: false,
-                                hasBackup: widget.hasBackup,
-                                card: card,
-                                balanceStore: _balanceStore,
-                              );
+                              if (widget.backupPack == true) {
+                                await router.push(SecretSuccess(walletAddress: _validationStore.walletAddress));
+                              } else {
+                                await secretsSuccessAlert(
+                                  context: context,
+                                  walletAddress: _validationStore.walletAddress,
+                                  walletType: 'Card',
+                                  isBarList: false,
+                                  card: card,
+                                  balanceStore: _balanceStore,
+                                );
+                              }
 
                               await recordUserProperty(const CardHolder());
                             } else {
@@ -1121,20 +1124,20 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
       if (widget.s != 29) {
         if (isValidSecret(secretTwo)) {
           _validationStore.validateSecretTwo();
+          _secretTwoFocusNode.unfocus();
           await Future.delayed(
             const Duration(milliseconds: 500),
           );
           await _secretTwoLottieController.forward(from: 0);
-          _secretTwoFocusNode.unfocus();
         }
       } else {
         if (isValidSecret29(secretTwo)) {
           _validationStore.validateSecretTwo();
+          _secretTwoFocusNode.unfocus();
           await Future.delayed(
             const Duration(milliseconds: 500),
           );
           await _secretTwoLottieController.forward(from: 0);
-          _secretTwoFocusNode.unfocus();
         }
       }
       await recordAmplitudeEvent(

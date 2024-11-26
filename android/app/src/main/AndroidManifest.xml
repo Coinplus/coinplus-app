@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coinplus.app">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -59,7 +58,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="air.coinplus.com" />
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK
+                <!-- coinplus-alternate domain is required for App Links when the Journeys/Web SDK
                 and Deepviews are used inside your website.  -->
                 <data android:scheme="https" android:host="coinplus-alternate.test-app.link" />
             </intent-filter>
@@ -69,7 +68,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="example.test-app.link" />
-                <!-- example-alternate domain is required for App Links when the Journeys/Web SDK
+                <!-- coinplus-alternate domain is required for App Links when the Journeys/Web SDK
                 and Deepviews are used inside your website.  -->
                 <data android:scheme="https" android:host="example-alternate.test-app.link" />
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />

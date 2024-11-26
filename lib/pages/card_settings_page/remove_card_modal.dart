@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../constants/button_settings.dart';
+import '../../constants/card_color.dart';
 import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
@@ -52,10 +53,8 @@ class RemoveCard extends StatelessWidget {
             ).expandedHorizontally(),
           ),
           const Gap(30),
-          Assets.images.card.cardForm.image(
-            height: 84,
-          ),
-          const Gap(27),
+          card.color.image.image(height: 130),
+          const Gap(30),
           const Text(
             'Your Coinplus Bitcoin card will be deleted from your wallet permanently!',
             textAlign: TextAlign.center,

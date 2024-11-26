@@ -152,7 +152,6 @@ Future<void> sendReceiveButtonModal({
                 isModalOpened: isModalOpened,
                 tabController: tabController,
                 walletContext: context,
-                allSettingsState: allSettingsState,
               ),
             if (card.blockchain == 'ETH') const SizedBox(),
             const Gap(8),
