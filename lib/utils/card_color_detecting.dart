@@ -16,6 +16,10 @@ DecorationImage getFrontImageForCardColor(String? colorNum) {
       return DecorationImage(
         image: Assets.images.card.brownCardFront.image().image,
       );
+    case '3' || 'BACKUP':
+      return DecorationImage(
+        image: Assets.images.card.backupCardFront.image().image,
+      );
     default:
       return DecorationImage(
         image: Assets.images.card.orangeCardFront.image().image,

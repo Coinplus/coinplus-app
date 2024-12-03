@@ -22,6 +22,8 @@ import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
+import '../../modals/card_blocked_modal/card_blocked_modal.dart';
+import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../loading_button/loading_button.dart';
 
@@ -218,9 +220,41 @@ class BarScanMethodsPage extends HookWidget {
                   QrScanned(source: 'Wallet', walletAddress: res),
                 ),
               );
-              await router.push(
-                BarConnectRoute(receivedData: res),
-              );
+              _walletProtectState.onAddressChanges(res);
+
+              final cardData = await getCardData(res);
+
+              if (_walletProtectState.isValidWalletAddress) {
+                if (cardData != null) {
+                  if (cardData.lost != true) {
+                    await router.push(
+                      CardConnectRoute(receivedData: res, cardColor: cardData.color),
+                    );
+                  } else {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: router.navigatorKey.currentContext!,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(
+                            20,
+                          ),
+                          topRight: Radius.circular(
+                            20,
+                          ),
+                        ),
+                      ),
+                      builder: (context) {
+                        return const CardBlockedModal();
+                      },
+                    );
+                  }
+                } else {
+                  await router.push(
+                    BarConnectRoute(receivedData: res),
+                  );
+                }
+              }
             }
           },
           child: Row(

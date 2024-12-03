@@ -1534,6 +1534,12 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
+                              } else if (_validationStore.color == '3' || _validationStore.color == 'BACKUP') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.BACKUP,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
                               } else if (_validationStore.color == 'OLD CARD') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,
@@ -1572,6 +1578,12 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                               } else if (_validationStore.color == '2' || _validationStore.color == 'BLACK') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.BLACK,
+                                  label: WalletType.COINPLUS_WALLET,
+                                  name: 'Coinplus Bitcoin Wallet',
+                                );
+                              } else if (_validationStore.color == '3' || _validationStore.color == 'BACKUP') {
+                                _balanceStore.saveSelectedCardManually(
+                                  color: CardColor.BACKUP,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );

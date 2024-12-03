@@ -112,5 +112,9 @@ class Router extends $Router {
     AdaptiveRoute(
       page: DontHaveBackupRoute.page,
     ),
+    AdaptiveRoute(
+      page: BuyBackupCardRoute.page,
+      fullscreenDialog: true,
+    ),
   ];
 }

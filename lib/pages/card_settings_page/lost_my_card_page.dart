@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -20,34 +22,34 @@ import '../send_page/send_to/send_to_state.dart';
 import '../send_page/send_to/transaction_review_tab/transaction_review_tab.dart';
 
 @RoutePage()
-class LostMyCardPage extends StatelessWidget {
-  const LostMyCardPage({super.key, required this.backupCard, required this.mainCard});
+class LostMyCardPage extends StatefulWidget {
+  const LostMyCardPage({super.key, required this.mainCard});
 
+  final AbstractCard? mainCard;
+
+  @override
+  State<LostMyCardPage> createState() => _LostMyCardPageState();
+}
+
+class _LostMyCardPageState extends State<LostMyCardPage> {
   SendToState get _sendToState => GetIt.I<SendToState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
-  final AbstractCard? mainCard;
-  final CardModel? backupCard;
+  late final CardModel? backupCard;
+
+  @override
+  void initState() {
+    super.initState();
+    _balanceStore.loadBackupCard(widget.mainCard!.address).then((_) {
+      backupCard = _balanceStore.backupSingleCard;
+    }).catchError((error) {
+      log('Error loading backup card: $error');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Future<void> changeBackupCardToPrimary() async {
-    //   await _balanceStore.replaceMainCardWithBackup(
-    //     mainCardAddress: mainCard!.address,
-    //     backedUpCard: backupCard,
-    //   );
-    //   await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
-    //
-    //   router.popUntilRouteWithName(DashboardRoute.name);
-    //   await Future.delayed(const Duration(milliseconds: 300));
-    //   await showCustomSnackBar(
-    //     context: context,
-    //     message: 'Your backup card changed as primary',
-    //   );
-    //   await router.maybePop();
-    // }
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -99,9 +101,11 @@ class LostMyCardPage extends StatelessWidget {
             LoadingButton(
               onPressed: () async {
                 router.popUntilRouteWithName(DashboardRoute.name);
-                final mainCardIndex = _balanceStore.cards.indexOf(mainCard);
+                final cardIndex = _balanceStore.cards.indexWhere(
+                  (card) => card.address.trim() == card.address.trim(),
+                );
                 await _sendToState.transactionsStore.getUtxosData();
-                _sendToState.transactionsStore.onSelectCard(mainCardIndex);
+                _sendToState.transactionsStore.onSelectCard(cardIndex);
                 _sendToState.addressController.text = backupCard!.address;
                 _sendToState.transactionsStore.setReceiverWalletAddress(backupCard!.address);
                 await useMaxAction();
@@ -113,7 +117,7 @@ class LostMyCardPage extends StatelessWidget {
                     ? _sendToState.sendAmountInUsd == 0
                         ? noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
                             .then((_) async {
-                            await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
+                            await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
                           })
                         : !_sendToState.isInputtedAmountBiggerTotal
                             ? !_sendToState.isCoverFee
@@ -136,7 +140,7 @@ class LostMyCardPage extends StatelessWidget {
                                           TransactionReviewTab(
                                             isFromLostCardPage: true,
                                             backupCard: backupCard,
-                                            mainCard: mainCard,
+                                            mainCard: widget.mainCard,
                                           ),
                                         ],
                                       );
@@ -144,15 +148,15 @@ class LostMyCardPage extends StatelessWidget {
                                   )
                                 : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: true)
                                     .then((_) async {
-                                    await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
+                                    await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
                                   })
                             : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
                                 .then((_) async {
-                                await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
+                                await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
                               })
                     : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
                         .then((_) async {
-                        await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
+                        await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
                       });
               },
               child: const Text(

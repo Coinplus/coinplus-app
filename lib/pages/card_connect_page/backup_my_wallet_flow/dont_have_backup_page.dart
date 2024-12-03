@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -9,6 +11,9 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
+import '../../../models/abstract_card/abstract_card.dart';
+import '../../../models/card_model/card_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
@@ -23,10 +28,14 @@ class DontHaveBackupPage extends StatefulWidget {
     super.key,
     required this.walletAddress,
     required this.cardColor,
+    required this.backupCard,
+    required this.mainCard,
   });
 
   final String walletAddress;
   final String? cardColor;
+  final CardModel? backupCard;
+  final AbstractCard? mainCard;
 
   @override
   State<DontHaveBackupPage> createState() => _DontHaveBackupPageState();
@@ -99,9 +108,9 @@ class _DontHaveBackupPageState extends State<DontHaveBackupPage> {
                         ),
                 ),
                 const Gap(5),
-                const Text(
-                  'Let’s backup your wallet',
-                  style: TextStyle(
+                Text(
+                  _settingsState.currentPage == 1 ? 'Your wallet is backed up!' : 'Let’s backup your wallet',
+                  style: const TextStyle(
                     fontFamily: FontFamily.redHatMedium,
                     color: AppColors.primary,
                     fontSize: 24,
@@ -165,9 +174,30 @@ class _DontHaveBackupPageState extends State<DontHaveBackupPage> {
                       )
                       .copyWith(),
                   onPressed: () async {
-                    await connectBackupWalletIos(
-                      mainWalletAddress: widget.walletAddress,
-                    );
+                    if (Platform.isIOS) {
+                      await connectBackupWalletIos(
+                        mainWalletAddress: widget.walletAddress,
+                        pageController: _pageController,
+                      );
+                    } else {
+                      await connectBackupWalletAndroid(
+                        mainWalletAddress: widget.walletAddress,
+                        pageController: _pageController,
+                      );
+                      await showModalBottomSheet(
+                        context: router.navigatorKey.currentContext!,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return const AndroidNfcSessionModal();
+                        },
+                      );
+                    }
                   },
                   child: const Text(
                     'Add a backup card',
@@ -202,12 +232,61 @@ class _DontHaveBackupPageState extends State<DontHaveBackupPage> {
                     await showSendFromWalletModal(isBarList: false);
                   },
                   child: const Text(
-                    'Don’t Have a Backup Card',
+                    'Don’t have a backup card',
                     style: TextStyle(
                       fontSize: 15,
                       fontFamily: FontFamily.redHatMedium,
                       fontWeight: FontWeight.normal,
                       color: AppColors.primaryTextColor,
+                    ),
+                  ),
+                ),
+              ),
+              const Gap(40),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
+              Lottie.asset('assets/lottie_animations/lost_card_animation.json'),
+              const Spacer(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 31),
+                child: Text(
+                  'Your wallet has been successfully backed up. In case of an emergency, go to the Wallet Settings ⚙️.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: FontFamily.redHatMedium,
+                    color: AppColors.primary,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              const Spacer(
+                flex: 2,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 64),
+                child: LoadingButton(
+                  style: context.theme
+                      .buttonStyle(
+                        textStyle: const TextStyle(
+                          fontFamily: FontFamily.redHatMedium,
+                          color: AppColors.primaryTextColor,
+                          fontSize: 15,
+                        ),
+                      )
+                      .copyWith(),
+                  onPressed: () async {
+                    await router.push(LostMyCardRoute(mainCard: widget.mainCard));
+                  },
+                  child: const Text(
+                    'Done',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

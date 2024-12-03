@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -300,7 +301,12 @@ class PrimaryCardSelectionModal extends HookWidget {
                 .copyWith(),
             onPressed: () async {
               await router.maybePop();
-              await nfcSessionIos(isFromBackupConnect: true);
+              if(Platform.isIOS) {
+                await nfcSessionIos(isFromBackupConnect: true);
+              } else {
+                await nfcSessionAndroid(isFromBackupConnect: true);
+              }
+
             },
             child: const Text(
               'Add new',

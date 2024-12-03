@@ -200,6 +200,20 @@ Future<BuyCardModel?> getBuyCardData() async {
   return null;
 }
 
+Future<BuyCardModel?> getBuyBackupData() async {
+  final DocumentSnapshot documentSnapshot = await _firestore.collection('links').doc('buy_backup').get();
+
+  if (documentSnapshot.exists) {
+    final documentData = documentSnapshot.data() as Map<String, dynamic>?;
+
+    if (documentData != null) {
+      final card = BuyCardModel.fromJson(documentData);
+      return card;
+    }
+  } else {}
+  return null;
+}
+
 Future<BuyCardModel?> getBuyCardPlusButtonLink() async {
   final DocumentSnapshot documentSnapshot = await _firestore.collection('links').doc('buy_card_plus_button').get();
 

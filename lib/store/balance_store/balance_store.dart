@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -117,9 +119,14 @@ abstract class _BalanceStore with Store {
 
   @action
   Future<void> loadBackupCard(String mainCardAddress) async {
-    backupCardLoading = true;
-    backupSingleCard = await StorageUtils.searchMainAndBackupCard(mainCardAddress);
-    backupCardLoading = false;
+    try {
+      backupCardLoading = true;
+      backupSingleCard = await StorageUtils.searchMainAndBackupCard(mainCardAddress);
+    } catch (e) {
+      log('Error while loading backup card: $e');
+    } finally {
+      backupCardLoading = false;
+    }
   }
 
   Future<void> getCardsFromStorage() async {
@@ -516,6 +523,11 @@ abstract class _BalanceStore with Store {
     await StorageUtils.removeCard(mainCardAddress);
     await _secureStorage.delete(key: mainCardAddress);
     final backupCard = _backupCards[backupCardIndex];
+    await _secureStorage.isWalletActivated(
+      isSet: false,
+      address: mainCardAddress,
+    );
+    await _secureStorage.setBackupStatus(isSet: false, address: mainCardAddress);
     final updatedCard = backupCard.copyWith(
       isBackup: false,
       createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
@@ -524,6 +536,7 @@ abstract class _BalanceStore with Store {
     await updateCardBackupStatus(cardAddress: updatedCard.address, backupStatus: false);
     _cards.insert(0, updatedCard);
     await StorageUtils.saveUpdatedCards(_cards);
+
     _backupCards.removeAt(backupCardIndex);
     await StorageUtils.removeBackupCard(backupCard.address);
     await _secureStorage.delete(key: backedUpCard!.address);
