@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -9,6 +11,7 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
 import '../../../services/cloud_firestore_service.dart';
@@ -25,12 +28,14 @@ class BackupMyWalletPage extends StatefulWidget {
     required this.backupPack,
     required this.isWalletActivated,
     required this.cardColor,
+    this.isFromLostPage,
   });
 
   final String walletAddress;
   final bool? backupPack;
   final bool? isWalletActivated;
   final String? cardColor;
+  final bool? isFromLostPage;
 
   @override
   State<BackupMyWalletPage> createState() => _BackupMyWalletPageState();
@@ -170,9 +175,30 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                         )
                         .copyWith(),
                     onPressed: () async {
-                      await connectBackupWalletIos(
-                        mainWalletAddress: widget.walletAddress,
-                      );
+                      if (Platform.isIOS) {
+                        await connectBackupWalletIos(
+                          mainWalletAddress: widget.walletAddress,
+                          isFromLostCard: widget.isFromLostPage,
+                        );
+                      } else {
+                        await connectBackupWalletAndroid(
+                          mainWalletAddress: widget.walletAddress,
+                          isFromLostCard: widget.isFromLostPage,
+                        );
+                        await showModalBottomSheet(
+                          context: router.navigatorKey.currentContext!,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          builder: (context) {
+                            return const AndroidNfcSessionModal();
+                          },
+                        );
+                      }
                     },
                     child: const Text(
                       'Add a backup card',
@@ -231,18 +257,22 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                           Colors.grey.withOpacity(0.1),
                         ),
                       ),
-                  onPressed: () async {
-                    await hasShownWallet().then((hasShown) {
-                      if (hasShown) {
-                        router.popUntilRouteWithName(DashboardRoute.name);
-                      } else {
-                        router.pushAndPopAll(const WalletProtectionRoute());
-                      }
-                    });
-                  },
-                  child: const Text(
-                    'Remind later',
-                    style: TextStyle(
+                  onPressed: widget.backupPack == true
+                      ? () async {
+                          await hasShownWallet().then((hasShown) {
+                            if (hasShown) {
+                              router.popUntilRouteWithName(DashboardRoute.name);
+                            } else {
+                              router.pushAndPopAll(const WalletProtectionRoute());
+                            }
+                          });
+                        }
+                      : () {
+                          router.push(const BuyBackupCardRoute());
+                        },
+                  child: Text(
+                    widget.backupPack == true ? 'Remind later' : 'Get a backup card',
+                    style: const TextStyle(
                       fontSize: 15,
                       fontFamily: FontFamily.redHatMedium,
                       fontWeight: FontWeight.normal,

@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../all_alert_dialogs/dont_have_secrets_dialog/dont_have_secrets_dialog.dart';
+import '../../extensions/elevated_button_extensions.dart';
 import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
@@ -176,37 +177,65 @@ class _ActivateCardForBackupState extends State<ActivateCardForBackup> {
                 const Spacer(
                   flex: 2,
                 ),
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      width: 130,
-                      child: LoadingButton(
-                        onPressed: () async {
-                          final cardIndex = _balanceStore.cards.indexOf(widget.card);
-                          await _historyPageStore.setCardActivationIndex(index: cardIndex);
-                          final cardData = await getCardData(widget.card.address);
-                          await router.push(CardActivationRoute(s: cardData?.s, backupPack: cardData?.backupPack));
-                        },
-                        child: const Text(
-                          'Yes',
-                          style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 15),
-                        ),
+                    LoadingButton(
+                      style: context.theme
+                          .buttonStyle(
+                            textStyle: const TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              color: AppColors.primaryTextColor,
+                              fontSize: 15,
+                            ),
+                          )
+                          .copyWith(
+                            padding: const WidgetStatePropertyAll(
+                              EdgeInsets.all(15),
+                            ),
+                          ),
+                      onPressed: () async {
+                        final cardIndex = _balanceStore.cards.indexOf(widget.card);
+                        await _historyPageStore.setCardActivationIndex(index: cardIndex);
+                        final cardData = await getCardData(widget.card.address);
+                        await router.push(
+                          CardActivationRoute(
+                            s: cardData?.s,
+                            backupPack: cardData?.backupPack,
+                            isFromLostCardPage: true,
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 15, color: Colors.white),
                       ),
-                    ),
-                    SizedBox(
-                      width: 130,
-                      child: LoadingButton(
-                        onPressed: () {
-                          router.popUntilRouteWithName(DashboardRoute.name);
-                          dontHaveSecretsDialog(context);
-                        },
-                        child: const Text(
-                          'No',
-                          style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 15),
-                        ),
+                    ).paddingHorizontal(80),
+                    const Gap(10),
+                    LoadingButton(
+                      style: context.theme
+                          .buttonStyle(
+                            textStyle: const TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              color: AppColors.primaryTextColor,
+                              fontSize: 15,
+                            ),
+                          )
+                          .copyWith(
+                            backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                            padding: const WidgetStatePropertyAll(
+                              EdgeInsets.all(15),
+                            ),
+                          ),
+                      onPressed: () {
+                        router.popUntilRouteWithName(DashboardRoute.name);
+                        dontHaveSecretsDialog(context);
+                      },
+                      child: const Text(
+                        'No',
+                        style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 15),
                       ),
-                    ),
+                    ).paddingHorizontal(80),
                   ],
                 ),
                 const Gap(40),

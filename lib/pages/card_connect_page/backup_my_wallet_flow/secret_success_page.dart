@@ -1,8 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:auto_route/annotations.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:gap/gap.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../extensions/context_extension.dart';
@@ -10,23 +14,29 @@ import '../../../extensions/elevated_button_extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
+import '../../../models/abstract_card/abstract_card.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
+import '../../../store/balance_store/balance_store.dart';
 import '../../../utils/card_nfc_session.dart';
 import '../../../widgets/loading_button/loading_button.dart';
 import '../../splash_screen/splash_screen.dart';
 
 @RoutePage()
 class SecretSuccess extends StatefulWidget {
-  const SecretSuccess({super.key, required this.walletAddress, this.initialPageIndex});
+  const SecretSuccess({super.key, required this.walletAddress, this.initialPageIndex, this.isFromLostCardPage});
 
   final String walletAddress;
   final int? initialPageIndex;
+  final bool? isFromLostCardPage;
 
   @override
   State<SecretSuccess> createState() => _SecretSuccessState();
 }
+
+BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
 class _SecretSuccessState extends State<SecretSuccess> {
   final _pageController = PageController();
@@ -81,14 +91,18 @@ class _SecretSuccessState extends State<SecretSuccess> {
               icon: Assets.icons.close.image(),
             ),
             const Gap(5),
-            const Text(
-              'Let’s backup your wallet',
-              style: TextStyle(
-                fontFamily: FontFamily.redHatMedium,
-                color: AppColors.primary,
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
+            Observer(
+              builder: (context) {
+                return Text(
+                  _settingsState.currentPage == 1 ? 'Your wallet is backed up!' : 'Let’s backup your wallet',
+                  style: const TextStyle(
+                    fontFamily: FontFamily.redHatMedium,
+                    color: AppColors.primary,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -103,12 +117,10 @@ class _SecretSuccessState extends State<SecretSuccess> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(
-                flex: 2,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 108),
-                child: Assets.icons.successfullyActivated.image(),
+              const Spacer(flex: 2),
+              SizedBox(
+                height: 200,
+                child: Lottie.asset('assets/lottie_animations/secrets_success.json', repeat: false),
               ),
               const Spacer(),
               const Padding(
@@ -140,10 +152,30 @@ class _SecretSuccessState extends State<SecretSuccess> {
                       .copyWith(),
                   onPressed: () async {
                     try {
-                      await connectBackupWalletIos(
-                        mainWalletAddress: widget.walletAddress,
-                        pageController: _pageController,
-                      );
+                      if (Platform.isIOS) {
+                        await connectBackupWalletIos(
+                          mainWalletAddress: widget.walletAddress,
+                          pageController: _pageController,
+                        );
+                      } else {
+                        await connectBackupWalletAndroid(
+                          mainWalletAddress: widget.walletAddress,
+                          pageController: _pageController,
+                        );
+                        await showModalBottomSheet(
+                          context: router.navigatorKey.currentContext!,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          builder: (context) {
+                            return const AndroidNfcSessionModal();
+                          },
+                        );
+                      }
                     } catch (e) {
                       log(e.toString());
                     }
@@ -195,7 +227,14 @@ class _SecretSuccessState extends State<SecretSuccess> {
                       )
                       .copyWith(),
                   onPressed: () async {
-                    await router.pushAndPopAll(const DashboardRoute());
+                    final mainCard = _balanceStore.cards.firstWhereOrNull(
+                      (card) => card.address == widget.walletAddress,
+                    );
+                    if (widget.isFromLostCardPage == true) {
+                      await router.push(LostMyCardRoute(mainCard: mainCard! as AbstractCard));
+                    } else {
+                      await router.pushAndPopAll(const DashboardRoute());
+                    }
                   },
                   child: const Text(
                     'Done',

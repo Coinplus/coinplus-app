@@ -47,11 +47,13 @@ class CardActivationPage extends StatefulWidget {
     this.receivedData,
     this.backupPack,
     this.s,
+    this.isFromLostCardPage,
   });
 
   final String? receivedData;
   final bool? backupPack;
   final int? s;
+  final bool? isFromLostCardPage;
 
   @override
   State<CardActivationPage> createState() => _CardActivationPageState();
@@ -935,6 +937,18 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                   walletType: 'Card',
                                 ),
                               );
+                              if (widget.isFromLostCardPage == true) {
+                                await router.push(
+                                  BackupMyWalletRoute(
+                                    walletAddress: card!.address,
+                                    backupPack: widget.backupPack,
+                                    isWalletActivated: true,
+                                    cardColor: card!.color.toString(),
+                                    isFromLostPage: widget.isFromLostCardPage,
+                                  ),
+                                );
+                                return;
+                              }
 
                               if (widget.backupPack == true) {
                                 await router.push(SecretSuccess(walletAddress: _validationStore.walletAddress));
@@ -1062,6 +1076,10 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
       case CardColor.BLACK:
         return DecorationImage(
           image: Assets.images.card.brownCardFront.image().image,
+        );
+      case CardColor.BACKUP:
+        return DecorationImage(
+          image: Assets.images.card.backupCardFront.image().image,
         );
       default:
         return DecorationImage(

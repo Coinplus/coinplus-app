@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -12,6 +13,7 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../widgets/loading_button/loading_button.dart';
+import '../android_nfc_session_modal/android_nfc_session_modal.dart';
 
 class BackupCardTapped extends StatelessWidget {
   const BackupCardTapped({super.key, this.isFromManualPage = false});
@@ -61,7 +63,25 @@ class BackupCardTapped extends StatelessWidget {
                 : () async {
                     await router.maybePop();
                     try {
-                      await nfcSessionIos();
+                      if(Platform.isIOS) {
+                        await nfcSessionIos();
+                      } else {
+                        await nfcSessionAndroid();
+                        await showModalBottomSheet(
+                          context: router.navigatorKey.currentContext!,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          builder: (context) {
+                            return const AndroidNfcSessionModal();
+                          },
+                        );
+                      }
+
                     } catch (e) {
                       log(e.toString());
                     }

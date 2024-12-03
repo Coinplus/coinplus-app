@@ -63,7 +63,7 @@ class CardBlockedModal extends StatelessWidget {
               await router.push(const ContactUs());
             },
             child: const Text(
-              'Contact Support',
+              'Contact support',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.white,

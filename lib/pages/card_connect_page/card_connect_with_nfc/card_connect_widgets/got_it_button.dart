@@ -147,6 +147,10 @@ class GotItButton extends StatelessWidget {
                               balanceStore.saveSelectedBackupCard(
                                 color: CardColor.BLACK,
                               );
+                            } else if (cardColor == '3') {
+                              balanceStore.saveSelectedBackupCard(
+                                color: CardColor.BACKUP,
+                              );
                             }
                             await StorageUtils.saveMainAndBackupCard(
                               mainCardAddress: balanceStore.mainWalletAddress,
@@ -176,6 +180,10 @@ class GotItButton extends StatelessWidget {
                             } else if (cardColor == '2' || cardColor == 'BLACK') {
                               balanceStore.saveSelectedCard(
                                 color: CardColor.BLACK,
+                              );
+                            } else if (cardColor == '3' || cardColor == 'BACKUP') {
+                              balanceStore.saveSelectedCard(
+                                color: CardColor.BACKUP,
                               );
                             } else {
                               balanceStore.saveSelectedCard(

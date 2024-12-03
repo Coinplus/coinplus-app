@@ -22,7 +22,6 @@ Future<void> signInAnonymously() async {
     final auth = FirebaseAuth.instance;
     try {
       await auth.signInAnonymously();
-      log('Sign in successful');
     } catch (e) {
       log('General error during sign-in: $e');
     }

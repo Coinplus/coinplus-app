@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gaimon/gaimon.dart';
@@ -14,6 +16,7 @@ import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
+import '../../store/history_page_store/history_page_store.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../send_page/send_to/provided_amount_tab/use_max_action/use_max_action.dart';
 import '../send_page/send_to/send_to_state.dart';
@@ -36,15 +39,26 @@ class LostCardActionSlider extends StatefulWidget {
 class _LostCardActionSliderState extends State<LostCardActionSlider> {
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
 
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
+
   SendToState get _sendToState => GetIt.I<SendToState>();
   late final CardModel? backupCard;
+  final ActionSliderController controller = ActionSliderController();
 
   @override
   void initState() {
     super.initState();
     _balanceStore.loadBackupCard(widget.card.address).then((_) {
       backupCard = _balanceStore.backupSingleCard;
+    }).catchError((error) {
+      log('Error loading backup card: $error');
     });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,77 +73,97 @@ class _LostCardActionSliderState extends State<LostCardActionSlider> {
       ),
       action: (controller) async {
         controller.loading();
-        final isCardActivated = await _secureStorage.checkWalletStatus(widget.card.address);
-        final cardData = await getCardData(widget.card.address);
-        await Future.delayed(const Duration(milliseconds: 300));
-        Gaimon.success();
-        controller.success();
-        if (widget.lostStatus == true) {
-          router.popUntilRouteWithName(DashboardRoute.name);
-          final mainCardIndex = _balanceStore.cards.indexOf(widget.card);
-          await _sendToState.transactionsStore.getUtxosData();
-          _sendToState.transactionsStore.onSelectCard(mainCardIndex);
-          _sendToState.addressController.text = backupCard!.address;
-          _sendToState.transactionsStore.setReceiverWalletAddress(backupCard!.address);
-          await useMaxAction();
-          _sendToState
-            ..onAddressChanges(backupCard!.address)
-            ..setOutputAddress(backupCard!.address);
 
-          !_sendToState.isAmountToSmall
-              ? _sendToState.sendAmountInUsd == 0
-                  ? noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false).then((_) async {
-                      await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
-                    })
-                  : !_sendToState.isInputtedAmountBiggerTotal
-                      ? !_sendToState.isCoverFee
-                          ? await showModalBottomSheet(
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
+        try {
+          final isCardActivated = await _secureStorage.checkWalletStatus(widget.card.address);
+          final cardData = await getCardData(widget.card.address);
+          await Future.delayed(const Duration(milliseconds: 300));
+          Gaimon.success();
+          controller.success();
+          if (widget.lostStatus == true) {
+            router.popUntilRouteWithName(DashboardRoute.name);
+            final mainCardIndex = _balanceStore.cards.indexOf(widget.card);
+            await _sendToState.transactionsStore.getUtxosData();
+            _sendToState.transactionsStore.onSelectCard(mainCardIndex);
+            _sendToState.addressController.text = backupCard!.address;
+            _sendToState.transactionsStore.setReceiverWalletAddress(backupCard!.address);
+            await useMaxAction();
+            _sendToState
+              ..onAddressChanges(backupCard!.address)
+              ..setOutputAddress(backupCard!.address);
+
+            !_sendToState.isAmountToSmall
+                ? _sendToState.sendAmountInUsd == 0
+                    ? noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
+                        .then((_) async {
+                        await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
+                      })
+                    : !_sendToState.isInputtedAmountBiggerTotal
+                        ? !_sendToState.isCoverFee
+                            ? await showModalBottomSheet(
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
                                 ),
-                              ),
-                              context: router.navigatorKey.currentContext!,
-                              builder: (_) {
-                                controller.reset();
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Gap(12),
-                                    Assets.icons.notch.image(height: 4),
-                                    const Gap(30),
-                                    TransactionReviewTab(
-                                      isFromLostCardPage: true,
-                                      backupCard: backupCard,
-                                      mainCard: widget.card,
-                                    ),
-                                  ],
-                                );
-                              },
-                            )
-                          : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: true)
-                              .then((_) async {
-                              await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
-                            })
-                      : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
-                          .then((_) async {
-                          await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
-                        })
-              : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false).then((_) async {
-                  await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
-                });
-        } else {
-          if (isCardActivated == true) {
-            if (widget.card.hasBackedUp) {
-              await router.push(LostMyCardRoute(backupCard: backupCard, mainCard: widget.card));
-            } else {
-              await router.push(DontHaveBackupRoute(walletAddress: widget.card.address, cardColor: cardData?.color));
-            }
+                                context: router.navigatorKey.currentContext!,
+                                builder: (_) {
+                                  controller.reset();
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Gap(12),
+                                      Assets.icons.notch.image(height: 4),
+                                      const Gap(30),
+                                      TransactionReviewTab(
+                                        isFromLostCardPage: true,
+                                        backupCard: backupCard,
+                                        mainCard: widget.card,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              )
+                            : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: true)
+                                .then((_) async {
+                                await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
+                              })
+                        : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
+                            .then((_) async {
+                            await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
+                          })
+                : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false).then((_) async {
+                    await updateCardLostStatus(cardAddress: widget.card.address, lostStatus: true);
+                  });
+            controller.reset();
           } else {
-            await router.push(ActivateCardForBackup(card: widget.card));
+            if (isCardActivated == true) {
+              if (widget.card.hasBackedUp) {
+                await router.push(LostMyCardRoute(mainCard: widget.card));
+              } else {
+                final cardIndex = _balanceStore.cards.indexWhere(
+                  (card) => card.address.trim() == widget.card.address.trim(),
+                );
+                await _historyPageStore.setCardHistoryIndex(cardIndex);
+                await router.push(
+                  DontHaveBackupRoute(
+                    walletAddress: widget.card.address,
+                    cardColor: cardData?.color,
+                    backupCard: backupCard,
+                    mainCard: widget.card,
+                  ),
+                );
+              }
+            } else {
+              await router.push(ActivateCardForBackup(card: widget.card));
+            }
+            controller.reset();
           }
+        } catch (e) {
+          debugPrint('Error in ActionSlider action: $e');
+          controller.reset();
         }
       },
       boxShadow: [

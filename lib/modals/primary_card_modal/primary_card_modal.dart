@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -12,6 +13,7 @@ import '../../gen/fonts.gen.dart';
 import '../../providers/screen_service.dart';
 import '../../utils/card_nfc_session.dart';
 import '../../widgets/loading_button/loading_button.dart';
+import '../android_nfc_session_modal/android_nfc_session_modal.dart';
 
 class PrimaryCardModal extends StatelessWidget {
   const PrimaryCardModal({super.key, required this.walletAddress, required this.pageController});
@@ -57,10 +59,30 @@ class PrimaryCardModal extends StatelessWidget {
             onPressed: () async {
               await router.maybePop();
               try {
-                await connectBackupWalletIos(
-                  mainWalletAddress: walletAddress,
-                  pageController: pageController,
-                );
+                if (Platform.isIOS) {
+                  await connectBackupWalletIos(
+                    mainWalletAddress: walletAddress,
+                    pageController: pageController,
+                  );
+                } else {
+                  await connectBackupWalletAndroid(
+                    mainWalletAddress: walletAddress,
+                    pageController: pageController,
+                  );
+                  await showModalBottomSheet(
+                    context: router.navigatorKey.currentContext!,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return const AndroidNfcSessionModal();
+                    },
+                  );
+                }
               } catch (e) {
                 log(e.toString());
               }

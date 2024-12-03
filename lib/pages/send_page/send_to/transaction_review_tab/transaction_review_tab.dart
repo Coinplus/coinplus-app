@@ -21,6 +21,7 @@ import '../../../../providers/screen_service.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../services/cloud_firestore_service.dart';
 import '../../../../store/balance_store/balance_store.dart';
+import '../../../../store/history_page_store/history_page_store.dart';
 import '../../../../widgets/loading_button/loading_button.dart';
 import '../send_to_state.dart';
 
@@ -39,6 +40,8 @@ class TransactionReviewTab extends HookWidget {
   SendToState get _sendToState => GetIt.I<SendToState>();
 
   BalanceStore get _balanceStore => GetIt.I<BalanceStore>();
+
+  HistoryPageStore get _historyPageStore => GetIt.I<HistoryPageStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -395,13 +398,16 @@ class TransactionReviewTab extends HookWidget {
                           txHash: _sendToState.transactionsStore.txHex,
                         ),
                       );
-                      await _sendToState.transactionsStore.broadcastTransaction();
+                      // await _sendToState.transactionsStore.broadcastTransaction();
                       await router.maybePop();
                       await transactionSubmittedAlert(context: context);
                       if (isFromLostCardPage == true && mainCard != null) {
                         await _balanceStore.replaceMainCardWithBackup(
                           mainCardAddress: mainCard!.address,
                           backedUpCard: backupCard,
+                        );
+                        await _historyPageStore.saveAndPatchCardAddress(
+                          backupCard!.address,
                         );
                         await updateCardLostStatus(cardAddress: mainCard!.address, lostStatus: true);
                       }

@@ -23,6 +23,7 @@ import '../../extensions/widget_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
@@ -55,7 +56,6 @@ class CardSettingsPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
-
     final _cardSettingsState = useMemoized(() => CardSettingState(card: card));
     final _balanceStore = useMemoized(() => GetIt.I<BalanceStore>());
     final _secureStorage = SecureStorageService();
@@ -312,22 +312,43 @@ class CardSettingsPage extends HookWidget {
                                             child: snapshot.data?.lost == true
                                                 ? ScaleTap(
                                                     enableFeedback: false,
-                                                    onPressed: () {
-                                                      checkFoundCard(mainWalletAddress: card.address);
+                                                    onPressed: () async {
+                                                      if (Platform.isIOS) {
+                                                        await checkFoundCardIos(mainWalletAddress: card.address);
+                                                      } else {
+                                                        try {
+                                                          await checkFoundCardAndroid(mainWalletAddress: card.address);
+                                                          await showModalBottomSheet(
+                                                            context: router.navigatorKey.currentContext!,
+                                                            shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                              ),
+                                                            ),
+                                                            backgroundColor: Colors.transparent,
+                                                            builder: (context) {
+                                                              return const AndroidNfcSessionModal();
+                                                            },
+                                                          );
+                                                        } catch (e) {
+                                                          return;
+                                                        }
+                                                      }
                                                     },
                                                     child: Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius: BorderRadius.circular(8),
                                                         color: Colors.greenAccent,
                                                       ),
-                                                      child: const Padding(
-                                                        padding: EdgeInsets.all(8),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8),
                                                         child: Text(
                                                           'Card found',
                                                           style: TextStyle(
                                                             fontFamily: FontFamily.redHatMedium,
                                                             fontSize: 14,
-                                                            color: AppColors.primary,
+                                                            color: Colors.black.withOpacity(0.5),
                                                             fontWeight: FontWeight.w700,
                                                           ),
                                                         ),
