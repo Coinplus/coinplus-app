@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
-import '../../../../models/amplitude_event/amplitude_event.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../services/ramp_service.dart';
 import '../../../../store/accelerometer_store/accelerometer_store.dart';

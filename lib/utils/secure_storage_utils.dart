@@ -3,7 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/abstract_card/abstract_card.dart';
-import '../models/amplitude_event/amplitude_event.dart';
+import '../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../models/bar_model/bar_model.dart';
 import '../pages/send_page/send_to/send_to_state.dart';
 import '../services/amplitude_service.dart';
