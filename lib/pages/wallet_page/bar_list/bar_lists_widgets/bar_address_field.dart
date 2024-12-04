@@ -5,7 +5,7 @@ import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../gen/fonts.gen.dart';
-import '../../../../models/amplitude_event/amplitude_event.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../../models/bar_model/bar_model.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../store/balance_store/balance_store.dart';

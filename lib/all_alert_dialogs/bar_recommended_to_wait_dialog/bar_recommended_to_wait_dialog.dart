@@ -12,7 +12,7 @@ import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../models/abstract_card/abstract_card.dart';
-import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';

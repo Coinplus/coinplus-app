@@ -59,19 +59,14 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="air.coinplus.com" />
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-                <!-- coinplus-alternate domain is required for App Links when the Journeys/Web SDK
-                and Deepviews are used inside your website.  -->
-                <data android:scheme="https" android:host="coinplus-alternate.test-app.link" />
+                <data android:scheme="https" android:host="tap.coinplus.com" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
             </intent-filter>
             <!-- Branch App Links - Test App -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="example.test-app.link" />
-                <!-- coinplus-alternate domain is required for App Links when the Journeys/Web SDK
-                and Deepviews are used inside your website.  -->
-                <data android:scheme="https" android:host="example-alternate.test-app.link" />
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

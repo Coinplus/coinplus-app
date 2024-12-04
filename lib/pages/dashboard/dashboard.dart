@@ -25,7 +25,7 @@ import '../../modals/primary_card_selection_modal/primary_card_selection_modal.d
 import '../../modals/send_receive_modal/send_receive_modal.dart';
 import '../../modals/tapped_backup_card_modal/tapped_backup_card_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';

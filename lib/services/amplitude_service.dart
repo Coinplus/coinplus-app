@@ -6,7 +6,7 @@ import 'package:amplitude_flutter/tracking_options.dart';
 import 'package:get_it/get_it.dart';
 
 import '../http/interceptors/api_keys.dart';
-import '../models/amplitude_event/amplitude_event.dart';
+import '../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../providers/flavor_service.dart';
