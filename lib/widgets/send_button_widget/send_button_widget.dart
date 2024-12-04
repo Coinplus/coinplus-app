@@ -11,7 +11,7 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../all_alert_dialogs/already_activated_alert/already_activated_alert.dart';

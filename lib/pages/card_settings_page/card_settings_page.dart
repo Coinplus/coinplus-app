@@ -25,7 +25,7 @@ import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';

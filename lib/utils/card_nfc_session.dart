@@ -26,7 +26,7 @@ import '../modals/card_blocked_modal/card_blocked_modal.dart';
 import '../modals/primary_card_modal/primary_card_modal.dart';
 import '../modals/primary_card_selection_modal/primary_card_selection_modal.dart';
 import '../modals/tapped_backup_card_modal/tapped_backup_card_modal.dart';
-import '../models/amplitude_event/amplitude_event.dart';
+import '../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../pages/settings_page/your_card_is_original.dart';
 import '../pages/splash_screen/splash_screen.dart';

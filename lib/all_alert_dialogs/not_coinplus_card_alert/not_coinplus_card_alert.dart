@@ -5,7 +5,7 @@ import 'package:styled_text/widgets/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../gen/fonts.gen.dart';
-import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';

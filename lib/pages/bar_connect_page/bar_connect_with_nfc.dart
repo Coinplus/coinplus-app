@@ -22,7 +22,7 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../../providers/screen_service.dart';

@@ -22,7 +22,7 @@ import '../../../gen/fonts.gen.dart';
 import '../../../modals/backup_card_modal/backup_card_modal.dart';
 import '../../../modals/lost_card_info_modal/lost_card_info_modal.dart';
 import '../../../models/abstract_card/abstract_card.dart';
-import '../../../models/amplitude_event/amplitude_event.dart';
+import '../../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';

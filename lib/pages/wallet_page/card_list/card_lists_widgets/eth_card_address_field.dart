@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/fonts.gen.dart';
 import '../../../../models/abstract_card/abstract_card.dart';
-import '../../../../models/amplitude_event/amplitude_event.dart';
+import '../../../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../../services/amplitude_service.dart';
 import '../../../../store/balance_store/balance_store.dart';
 import '../../../../utils/data_utils.dart';
