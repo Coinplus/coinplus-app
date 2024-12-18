@@ -271,7 +271,7 @@ class _BarListState extends State<BarList> with TickerProviderStateMixin, Automa
                                   borderRadius: BorderRadius.circular(14),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.1),
+                                      color: Colors.grey.withValues(alpha: 0.1),
                                       blurRadius: 15,
                                       spreadRadius: 0.5,
                                     ),

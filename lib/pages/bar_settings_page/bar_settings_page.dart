@@ -211,7 +211,7 @@ class BarSettingsPage extends HookWidget {
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                 message: 'Address was copied',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
@@ -380,7 +380,7 @@ class BarSettingsPage extends HookWidget {
                                                 ),
                                                 Overlay.of(context),
                                                 CustomSnackBar.success(
-                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                  backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                                   message: 'Private key was copied',
                                                   textStyle: const TextStyle(
                                                     fontFamily: FontFamily.redHatMedium,
@@ -405,7 +405,7 @@ class BarSettingsPage extends HookWidget {
                                             ),
                                             Overlay.of(context),
                                             CustomSnackBar.success(
-                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                              backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                               message: 'Hold to reveal your Private key',
                                               textStyle: const TextStyle(
                                                 fontFamily: FontFamily.redHatMedium,
@@ -435,7 +435,7 @@ class BarSettingsPage extends HookWidget {
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey.withValues(alpha: 0.1),
                                                 ),
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
@@ -464,7 +464,7 @@ class BarSettingsPage extends HookWidget {
                                                       10,
                                                     ),
                                                     border: Border.all(
-                                                      color: Colors.grey.withOpacity(0.1),
+                                                      color: Colors.grey.withValues(alpha: 0.1),
                                                     ),
                                                   ),
                                                   child: const Text(
@@ -570,7 +570,7 @@ class BarSettingsPage extends HookWidget {
                   Divider(
                     indent: 5,
                     endIndent: 5,
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                   ),
                   const Gap(16),
                   ListTile(
@@ -660,7 +660,7 @@ class BarSettingsPage extends HookWidget {
                   Divider(
                     indent: 5,
                     endIndent: 5,
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                   ),
                   const Gap(10),
                   ListTile(
@@ -726,7 +726,7 @@ class BarSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,
@@ -746,7 +746,7 @@ class BarSettingsPage extends HookWidget {
                                     ),
                                     Overlay.of(context),
                                     CustomSnackBar.success(
-                                      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                      backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                       message: 'Your card color was changed',
                                       textStyle: const TextStyle(
                                         fontFamily: FontFamily.redHatMedium,

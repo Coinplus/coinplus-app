@@ -40,7 +40,7 @@ class CoinsDataWidget extends StatelessWidget {
             return Divider(
               endIndent: 10,
               indent: 10,
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.withValues(alpha: 0.2),
             );
           },
           itemBuilder: (context, index) {
@@ -99,7 +99,7 @@ class CoinsDataWidget extends StatelessWidget {
                                               )
                                               .copyWith(
                                                 backgroundColor: WidgetStateProperty.all(
-                                                  Colors.grey.withOpacity(0.1),
+                                                  Colors.grey.withValues(alpha: 0.1),
                                                 ),
                                                 shape: const WidgetStatePropertyAll(
                                                   RoundedRectangleBorder(
@@ -173,12 +173,12 @@ class CoinsDataWidget extends StatelessWidget {
                                                     placeholder: (context, url) => Container(
                                                       decoration: BoxDecoration(
                                                         borderRadius: BorderRadius.circular(20),
-                                                        color: Colors.grey.withOpacity(0.5),
+                                                        color: Colors.grey.withValues(alpha: 0.5),
                                                       ),
                                                       height: 26,
                                                       width: 26,
                                                       child: CircleAvatar(
-                                                        backgroundColor: Colors.grey.withOpacity(0.3),
+                                                        backgroundColor: Colors.grey.withValues(alpha: 0.3),
                                                         child: Center(
                                                           child: Text(
                                                             data.symbol,

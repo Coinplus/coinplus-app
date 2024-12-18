@@ -186,7 +186,7 @@ final lightTheme = base.copyWith(
         (states) {
           return states.contains(WidgetState.disabled)
               ? TextStyle(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withValues(alpha: 0.5),
                   fontFamily: FontFamily.CeraPro,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -211,7 +211,7 @@ final lightTheme = base.copyWith(
       }),
       backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(WidgetState.disabled) ? Colors.black.withOpacity(0.4) : Colors.black;
+          return states.contains(WidgetState.disabled) ? Colors.black.withValues(alpha: 0.4) : Colors.black;
         },
       ),
       overlayColor: WidgetStateProperty.all(
@@ -228,14 +228,14 @@ final lightTheme = base.copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      shadowColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.2)),
+      shadowColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.2)),
       padding: WidgetStateProperty.all(
         const EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 16,
         ),
       ),
-      overlayColor: WidgetStateProperty.all(Colors.black.withOpacity(.5)),
+      overlayColor: WidgetStateProperty.all(Colors.black.withValues(alpha: .5)),
       elevation: WidgetStateProperty.all(0),
       textStyle: WidgetStateProperty.resolveWith(
         (states) {
@@ -251,7 +251,7 @@ final lightTheme = base.copyWith(
       foregroundColor: WidgetStateProperty.all(Colors.white),
       backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return Colors.grey.withOpacity(0.2);
+          return Colors.grey.withValues(alpha: 0.2);
         },
       ),
     ),

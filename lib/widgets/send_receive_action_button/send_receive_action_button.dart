@@ -202,7 +202,7 @@ class SendReceiveActionButton extends StatelessWidget {
               return FloatingActionButton(
                 shape: const CircleBorder(),
                 elevation: 3,
-                backgroundColor: Colors.deepOrangeAccent.withOpacity(0.9),
+                backgroundColor: Colors.deepOrangeAccent.withValues(alpha: 0.9),
                 onPressed: null,
                 child: AnimatedCrossFade(
                   duration: const Duration(milliseconds: 1),

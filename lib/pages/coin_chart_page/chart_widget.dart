@@ -63,8 +63,8 @@ class ChartWidget extends HookWidget {
                                                       )
                                                     : const Color(
                                                         0xFFFD5340,
-                                                      ).withOpacity(
-                                                        0.7,
+                                                      ).withValues(
+                                                        alpha: 0.7,
                                                       ),
             strokeWidth: 1,
             dashArray: [1, 3],
@@ -102,8 +102,8 @@ class ChartWidget extends HookWidget {
                                                         )
                                                       : const Color(
                                                           0xFFFD5340,
-                                                        ).withOpacity(
-                                                          0.7,
+                                                        ).withValues(
+                                                          alpha: 0.7,
                                                         ),
             ),
           ),
@@ -283,8 +283,8 @@ class ChartWidget extends HookWidget {
                                                                         )
                                                                       : const Color(
                                                                           0xFFFD5340,
-                                                                        ).withOpacity(
-                                                                          0.7,
+                                                                        ).withValues(
+                                                                          alpha: 0.7,
                                                                         ),
                               strokeWidth: 2,
                               strokeColor: Colors.transparent,
@@ -336,8 +336,8 @@ class ChartWidget extends HookWidget {
                                                                     )
                                                                   : const Color(
                                                                       0xFFFD5340,
-                                                                    ).withOpacity(
-                                                                      0.7,
+                                                                    ).withValues(
+                                                                      alpha: 0.7,
                                                                     ),
                       belowBarData: BarAreaData(
                         show: true,
@@ -386,8 +386,8 @@ class ChartWidget extends HookWidget {
                                                                         )
                                                                       : const Color(
                                                                           0xFFFD5340,
-                                                                        ).withOpacity(
-                                                                          0.7,
+                                                                        ).withValues(
+                                                                          alpha: 0.7,
                                                                         ),
                             Colors.white,
                           ],
@@ -404,7 +404,7 @@ class ChartWidget extends HookWidget {
                 bottom: 10,
                 child: Assets.icons.coinplusLogoBlack.image(
                   height: 20,
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                 ),
               ),
             ],

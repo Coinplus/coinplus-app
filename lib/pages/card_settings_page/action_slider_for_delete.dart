@@ -114,7 +114,7 @@ class ActionSliderForCardDelete extends StatelessWidget {
       },
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
+          color: Colors.grey.withValues(alpha: 0.3),
           blurRadius: 1,
           spreadRadius: 1,
         ),

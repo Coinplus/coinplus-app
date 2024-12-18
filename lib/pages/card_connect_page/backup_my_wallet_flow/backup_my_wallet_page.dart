@@ -12,8 +12,10 @@ import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
+import '../../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../services/cloud_firestore_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../utils/card_nfc_session.dart';
@@ -175,6 +177,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                         )
                         .copyWith(),
                     onPressed: () async {
+                      await recordAmplitudeEventPartThree(BackupCard(walletAddress: widget.walletAddress));
                       if (Platform.isIOS) {
                         await connectBackupWalletIos(
                           mainWalletAddress: widget.walletAddress,
@@ -229,6 +232,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       );
+                      await recordAmplitudeEventPartThree(BackupCard(walletAddress: widget.walletAddress));
                     },
                     child: const Text(
                       'Backup card',
@@ -254,7 +258,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                       )
                       .copyWith(
                         backgroundColor: WidgetStateProperty.all(
-                          Colors.grey.withOpacity(0.1),
+                          Colors.grey.withValues(alpha: 0.1),
                         ),
                       ),
                   onPressed: widget.backupPack == true
@@ -269,6 +273,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                         }
                       : () {
                           router.push(const BuyBackupCardRoute());
+                          recordAmplitudeEventPartThree(GetBackup(walletAddress: widget.walletAddress));
                         },
                   child: Text(
                     widget.backupPack == true ? 'Remind later' : 'Get a backup card',
@@ -326,6 +331,7 @@ class _BackupMyWalletPageState extends State<BackupMyWalletPage> {
                         s: cardData?.s == null ? null : 29,
                       ),
                     );
+                    await recordAmplitudeEventPartThree(BackupNextClicked(walletAddress: widget.walletAddress));
                   },
                   child: const Text(
                     'Next',

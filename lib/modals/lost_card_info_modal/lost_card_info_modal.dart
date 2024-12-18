@@ -8,8 +8,10 @@ import '../../extensions/extensions.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../models/firebase_model/cards_firebase_model.dart';
 import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
 import '../../utils/data_utils.dart';
 import '../../widgets/loading_button/loading_button.dart';
 import '../backup_card_modal/backup_card_modal.dart';
@@ -21,6 +23,9 @@ class LostCardInfoModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    recordAmplitudeEventPartThree(
+      PrimaryCard(walletAddress: cardData?.primaryWalletAddress ?? '', backupAddress: cardData?.address ?? ''),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(

@@ -150,7 +150,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
               style: TextStyle(
                 fontSize: 32,
                 fontFamily: FontFamily.redHatBold,
-                color: Colors.black.withOpacity(0.9),
+                color: Colors.black.withValues(alpha: 0.9),
               ),
             ),
           ],
@@ -279,7 +279,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                                         style: TextStyle(
                                                           fontFamily: FontFamily.redHatMedium,
                                                           fontWeight: FontWeight.w700,
-                                                          color: Colors.black.withOpacity(0.7),
+                                                          color: Colors.black.withValues(alpha: 0.7),
                                                           fontSize: 20,
                                                         ),
                                                       );
@@ -321,8 +321,8 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                                           CustomSnackBar.success(
                                                             backgroundColor: const Color(
                                                               0xFF4A4A4A,
-                                                            ).withOpacity(
-                                                              0.9,
+                                                            ).withValues(
+                                                              alpha: 0.9,
                                                             ),
                                                             message: 'Address was copied',
                                                             textStyle: const TextStyle(
@@ -446,7 +446,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                                 style: TextStyle(
                                                   fontFamily: FontFamily.redHatMedium,
                                                   fontWeight: FontWeight.w700,
-                                                  color: Colors.black.withOpacity(0.7),
+                                                  color: Colors.black.withValues(alpha: 0.7),
                                                   fontSize: 20,
                                                 ),
                                               );
@@ -473,7 +473,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                             ),
                                             Overlay.of(context),
                                             CustomSnackBar.success(
-                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                              backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                               message: 'Address was copied',
                                               textStyle: const TextStyle(
                                                 fontFamily: FontFamily.redHatMedium,
@@ -582,8 +582,8 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                     hintStyle: TextStyle(
                                       fontFamily: FontFamily.redHatLight,
                                       fontSize: 12,
-                                      color: AppColors.primaryTextColor.withOpacity(
-                                        0.8,
+                                      color: AppColors.primaryTextColor.withValues(
+                                        alpha: 0.8,
                                       ),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(
@@ -717,9 +717,9 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
+                                  color: Colors.grey.withValues(alpha: 0.3),
                                 ),
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -785,11 +785,11 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                       border: Border.all(
                                         color: _allSettingsState.isActivatedCheckBox
                                             ? const Color(0xFF73C3A6)
-                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                       ),
                                       color: _allSettingsState.isActivatedCheckBox
-                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                          : const Color(0xFFFF2E00).withOpacity(0.05),
+                                          ? const Color(0xFF73C3A6).withValues(alpha: 0.1)
+                                          : const Color(0xFFFF2E00).withValues(alpha: 0.05),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(14),
@@ -841,14 +841,14 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                   color: _allSettingsState.isActive
                                       ? const Color(0xFF73C3A6)
                                       : _allSettingsState.isAccepted
-                                          ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00).withOpacity(0.6),
+                                          ? Colors.grey.withValues(alpha: 0.3)
+                                          : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                 ),
                                 color: _allSettingsState.isActive
-                                    ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                    ? const Color(0xFF73C3A6).withValues(alpha: 0.1)
                                     : _allSettingsState.isAccepted
-                                        ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00).withOpacity(0.05),
+                                        ? Colors.white.withValues(alpha: 0.7)
+                                        : const Color(0xFFFF2E00).withValues(alpha: 0.05),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -899,14 +899,14 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                 builder: (context) {
                                   return Checkbox(
                                     checkColor: const Color(0xFF73C3A6),
-                                    activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                    activeColor: const Color(0xFF73C3A6).withValues(alpha: 0.5),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(4),
                                       ),
                                     ),
                                     side: BorderSide(
-                                      color: const Color(0xFFFF2E00).withOpacity(0.6),
+                                      color: const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                     ),
                                     value: _allSettingsState.isActivatedCheckBox,
                                     onChanged: (_) {
@@ -962,7 +962,7 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                   builder: (context) {
                                     return Checkbox(
                                       checkColor: const Color(0xFF73C3A6),
-                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                      activeColor: const Color(0xFF73C3A6).withValues(alpha: 0.5),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(4),
@@ -970,8 +970,8 @@ class _BarConnectWithNfcState extends State<BarConnectWithNfc> with TickerProvid
                                       ),
                                       side: BorderSide(
                                         color: _allSettingsState.isAccepted
-                                            ? Colors.grey.withOpacity(0.5)
-                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                            ? Colors.grey.withValues(alpha: 0.5)
+                                            : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                       ),
                                       value: _allSettingsState.isActive,
                                       onChanged: (_) {

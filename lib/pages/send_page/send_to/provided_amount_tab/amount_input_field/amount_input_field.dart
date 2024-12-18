@@ -167,7 +167,7 @@ class AmountInputField extends HookWidget {
                 style: ButtonStyle(
                   splashFactory: NoSplash.splashFactory,
                   overlayColor: WidgetStateProperty.resolveWith(
-                    (states) => Colors.grey.withOpacity(0.2),
+                    (states) => Colors.grey.withValues(alpha: 0.2),
                   ),
                 ),
                 onPressed: useMaxAction,

@@ -243,7 +243,7 @@ class SettingsPage extends HookWidget {
                                         indent: 5,
                                         endIndent: 5,
                                         thickness: 1,
-                                        color: Colors.grey.withOpacity(0.1),
+                                        color: Colors.grey.withValues(alpha: 0.1),
                                       ),
                                       InkWell(
                                         onTap: () {
@@ -285,7 +285,7 @@ class SettingsPage extends HookWidget {
                                                   indent: 0,
                                                   endIndent: 0,
                                                   thickness: 1,
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey.withValues(alpha: 0.1),
                                                 ),
                                                 InkWell(
                                                   onTap: () => onToggleFaceId(
@@ -348,7 +348,7 @@ class SettingsPage extends HookWidget {
                                 indent: 5,
                                 endIndent: 5,
                                 thickness: 1,
-                                color: Colors.grey.withOpacity(0.1),
+                                color: Colors.grey.withValues(alpha: 0.1),
                               ),
                               if (_nfcState.isNfcSupported)
                                 InkWell(
@@ -405,7 +405,7 @@ class SettingsPage extends HookWidget {
                                 indent: 5,
                                 endIndent: 5,
                                 thickness: 1,
-                                color: Colors.grey.withOpacity(0.1),
+                                color: Colors.grey.withValues(alpha: 0.1),
                               ),
                               InkWell(
                                 onTap: () => onToggleHideBalances(
@@ -607,7 +607,7 @@ class SettingsPage extends HookWidget {
                             indent: 0,
                             endIndent: 0,
                             thickness: 1,
-                            color: Colors.grey.withOpacity(0.1),
+                            color: Colors.grey.withValues(alpha: 0.1),
                           ),
                           InkWell(
                             onTap: () {
@@ -905,7 +905,7 @@ class SettingsPage extends HookWidget {
                             indent: 0,
                             endIndent: 0,
                             thickness: 1,
-                            color: Colors.grey.withOpacity(0.1),
+                            color: Colors.grey.withValues(alpha: 0.1),
                           ),
                           InkWell(
                             onTap: () async {
@@ -957,7 +957,7 @@ class SettingsPage extends HookWidget {
                             indent: 0,
                             endIndent: 0,
                             thickness: 1,
-                            color: Colors.grey.withOpacity(0.1),
+                            color: Colors.grey.withValues(alpha: 0.1),
                           ),
                           InkWell(
                             onTap: () async {

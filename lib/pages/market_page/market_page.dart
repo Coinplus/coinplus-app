@@ -119,7 +119,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                 splashColor: Colors.white,
                 focusElevation: 0,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey.withOpacity(0.6)),
+                  side: BorderSide(color: Colors.grey.withValues(alpha: 0.6)),
                   borderRadius: BorderRadius.circular(100),
                 ),
                 mini: true,
@@ -178,7 +178,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                         },
                         decoration: InputDecoration(
                           filled: true,
-                          prefixIconColor: Colors.grey.withOpacity(0.5),
+                          prefixIconColor: Colors.grey.withValues(alpha: 0.5),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                               color: Colors.blueAccent,
@@ -195,7 +195,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                           hintText: 'Search among Top ${_marketPageStore.searchedList.length} coins',
                           hintStyle: TextStyle(
                             fontFamily: FontFamily.redHatLight,
-                            color: AppColors.primaryTextColor.withOpacity(0.5),
+                            color: AppColors.primaryTextColor.withValues(alpha: 0.5),
                             fontSize: 14,
                           ),
                           prefixIcon: const Icon(
@@ -215,7 +215,7 @@ class _MarketPageState extends State<MarketPage> with TickerProviderStateMixin {
                                   ),
                                 )
                               : const SizedBox(),
-                          fillColor: Colors.grey.withOpacity(0.1),
+                          fillColor: Colors.grey.withValues(alpha: 0.1),
                         ),
                       ),
                     ),

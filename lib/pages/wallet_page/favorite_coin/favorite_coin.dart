@@ -45,13 +45,13 @@ class FavoriteCoin extends HookWidget {
                       ? Row(
                           children: [
                             Shimmer.fromColors(
-                              baseColor: Colors.grey.withOpacity(0.3),
+                              baseColor: Colors.grey.withValues(alpha: 0.3),
                               highlightColor: Colors.white,
                               child: Assets.icons.bTCIcon.image(height: 24),
                             ),
                             const Gap(8),
                             Shimmer.fromColors(
-                              baseColor: Colors.grey.withOpacity(0.3),
+                              baseColor: Colors.grey.withValues(alpha: 0.3),
                               highlightColor: Colors.white,
                               child: Container(
                                 decoration: BoxDecoration(
@@ -70,7 +70,7 @@ class FavoriteCoin extends HookWidget {
                             ),
                             const Gap(8),
                             Shimmer.fromColors(
-                              baseColor: Colors.grey.withOpacity(0.3),
+                              baseColor: Colors.grey.withValues(alpha: 0.3),
                               highlightColor: Colors.white,
                               child: Container(
                                 decoration: BoxDecoration(
@@ -83,7 +83,7 @@ class FavoriteCoin extends HookWidget {
                                     Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: Colors.grey.withOpacity(0.1),
+                                        color: Colors.grey.withValues(alpha: 0.1),
                                       ),
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 4,
@@ -107,7 +107,7 @@ class FavoriteCoin extends HookWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Shimmer.fromColors(
-                                  baseColor: Colors.grey.withOpacity(0.3),
+                                  baseColor: Colors.grey.withValues(alpha: 0.3),
                                   highlightColor: Colors.white,
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -126,7 +126,7 @@ class FavoriteCoin extends HookWidget {
                                 ),
                                 const Gap(4),
                                 Shimmer.fromColors(
-                                  baseColor: Colors.grey.withOpacity(0.3),
+                                  baseColor: Colors.grey.withValues(alpha: 0.3),
                                   highlightColor: Colors.white,
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -177,7 +177,7 @@ class FavoriteCoin extends HookWidget {
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(2),
-                                          color: Colors.grey.withOpacity(0.1),
+                                          color: Colors.grey.withValues(alpha: 0.1),
                                         ),
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 4,

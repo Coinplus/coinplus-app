@@ -78,8 +78,8 @@ class BarReorderWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                           10,
                         ),
-                        color: Colors.grey.withOpacity(
-                          0.1,
+                        color: Colors.grey.withValues(
+                          alpha: 0.1,
                         ),
                       ),
                       child: const Text(
@@ -124,8 +124,8 @@ class BarReorderWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(
                         10,
                       ),
-                      color: Colors.grey.withOpacity(
-                        0.2,
+                      color: Colors.grey.withValues(
+                        alpha: 0.2,
                       ),
                     ),
                     child: Row(
@@ -284,7 +284,7 @@ class BarReorderWidget extends StatelessWidget {
                             Center(
                               child: Icon(
                                 Icons.drag_handle,
-                                color: Colors.grey.withOpacity(0.5),
+                                color: Colors.grey.withValues(alpha: 0.5),
                                 size: 30,
                               ),
                             ),

@@ -231,7 +231,7 @@ class _WalletPageState extends State<WalletPage> with TickerProviderStateMixin {
         ),
       ),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white.withOpacity(0.95),
+      backgroundColor: Colors.white.withValues(alpha: 0.95),
       body: ReactionBuilder(
         builder: (context) {
           return reaction(

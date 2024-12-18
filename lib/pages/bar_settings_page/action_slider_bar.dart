@@ -79,7 +79,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
           ),
           Overlay.of(context),
           CustomSnackBar.success(
-            backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+            backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
             message: 'Your bar was removed',
             textStyle: const TextStyle(
               fontFamily: FontFamily.redHatMedium,
@@ -92,7 +92,7 @@ class ActionSliderForBarDelete extends StatelessWidget {
       },
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
+          color: Colors.grey.withValues(alpha: 0.3),
           blurRadius: 1,
           spreadRadius: 1,
         ),

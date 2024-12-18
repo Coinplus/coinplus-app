@@ -197,7 +197,7 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                                     BoxShadow(
                                                       blurRadius: 10,
                                                       spreadRadius: 5,
-                                                      color: Colors.grey.withOpacity(0.2),
+                                                      color: Colors.grey.withValues(alpha: 0.2),
                                                     ),
                                                   ],
                                                 ),
@@ -340,7 +340,7 @@ class _HistoryPageState extends State<HistoryPage> with TickerProviderStateMixin
                                                     BoxShadow(
                                                       blurRadius: 10,
                                                       spreadRadius: 5,
-                                                      color: Colors.grey.withOpacity(0.2),
+                                                      color: Colors.grey.withValues(alpha: 0.2),
                                                     ),
                                                   ],
                                                 ),

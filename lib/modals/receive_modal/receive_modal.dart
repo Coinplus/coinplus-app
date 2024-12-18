@@ -239,14 +239,14 @@ Future<void> receiveModal({
                   border: Border.all(
                     color: const Color(
                       0xFF4A83E0,
-                    ).withOpacity(
-                      0.1,
+                    ).withValues(
+                      alpha: 0.1,
                     ),
                   ),
                   borderRadius: BorderRadius.circular(14),
                   color: const Color(
                     0xFF4A83E0,
-                  ).withOpacity(0.05),
+                  ).withValues(alpha: 0.05),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(14),

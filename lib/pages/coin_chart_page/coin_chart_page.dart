@@ -1,5 +1,4 @@
 // ignore_for_file: cascade_invocations
-
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,30 +77,26 @@ class _CoinChartPageState extends State<CoinChartPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Observer(
-              builder: (context) {
-                return ScaleTap(
-                  enableFeedback: false,
-                  onPressed: () {
-                    Gaimon.heavy();
-                    _marketPageStore.toggleFavorite(
-                      coinId: widget.data!.id,
-                      context: context,
-                      coinName: widget.data!.name,
-                    );
-                    _marketPageStore.loadFavoriteCoins();
-                    _marketPageStore.checkIfFavorite(widget.data!.id);
-                  },
-                  child: Observer(
-                    builder: (context) {
-                      return Icon(
-                        _marketPageStore.isFavorite ? Icons.star : Icons.star_border,
-                        color: _marketPageStore.isFavorite ? Colors.orange : Colors.black,
-                      );
-                    },
-                  ),
+            child: ScaleTap(
+              enableFeedback: false,
+              onPressed: () {
+                Gaimon.heavy();
+                _marketPageStore.toggleFavorite(
+                  coinId: widget.data!.id,
+                  context: context,
+                  coinName: widget.data!.name,
                 );
+                _marketPageStore.loadFavoriteCoins();
+                _marketPageStore.checkIfFavorite(widget.data!.id);
               },
+              child: Observer(
+                builder: (context) {
+                  return Icon(
+                    _marketPageStore.isFavorite ? Icons.star : Icons.star_border,
+                    color: _marketPageStore.isFavorite ? Colors.orange : Colors.black,
+                  );
+                },
+              ),
             ),
           ),
         ],

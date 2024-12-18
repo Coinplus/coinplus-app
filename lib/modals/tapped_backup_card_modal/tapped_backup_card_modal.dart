@@ -63,7 +63,7 @@ class BackupCardTapped extends StatelessWidget {
                 : () async {
                     await router.maybePop();
                     try {
-                      if(Platform.isIOS) {
+                      if (Platform.isIOS) {
                         await nfcSessionIos();
                       } else {
                         await nfcSessionAndroid();
@@ -81,7 +81,6 @@ class BackupCardTapped extends StatelessWidget {
                           },
                         );
                       }
-
                     } catch (e) {
                       log(e.toString());
                     }

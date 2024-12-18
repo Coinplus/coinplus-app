@@ -190,7 +190,7 @@ final darkTheme = base.copyWith(
         (states) {
           return states.contains(WidgetState.disabled)
               ? TextStyle(
-                  color: Colors.white.withOpacity(0.4),
+                  color: Colors.white.withValues(alpha: 0.4),
                   fontFamily: FontFamily.CeraPro,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -211,15 +211,15 @@ final darkTheme = base.copyWith(
         );
       }),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
-        return states.contains(WidgetState.disabled) ? Colors.redAccent.withOpacity(0.4) : Colors.redAccent;
+        return states.contains(WidgetState.disabled) ? Colors.redAccent.withValues(alpha: 0.4) : Colors.redAccent;
       }),
       backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(WidgetState.disabled) ? Colors.grey.withOpacity(0.4) : Colors.grey;
+          return states.contains(WidgetState.disabled) ? Colors.grey.withValues(alpha: 0.4) : Colors.grey;
         },
       ),
       overlayColor: WidgetStateProperty.all(
-        Colors.grey.withOpacity(.5),
+        Colors.grey.withValues(alpha: .5),
       ),
     ),
   ),
@@ -259,11 +259,11 @@ final darkTheme = base.copyWith(
       foregroundColor: WidgetStateProperty.all(Colors.white),
       backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
-          return states.contains(WidgetState.disabled) ? Colors.grey.withOpacity(0.5) : Colors.grey;
+          return states.contains(WidgetState.disabled) ? Colors.grey.withValues(alpha: 0.5) : Colors.grey;
         },
       ),
       overlayColor: WidgetStateProperty.all(
-        Colors.grey.withOpacity(.5),
+        Colors.grey.withValues(alpha: .5),
       ),
     ),
   ),

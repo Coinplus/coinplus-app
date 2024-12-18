@@ -13,9 +13,11 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
 import '../../../models/abstract_card/abstract_card.dart';
+import '../../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../../models/card_model/card_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../utils/card_nfc_session.dart';
 import '../../../widgets/loading_button/loading_button.dart';
@@ -223,13 +225,14 @@ class _DontHaveBackupPageState extends State<DontHaveBackupPage> {
                       )
                       .copyWith(
                         backgroundColor: WidgetStateProperty.all(
-                          Colors.grey.withOpacity(0.1),
+                          Colors.grey.withValues(alpha: 0.1),
                         ),
                       ),
                   onPressed: () async {
                     router.popUntilRouteWithName(DashboardRoute.name);
                     await Future.delayed(const Duration(milliseconds: 400));
                     await showSendFromWalletModal(isBarList: false);
+                    await recordAmplitudeEventPartThree(DontHaveBackup(walletAddress: widget.walletAddress));
                   },
                   child: const Text(
                     'Don’t have a backup card',

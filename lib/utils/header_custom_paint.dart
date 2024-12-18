@@ -1,6 +1,5 @@
 //Copy this CustomPainter code to the Bottom of the File
 import 'dart:ui' as ui;
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -47,8 +46,8 @@ class HeaderCustomPainter extends CustomPainter {
         const Offset(0, 0),
         Offset(size.width * 0.3276933, size.height * 1.672307),
         [
-          const Color(0xffFF335C).withOpacity(1),
-          const Color(0xffFF6138).withOpacity(1),
+          const Color(0xffFF335C).withValues(alpha: 1),
+          const Color(0xffFF6138).withValues(alpha: 1),
         ],
         [0, 1],
       );

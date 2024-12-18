@@ -11,9 +11,7 @@ import '../utils/page_controller_manager.dart';
 
 FlavorService get flavorService => GetIt.I<FlavorService>();
 
-final pageController = PageControllerManager();
-
-final _pageController = pageController.pageController;
+final _pageController = PageControllerManager().pageController;
 
 final _allSettingsState = AllSettingsState();
 

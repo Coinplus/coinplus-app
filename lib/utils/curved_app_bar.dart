@@ -36,8 +36,8 @@ class RPSCustomPainter extends CustomPainter {
       const Offset(0, 0),
       Offset(size.width * 0.5334533, size.height * 1.461172),
       [
-        const Color(0xffFF335C).withOpacity(1),
-        const Color(0xffFF6138).withOpacity(1),
+        const Color(0xffFF335C).withValues(alpha: 1),
+        const Color(0xffFF6138).withValues(alpha: 1),
       ],
       [0, 1],
     );

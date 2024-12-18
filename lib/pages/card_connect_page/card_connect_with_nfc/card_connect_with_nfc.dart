@@ -245,7 +245,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
+                                color: Colors.grey.withValues(alpha: 0.1),
                                 spreadRadius: 1,
                                 blurRadius: 15,
                               ),
@@ -479,8 +479,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                                           hintStyle: TextStyle(
                                                             fontFamily: FontFamily.redHatLight,
                                                             fontSize: 13,
-                                                            color: AppColors.primaryTextColor.withOpacity(
-                                                              0.5,
+                                                            color: AppColors.primaryTextColor.withValues(
+                                                              alpha: 0.5,
                                                             ),
                                                           ),
                                                           contentPadding: const EdgeInsets.symmetric(
@@ -619,9 +619,9 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
+                                  color: Colors.grey.withValues(alpha: 0.3),
                                 ),
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -716,11 +716,11 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                       border: Border.all(
                                         color: _allSettingsState.isActivatedCheckBox
                                             ? const Color(0xFF73C3A6)
-                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                            : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                       ),
                                       color: _allSettingsState.isActivatedCheckBox
-                                          ? const Color(0xFF73C3A6).withOpacity(0.1)
-                                          : const Color(0xFFFF2E00).withOpacity(0.05),
+                                          ? const Color(0xFF73C3A6).withValues(alpha: 0.1)
+                                          : const Color(0xFFFF2E00).withValues(alpha: 0.05),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(14),
@@ -772,14 +772,14 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                   color: _allSettingsState.isActive
                                       ? const Color(0xFF73C3A6)
                                       : _allSettingsState.isAccepted
-                                          ? Colors.grey.withOpacity(0.3)
-                                          : const Color(0xFFFF2E00).withOpacity(0.6),
+                                          ? Colors.grey.withValues(alpha: 0.3)
+                                          : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                 ),
                                 color: _allSettingsState.isActive
-                                    ? const Color(0xFF73C3A6).withOpacity(0.1)
+                                    ? const Color(0xFF73C3A6).withValues(alpha: 0.1)
                                     : _allSettingsState.isAccepted
-                                        ? Colors.white.withOpacity(0.7)
-                                        : const Color(0xFFFF2E00).withOpacity(0.05),
+                                        ? Colors.white.withValues(alpha: 0.7)
+                                        : const Color(0xFFFF2E00).withValues(alpha: 0.05),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(14),
@@ -830,14 +830,14 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                 builder: (context) {
                                   return Checkbox(
                                     checkColor: const Color(0xFF73C3A6),
-                                    activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                    activeColor: const Color(0xFF73C3A6).withValues(alpha: 0.5),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(4),
                                       ),
                                     ),
                                     side: BorderSide(
-                                      color: const Color(0xFFFF2E00).withOpacity(0.6),
+                                      color: const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                     ),
                                     value: _allSettingsState.isActivatedCheckBox,
                                     onChanged: (_) {
@@ -922,7 +922,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                   builder: (context) {
                                     return Checkbox(
                                       checkColor: const Color(0xFF73C3A6),
-                                      activeColor: const Color(0xFF73C3A6).withOpacity(0.5),
+                                      activeColor: const Color(0xFF73C3A6).withValues(alpha: 0.5),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                           Radius.circular(4),
@@ -930,8 +930,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                       ),
                                       side: BorderSide(
                                         color: _allSettingsState.isAccepted
-                                            ? Colors.grey.withOpacity(0.5)
-                                            : const Color(0xFFFF2E00).withOpacity(0.6),
+                                            ? Colors.grey.withValues(alpha: 0.5)
+                                            : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                       ),
                                       value: _allSettingsState.isActive,
                                       onChanged: (_) {

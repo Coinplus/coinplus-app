@@ -57,8 +57,8 @@ class BarAddressField extends StatelessWidget {
                     CustomSnackBar.success(
                       backgroundColor: const Color(
                         0xFF4A4A4A,
-                      ).withOpacity(
-                        0.9,
+                      ).withValues(
+                        alpha: 0.9,
                       ),
                       message: 'Address was copied',
                       textStyle: const TextStyle(

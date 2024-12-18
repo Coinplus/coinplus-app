@@ -98,7 +98,7 @@ class AndroidBarNfcModal extends StatelessWidget {
                     ),
                   )
                   .copyWith(
-                    backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.3)),
+                    backgroundColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.3)),
                   ),
               child: const Text('Cancel'),
             ).paddingHorizontal(60),

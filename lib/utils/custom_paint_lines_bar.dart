@@ -68,7 +68,7 @@ class BarLinesCustomPaint extends CustomPainter {
     path_0.close();
 
     final paint0Fill = Paint()..style = PaintingStyle.fill;
-    paint0Fill.color = const Color(0xff5E668A).withOpacity(1);
+    paint0Fill.color = const Color(0xff5E668A).withValues(alpha: 1);
     canvas.drawPath(path_0, paint0Fill);
   }
 

@@ -137,10 +137,10 @@ class _CardNameChangeModalState extends State<CardNameChangeModal> {
                   hintText: widget.card.name,
                   hintStyle: TextStyle(
                     fontFamily: FontFamily.redHatLight,
-                    color: AppColors.primaryTextColor.withOpacity(0.8),
+                    color: AppColors.primaryTextColor.withValues(alpha: 0.8),
                     fontSize: 14,
                   ),
-                  fillColor: Colors.grey.withOpacity(0.1),
+                  fillColor: Colors.grey.withValues(alpha: 0.1),
                 ),
               ).paddingHorizontal(12),
               const Gap(8),

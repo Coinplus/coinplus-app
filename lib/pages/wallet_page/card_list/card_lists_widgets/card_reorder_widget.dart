@@ -85,7 +85,7 @@ class CardReorderWidget extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.withOpacity(0.1),
+                        color: Colors.grey.withValues(alpha: 0.1),
                       ),
                       child: const Text(
                         'Hold and slide the wallet across the list to re-order',
@@ -125,7 +125,7 @@ class CardReorderWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         if (!_settingsState.isReorderingStart)
-                          BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 5, blurRadius: 10)
+                          BoxShadow(color: Colors.grey.withValues(alpha: 0.2), spreadRadius: 5, blurRadius: 10)
                         else
                           const BoxShadow(color: Colors.transparent),
                       ],
@@ -274,7 +274,7 @@ class CardReorderWidget extends StatelessWidget {
                             Center(
                               child: Icon(
                                 Icons.drag_handle,
-                                color: Colors.grey.withOpacity(0.5),
+                                color: Colors.grey.withValues(alpha: 0.5),
                                 size: 30,
                               ),
                             ),

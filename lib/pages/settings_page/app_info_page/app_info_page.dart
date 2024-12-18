@@ -155,7 +155,7 @@ class AboutAppPage extends HookWidget {
                     indent: 0,
                     endIndent: 0,
                     thickness: 1,
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withValues(alpha: 0.1),
                   ),
                   InkWell(
                     onTap: () async {
@@ -200,7 +200,7 @@ class AboutAppPage extends HookWidget {
                     indent: 0,
                     endIndent: 0,
                     thickness: 1,
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withValues(alpha: 0.1),
                   ),
                   InkWell(
                     onTap: () async {

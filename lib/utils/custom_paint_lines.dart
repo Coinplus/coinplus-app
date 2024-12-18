@@ -56,7 +56,7 @@ class LineCustomPaint extends CustomPainter {
     path_0.close();
 
     final paint0Fill = Paint()..style = PaintingStyle.fill;
-    paint0Fill.color = const Color(0xff0D2449).withOpacity(1);
+    paint0Fill.color = const Color(0xff0D2449).withValues(alpha: 1);
     canvas.drawPath(path_0, paint0Fill);
   }
 

@@ -114,7 +114,7 @@ class QrScannerPage extends HookWidget {
                 return Container(
                   decoration: ShapeDecoration(
                     shape: QrOverlayShape(
-                      overlayColor: Colors.black.withOpacity(0.8),
+                      overlayColor: Colors.black.withValues(alpha: 0.8),
                       borderColor: qrDetect.isDetected ? (qrDetect.isValid ? Colors.green : Colors.red) : Colors.blue,
                       borderRadius: 12,
                       borderLength: 20,
@@ -190,11 +190,11 @@ class QrScannerPage extends HookWidget {
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(14),
-                                  color: Colors.grey.withOpacity(0.2),
+                                  color: Colors.grey.withValues(alpha: 0.2),
                                 ),
                                 child: Assets.icons.torch.image(
                                   height: 40,
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                 ),
                               ),
                               const Gap(8),
@@ -202,7 +202,7 @@ class QrScannerPage extends HookWidget {
                                 'Torch',
                                 style: TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                   fontSize: 14,
                                 ),
                               ),
@@ -215,11 +215,11 @@ class QrScannerPage extends HookWidget {
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(14),
-                                  color: Colors.green.withOpacity(0.7),
+                                  color: Colors.green.withValues(alpha: 0.7),
                                 ),
                                 child: Assets.icons.torch.image(
                                   height: 40,
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                 ),
                               ),
                               const Gap(8),
@@ -227,7 +227,7 @@ class QrScannerPage extends HookWidget {
                                 'Torch',
                                 style: TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                   fontSize: 14,
                                 ),
                               ),
