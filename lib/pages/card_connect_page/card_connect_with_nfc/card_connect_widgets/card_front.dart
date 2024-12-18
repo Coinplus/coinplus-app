@@ -43,7 +43,7 @@ class CardFront extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 15,
           ),
@@ -104,7 +104,7 @@ class CardFront extends StatelessWidget {
                                 CustomSnackBar.success(
                                   backgroundColor: const Color(
                                     0xFF4A4A4A,
-                                  ).withOpacity(0.9),
+                                  ).withValues(alpha: 0.9),
                                   message: 'Address was copied',
                                   textStyle: const TextStyle(
                                     fontFamily: FontFamily.redHatMedium,
@@ -145,8 +145,8 @@ class CardFront extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 6,
                               ),
-                              color: Colors.black.withOpacity(
-                                0.2,
+                              color: Colors.black.withValues(
+                                alpha: 0.2,
                               ),
                             ),
                             child: Column(
@@ -291,8 +291,8 @@ class CardFront extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 6,
                               ),
-                              color: Colors.black.withOpacity(
-                                0.2,
+                              color: Colors.black.withValues(
+                                alpha: 0.2,
                               ),
                             ),
                             child: Column(

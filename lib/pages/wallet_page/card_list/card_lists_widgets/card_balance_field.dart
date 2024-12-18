@@ -59,8 +59,8 @@ class CardBalanceField extends HookWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: Colors.black.withOpacity(
-                      0.3,
+                    color: Colors.black.withValues(
+                      alpha: 0.3,
                     ),
                   ),
                   child: Row(

@@ -12,11 +12,11 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../modals/card_blocked_modal/card_blocked_modal.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/wallet_protect_state/wallet_protect_state.dart';
@@ -83,7 +83,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                     )
                     .copyWith(
                       backgroundColor: WidgetStateProperty.all(
-                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withValues(alpha: 0.1),
                       ),
                     ),
                 onPressed: () async {
@@ -174,7 +174,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                     )
                     .copyWith(
                       backgroundColor: WidgetStateProperty.all(
-                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withValues(alpha: 0.1),
                       ),
                     ),
                 onPressed: () async {
@@ -277,7 +277,7 @@ class _ConnectManuallyButtonState extends State<ConnectManuallyButton> {
                   )
                   .copyWith(
                     backgroundColor: WidgetStateProperty.all(
-                      Colors.grey.withOpacity(0.1),
+                      Colors.grey.withValues(alpha: 0.1),
                     ),
                     padding: const WidgetStatePropertyAll(
                       EdgeInsets.all(13),

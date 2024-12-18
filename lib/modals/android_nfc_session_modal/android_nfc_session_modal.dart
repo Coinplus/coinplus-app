@@ -78,7 +78,7 @@ class AndroidNfcSessionModal extends StatelessWidget {
                   )
                   .copyWith(
                     backgroundColor: WidgetStateProperty.all(
-                      Colors.grey.withOpacity(0.3),
+                      Colors.grey.withValues(alpha: 0.3),
                     ),
                   ),
               child: const Text('Cancel'),

@@ -144,7 +144,7 @@ class ChangeSelectedAddressModal extends HookWidget {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         color: (isSelected && cardActivationStatus)
-                                            ? Colors.grey.withOpacity(0.1)
+                                            ? Colors.grey.withValues(alpha: 0.1)
                                             : Colors.transparent,
                                       ),
                                       child: Padding(
@@ -254,7 +254,7 @@ class ChangeSelectedAddressModal extends HookWidget {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         color: isSelected && barActivationStatus
-                                            ? Colors.grey.withOpacity(0.1)
+                                            ? Colors.grey.withValues(alpha: 0.1)
                                             : Colors.transparent,
                                       ),
                                       child: Padding(

@@ -23,6 +23,7 @@ import '../../../modals/backup_card_modal/backup_card_modal.dart';
 import '../../../modals/lost_card_info_modal/lost_card_info_modal.dart';
 import '../../../models/abstract_card/abstract_card.dart';
 import '../../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
+import '../../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
@@ -366,7 +367,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                       ),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: Colors.grey.withOpacity(0.2),
+                                                          color: Colors.grey.withValues(alpha: 0.2),
                                                           blurRadius: 20,
                                                           spreadRadius: 0.5,
                                                         ),
@@ -432,7 +433,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                             child: Container(
                                                                               decoration: BoxDecoration(
                                                                                 borderRadius: BorderRadius.circular(6),
-                                                                                color: Colors.black.withOpacity(0.5),
+                                                                                color:
+                                                                                    Colors.black.withValues(alpha: 0.5),
                                                                               ),
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.symmetric(
@@ -482,7 +484,10 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                   context: context,
                                                                                   pageListBuilder: (modalSheetContext) {
                                                                                     return [
-                                                                                      modalPage1(modalSheetContext),
+                                                                                      modalPage1(
+                                                                                        modalSheetContext,
+                                                                                        card,
+                                                                                      ),
                                                                                       modalPage2(
                                                                                         modalSheetContext,
                                                                                         card.address,
@@ -510,6 +515,12 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                 final cardData = await getCardData(
                                                                                   card.address,
                                                                                 );
+                                                                                await recordAmplitudeEventPartThree(
+                                                                                  AddBackup(
+                                                                                    walletAddress: card.address,
+                                                                                    activated: isWalletActivated,
+                                                                                  ),
+                                                                                );
                                                                                 await _balanceStore
                                                                                     .setMainWalletAddress(
                                                                                   walletAddress: card.address,
@@ -527,6 +538,12 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                               } else if (!isWalletActivated) {
                                                                                 final cardData = await getCardData(
                                                                                   card.address,
+                                                                                );
+                                                                                await recordAmplitudeEventPartThree(
+                                                                                  AddBackup(
+                                                                                    walletAddress: card.address,
+                                                                                    activated: isWalletActivated,
+                                                                                  ),
                                                                                 );
                                                                                 await _balanceStore
                                                                                     .setMainWalletAddress(
@@ -608,7 +625,8 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                                                 decoration: BoxDecoration(
                                                                                   borderRadius:
                                                                                       BorderRadius.circular(6),
-                                                                                  color: Colors.black.withOpacity(0.5),
+                                                                                  color: Colors.black
+                                                                                      .withValues(alpha: 0.5),
                                                                                 ),
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.symmetric(
@@ -805,7 +823,7 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                                                       ),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: Colors.grey.withOpacity(0.2),
+                                                          color: Colors.grey.withValues(alpha: 0.2),
                                                           blurRadius: 20,
                                                           spreadRadius: 0.5,
                                                         ),
@@ -896,11 +914,11 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
                           child: IosSmoothPageIndicator(
                             dotIndex: _balanceStore.cardIndicatorIndex,
                             dotsCount: _balanceStore.cards.length + _balanceStore.ethCards.length + 1,
-                            dotBackgroundColor: Colors.grey.withOpacity(0.1),
+                            dotBackgroundColor: Colors.grey.withValues(alpha: 0.1),
                             carouselController: widget.carouselController,
-                            dotColor: Colors.grey.withOpacity(0.3),
+                            dotColor: Colors.grey.withValues(alpha: 0.3),
                             onPageChanged: _balanceStore.updateCardIndicatorIndex,
-                            activeDotColor: AppColors.primaryButtonColor.withOpacity(0.7),
+                            activeDotColor: AppColors.primaryButtonColor.withValues(alpha: 0.7),
                             onDotTapped: (_) {
                               recordAmplitudeEventPartTwo(
                                 const PageIndicatorClicked(),

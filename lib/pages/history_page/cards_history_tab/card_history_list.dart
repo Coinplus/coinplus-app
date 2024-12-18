@@ -60,8 +60,8 @@ class CardHistoryList extends StatelessWidget {
                                     )
                                     .copyWith(
                                       backgroundColor: WidgetStateProperty.all(
-                                        Colors.grey.withOpacity(
-                                          0.1,
+                                        Colors.grey.withValues(
+                                          alpha: 0.1,
                                         ),
                                       ),
                                       shape: const WidgetStatePropertyAll(
@@ -143,7 +143,7 @@ class CardHistoryList extends StatelessWidget {
                         BoxShadow(
                           spreadRadius: 2,
                           blurRadius: 10,
-                          color: Colors.grey.withOpacity(0.1),
+                          color: Colors.grey.withValues(alpha: 0.1),
                         ),
                       ],
                     ),
@@ -157,7 +157,7 @@ class CardHistoryList extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       child: ListView.separated(
                         separatorBuilder: (_, __) => Divider(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withValues(alpha: 0.2),
                           height: 0,
                         ),
                         shrinkWrap: true,
@@ -229,8 +229,8 @@ class CardHistoryList extends StatelessWidget {
                                         height: 30,
                                         width: 30,
                                         child: CircularProgressIndicator(
-                                          color: Colors.grey.withOpacity(
-                                            0.5,
+                                          color: Colors.grey.withValues(
+                                            alpha: 0.5,
                                           ),
                                           strokeWidth: 2,
                                         ),

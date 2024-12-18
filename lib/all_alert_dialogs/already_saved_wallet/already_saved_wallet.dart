@@ -6,12 +6,12 @@ import 'package:gap/gap.dart';
 import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../pages/splash_screen/splash_screen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 
 Future<void> alreadySavedWallet(BuildContext context, String walletAddress) {
   return showDialogBox(

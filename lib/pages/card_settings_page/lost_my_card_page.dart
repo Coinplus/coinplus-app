@@ -11,9 +11,11 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../widgets/loading_button/loading_button.dart';
@@ -112,12 +114,23 @@ class _LostMyCardPageState extends State<LostMyCardPage> {
                 _sendToState
                   ..onAddressChanges(backupCard!.address)
                   ..setOutputAddress(backupCard!.address);
-
+                await recordAmplitudeEventPartThree(
+                  StartTransfer(
+                    walletAddress: widget.mainCard?.address ?? '',
+                    backupAddress: backupCard?.address ?? '',
+                  ),
+                );
                 !_sendToState.isAmountToSmall
                     ? _sendToState.sendAmountInUsd == 0
                         ? noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
                             .then((_) async {
                             await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
+                            await recordAmplitudeEventPartThree(
+                              NoFundsTransfer(
+                                walletAddress: widget.mainCard?.address ?? '',
+                                backupAddress: backupCard?.address ?? '',
+                              ),
+                            );
                           })
                         : !_sendToState.isInputtedAmountBiggerTotal
                             ? !_sendToState.isCoverFee
@@ -149,14 +162,32 @@ class _LostMyCardPageState extends State<LostMyCardPage> {
                                 : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: true)
                                     .then((_) async {
                                     await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
+                                    await recordAmplitudeEventPartThree(
+                                      NoEnoughFundsTransfer(
+                                        walletAddress: widget.mainCard?.address ?? '',
+                                        backupAddress: backupCard?.address ?? '',
+                                      ),
+                                    );
                                   })
                             : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
                                 .then((_) async {
                                 await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
+                                await recordAmplitudeEventPartThree(
+                                  NoFundsTransfer(
+                                    walletAddress: widget.mainCard?.address ?? '',
+                                    backupAddress: backupCard?.address ?? '',
+                                  ),
+                                );
                               })
                     : noFundsToTransfer(context: router.navigatorKey.currentContext!, notCoverFee: false)
                         .then((_) async {
                         await updateCardLostStatus(cardAddress: widget.mainCard!.address, lostStatus: true);
+                        await recordAmplitudeEventPartThree(
+                          NoFundsTransfer(
+                            walletAddress: widget.mainCard?.address ?? '',
+                            backupAddress: backupCard?.address ?? '',
+                          ),
+                        );
                       });
               },
               child: const Text(

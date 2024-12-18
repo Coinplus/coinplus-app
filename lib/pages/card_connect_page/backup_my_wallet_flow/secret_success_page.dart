@@ -16,8 +16,10 @@ import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
 import '../../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
 import '../../../models/abstract_card/abstract_card.dart';
+import '../../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
+import '../../../services/amplitude_service.dart';
 import '../../../store/all_settings_state/all_settings_state.dart';
 import '../../../store/balance_store/balance_store.dart';
 import '../../../utils/card_nfc_session.dart';
@@ -80,6 +82,7 @@ class _SecretSuccessState extends State<SecretSuccess> {
               splashRadius: 30,
               splashColor: Colors.transparent,
               onPressed: () async {
+                await recordAmplitudeEventPartThree(CloseBackup(walletAddress: widget.walletAddress));
                 await hasShownWallet().then((hasShown) async {
                   if (hasShown) {
                     await router.pushAndPopAll(const DashboardRoute());
@@ -179,6 +182,9 @@ class _SecretSuccessState extends State<SecretSuccess> {
                     } catch (e) {
                       log(e.toString());
                     }
+                    await recordAmplitudeEventPartThree(
+                      BackupActivationNextClicked(walletAddress: widget.walletAddress),
+                    );
                   },
                   child: const Text(
                     'Next',
@@ -227,6 +233,7 @@ class _SecretSuccessState extends State<SecretSuccess> {
                       )
                       .copyWith(),
                   onPressed: () async {
+                    await recordAmplitudeEventPartThree(BackupDone(walletAddress: widget.walletAddress));
                     final mainCard = _balanceStore.cards.firstWhereOrNull(
                       (card) => card.address == widget.walletAddress,
                     );

@@ -655,13 +655,14 @@ class DashboardPage extends HookWidget {
                   endIndent: 1,
                   indent: 0,
                   height: 1,
-                  color: Colors.grey.withOpacity(0.4),
+                  color: Colors.grey.withValues(alpha: 0.4),
                 ),
                 Observer(
                   builder: (context) {
                     return Theme(
                       data: ThemeData(
-                        canvasColor: _allSettingsState.currentIndex == 1 ? Colors.white : Colors.white.withOpacity(0.5),
+                        canvasColor:
+                            _allSettingsState.currentIndex == 1 ? Colors.white : Colors.white.withValues(alpha: 0.5),
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                       ),
@@ -727,8 +728,9 @@ class DashboardPage extends HookWidget {
                                     },
                                 ],
                                 currentIndex: _allSettingsState.currentIndex,
-                                backgroundColor:
-                                    _allSettingsState.currentIndex == 1 ? Colors.white : Colors.white.withOpacity(0.8),
+                                backgroundColor: _allSettingsState.currentIndex == 1
+                                    ? Colors.white
+                                    : Colors.white.withValues(alpha: 0.8),
                                 elevation: 0,
                                 type: BottomNavigationBarType.fixed,
                                 selectedItemColor: Colors.black,

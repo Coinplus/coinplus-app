@@ -14,7 +14,7 @@ Future<void> showCustomSnackBar({
     ),
     Overlay.of(context),
     CustomSnackBar.success(
-      backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+      backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
       message: message,
       textStyle: const TextStyle(
         fontFamily: FontFamily.redHatMedium,

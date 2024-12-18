@@ -18,7 +18,7 @@ String? onLinkPassed(Map<dynamic, dynamic> data) {
         displayDuration: const Duration(milliseconds: 400),
         Overlay.of(router.navigatorKey.currentContext!),
         CustomSnackBar.success(
-          backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+          backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
           message: 'This is not a valid Coinplus Bitcoin address',
           textStyle: const TextStyle(
             fontFamily: FontFamily.redHatMedium,

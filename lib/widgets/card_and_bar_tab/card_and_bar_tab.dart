@@ -22,7 +22,7 @@ class CardAndBarTab extends StatelessWidget {
           BoxShadow(
             blurRadius: 5,
             spreadRadius: 1,
-            color: Colors.grey.withOpacity(0.4),
+            color: Colors.grey.withValues(alpha: 0.4),
           ),
         ],
       ),
@@ -39,7 +39,7 @@ class CardAndBarTab extends StatelessWidget {
           barDecoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
           indicatorDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
           ),
           controller: tabController,
           tabs: const [

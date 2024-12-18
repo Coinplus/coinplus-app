@@ -97,7 +97,7 @@ class ProvideAddressTab extends HookWidget {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -110,7 +110,7 @@ class ProvideAddressTab extends HookWidget {
                           horizontal: 10,
                         ),
                         hintText: 'Enter receiver address',
-                        fillColor: Colors.grey.withOpacity(0.1),
+                        fillColor: Colors.grey.withValues(alpha: 0.1),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(9),
                           child: ScaleTap(
@@ -148,7 +148,7 @@ class ProvideAddressTab extends HookWidget {
                         ),
                         hintStyle: TextStyle(
                           fontFamily: FontFamily.redHatLight,
-                          color: AppColors.primaryTextColor.withOpacity(0.8),
+                          color: AppColors.primaryTextColor.withValues(alpha: 0.8),
                           fontSize: 14,
                         ),
                       ),

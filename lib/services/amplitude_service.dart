@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 
 import '../http/interceptors/api_keys.dart';
 import '../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
+import '../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../models/amplitude_user_property_model/amplitude_user_property_model.dart';
 import '../providers/flavor_service.dart';
@@ -39,6 +40,15 @@ Future<void> recordAmplitudeEvent(AmplitudeEvent event) async {
 }
 
 Future<void> recordAmplitudeEventPartTwo(AmplitudeEventPartTwo event) async {
+  await amplitude.track(
+    BaseEvent(
+      event.eventType,
+      eventProperties: event.toJson(),
+    ),
+  );
+}
+
+Future<void> recordAmplitudeEventPartThree(AmplitudeEventPartThree event) async {
   await amplitude.track(
     BaseEvent(
       event.eventType,

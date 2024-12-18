@@ -35,7 +35,7 @@ class OverviewWidget extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: Colors.grey.withValues(alpha: 0.1),
                         blurRadius: 8,
                         spreadRadius: 3,
                       ),
@@ -55,12 +55,12 @@ class OverviewWidget extends StatelessWidget {
                           placeholder: (context, url) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withValues(alpha: 0.5),
                             ),
                             height: 22,
                             width: 22,
                             child: CircleAvatar(
-                              backgroundColor: Colors.grey.withOpacity(0.3),
+                              backgroundColor: Colors.grey.withValues(alpha: 0.3),
                               child: Center(
                                 child: Text(
                                   bitcoin.symbol,
@@ -91,7 +91,7 @@ class OverviewWidget extends StatelessWidget {
                           width: 1,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
                         const Gap(15),
@@ -102,12 +102,12 @@ class OverviewWidget extends StatelessWidget {
                           placeholder: (context, url) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withValues(alpha: 0.5),
                             ),
                             height: 22,
                             width: 22,
                             child: CircleAvatar(
-                              backgroundColor: Colors.grey.withOpacity(0.3),
+                              backgroundColor: Colors.grey.withValues(alpha: 0.3),
                               child: Center(
                                 child: Text(
                                   ethereum.symbol,
@@ -138,7 +138,7 @@ class OverviewWidget extends StatelessWidget {
                           width: 1,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
                         const Gap(15),
@@ -149,12 +149,12 @@ class OverviewWidget extends StatelessWidget {
                           placeholder: (context, url) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withValues(alpha: 0.5),
                             ),
                             height: 22,
                             width: 22,
                             child: CircleAvatar(
-                              backgroundColor: Colors.grey.withOpacity(0.3),
+                              backgroundColor: Colors.grey.withValues(alpha: 0.3),
                               child: Center(
                                 child: Text(
                                   ton.symbol,

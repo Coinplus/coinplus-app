@@ -40,7 +40,7 @@ class MarketCapData extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontSize: 13,
-                  color: AppColors.textHintsColor.withOpacity(0.8),
+                  color: AppColors.textHintsColor.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -48,7 +48,7 @@ class MarketCapData extends StatelessWidget {
                 formattedMarketCap,
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
-                  color: AppColors.primary.withOpacity(0.8),
+                  color: AppColors.primary.withValues(alpha: 0.8),
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),
@@ -59,7 +59,7 @@ class MarketCapData extends StatelessWidget {
               indent: 5,
               endIndent: 5,
               thickness: 1,
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
             ),
             ListTile(
               minLeadingWidth: 10,
@@ -68,7 +68,7 @@ class MarketCapData extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontSize: 13,
-                  color: AppColors.textHintsColor.withOpacity(0.8),
+                  color: AppColors.textHintsColor.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -76,7 +76,7 @@ class MarketCapData extends StatelessWidget {
                 formattedVolume,
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
-                  color: AppColors.primary.withOpacity(0.8),
+                  color: AppColors.primary.withValues(alpha: 0.8),
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),
@@ -87,7 +87,7 @@ class MarketCapData extends StatelessWidget {
               indent: 5,
               endIndent: 5,
               thickness: 1,
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
             ),
             ListTile(
               minLeadingWidth: 10,
@@ -96,7 +96,7 @@ class MarketCapData extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontSize: 13,
-                  color: AppColors.textHintsColor.withOpacity(0.8),
+                  color: AppColors.textHintsColor.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -104,7 +104,7 @@ class MarketCapData extends StatelessWidget {
                 '$formattedAvailableSupply coins',
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
-                  color: AppColors.primary.withOpacity(0.8),
+                  color: AppColors.primary.withValues(alpha: 0.8),
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),
@@ -115,7 +115,7 @@ class MarketCapData extends StatelessWidget {
               indent: 5,
               endIndent: 5,
               thickness: 1,
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
             ),
             ListTile(
               minLeadingWidth: 10,
@@ -124,7 +124,7 @@ class MarketCapData extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
                   fontSize: 13,
-                  color: AppColors.textHintsColor.withOpacity(0.8),
+                  color: AppColors.textHintsColor.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -132,7 +132,7 @@ class MarketCapData extends StatelessWidget {
                 '$formattedTotalSupply coins',
                 style: TextStyle(
                   fontFamily: FontFamily.redHatMedium,
-                  color: AppColors.primary.withOpacity(0.8),
+                  color: AppColors.primary.withValues(alpha: 0.8),
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),

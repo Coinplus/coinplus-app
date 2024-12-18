@@ -86,7 +86,7 @@ class CardSelectDropdown extends HookWidget {
                                     BoxShadow(
                                       blurRadius: 10,
                                       spreadRadius: 5,
-                                      color: Colors.grey.withOpacity(0.2),
+                                      color: Colors.grey.withValues(alpha: 0.2),
                                     ),
                                   ],
                                 ),
@@ -206,7 +206,7 @@ class CardSelectDropdown extends HookWidget {
                                     BoxShadow(
                                       blurRadius: 10,
                                       spreadRadius: 5,
-                                      color: Colors.grey.withOpacity(0.2),
+                                      color: Colors.grey.withValues(alpha: 0.2),
                                     ),
                                   ],
                                 ),
@@ -327,7 +327,7 @@ class CardSelectDropdown extends HookWidget {
                                     BoxShadow(
                                       blurRadius: 10,
                                       spreadRadius: 5,
-                                      color: Colors.grey.withOpacity(0.2),
+                                      color: Colors.grey.withValues(alpha: 0.2),
                                     ),
                                   ],
                                 ),

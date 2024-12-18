@@ -224,7 +224,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
               style: TextStyle(
                 fontSize: 32,
                 fontFamily: FontFamily.redHatBold,
-                color: Colors.black.withOpacity(0.9),
+                color: Colors.black.withValues(alpha: 0.9),
               ),
             ),
           ],
@@ -249,7 +249,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
+                            color: Colors.grey.withValues(alpha: 0.1),
                             spreadRadius: 1,
                             blurRadius: 15,
                           ),
@@ -275,7 +275,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.1),
+                                    color: Colors.grey.withValues(alpha: 0.1),
                                     spreadRadius: 1,
                                     blurRadius: 15,
                                   ),
@@ -324,8 +324,8 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                     ? Colors.blue
                                                                     : const Color(
                                                                         0xFFB5B5B5,
-                                                                      ).withOpacity(
-                                                                        0.6,
+                                                                      ).withValues(
+                                                                        alpha: 0.6,
                                                                       ),
                                                               ),
                                                               borderRadius: BorderRadius.circular(
@@ -410,8 +410,8 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                       hintStyle: TextStyle(
                                                                         fontFamily: FontFamily.redHatLight,
                                                                         fontSize: 13,
-                                                                        color: AppColors.primaryTextColor.withOpacity(
-                                                                          0.8,
+                                                                        color: AppColors.primaryTextColor.withValues(
+                                                                          alpha: 0.8,
                                                                         ),
                                                                       ),
                                                                       contentPadding: const EdgeInsets.symmetric(
@@ -535,8 +535,8 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                     ? Colors.blue
                                                                     : const Color(
                                                                         0xFFB5B5B5,
-                                                                      ).withOpacity(
-                                                                        0.6,
+                                                                      ).withValues(
+                                                                        alpha: 0.6,
                                                                       ),
                                                               ),
                                                               borderRadius: BorderRadius.circular(
@@ -620,8 +620,8 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                       hintStyle: TextStyle(
                                                                         fontFamily: FontFamily.redHatLight,
                                                                         fontSize: 13,
-                                                                        color: AppColors.primaryTextColor.withOpacity(
-                                                                          0.8,
+                                                                        color: AppColors.primaryTextColor.withValues(
+                                                                          alpha: 0.8,
                                                                         ),
                                                                       ),
                                                                       contentPadding: const EdgeInsets.symmetric(
@@ -756,9 +756,9 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                     ),
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(14),
