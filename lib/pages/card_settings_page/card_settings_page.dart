@@ -26,6 +26,7 @@ import '../../gen/fonts.gen.dart';
 import '../../modals/android_nfc_session_modal/android_nfc_session_modal.dart';
 import '../../models/abstract_card/abstract_card.dart';
 import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
+import '../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
@@ -209,7 +210,7 @@ class CardSettingsPage extends HookWidget {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(16),
-                                          color: Colors.grey.withOpacity(0.08),
+                                          color: Colors.grey.withValues(alpha: 0.08),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(12),
@@ -276,7 +277,7 @@ class CardSettingsPage extends HookWidget {
                                           Container(
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(16),
-                                              color: Colors.grey.withOpacity(0.09),
+                                              color: Colors.grey.withValues(alpha: 0.09),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.all(12),
@@ -313,11 +314,25 @@ class CardSettingsPage extends HookWidget {
                                                 ? ScaleTap(
                                                     enableFeedback: false,
                                                     onPressed: () async {
+                                                      await recordAmplitudeEventPartThree(
+                                                        CardFound(
+                                                          walletAddress: card.address,
+                                                          backupAddress: _balanceStore.backupSingleCard?.address ?? '',
+                                                        ),
+                                                      );
                                                       if (Platform.isIOS) {
-                                                        await checkFoundCardIos(mainWalletAddress: card.address);
+                                                        await checkFoundCardIos(
+                                                          mainWalletAddress: card.address,
+                                                          backupWalletAddress:
+                                                              _balanceStore.backupSingleCard?.address ?? '',
+                                                        );
                                                       } else {
                                                         try {
-                                                          await checkFoundCardAndroid(mainWalletAddress: card.address);
+                                                          await checkFoundCardAndroid(
+                                                            mainWalletAddress: card.address,
+                                                            backupWalletAddress:
+                                                                _balanceStore.backupSingleCard?.address ?? '',
+                                                          );
                                                           await showModalBottomSheet(
                                                             context: router.navigatorKey.currentContext!,
                                                             shape: const RoundedRectangleBorder(
@@ -348,7 +363,7 @@ class CardSettingsPage extends HookWidget {
                                                           style: TextStyle(
                                                             fontFamily: FontFamily.redHatMedium,
                                                             fontSize: 14,
-                                                            color: Colors.black.withOpacity(0.5),
+                                                            color: Colors.black.withValues(alpha: 0.5),
                                                             fontWeight: FontWeight.w700,
                                                           ),
                                                         ),
@@ -436,7 +451,7 @@ class CardSettingsPage extends HookWidget {
                               ),
                               Overlay.of(context),
                               CustomSnackBar.success(
-                                backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                 message: 'Address was copied',
                                 textStyle: const TextStyle(
                                   fontFamily: FontFamily.redHatMedium,
@@ -610,7 +625,7 @@ class CardSettingsPage extends HookWidget {
                                                 ),
                                                 Overlay.of(context),
                                                 CustomSnackBar.success(
-                                                  backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                                  backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                                   message: 'Private key was copied',
                                                   textStyle: const TextStyle(
                                                     fontFamily: FontFamily.redHatMedium,
@@ -635,7 +650,7 @@ class CardSettingsPage extends HookWidget {
                                             ),
                                             Overlay.of(context),
                                             CustomSnackBar.success(
-                                              backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                              backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                               message: 'Hold to reveal your Private key',
                                               textStyle: const TextStyle(
                                                 fontFamily: FontFamily.redHatMedium,
@@ -665,7 +680,7 @@ class CardSettingsPage extends HookWidget {
                                               padding: const EdgeInsets.all(5),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey.withValues(alpha: 0.1),
                                                 ),
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
@@ -694,7 +709,7 @@ class CardSettingsPage extends HookWidget {
                                                       10,
                                                     ),
                                                     border: Border.all(
-                                                      color: Colors.grey.withOpacity(0.1),
+                                                      color: Colors.grey.withValues(alpha: 0.1),
                                                     ),
                                                   ),
                                                   child: const Text(
@@ -800,7 +815,7 @@ class CardSettingsPage extends HookWidget {
                   Divider(
                     indent: 5,
                     endIndent: 5,
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                   ),
                   if (card.color != CardColor.BACKUP)
                     if (card.label != WalletType.TRACKER)
@@ -846,7 +861,7 @@ class CardSettingsPage extends HookWidget {
                           Divider(
                             indent: 5,
                             endIndent: 5,
-                            color: Colors.grey.withOpacity(0.2),
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                           const Gap(10),
                         ],
@@ -933,7 +948,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                         message: 'Your card color was changed',
                                         textStyle: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
@@ -959,7 +974,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                         message: 'Your card color was changed',
                                         textStyle: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,
@@ -985,7 +1000,7 @@ class CardSettingsPage extends HookWidget {
                                       ),
                                       Overlay.of(context),
                                       CustomSnackBar.success(
-                                        backgroundColor: const Color(0xFF4A4A4A).withOpacity(0.9),
+                                        backgroundColor: const Color(0xFF4A4A4A).withValues(alpha: 0.9),
                                         message: 'Your card color was changed',
                                         textStyle: const TextStyle(
                                           fontFamily: FontFamily.redHatMedium,

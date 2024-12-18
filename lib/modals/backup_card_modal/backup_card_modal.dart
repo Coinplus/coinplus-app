@@ -20,7 +20,10 @@ import '../../extensions/num_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
+import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../providers/screen_service.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/accelerometer_store/accelerometer_store.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
@@ -41,6 +44,7 @@ final pageIndexNotifier = ValueNotifier(0);
 
 WoltModalSheetPage modalPage1(
   BuildContext modalSheetContext,
+  AbstractCard card,
 ) {
   return WoltModalSheetPage(
     backgroundColor: Colors.white,
@@ -51,6 +55,12 @@ WoltModalSheetPage modalPage1(
       builder: (context) {
         final backupCard = _balanceStore.backupCards.firstWhereOrNull(
           (card) => card.address == _balanceStore.backupSingleCard?.address,
+        );
+        recordAmplitudeEventPartThree(
+          BackedUp(
+            walletAddress: card.address,
+            backupAddress: backupCard?.address ?? '',
+          ),
         );
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -104,6 +114,12 @@ WoltModalSheetPage modalPage1(
                                             HapticFeedback.mediumImpact();
                                             settingsState.copyAddress();
                                           },
+                                        );
+                                        await recordAmplitudeEventPartThree(
+                                          CopyBackupAddress(
+                                            walletAddress: card.address,
+                                            backupAddress: backupCard.address,
+                                          ),
                                         );
                                       },
                                       child: Container(
@@ -243,7 +259,12 @@ WoltModalSheetPage modalPage1(
                   ),
                   const Gap(32),
                   LoadingButton(
-                    onPressed: router.maybePop,
+                    onPressed: () {
+                      router.maybePop();
+                      recordAmplitudeEventPartThree(
+                        GotItBackup(walletAddress: card.address, backupAddress: backupCard?.address ?? ''),
+                      );
+                    },
                     child: const Text(
                       'Got it',
                       style: TextStyle(
@@ -259,6 +280,9 @@ WoltModalSheetPage modalPage1(
                     ),
                     onPressed: () async {
                       pageIndexNotifier.value = pageIndexNotifier.value + 1;
+                      await recordAmplitudeEventPartThree(
+                        RemoveBackup(walletAddress: card.address, backupAddress: backupCard?.address ?? ''),
+                      );
                     },
                     child: const Text(
                       'Remove backup',
@@ -367,12 +391,15 @@ WoltModalSheetPage modalPage2(
                   unawaited(deletePrimaryWalletColorFromDb(backupWalletAddress: backupCard.address));
                   unawaited(updateCardHasBackupStatus(cardAddress: mainCardAddress, hasBackupStatus: false));
                   await showCustomSnackBar(context: modalSheetContext, message: 'Your backup card was removed');
+                  await recordAmplitudeEventPartThree(
+                    RemoveBackupConfirm(walletAddress: mainCardAddress, backupAddress: backupCard.address),
+                  );
                   await router.maybePop();
                   Gaimon.success();
                 },
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     blurRadius: 1,
                     spreadRadius: 1,
                   ),

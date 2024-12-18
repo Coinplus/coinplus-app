@@ -206,7 +206,7 @@ class PinCodePage extends HookWidget {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.3),
+                                  color: Colors.grey.withValues(alpha: 0.3),
                                 ),
                                 height: 1,
                                 width: 155,
@@ -222,7 +222,7 @@ class PinCodePage extends HookWidget {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.3),
+                                  color: Colors.grey.withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 height: 1,

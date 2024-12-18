@@ -11,7 +11,6 @@ import '../../../extensions/extensions.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../providers/screen_service.dart';
 import '../../../services/amplitude_service.dart';
 import '../../all_alert_dialogs/already_activated_alert/already_activated_alert.dart';
@@ -19,6 +18,7 @@ import '../../all_alert_dialogs/bar_recommended_to_wait_dialog/bar_recommended_t
 import '../../all_alert_dialogs/card_recommended_to_wait_dialog/card_recommended_to_wait_dialog.dart';
 import '../../constants/card_type.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../pages/send_page/send_to/send_to_modal.dart';
 import '../../pages/send_page/send_to/send_to_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -69,7 +69,7 @@ class SendButtonWidget extends HookWidget {
                   EdgeInsets.all(10),
                 ),
                 backgroundColor: WidgetStateProperty.all(
-                  Colors.grey.withOpacity(0.1),
+                  Colors.grey.withValues(alpha: 0.1),
                 ),
               ),
           onPressed: card.label == WalletType.COINPLUS_WALLET

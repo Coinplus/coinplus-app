@@ -52,7 +52,7 @@ class TotalBalance extends StatelessWidget {
                   'Total balance',
                   style: TextStyle(
                     fontFamily: FontFamily.redHatMedium,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

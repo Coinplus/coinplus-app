@@ -53,7 +53,7 @@ class CardEmptyState extends StatelessWidget {
                 borderRadius: BorderRadius.circular(14),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     blurRadius: 20,
                     spreadRadius: 0.5,
                   ),

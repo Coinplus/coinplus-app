@@ -187,7 +187,7 @@ class PrimaryCardSelectionModal extends HookWidget {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  color: Colors.black.withOpacity(0.6),
+                                  color: Colors.black.withValues(alpha: 0.6),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(6),
@@ -301,12 +301,11 @@ class PrimaryCardSelectionModal extends HookWidget {
                 .copyWith(),
             onPressed: () async {
               await router.maybePop();
-              if(Platform.isIOS) {
+              if (Platform.isIOS) {
                 await nfcSessionIos(isFromBackupConnect: true);
               } else {
                 await nfcSessionAndroid(isFromBackupConnect: true);
               }
-
             },
             child: const Text(
               'Add new',

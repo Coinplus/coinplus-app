@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:action_slider/action_slider.dart';
@@ -11,9 +12,11 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../models/card_model/card_model.dart';
 import '../../providers/screen_service.dart';
 import '../../router.gr.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/balance_store/balance_store.dart';
 import '../../store/history_page_store/history_page_store.dart';
@@ -66,20 +69,24 @@ class _LostCardActionSliderState extends State<LostCardActionSlider> {
     final _secureStorage = SecureStorageService();
     return ActionSlider.standard(
       height: 60,
-      backgroundColor: Colors.grey.withOpacity(0.09),
+      backgroundColor: Colors.grey.withValues(alpha: 0.09),
       successIcon: const Icon(
         Icons.check_rounded,
         color: Colors.black,
       ),
       action: (controller) async {
         controller.loading();
-
         try {
           final isCardActivated = await _secureStorage.checkWalletStatus(widget.card.address);
           final cardData = await getCardData(widget.card.address);
           await Future.delayed(const Duration(milliseconds: 300));
           Gaimon.success();
           controller.success();
+          unawaited(
+            recordAmplitudeEventPartThree(
+              LostMyCard(walletAddress: widget.card.address, activated: isCardActivated),
+            ),
+          );
           if (widget.lostStatus == true) {
             router.popUntilRouteWithName(DashboardRoute.name);
             final mainCardIndex = _balanceStore.cards.indexOf(widget.card);
@@ -168,7 +175,7 @@ class _LostCardActionSliderState extends State<LostCardActionSlider> {
       },
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.1),
+          color: Colors.grey.withValues(alpha: 0.1),
           blurRadius: 1,
           spreadRadius: 1,
         ),

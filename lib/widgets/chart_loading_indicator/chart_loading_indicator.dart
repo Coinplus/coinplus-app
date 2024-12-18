@@ -44,8 +44,8 @@ class ChartLoadingIndicator extends StatelessWidget {
                                                     )
                                                   : const Color(
                                                       0xFFFD5340,
-                                                    ).withOpacity(
-                                                      0.7,
+                                                    ).withValues(
+                                                      alpha: 0.7,
                                                     ),
         ),
       ),

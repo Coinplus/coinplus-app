@@ -220,8 +220,8 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                             )
                                                             .copyWith(
                                                               backgroundColor: WidgetStateProperty.all(
-                                                                Colors.grey.withOpacity(
-                                                                  0.1,
+                                                                Colors.grey.withValues(
+                                                                  alpha: 0.1,
                                                                 ),
                                                               ),
                                                               shape: const WidgetStatePropertyAll(
@@ -304,7 +304,7 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                 BoxShadow(
                                                   spreadRadius: 2,
                                                   blurRadius: 10,
-                                                  color: Colors.grey.withOpacity(0.1),
+                                                  color: Colors.grey.withValues(alpha: 0.1),
                                                 ),
                                               ],
                                             ),
@@ -316,7 +316,7 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                               clipBehavior: Clip.hardEdge,
                                               child: ListView.separated(
                                                 separatorBuilder: (_, __) => Divider(
-                                                  color: Colors.grey.withOpacity(0.2),
+                                                  color: Colors.grey.withValues(alpha: 0.2),
                                                   height: 0,
                                                 ),
                                                 shrinkWrap: true,
@@ -416,7 +416,7 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                           BoxShadow(
                                                                             spreadRadius: 5,
                                                                             blurRadius: 10,
-                                                                            color: Colors.grey.withOpacity(0.1),
+                                                                            color: Colors.grey.withValues(alpha: 0.1),
                                                                           ),
                                                                         ],
                                                                       ),
@@ -444,8 +444,8 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                                     height: 30,
                                                                                     width: 30,
                                                                                     child: CircularProgressIndicator(
-                                                                                      color:
-                                                                                          Colors.grey.withOpacity(0.5),
+                                                                                      color: Colors.grey
+                                                                                          .withValues(alpha: 0.5),
                                                                                       strokeWidth: 2,
                                                                                     ),
                                                                                   ),
@@ -605,8 +605,8 @@ class _BarsHistoryPageState extends State<BarsHistoryPage> with TickerProviderSt
                                                                   height: 30,
                                                                   width: 30,
                                                                   child: CircularProgressIndicator(
-                                                                    color: Colors.grey.withOpacity(
-                                                                      0.5,
+                                                                    color: Colors.grey.withValues(
+                                                                      alpha: 0.5,
                                                                     ),
                                                                     strokeWidth: 2,
                                                                   ),

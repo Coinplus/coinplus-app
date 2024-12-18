@@ -40,12 +40,12 @@ class CoinNameAndPrice extends StatelessWidget {
                       placeholder: (context, url) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.grey.withValues(alpha: 0.5),
                         ),
                         height: 20,
                         width: 20,
                         child: CircleAvatar(
-                          backgroundColor: Colors.grey.withOpacity(0.3),
+                          backgroundColor: Colors.grey.withValues(alpha: 0.3),
                           child: Center(
                             child: Text(
                               widget.data!.symbol,

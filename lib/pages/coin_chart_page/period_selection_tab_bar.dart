@@ -46,8 +46,9 @@ class PeriodSelectionTab extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color:
-                    _marketPageStore.chartEnum == ChartEnum.ONE_DAY ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+                color: _marketPageStore.chartEnum == ChartEnum.ONE_DAY
+                    ? Colors.grey.withValues(alpha: 0.2)
+                    : Colors.transparent,
               ),
               child: Center(
                 child: Text(
@@ -84,7 +85,7 @@ class PeriodSelectionTab extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: _marketPageStore.chartEnum == ChartEnum.ONE_WEEK
-                    ? Colors.grey.withOpacity(0.2)
+                    ? Colors.grey.withValues(alpha: 0.2)
                     : Colors.transparent,
               ),
               child: Center(
@@ -122,7 +123,7 @@ class PeriodSelectionTab extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: _marketPageStore.chartEnum == ChartEnum.ONE_MONTH
-                    ? Colors.grey.withOpacity(0.2)
+                    ? Colors.grey.withValues(alpha: 0.2)
                     : Colors.transparent,
               ),
               child: Center(
@@ -160,7 +161,7 @@ class PeriodSelectionTab extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: _marketPageStore.chartEnum == ChartEnum.THREE_MONTHS
-                    ? Colors.grey.withOpacity(0.2)
+                    ? Colors.grey.withValues(alpha: 0.2)
                     : Colors.transparent,
               ),
               child: Center(
@@ -198,7 +199,7 @@ class PeriodSelectionTab extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: _marketPageStore.chartEnum == ChartEnum.SIX_MONTHS
-                    ? Colors.grey.withOpacity(0.2)
+                    ? Colors.grey.withValues(alpha: 0.2)
                     : Colors.transparent,
               ),
               child: Center(
@@ -236,7 +237,7 @@ class PeriodSelectionTab extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: _marketPageStore.chartEnum == ChartEnum.ONE_YEAR
-                    ? Colors.grey.withOpacity(0.2)
+                    ? Colors.grey.withValues(alpha: 0.2)
                     : Colors.transparent,
               ),
               child: Center(
@@ -273,7 +274,9 @@ class PeriodSelectionTab extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: _marketPageStore.chartEnum == ChartEnum.ALL ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+                color: _marketPageStore.chartEnum == ChartEnum.ALL
+                    ? Colors.grey.withValues(alpha: 0.2)
+                    : Colors.transparent,
               ),
               child: Center(
                 child: Text(

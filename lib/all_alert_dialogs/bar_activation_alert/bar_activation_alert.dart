@@ -11,12 +11,12 @@ import 'package:nxp_originality_verifier/nxp_originality_verifier.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../models/bar_model/bar_model.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
 import '../../../services/amplitude_service.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../widgets/alert_dialog/show_dialog_box.dart';
 import '../../widgets/send_button_widget/send_page_modals.dart';

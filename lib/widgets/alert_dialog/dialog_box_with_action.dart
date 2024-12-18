@@ -114,7 +114,7 @@ class DialogBoxWithAction extends HookWidget {
                 )
                 .copyWith(
                   backgroundColor: WidgetStateProperty.all(
-                    Colors.grey.withOpacity(0.2),
+                    Colors.grey.withValues(alpha: 0.2),
                   ),
                   padding: WidgetStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 12),

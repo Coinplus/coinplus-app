@@ -27,6 +27,7 @@ import '../modals/primary_card_modal/primary_card_modal.dart';
 import '../modals/primary_card_selection_modal/primary_card_selection_modal.dart';
 import '../modals/tapped_backup_card_modal/tapped_backup_card_modal.dart';
 import '../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
+import '../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../pages/settings_page/your_card_is_original.dart';
 import '../pages/splash_screen/splash_screen.dart';
@@ -859,6 +860,9 @@ Future<void> connectBackupWalletIos({
                 cardAddress: mainWalletAddress,
                 hasBackedUp: true,
               );
+              await recordAmplitudeEventPartThree(
+                BackupTapped(walletAddress: mainWalletAddress, backupAddress: walletAddress),
+              );
               if (pageController != null) {
                 await pageController.animateToPage(
                   1,
@@ -1046,6 +1050,9 @@ Future<void> connectBackupWalletAndroid({
                 cardAddress: mainWalletAddress,
                 hasBackedUp: true,
               );
+              await recordAmplitudeEventPartThree(
+                BackupTapped(walletAddress: mainWalletAddress, backupAddress: walletAddress),
+              );
               if (pageController != null) {
                 await pageController.animateToPage(
                   1,
@@ -1094,6 +1101,7 @@ Future<void> connectBackupWalletAndroid({
 
 Future<void> checkFoundCardIos({
   required String mainWalletAddress,
+  required String backupWalletAddress,
 }) async {
   await _walletProtectState.updateNfcSessionStatus(isStarted: true);
   await NfcManager.instance.startSession(
@@ -1147,6 +1155,9 @@ Future<void> checkFoundCardIos({
               if (card.lost == true) {
                 await Future.delayed(const Duration(milliseconds: 1500));
                 await updateCardLostStatus(cardAddress: mainWalletAddress, lostStatus: false);
+                await recordAmplitudeEventPartThree(
+                  FoundCardTapped(walletAddress: walletAddress, backupAddress: backupWalletAddress),
+                );
               }
             } else {
               await notCoinplusCardAlert(
@@ -1174,6 +1185,7 @@ Future<void> checkFoundCardIos({
 
 Future<void> checkFoundCardAndroid({
   required String mainWalletAddress,
+  required String backupWalletAddress,
 }) async {
   await _walletProtectState.updateNfcSessionStatus(isStarted: true);
   await NfcManager.instance.startSession(
@@ -1234,6 +1246,9 @@ Future<void> checkFoundCardAndroid({
                   ),
                 );
                 await router.maybePop();
+                await recordAmplitudeEventPartThree(
+                  FoundCardTapped(walletAddress: walletAddress, backupAddress: backupWalletAddress),
+                );
               }
             } else {
               await notCoinplusCardAlert(
@@ -1303,7 +1318,7 @@ Future<void> checkFoundCardAndroid({
                           )
                           .copyWith(
                             backgroundColor: WidgetStateProperty.all(
-                              Colors.grey.withOpacity(0.3),
+                              Colors.grey.withValues(alpha: 0.3),
                             ),
                           ),
                       child: const Text('Close'),
@@ -1633,7 +1648,7 @@ Future<void> checkNfcAndroid({
                     )
                     .copyWith(
                       backgroundColor: WidgetStateProperty.all(
-                        Colors.grey.withOpacity(0.3),
+                        Colors.grey.withValues(alpha: 0.3),
                       ),
                     ),
                 child: const Text('Cancel'),

@@ -10,8 +10,10 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../models/abstract_card/abstract_card.dart';
+import '../../models/amplitude_event/amplitude_event_part_three/amplitude_event_part_three.dart';
 import '../../providers/screen_service.dart';
 import '../../router.dart';
+import '../../services/amplitude_service.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../../store/balance_store/balance_store.dart';
@@ -145,9 +147,10 @@ class _ActivateCardForBackupState extends State<ActivateCardForBackup> {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
+                    recordAmplitudeEventPartThree(ActivatedCard(walletAddress: widget.card.address));
                   },
                   child: const Text(
-                    'Activate Card',
+                    'Activate card',
                     style: TextStyle(fontFamily: FontFamily.redHatMedium, fontSize: 15),
                   ),
                 ).paddingHorizontal(64),
@@ -222,7 +225,7 @@ class _ActivateCardForBackupState extends State<ActivateCardForBackup> {
                             ),
                           )
                           .copyWith(
-                            backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                            backgroundColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.1)),
                             padding: const WidgetStatePropertyAll(
                               EdgeInsets.all(15),
                             ),

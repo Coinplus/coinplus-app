@@ -15,7 +15,6 @@ import '../../../extensions/widget_extension.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
-import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../../models/amplitude_event/amplitude_event_part_two/amplitude_event_part_two.dart';
 import '../../../providers/screen_service.dart';
 import '../../../router.gr.dart';
@@ -23,6 +22,7 @@ import '../../../services/amplitude_service.dart';
 import '../../../store/wallet_protect_state/wallet_protect_state.dart';
 import '../../../utils/card_nfc_session.dart';
 import '../../modals/card_blocked_modal/card_blocked_modal.dart';
+import '../../models/amplitude_event/amplitude_event_part_one/amplitude_event.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../store/all_settings_state/all_settings_state.dart';
 import '../loading_button/loading_button.dart';
@@ -55,7 +55,7 @@ class BarScanMethodsPage extends HookWidget {
                   ),
                 )
                 .copyWith(
-                  backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                  backgroundColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.1)),
                 ),
             onPressed: Platform.isIOS
                 ? () async {
@@ -159,7 +159,7 @@ class BarScanMethodsPage extends HookWidget {
                                       )
                                       .copyWith(
                                         backgroundColor: WidgetStateProperty.all(
-                                          Colors.grey.withOpacity(0.3),
+                                          Colors.grey.withValues(alpha: 0.3),
                                         ),
                                       ),
                                   child: const Text('Cancel'),
@@ -202,7 +202,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.1)),
               ),
           onPressed: () async {
             unawaited(
@@ -288,7 +288,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.1)),
               ),
           onPressed: () {
             router
@@ -331,7 +331,7 @@ class BarScanMethodsPage extends HookWidget {
                 ),
               )
               .copyWith(
-                backgroundColor: WidgetStateProperty.all(Colors.grey.withOpacity(0.1)),
+                backgroundColor: WidgetStateProperty.all(Colors.grey.withValues(alpha: 0.1)),
               ),
           onPressed: () async {
             unawaited(
