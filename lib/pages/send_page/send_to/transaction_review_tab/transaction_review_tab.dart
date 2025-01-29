@@ -398,7 +398,7 @@ class TransactionReviewTab extends HookWidget {
                           txHash: _sendToState.transactionsStore.txHex,
                         ),
                       );
-                      // await _sendToState.transactionsStore.broadcastTransaction();
+                      await _sendToState.transactionsStore.broadcastTransaction();
                       await router.maybePop();
                       await transactionSubmittedAlert(context: context);
                       if (isFromLostCardPage == true && mainCard != null) {
