@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
@@ -668,7 +669,7 @@ class DashboardPage extends HookWidget {
                       ),
                       child: Observer(
                         builder: (context) {
-                          return ClipRRect(
+                          return Platform.isIOS ? ClipRRect(
                             child: BackdropFilter(
                               filter: ImageFilter.blur(
                                 sigmaX: _allSettingsState.currentIndex == 1 ? 0 : 8,
@@ -785,6 +786,113 @@ class DashboardPage extends HookWidget {
                                 ],
                               ),
                             ),
+                          ) : BottomNavigationBar(
+                            selectedLabelStyle: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: FontFamily.redHatMedium,
+                            ),
+                            unselectedLabelStyle: const TextStyle(
+                              fontSize: 11,
+                              fontFamily: FontFamily.redHatMedium,
+                            ),
+                            onTap: (index) => [
+                              HapticFeedback.lightImpact(),
+                              _pageController.jumpToPage(index),
+                              _allSettingsState.updateIndex(index),
+                              if (index == 0)
+                                {
+                                  recordAmplitudeEvent(
+                                    const WalletTabClicked(),
+                                  ),
+                                  if (_balanceStore.cards.isNotEmpty)
+                                    {
+                                      _rampService.configuration.userAddress =
+                                          _balanceStore.cards[_historyPageStore.cardHistoryIndex].address,
+                                    }
+                                  else if (_balanceStore.bars.isNotEmpty)
+                                    {
+                                      _rampService.configuration.userAddress =
+                                          _balanceStore.bars[_historyPageStore.barHistoryIndex].address,
+                                    },
+                                }
+                              else if (index == 1)
+                                {
+                                  if (currentIndex.value == index && index == 1)
+                                    {
+                                      programmaticRefresh(),
+                                    },
+                                  currentIndex.value = index,
+                                  recordAmplitudeEvent(
+                                    const MarketTabClicked(),
+                                  ),
+                                }
+                              else if (index == 2)
+                                  {
+                                    recordAmplitudeEvent(
+                                      const HistoryTabClicked(),
+                                    ),
+                                  }
+                                else if (index == 3)
+                                    {
+                                      recordAmplitudeEvent(
+                                        const SettingsTabClicked(),
+                                      ),
+                                    },
+                            ],
+                            currentIndex: _allSettingsState.currentIndex,
+                            backgroundColor:Colors.white,
+                            elevation: 0,
+                            type: BottomNavigationBarType.fixed,
+                            selectedItemColor: Colors.black,
+                            unselectedItemColor: const Color(0xFfB8BEC5),
+                            items: <BottomNavigationBarItem>[
+                              BottomNavigationBarItem(
+                                icon: Assets.icons.walletIcon.image(
+                                  height: 32,
+                                  color:
+                                  _allSettingsState.currentIndex == 0 ? Colors.black : const Color(0xFfB8BEC5),
+                                ),
+                                label: 'Wallet',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 30,
+                                    top: 8,
+                                  ),
+                                  child: Assets.icons.market.image(
+                                    height: 23,
+                                    color: _allSettingsState.currentIndex == 1
+                                        ? Colors.black
+                                        : const Color(0xFfB8BEC5),
+                                  ),
+                                ),
+                                label: 'Markets            ',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 30,
+                                    top: 5,
+                                  ),
+                                  child: Assets.icons.history.image(
+                                    height: 28,
+                                    color: _allSettingsState.currentIndex == 2
+                                        ? Colors.black
+                                        : const Color(0xFfB8BEC5),
+                                  ),
+                                ),
+                                label: '             History',
+                              ),
+                              BottomNavigationBarItem(
+                                icon: Assets.icons.pageInfo.image(
+                                  height: 32,
+                                  color:
+                                  _allSettingsState.currentIndex == 3 ? Colors.black : const Color(0xFfB8BEC5),
+                                ),
+                                label: 'Settings',
+                              ),
+                            ],
                           );
                         },
                       ),
