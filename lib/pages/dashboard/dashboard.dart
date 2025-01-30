@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../all_alert_dialogs/already_saved_wallet/already_saved_wallet.dart';
 import '../../constants/card_record.dart';
+import '../../extensions/context_extension.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/fonts.gen.dart';
 import '../../modals/already_used_backup_card_modal/already_used_backup_card_modal.dart';
@@ -120,7 +121,9 @@ class DashboardPage extends HookWidget {
       await FirebaseMessaging.instance.getInitialMessage().then((message) async {
         if (message != null && message.data['screen'] == 'buy_bitcoin') {
           await Future.delayed(const Duration(milliseconds: 1000));
-          await openModalBottomSheet();
+          if(context.height > 600) {
+            await openModalBottomSheet();
+          }
         }
       });
 

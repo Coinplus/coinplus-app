@@ -16,13 +16,11 @@ final _pageController = PageControllerManager().pageController;
 final _allSettingsState = AllSettingsState();
 
 Future<void> signInAnonymously() async {
-  if (flavorService.isProduction) {
     final auth = FirebaseAuth.instance;
     try {
       await auth.signInAnonymously();
     } catch (e) {
       log('General error during sign-in: $e');
-    }
   }
 }
 
