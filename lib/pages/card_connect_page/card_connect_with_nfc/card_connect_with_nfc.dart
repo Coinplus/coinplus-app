@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -147,6 +148,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
 
   @override
   Widget build(BuildContext context) {
+    log(context.width.toString());
     final gaps = ResponsiveGaps(context);
     return Scaffold(
       backgroundColor: Colors.white,

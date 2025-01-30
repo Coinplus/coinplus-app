@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -60,42 +61,117 @@ class CardAddressField extends HookWidget {
         padding: EdgeInsets.symmetric(
           horizontal: context.height > 667 ? context.height * 0.035 : context.height * 0.043,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-            child: Container(
-              height: 60,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(
-                left: 8,
-                right: 8,
-                top: 12,
-                bottom: 12,
-              ),
-              decoration: BoxDecoration(
+        child: Platform.isIOS
+            ? ClipRRect(
                 borderRadius: BorderRadius.circular(6),
-                color: Colors.black.withValues(
-                  alpha: 0.3,
-                ),
-              ),
-              child: Column(
-                children: [
-                  const Row(
-                    children: [
-                      Text(
-                        'Address',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: FontFamily.redHatMedium,
-                          color: Colors.white,
-                        ),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                  child: Container(
+                    height: 60,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                      right: 8,
+                      top: 12,
+                      bottom: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.black.withValues(
+                        alpha: 0.3,
                       ),
-                    ],
+                    ),
+                    child: Column(
+                      children: [
+                        const Row(
+                          children: [
+                            Text(
+                              'Address',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: FontFamily.redHatMedium,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Observer(
+                          builder: (context) {
+                            if (_balanceStore.loadings[state.cards[index].address] ?? false) {
+                              return Text(
+                                getSplitAddress(state.cards[index].address),
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                style: const TextStyle(
+                                  fontFamily: FontFamily.redHatMedium,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ).expandedHorizontally();
+                            }
+                            return Text(
+                              getSplitAddress(state.cards[index].address),
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              style: const TextStyle(
+                                fontFamily: FontFamily.redHatMedium,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ).expandedHorizontally();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  Observer(
-                    builder: (context) {
-                      if (_balanceStore.loadings[state.cards[index].address] ?? false) {
+                ),
+              )
+            : Container(
+                height: 60,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  top: 12,
+                  bottom: 12,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: Colors.black.withValues(
+                    alpha: 0.4,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    const Row(
+                      children: [
+                        Text(
+                          'Address',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: FontFamily.redHatMedium,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Observer(
+                      builder: (context) {
+                        if (_balanceStore.loadings[state.cards[index].address] ?? false) {
+                          return Text(
+                            getSplitAddress(state.cards[index].address),
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: const TextStyle(
+                              fontFamily: FontFamily.redHatMedium,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ).expandedHorizontally();
+                        }
                         return Text(
                           getSplitAddress(state.cards[index].address),
                           overflow: TextOverflow.ellipsis,
@@ -107,25 +183,11 @@ class CardAddressField extends HookWidget {
                             fontSize: 12,
                           ),
                         ).expandedHorizontally();
-                      }
-                      return Text(
-                        getSplitAddress(state.cards[index].address),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        style: const TextStyle(
-                          fontFamily: FontFamily.redHatMedium,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ).expandedHorizontally();
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }
