@@ -676,7 +676,9 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        if (!(_validationStore.color == '1' || _validationStore.color == 'WHITE'))
+                                        if (!(_validationStore.color == '1' ||
+                                            _validationStore.color == 'WHITE' ||
+                                            _validationStore.color == 'OLD CARD'))
                                           Assets.icons.coinplusLogo.image(height: 32)
                                         else
                                           Assets.icons.coinplusLogoBlack.image(height: 32),
@@ -1085,12 +1087,16 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    if (!(_validationStore.color == '1' || _validationStore.color == 'WHITE'))
+                                    if (!(_validationStore.color == '1' ||
+                                        _validationStore.color == 'WHITE' ||
+                                        _validationStore.color == 'OLD CARD'))
                                       Assets.icons.cardBackText.image(height: 55)
                                     else
                                       Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
-                                    if (!(_validationStore.color == '1' || _validationStore.color == 'WHITE'))
+                                    if (!(_validationStore.color == '1' ||
+                                        _validationStore.color == 'WHITE' ||
+                                        _validationStore.color == 'OLD CARD'))
                                       SizedBox(
                                         width: 115,
                                         child: Assets.icons.cardBackLink.image(),
@@ -1542,9 +1548,9 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                 );
                               } else if (_validationStore.color == 'OLD CARD') {
                                 _balanceStore.saveSelectedCardManually(
-                                  color: CardColor.ORANGE,
-                                  label: WalletType.COINPLUS_WALLET,
-                                  name: 'Coinplus Bitcoin Wallet',
+                                  color: CardColor.LEGACY,
+                                  label: WalletType.COINPLUS_LEGACY_WALLET,
+                                  name: 'Coinplus Legacy Wallet',
                                 );
                               } else {
                                 _balanceStore.saveSelectedCardManually(
@@ -1589,20 +1595,20 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                 );
                               } else if (_validationStore.color == 'OLD CARD') {
                                 _balanceStore.saveSelectedCardManually(
-                                  color: CardColor.ORANGE,
-                                  label: WalletType.COINPLUS_WALLET,
-                                  name: 'Coinplus Bitcoin Wallet',
+                                  color: CardColor.LEGACY,
+                                  label: WalletType.COINPLUS_LEGACY_WALLET,
+                                  name: 'Coinplus Legacy Wallet',
                                 );
                               } else {
                                 _balanceStore.saveSelectedCardManually(
-                                  color: CardColor.ORANGE,
-                                  label: WalletType.COINPLUS_WALLET,
+                                  color: CardColor.LEGACY,
+                                  label: WalletType.COINPLUS_LEGACY_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
                               }
                             } else {
                               _balanceStore.saveSelectedCardManually(
-                                color: CardColor.ORANGE,
+                                color: CardColor.LEGACY,
                                 label: WalletType.TRACKER_PLUS,
                                 name: 'Bitcoin Wallet',
                               );

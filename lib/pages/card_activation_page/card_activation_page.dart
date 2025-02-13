@@ -1056,6 +1056,10 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
         return DecorationImage(
           image: Assets.images.card.filledBackBrown.image().image,
         );
+      case CardColor.LEGACY:
+        return DecorationImage(
+          image: Assets.images.card.filledBackLegacy.image().image,
+        );
       default:
         return DecorationImage(
           image: Assets.images.card.filledBack.image().image,
@@ -1080,6 +1084,10 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
       case CardColor.BACKUP:
         return DecorationImage(
           image: Assets.images.card.backupCardFront.image().image,
+        );
+      case CardColor.LEGACY:
+        return DecorationImage(
+          image: Assets.images.card.legacyFront.image().image,
         );
       default:
         return DecorationImage(

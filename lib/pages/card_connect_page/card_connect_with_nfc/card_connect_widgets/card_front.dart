@@ -27,6 +27,7 @@ class CardFront extends StatelessWidget {
     required this.cardColor,
     required this.addressState,
     required this.marketPageStore,
+    required this.isMifareUltralight,
   });
 
   final String receivedData;
@@ -34,6 +35,7 @@ class CardFront extends StatelessWidget {
   final String? cardColor;
   final AddressState addressState;
   final MarketPageStore marketPageStore;
+  final bool isMifareUltralight;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class CardFront extends StatelessWidget {
           ),
         ],
         image: DecorationImage(
-          image: getFrontImageForCardColor(cardColor).image,
+          image: getFrontImageForCardColor(cardColor, isMifare: isMifareUltralight).image,
         ),
       ),
       child: Center(
@@ -145,9 +147,11 @@ class CardFront extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 6,
                               ),
-                              color: Colors.black.withValues(
-                                alpha: 0.2,
-                              ),
+                              color: isMifareUltralight
+                                  ? Colors.grey.withValues(alpha: 0.5)
+                                  : Colors.black.withValues(
+                                      alpha: 0.2,
+                                    ),
                             ),
                             child: Column(
                               children: [
@@ -291,9 +295,11 @@ class CardFront extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 6,
                               ),
-                              color: Colors.black.withValues(
-                                alpha: 0.2,
-                              ),
+                              color: isMifareUltralight
+                                  ? Colors.grey.withValues(alpha: 0.5)
+                                  : Colors.black.withValues(
+                                      alpha: 0.2,
+                                    ),
                             ),
                             child: Column(
                               children: [

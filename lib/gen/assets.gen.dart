@@ -526,12 +526,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/pending.png
   AssetGenImage get pending => const AssetGenImage('assets/images/pending.png');
 
-  /// File path: assets/images/wallet_protect_image.png
+  /// File path: assets/images/wallet_protect_image.webp
   AssetGenImage get walletProtectImage =>
-      const AssetGenImage('assets/images/wallet_protect_image.png');
-
-  /// File path: assets/images/warning.jpg
-  AssetGenImage get warning => const AssetGenImage('assets/images/warning.jpg');
+      const AssetGenImage('assets/images/wallet_protect_image.webp');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -541,8 +538,7 @@ class $AssetsImagesGen {
         coinpluslogo,
         lostCardIllustration,
         pending,
-        walletProtectImage,
-        warning
+        walletProtectImage
       ];
 }
 
@@ -729,8 +725,8 @@ class $AssetsImagesBarGen {
 class $AssetsImagesCardGen {
   const $AssetsImagesCardGen();
 
-  /// File path: assets/images/card/Back.png
-  AssetGenImage get back => const AssetGenImage('assets/images/card/Back.png');
+  /// File path: assets/images/card/Back.webp
+  AssetGenImage get back => const AssetGenImage('assets/images/card/Back.webp');
 
   /// File path: assets/images/card/Secret1.png
   AssetGenImage get secret1 =>
@@ -744,25 +740,29 @@ class $AssetsImagesCardGen {
   AssetGenImage get backupCardFront =>
       const AssetGenImage('assets/images/card/backup_card_front.png');
 
-  /// File path: assets/images/card/brown_card_front.png
+  /// File path: assets/images/card/brown_card_front.webp
   AssetGenImage get brownCardFront =>
-      const AssetGenImage('assets/images/card/brown_card_front.png');
+      const AssetGenImage('assets/images/card/brown_card_front.webp');
 
   /// File path: assets/images/card/buy_card_text.png
   AssetGenImage get buyCardText =>
       const AssetGenImage('assets/images/card/buy_card_text.png');
 
-  /// File path: assets/images/card/buy_cards.png
+  /// File path: assets/images/card/buy_cards.webp
   AssetGenImage get buyCards =>
-      const AssetGenImage('assets/images/card/buy_cards.png');
+      const AssetGenImage('assets/images/card/buy_cards.webp');
 
-  /// File path: assets/images/card/card_back_black.png
+  /// File path: assets/images/card/card_back_black.webp
   AssetGenImage get cardBackBlack =>
-      const AssetGenImage('assets/images/card/card_back_black.png');
+      const AssetGenImage('assets/images/card/card_back_black.webp');
 
-  /// File path: assets/images/card/card_back_white.png
+  /// File path: assets/images/card/card_back_legacy.webp
+  AssetGenImage get cardBackLegacy =>
+      const AssetGenImage('assets/images/card/card_back_legacy.webp');
+
+  /// File path: assets/images/card/card_back_white.webp
   AssetGenImage get cardBackWhite =>
-      const AssetGenImage('assets/images/card/card_back_white.png');
+      const AssetGenImage('assets/images/card/card_back_white.webp');
 
   /// File path: assets/images/card/card_buy_blur_effect.png
   AssetGenImage get cardBuyBlurEffect =>
@@ -780,33 +780,41 @@ class $AssetsImagesCardGen {
   AssetGenImage get emptyCard =>
       const AssetGenImage('assets/images/card/empty_card.png');
 
-  /// File path: assets/images/card/filled_back.png
+  /// File path: assets/images/card/filled_back.webp
   AssetGenImage get filledBack =>
-      const AssetGenImage('assets/images/card/filled_back.png');
+      const AssetGenImage('assets/images/card/filled_back.webp');
 
-  /// File path: assets/images/card/filled_back_brown.png
+  /// File path: assets/images/card/filled_back_brown.webp
   AssetGenImage get filledBackBrown =>
-      const AssetGenImage('assets/images/card/filled_back_brown.png');
+      const AssetGenImage('assets/images/card/filled_back_brown.webp');
 
-  /// File path: assets/images/card/filled_back_white.png
+  /// File path: assets/images/card/filled_back_legacy.webp
+  AssetGenImage get filledBackLegacy =>
+      const AssetGenImage('assets/images/card/filled_back_legacy.webp');
+
+  /// File path: assets/images/card/filled_back_white.webp
   AssetGenImage get filledBackWhite =>
-      const AssetGenImage('assets/images/card/filled_back_white.png');
+      const AssetGenImage('assets/images/card/filled_back_white.webp');
 
   /// File path: assets/images/card/form_card_selected.png
   AssetGenImage get formCardSelected =>
       const AssetGenImage('assets/images/card/form_card_selected.png');
 
-  /// File path: assets/images/card/orange_card_front.png
+  /// File path: assets/images/card/legacy_front.webp
+  AssetGenImage get legacyFront =>
+      const AssetGenImage('assets/images/card/legacy_front.webp');
+
+  /// File path: assets/images/card/orange_card_front.webp
   AssetGenImage get orangeCardFront =>
-      const AssetGenImage('assets/images/card/orange_card_front.png');
+      const AssetGenImage('assets/images/card/orange_card_front.webp');
 
   /// File path: assets/images/card/secrets_scratch_image.png
   AssetGenImage get secretsScratchImage =>
       const AssetGenImage('assets/images/card/secrets_scratch_image.png');
 
-  /// File path: assets/images/card/white_card_front.png
+  /// File path: assets/images/card/white_card_front.webp
   AssetGenImage get whiteCardFront =>
-      const AssetGenImage('assets/images/card/white_card_front.png');
+      const AssetGenImage('assets/images/card/white_card_front.webp');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -818,6 +826,7 @@ class $AssetsImagesCardGen {
         buyCardText,
         buyCards,
         cardBackBlack,
+        cardBackLegacy,
         cardBackWhite,
         cardBuyBlurEffect,
         cardForm,
@@ -825,8 +834,10 @@ class $AssetsImagesCardGen {
         emptyCard,
         filledBack,
         filledBackBrown,
+        filledBackLegacy,
         filledBackWhite,
         formCardSelected,
+        legacyFront,
         orangeCardFront,
         secretsScratchImage,
         whiteCardFront

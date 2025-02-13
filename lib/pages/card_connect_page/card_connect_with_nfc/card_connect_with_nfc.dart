@@ -233,6 +233,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                     cardColor: widget.cardColor,
                     addressState: _addressState,
                     marketPageStore: _marketPageStore,
+                    isMifareUltralight: widget.isMiFareUltralight ?? false,
                   ),
                   back: ClipRRect(
                     child: Padding(
@@ -254,9 +255,13 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                             ],
                             image: DecorationImage(
                               image: !_addressState.isAddressVisible
-                                  ? getBackImageForCardColor(widget.cardColor).image
+                                  ? getBackImageForCardColor(
+                                      widget.cardColor,
+                                      isMifare: widget.isMiFareUltralight ?? false,
+                                    ).image
                                   : getFilledBackImageForCardColor(
                                       widget.cardColor,
+                                      isMifare: widget.isMiFareUltralight ?? false,
                                     ).image,
                             ),
                           ),
@@ -357,7 +362,10 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        if (!(widget.cardColor == '1' || widget.cardColor == 'WHITE'))
+                                        if (!(widget.cardColor == '1' ||
+                                            widget.cardColor == 'WHITE' ||
+                                            widget.isMiFareUltralight == true ||
+                                            widget.cardColor == 'OLD CARD'))
                                           Assets.icons.coinplusLogo.image(height: 32)
                                         else
                                           Assets.icons.coinplusLogoBlack.image(height: 32),
@@ -375,7 +383,10 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                               border: Border.all(
                                                 color: _focusNode.hasFocus
                                                     ? Colors.blue
-                                                    : widget.cardColor == '1' || widget.cardColor == 'WHITE'
+                                                    : widget.cardColor == '1' ||
+                                                            widget.cardColor == 'WHITE' ||
+                                                            widget.isMiFareUltralight == true ||
+                                                            widget.cardColor == 'OLD CARD'
                                                         ? const Color(
                                                             0xFFF0563C,
                                                           )
@@ -577,12 +588,18 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    if (!(widget.cardColor == '1' || widget.cardColor == 'WHITE'))
+                                    if (!(widget.cardColor == '1' ||
+                                        widget.cardColor == 'WHITE' ||
+                                        widget.isMiFareUltralight == true ||
+                                        widget.cardColor == 'OLD CARD'))
                                       Assets.icons.cardBackText.image(height: 55)
                                     else
                                       Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
-                                    if (!(widget.cardColor == '1' || widget.cardColor == 'WHITE'))
+                                    if (!(widget.cardColor == '1' ||
+                                        widget.cardColor == 'WHITE' ||
+                                        widget.isMiFareUltralight == true ||
+                                        widget.cardColor == 'OLD CARD'))
                                       SizedBox(
                                         width: 115,
                                         child: Assets.icons.cardBackLink.image(),
