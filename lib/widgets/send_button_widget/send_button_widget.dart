@@ -72,7 +72,7 @@ class SendButtonWidget extends HookWidget {
                   Colors.grey.withValues(alpha: 0.1),
                 ),
               ),
-          onPressed: card.label == WalletType.COINPLUS_WALLET
+          onPressed: card.label == WalletType.COINPLUS_WALLET || card.label == WalletType.COINPLUS_LEGACY_WALLET
               ? isBarList
                   ? () async {
                       if (await isBarActivated) {
