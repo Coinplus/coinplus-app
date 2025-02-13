@@ -818,7 +818,9 @@ class CardSettingsPage extends HookWidget {
                     color: Colors.grey.withValues(alpha: 0.2),
                   ),
                   if (card.color != CardColor.BACKUP)
-                    if (card.label != WalletType.TRACKER)
+                    if (card.label != WalletType.TRACKER &&
+                        card.label != WalletType.COINPLUS_LEGACY_WALLET &&
+                        card.label != WalletType.TRACKER_PLUS)
                       Column(
                         children: [
                           const Gap(16),

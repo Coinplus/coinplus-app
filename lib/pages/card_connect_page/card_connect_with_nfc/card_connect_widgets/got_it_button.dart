@@ -186,8 +186,10 @@ class GotItButton extends StatelessWidget {
                                 color: CardColor.BACKUP,
                               );
                             } else {
-                              balanceStore.saveSelectedCard(
-                                color: CardColor.ORANGE,
+                              balanceStore.saveSelectedCardManually(
+                                color: CardColor.LEGACY,
+                                label: WalletType.COINPLUS_LEGACY_WALLET,
+                                name: 'Coinplus Legacy Wallet',
                               );
                             }
                             unawaited(
@@ -206,7 +208,7 @@ class GotItButton extends StatelessWidget {
                             if (isOldCard == false || isOldCard == null) {
                               await recordUserProperty(const Tracker());
                               balanceStore.saveSelectedCardManually(
-                                color: CardColor.ORANGE,
+                                color: CardColor.LEGACY,
                                 label: WalletType.TRACKER_PLUS,
                                 name: 'Bitcoin Wallet',
                               );
@@ -215,9 +217,9 @@ class GotItButton extends StatelessWidget {
                                 connectedCount(receivedData),
                               );
                               balanceStore.saveSelectedCardManually(
-                                color: CardColor.ORANGE,
-                                label: WalletType.COINPLUS_WALLET,
-                                name: 'Coinplus Bitcoin Wallet',
+                                color: CardColor.LEGACY,
+                                label: WalletType.COINPLUS_LEGACY_WALLET,
+                                name: 'Coinplus Legacy Wallet',
                               );
                             }
                           } else {
