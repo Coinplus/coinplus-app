@@ -293,7 +293,84 @@ Future<void> nfcSessionIos({
       } else {
         await NfcManager.instance.stopSession();
         await Future.delayed(const Duration(milliseconds: 2700));
-        if (tag.data.containsKey('mifare')) {
+        if (records.length > 1) {
+          if (card != null && card.possibleOldCard == true) {
+            if (card.nfcId == formattedTagId) {
+              //Connect as Coinplus Bitcoin Wallet
+              final cardIndex = _balanceStore.cards.indexWhere(
+                (element) => element.address == walletAddress,
+              );
+              if (cardIndex != -1) {
+                await _walletProtectState.updateModalStatus(isOpened: true);
+                await alreadySavedWallet(
+                  router.navigatorKey.currentContext!,
+                  walletAddress,
+                );
+                _balanceStore.onCardAdded(walletAddress);
+                await _walletProtectState.updateModalStatus(isOpened: false);
+              } else {
+                await router.push(
+                  CardConnectWithNfc(
+                    isOldCard: card.possibleOldCard,
+                    isMiFareUltralight: isMifareUltralight,
+                    isOriginalNxp: false,
+                    receivedData: walletAddress,
+                    cardColor: cardColor,
+                    isActivated: card.activated,
+                    backup: card.backup ?? false,
+                    backupPack: card.backupPack ?? false,
+                    isFromBackupConnect: isFromBackupConnect,
+                  ),
+                );
+              }
+            } else {
+              //Fake card
+              await NfcManager.instance.stopSession();
+              Future.delayed(
+                Duration.zero,
+                () => _walletProtectState.updateModalStatus(isOpened: true),
+              );
+              await Future.delayed(const Duration(milliseconds: 2700));
+              await notCoinplusCardAlert(
+                context: router.navigatorKey.currentContext!,
+                walletAddress: walletAddress,
+                walletType: 'Card',
+                source: 'Wallet',
+              );
+              Future.delayed(
+                Duration.zero,
+                () => _walletProtectState.updateModalStatus(isOpened: false),
+              );
+            }
+          } else {
+            final cardIndex = _balanceStore.cards.indexWhere(
+              (element) => element.address == walletAddress,
+            );
+            if (cardIndex != -1) {
+              await _walletProtectState.updateModalStatus(isOpened: true);
+              await alreadySavedWallet(
+                router.navigatorKey.currentContext!,
+                walletAddress,
+              );
+              _balanceStore.onCardAdded(walletAddress);
+              await _walletProtectState.updateModalStatus(isOpened: false);
+            } else {
+              await router.push(
+                CardConnectWithNfc(
+                  isOldCard: card?.possibleOldCard,
+                  isMiFareUltralight: isMifareUltralight,
+                  isOriginalNxp: false,
+                  receivedData: walletAddress,
+                  cardColor: cardColor,
+                  backup: card?.backup ?? false,
+                  backupPack: card?.backupPack ?? false,
+                  isActivated: card?.activated,
+                ),
+              );
+            }
+          }
+          return;
+        } else if (records.length <= 1) {
           isMifareUltralight = true;
           if (card != null && card.possibleOldCard == true) {
             if (card.nfcId == formattedTagId) {
@@ -323,7 +400,8 @@ Future<void> nfcSessionIos({
                   ),
                 );
               }
-            } else {
+            }
+            else {
               //Fake card
               await NfcManager.instance.stopSession();
               Future.delayed(
@@ -361,6 +439,7 @@ Future<void> nfcSessionIos({
                   isOldCard: card?.possibleOldCard,
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalNxp: false,
+                  cardColor: cardColor,
                   receivedData: walletAddress,
                   backup: card?.backup ?? false,
                   backupPack: card?.backupPack ?? false,
@@ -369,6 +448,7 @@ Future<void> nfcSessionIos({
               );
             }
           }
+          return;
         } else {
           //Connect as Tracker
           final cardIndex = _balanceStore.cards.indexWhere(
@@ -464,6 +544,7 @@ Future<void> nfcSessionAndroid({
       }
       await router.maybePop();
       final card = await getCardData(walletAddress);
+      final cardDbColor = card?.color ?? '';
       final formattedTagId = uid.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':').toUpperCase();
       if (isOriginalTag && card != null && (card.backup == false || card.backup == null)) {
         if (card.lost != true) {
@@ -608,12 +689,38 @@ Future<void> nfcSessionAndroid({
           }
         }
       } else {
-        if (tag.data.containsKey('mifareultralight')) {
+        if(records.length > 1) {
+          final cardIndex = _balanceStore.cards.indexWhere(
+                (element) => element.address == walletAddress,
+          );
+          if (cardIndex != -1) {
+            await _walletProtectState.updateModalStatus(isOpened: true);
+            await alreadySavedWallet(
+              router.navigatorKey.currentContext!,
+              walletAddress,
+            );
+            _balanceStore.onCardAdded(walletAddress);
+            await _walletProtectState.updateModalStatus(isOpened: false);
+          } else {
+            await router.push(
+              CardConnectWithNfc(
+                isOriginalNxp: false,
+                isMiFareUltralight: false,
+                cardColor: cardDbColor,
+                receivedData: walletAddress,
+                isActivated: card?.activated,
+                backup: card?.backup ?? false,
+                backupPack: card?.backupPack ?? false,
+              ),
+            );
+          }
+          return;
+        } else if(records.length <= 1) {
           isMifareUltralight = true;
           if (card != null && card.possibleOldCard == true) {
             if (card.nfcId == formattedTagId) {
               final cardIndex = _balanceStore.cards.indexWhere(
-                (element) => element.address == walletAddress,
+                    (element) => element.address == walletAddress,
               );
               if (cardIndex != -1) {
                 await _walletProtectState.updateModalStatus(isOpened: true);
@@ -629,6 +736,7 @@ Future<void> nfcSessionAndroid({
                     isOldCard: card.possibleOldCard,
                     isMiFareUltralight: isMifareUltralight,
                     isOriginalNxp: false,
+                    cardColor: cardDbColor,
                     isActivated: card.activated,
                     receivedData: walletAddress,
                     backup: card.backup ?? false,
@@ -639,7 +747,7 @@ Future<void> nfcSessionAndroid({
             } else {
               Future.delayed(
                 Duration.zero,
-                () => _walletProtectState.updateModalStatus(isOpened: true),
+                    () => _walletProtectState.updateModalStatus(isOpened: true),
               );
               await notCoinplusCardAlert(
                 context: router.navigatorKey.currentContext!,
@@ -649,12 +757,13 @@ Future<void> nfcSessionAndroid({
               );
               Future.delayed(
                 Duration.zero,
-                () => _walletProtectState.updateModalStatus(isOpened: false),
+                    () => _walletProtectState.updateModalStatus(isOpened: false),
               );
             }
-          } else {
+          }
+          else {
             final cardIndex = _balanceStore.cards.indexWhere(
-              (element) => element.address == walletAddress,
+                  (element) => element.address == walletAddress,
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);
@@ -670,6 +779,7 @@ Future<void> nfcSessionAndroid({
                   isOldCard: card?.possibleOldCard,
                   isMiFareUltralight: isMifareUltralight,
                   isOriginalNxp: false,
+                  cardColor: cardDbColor,
                   isActivated: card?.activated,
                   receivedData: walletAddress,
                   backup: card?.backup ?? false,
@@ -677,30 +787,6 @@ Future<void> nfcSessionAndroid({
                 ),
               );
             }
-          }
-        } else {
-          final cardIndex = _balanceStore.cards.indexWhere(
-            (element) => element.address == walletAddress,
-          );
-          if (cardIndex != -1) {
-            await _walletProtectState.updateModalStatus(isOpened: true);
-            await alreadySavedWallet(
-              router.navigatorKey.currentContext!,
-              walletAddress,
-            );
-            _balanceStore.onCardAdded(walletAddress);
-            await _walletProtectState.updateModalStatus(isOpened: false);
-          } else {
-            await router.push(
-              CardConnectWithNfc(
-                isOriginalNxp: false,
-                isMiFareUltralight: false,
-                receivedData: walletAddress,
-                isActivated: card?.activated,
-                backup: card?.backup ?? false,
-                backupPack: card?.backupPack ?? false,
-              ),
-            );
           }
         }
       }
