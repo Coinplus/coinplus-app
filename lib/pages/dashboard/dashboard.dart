@@ -189,6 +189,7 @@ class DashboardPage extends HookWidget {
                   ),
                 );
                 final cardDataFromDb = await getCardData(deepLinkRes.value.toString());
+                final cardType = cardDataFromDb?.type ?? '';
                 cardColorRes.value = cardDataFromDb?.color ?? '';
                 final cardExists = _balanceStore.cards.any(
                   (element) => element.address == deepLinkRes.value.toString(),
@@ -260,16 +261,25 @@ class DashboardPage extends HookWidget {
                         );
                       }
                     } else {
-                      await router.push(
-                        CardConnectWithNfc(
-                          receivedData: deepLinkRes.value,
-                          cardColor: cardColorRes.value,
-                          backupPack: cardDataFromDb?.backupPack ?? false,
-                          backup: cardDataFromDb?.backup ?? false,
-                          isOriginalNxp: true,
-                          isActivated: cardDataFromDb?.activated,
-                        ),
-                      );
+                      if (cardType != 'BAR') {
+                        await router.push(
+                          CardConnectWithNfc(
+                            receivedData: deepLinkRes.value,
+                            cardColor: cardColorRes.value,
+                            backupPack: cardDataFromDb?.backupPack ?? false,
+                            backup: cardDataFromDb?.backup ?? false,
+                            isOriginalNxp: true,
+                            isActivated: cardDataFromDb?.activated,
+                          ),
+                        );
+                      } else {
+                        await router.push(
+                          BarConnectWithNfc(
+                            receivedData: deepLinkRes.value,
+                            isActivated: cardDataFromDb?.activated ?? false,
+                          ),
+                        );
+                      }
                     }
 
                     deepLinkRes.value = null;
@@ -329,6 +339,8 @@ class DashboardPage extends HookWidget {
               );
               return;
             }
+            final cardType = cardDataFromDb?.type ?? '';
+
             cardColorRes.value = cardDataFromDb?.color ?? '';
             if (!appLocked.value && deepLinkRes.value != null && router.current.name != CardConnectRoute.name) {
               await recordAmplitudeEvent(
@@ -402,16 +414,25 @@ class DashboardPage extends HookWidget {
                       },
                     );
                   } else {
-                    await router.push(
-                      CardConnectWithNfc(
-                        receivedData: deepLinkRes.value,
-                        cardColor: cardColorRes.value,
-                        backupPack: cardDataFromDb?.backupPack ?? false,
-                        backup: cardDataFromDb?.backup ?? false,
-                        isOriginalNxp: true,
-                        isActivated: cardDataFromDb?.activated,
-                      ),
-                    );
+                    if (cardType != 'BAR') {
+                      await router.push(
+                        CardConnectWithNfc(
+                          receivedData: deepLinkRes.value,
+                          cardColor: cardColorRes.value,
+                          backupPack: cardDataFromDb?.backupPack ?? false,
+                          backup: cardDataFromDb?.backup ?? false,
+                          isOriginalNxp: true,
+                          isActivated: cardDataFromDb?.activated,
+                        ),
+                      );
+                    } else {
+                      await router.push(
+                        BarConnectWithNfc(
+                          receivedData: deepLinkRes.value,
+                          isActivated: cardDataFromDb?.activated ?? false,
+                        ),
+                      );
+                    }
                   }
                 }
               } else {
@@ -501,16 +522,25 @@ class DashboardPage extends HookWidget {
                       },
                     );
                   } else {
-                    await router.push(
-                      CardConnectWithNfc(
-                        receivedData: deepLinkRes.value,
-                        cardColor: cardColorRes.value,
-                        backupPack: cardDataFromDb?.backupPack ?? false,
-                        backup: cardDataFromDb?.backup ?? false,
-                        isOriginalNxp: true,
-                        isActivated: cardDataFromDb?.activated,
-                      ),
-                    );
+                    if (cardType != 'BAR') {
+                      await router.push(
+                        CardConnectWithNfc(
+                          receivedData: deepLinkRes.value,
+                          cardColor: cardColorRes.value,
+                          backupPack: cardDataFromDb?.backupPack ?? false,
+                          backup: cardDataFromDb?.backup ?? false,
+                          isOriginalNxp: true,
+                          isActivated: cardDataFromDb?.activated,
+                        ),
+                      );
+                    } else {
+                      await router.push(
+                        BarConnectWithNfc(
+                          receivedData: deepLinkRes.value,
+                          isActivated: cardDataFromDb?.activated ?? false,
+                        ),
+                      );
+                    }
                   }
                 }
               } else {

@@ -367,9 +367,13 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                             borderRadius: BorderRadius.circular(
                                               6,
                                             ),
-                                            color: Colors.black.withValues(
-                                              alpha: 0.2,
-                                            ),
+                                            color: _validationStore.color == 'OLD CARD' ||
+                                                    _validationStore.color == 'OLD_CARD' ||
+                                                    _validationStore.color == 'UNKNOWN_COLOR'
+                                                ? Colors.grey.withValues(alpha: 0.5)
+                                                : Colors.black.withValues(
+                                                    alpha: 0.2,
+                                                  ),
                                           ),
                                           child: Column(
                                             children: [
@@ -459,9 +463,13 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                             borderRadius: BorderRadius.circular(
                                               6,
                                             ),
-                                            color: Colors.black.withValues(
-                                              alpha: 0.2,
-                                            ),
+                                            color: _validationStore.color == 'OLD CARD' ||
+                                                    _validationStore.color == 'OLD_CARD' ||
+                                                    _validationStore.color == 'UNKNOWN_COLOR'
+                                                ? Colors.grey.withValues(alpha: 0.5)
+                                                : Colors.black.withValues(
+                                                    alpha: 0.2,
+                                                  ),
                                           ),
                                           child: Column(
                                             children: [
