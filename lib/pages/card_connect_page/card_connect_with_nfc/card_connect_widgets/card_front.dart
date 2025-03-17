@@ -39,17 +39,11 @@ class CardFront extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.height > 667 ? 455 : 365,
+    return context.width > 600 ?
+    Container(
+      height: context.width * 0.42,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 15,
-          ),
-        ],
         image: DecorationImage(
           image: getFrontImageForCardColor(cardColor, isMifare: isMifareUltralight).image,
         ),
@@ -65,18 +59,8 @@ class CardFront extends StatelessWidget {
                   SizedBox(
                     height: context.height * 0.22,
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.height < 932
-                          ? context.height < 867.4
-                              ? context.height > 844
-                                  ? context.width * 0.11 // iPhone 14 Pro (ok)
-                                  : context.height > 667
-                                      ? context.width * 0.17 //iPhone 13 Pro
-                                      : context.width * 0.23 // iPhone 7/8/SE (ok)
-                              : context.width * 0.15 //Samsung large display
-                          : context.width * 0.15, //iPhone 13 Pro Max,
-                    ),
+                  SizedBox(
+                    width: 200,
                     child: ScaleTap(
                       enableFeedback: false,
                       onPressed: () async {
@@ -265,18 +249,8 @@ class CardFront extends StatelessWidget {
                     ),
                   ),
                   const Gap(4),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.height < 932
-                          ? context.height < 867.4
-                              ? context.height > 844
-                                  ? context.width * 0.11 // iPhone 14 Pro (ok)
-                                  : context.height > 667
-                                      ? context.width * 0.17 //iPhone 13 Pro
-                                      : context.width * 0.23 // iPhone 7/8/SE (ok)
-                              : context.width * 0.15 //Samsung large display
-                          : context.width * 0.15, //iPhone 13 Pro Max,
-                    ),
+                  SizedBox(
+                    width: 200,
                     child: ScaleTap(
                       enableFeedback: false,
                       onPressed: () {},
@@ -300,6 +274,421 @@ class CardFront extends StatelessWidget {
                                   : Colors.black.withValues(
                                       alpha: 0.2,
                                     ),
+                            ),
+                            child: Column(
+                              children: [
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Balance',
+                                      style: TextStyle(
+                                        fontFamily: FontFamily.redHatMedium,
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                if (receivedData.startsWith('0'))
+                                  Observer(
+                                    builder: (context) {
+                                      final myFormat = NumberFormat.decimalPatternDigits(
+                                        locale: 'en_us',
+                                        decimalDigits: 2,
+                                      );
+                                      final data = marketPageStore.singleCoin?.result[1];
+                                      if (balanceStore.selectedEthCard != null &&
+                                          balanceStore.selectedEthCard!.finalBalance != null &&
+                                          data != null) {
+                                        final cardBalance = balanceStore.selectedEthCard!.finalBalance!;
+
+                                        if (cardBalance.isNaN) {
+                                          return const Padding(
+                                            padding: EdgeInsets.all(4),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: 10,
+                                                  width: 10,
+                                                  child: CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                    strokeWidth: 3,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+
+                                        return Row(
+                                          children: [
+                                            Text(
+                                              '\$${myFormat.format(cardBalance)}',
+                                              style: const TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                                width: 10,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  )
+                                else
+                                  Observer(
+                                    builder: (context) {
+                                      final myFormat = NumberFormat.decimalPatternDigits(
+                                        locale: 'en_us',
+                                        decimalDigits: 2,
+                                      );
+                                      final data = marketPageStore.singleCoin?.result.first;
+                                      if (balanceStore.selectedCard != null &&
+                                          balanceStore.selectedCard!.finalBalance != null &&
+                                          data != null) {
+                                        final cardBalance = balanceStore.selectedCard!.finalBalance!;
+
+                                        if (cardBalance.isNaN) {
+                                          return const Padding(
+                                            padding: EdgeInsets.all(4),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: 10,
+                                                  width: 10,
+                                                  child: CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                    strokeWidth: 3,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+
+                                        return Row(
+                                          children: [
+                                            Text(
+                                              '\$${myFormat.format(cardBalance / 100000000 * data.price)}',
+                                              style: const TextStyle(
+                                                fontFamily: FontFamily.redHatMedium,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                                width: 10,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ).paddingHorizontal(
+              context.height < 845 ? 0 : 20,
+            );
+          },
+        ),
+      ),
+    ) : Container(
+      height: context.height > 667 ? 455 : 365,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.1),
+            spreadRadius: 1,
+            blurRadius: 15,
+          ),
+        ],
+        image: DecorationImage(
+          image: getFrontImageForCardColor(cardColor, isMifare: isMifareUltralight).image,
+        ),
+      ),
+      child: Center(
+        child: Observer(
+          builder: (context) {
+            return Visibility(
+              visible: addressState.isAddressVisible,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: context.height * 0.22,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.height < 932
+                          ? context.height < 867.4
+                          ? context.height > 844
+                          ? context.width * 0.11 // iPhone 14 Pro (ok)
+                          : context.height > 667
+                          ? context.width * 0.17 //iPhone 13 Pro
+                          : context.width * 0.23 // iPhone 7/8/SE (ok)
+                          : context.width * 0.15 //Samsung large display
+                          : context.width * 0.15, //iPhone 13 Pro Max,
+                    ),
+                    child: ScaleTap(
+                      enableFeedback: false,
+                      onPressed: () async {
+                        await recordAmplitudeEvent(
+                          AddressCopied(
+                            walletType: 'Card',
+                            walletAddress: balanceStore.selectedCard!.address,
+                            activated: false,
+                            source: 'Balance',
+                          ),
+                        );
+                        if (Platform.isIOS) {
+                          await Clipboard.setData(
+                            ClipboardData(
+                              text: balanceStore.selectedCard!.address.toString(),
+                            ),
+                          ).then(
+                                (_) {
+                              HapticFeedback.mediumImpact();
+                              showTopSnackBar(
+                                displayDuration: const Duration(
+                                  milliseconds: 400,
+                                ),
+                                Overlay.of(
+                                  context,
+                                ),
+                                CustomSnackBar.success(
+                                  backgroundColor: const Color(
+                                    0xFF4A4A4A,
+                                  ).withValues(alpha: 0.9),
+                                  message: 'Address was copied',
+                                  textStyle: const TextStyle(
+                                    fontFamily: FontFamily.redHatMedium,
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          await Clipboard.setData(
+                            ClipboardData(
+                              text: balanceStore.selectedCard!.address.toString(),
+                            ),
+                          ).then(
+                                (_) {
+                              HapticFeedback.mediumImpact();
+                            },
+                          );
+                        }
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 5,
+                            sigmaY: 5,
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              left: 8,
+                              right: 8,
+                              top: 12,
+                              bottom: 12,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                6,
+                              ),
+                              color: isMifareUltralight
+                                  ? Colors.grey.withValues(alpha: 0.5)
+                                  : Colors.black.withValues(
+                                alpha: 0.2,
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                const Row(
+                                  children: [
+                                    Text(
+                                      'Address',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontFamily: FontFamily.redHatMedium,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                if (receivedData.startsWith('0'))
+                                  Observer(
+                                    builder: (context) {
+                                      final selectedEthCard = balanceStore.selectedEthCard;
+                                      if (balanceStore.loadings[selectedEthCard?.address] ?? false) {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                                width: 10,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 3,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      if (selectedEthCard == null) {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                                width: 10,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 3,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      final visibleAddress = getSplitAddress(
+                                        selectedEthCard.address,
+                                      );
+                                      return Text(
+                                        visibleAddress,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                      ).expandedHorizontally();
+                                    },
+                                  )
+                                else
+                                  Observer(
+                                    builder: (context) {
+                                      if (balanceStore.loadings[balanceStore.selectedCard?.address] ?? false) {
+                                        return const Padding(
+                                          padding: EdgeInsets.all(
+                                            4,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                                width: 10,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 3,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      final visibleAddress = getSplitAddress(
+                                        balanceStore.selectedCard!.address,
+                                      );
+                                      return Text(
+                                        visibleAddress,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontFamily: FontFamily.redHatMedium,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
+                                      ).expandedHorizontally();
+                                    },
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Gap(4),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.height < 932
+                          ? context.height < 867.4
+                          ? context.height > 844
+                          ? context.width * 0.11 // iPhone 14 Pro (ok)
+                          : context.height > 667
+                          ? context.width * 0.17 //iPhone 13 Pro
+                          : context.width * 0.23 // iPhone 7/8/SE (ok)
+                          : context.width * 0.15 //Samsung large display
+                          : context.width * 0.15, //iPhone 13 Pro Max,
+                    ),
+                    child: ScaleTap(
+                      enableFeedback: false,
+                      onPressed: () {},
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 5,
+                            sigmaY: 5,
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.all(
+                              8,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                6,
+                              ),
+                              color: isMifareUltralight
+                                  ? Colors.grey.withValues(alpha: 0.5)
+                                  : Colors.black.withValues(
+                                alpha: 0.2,
+                              ),
                             ),
                             child: Column(
                               children: [

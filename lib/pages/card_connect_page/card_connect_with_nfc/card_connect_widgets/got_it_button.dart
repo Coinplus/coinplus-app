@@ -88,6 +88,7 @@ class GotItButton extends StatelessWidget {
                         );
                         if (isOriginalNxp == true) {
                           unawaited(connectedCount(receivedData));
+                          unawaited(updateAppConnectionDate(receivedData));
                           if (cardColor == '0') {
                             balanceStore.saveSelectedEthCard(
                               color: CardColor.ETHEREUM,
@@ -133,8 +134,9 @@ class GotItButton extends StatelessWidget {
                           balanceStore.cardCurrentIndex,
                         );
                         if (isOriginalNxp == true) {
-                          unawaited(connectedCount(receivedData));
                           if (backup) {
+                             unawaited(connectedCount(receivedData));
+                             unawaited(updateAppConnectionDate(receivedData));
                             if (cardColor == '0') {
                               balanceStore.saveSelectedBackupCard(
                                 color: CardColor.ORANGE,
@@ -169,6 +171,8 @@ class GotItButton extends StatelessWidget {
                               backupWalletAddress: balanceStore.selectedBackupCard!.address,
                             );
                           } else {
+                             unawaited(connectedCount(receivedData));
+                             unawaited(updateAppConnectionDate(receivedData));
                             if (cardColor == '0' || cardColor == 'ORANGE') {
                               balanceStore.saveSelectedCard(
                                 color: CardColor.ORANGE,
@@ -206,6 +210,8 @@ class GotItButton extends StatelessWidget {
                               ),
                             );
                             if (isOldCard == false || isOldCard == null) {
+                               unawaited(connectedCount(receivedData));
+                               unawaited(updateAppConnectionDate(receivedData));
                               await recordUserProperty(const Tracker());
                               balanceStore.saveSelectedCardManually(
                                 color: CardColor.LEGACY,
@@ -213,9 +219,8 @@ class GotItButton extends StatelessWidget {
                                 name: 'Bitcoin Wallet',
                               );
                             } else {
-                              unawaited(
-                                connectedCount(receivedData),
-                              );
+                               unawaited(connectedCount(receivedData));
+                               unawaited(updateAppConnectionDate(receivedData));
                               balanceStore.saveSelectedCardManually(
                                 color: CardColor.LEGACY,
                                 label: WalletType.COINPLUS_LEGACY_WALLET,

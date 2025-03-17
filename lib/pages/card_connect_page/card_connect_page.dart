@@ -83,6 +83,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
   late AnimationController _textFieldAnimationController;
   late final TextEditingController _btcAddressController = TextEditingController();
   final ShakerController _shakeAnimationController = ShakerController();
+  final _nfcState = AllSettingsState();
 
   late AnimationController _lottieController;
 
@@ -102,7 +103,9 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
     _validationStore.initColor(widget.cardColor ?? '');
     _connectivityStore.initConnectivity();
     if (Platform.isAndroid) {
-      nfcStop();
+      if (_nfcState.isNfcSupported) {
+        nfcStop();
+      }
     }
     _toggleCard();
     _btcAddressController.addListener(() {
@@ -131,9 +134,19 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_connectivityStore.updateConnectionStatus);
     if (widget.receivedData != null) {
       Future.delayed(const Duration(milliseconds: 300), () {
+        initCardActivationStatus();
         _btcAddressController.text = widget.receivedData ?? '';
         _addressState.btcAddress = widget.receivedData!;
       });
+    }
+  }
+
+  Future<void> initCardActivationStatus() async {
+    final cardData = await getCardData(widget.receivedData.toString());
+    if(cardData != null) {
+      await _allSettingsState.initActivationStatus(
+        status: cardData.activated ?? false,
+      );
     }
   }
 
@@ -1145,169 +1158,159 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                           ),
                           builder: (context, snapshot) {
                             return AnimatedCrossFade(
-                              firstChild: ReactionBuilder(
+                              firstChild: Observer(
                                 builder: (context) {
-                                  return reaction((p1) => _allSettingsState.activationStatusFromDb, (p1) async {
-                                    final cardData = await getCardData(btcAddress);
-                                    if (cardData?.lost != null && cardData?.lost != true) {
-                                      await _allSettingsState.initActivationStatus(status: p1);
-                                    }
-                                  });
-                                },
-                                child: Observer(
-                                  builder: (context) {
-                                    return AnimatedCrossFade(
-                                      firstChild: Observer(
-                                        builder: (context) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              hasShownWallet().then(
-                                                (hasShown) async {
-                                                  if (hasShown) {
-                                                    unawaited(
-                                                      recordAmplitudeEvent(
-                                                        ActivatedCheckboxClicked(
-                                                          source: 'Wallet',
-                                                          walletType: 'Card',
-                                                          walletAddress: _balanceStore.selectedCard!.address,
-                                                        ),
+                                  return AnimatedCrossFade(
+                                    firstChild: Observer(
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            hasShownWallet().then(
+                                              (hasShown) async {
+                                                if (hasShown) {
+                                                  unawaited(
+                                                    recordAmplitudeEvent(
+                                                      ActivatedCheckboxClicked(
+                                                        source: 'Wallet',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedCard!.address,
                                                       ),
-                                                    );
-                                                  } else {
-                                                    unawaited(
-                                                      recordAmplitudeEvent(
-                                                        ActivatedCheckboxClicked(
-                                                          source: 'Onboarding',
-                                                          walletType: 'Card',
-                                                          walletAddress: _balanceStore.selectedCard!.address,
-                                                        ),
+                                                    ),
+                                                  );
+                                                } else {
+                                                  unawaited(
+                                                    recordAmplitudeEvent(
+                                                      ActivatedCheckboxClicked(
+                                                        source: 'Onboarding',
+                                                        walletType: 'Card',
+                                                        walletAddress: _balanceStore.selectedCard!.address,
                                                       ),
-                                                    );
-                                                  }
-                                                },
-                                              );
-                                              _allSettingsState.makeActiveCheckbox();
-                                              HapticFeedback.heavyImpact();
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                border: Border.all(
-                                                  color: _allSettingsState.isActivatedCheckBox
-                                                      ? const Color(0xFF73C3A6)
-                                                      : const Color(0xFFFF2E00).withValues(alpha: 0.6),
-                                                ),
-                                                color: _allSettingsState.isActivatedCheckBox
-                                                    ? const Color(0xFF73C3A6).withValues(alpha: 0.1)
-                                                    : const Color(0xFFFF2E00).withValues(alpha: 0.05),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(14),
-                                                child: Column(
-                                                  children: [
-                                                    const Text(
-                                                      'This card was previously activated!',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        fontWeight: FontWeight.w700,
-                                                        fontSize: 16,
-                                                        color: AppColors.textHintsColor,
-                                                      ),
-                                                    ).expandedHorizontally(),
-                                                    const Gap(4),
-                                                    const Text(
-                                                      "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        fontSize: 14,
-                                                        color: AppColors.textHintsColor,
-                                                      ),
-                                                    ).expandedHorizontally(),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      secondChild: Observer(
-                                        builder: (context) {
-                                          return Container(
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            );
+                                            _allSettingsState.makeActiveCheckbox();
+                                            HapticFeedback.heavyImpact();
+                                          },
+                                          child: Container(
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(8),
                                               border: Border.all(
-                                                color: Colors.grey.withValues(alpha: 0.3),
+                                                color: _allSettingsState.isActivatedCheckBox
+                                                    ? const Color(0xFF73C3A6)
+                                                    : const Color(0xFFFF2E00).withValues(alpha: 0.6),
                                               ),
-                                              color: Colors.white.withValues(alpha: 0.7),
+                                              color: _allSettingsState.isActivatedCheckBox
+                                                  ? const Color(0xFF73C3A6).withValues(alpha: 0.1)
+                                                  : const Color(0xFFFF2E00).withValues(alpha: 0.05),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.all(14),
                                               child: Column(
                                                 children: [
-                                                  AnimatedCrossFade(
-                                                    firstChild: const Text(
-                                                      'Fill in the address of your physical card wallet',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        fontWeight: FontWeight.w700,
-                                                        fontSize: 16,
-                                                        color: AppColors.textHintsColor,
-                                                      ),
-                                                    ).expandedHorizontally(),
-                                                    secondChild: const Text(
-                                                      'Coinplus Virtual Card',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        fontWeight: FontWeight.w700,
-                                                        fontSize: 16,
-                                                        color: AppColors.textHintsColor,
-                                                      ),
-                                                    ).expandedHorizontally(),
-                                                    crossFadeState: _addressState.isAddressVisible
-                                                        ? CrossFadeState.showSecond
-                                                        : CrossFadeState.showFirst,
-                                                    duration: const Duration(
-                                                      milliseconds: 400,
+                                                  const Text(
+                                                    'This card was previously activated!',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16,
+                                                      color: AppColors.textHintsColor,
                                                     ),
-                                                  ),
+                                                  ).expandedHorizontally(),
                                                   const Gap(4),
-                                                  AnimatedCrossFade(
-                                                    firstChild: const Text(
-                                                      'Please fill the address from your physical card into the address input field, or scan the QR code.',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        fontSize: 14,
-                                                        color: AppColors.textHintsColor,
-                                                      ),
-                                                    ).expandedHorizontally(),
-                                                    secondChild: const Text(
-                                                      'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
-                                                      style: TextStyle(
-                                                        fontFamily: FontFamily.redHatMedium,
-                                                        fontSize: 14,
-                                                        color: AppColors.textHintsColor,
-                                                      ),
-                                                    ).expandedHorizontally(),
-                                                    crossFadeState: _addressState.isAddressVisible
-                                                        ? CrossFadeState.showSecond
-                                                        : CrossFadeState.showFirst,
-                                                    duration: const Duration(
-                                                      milliseconds: 400,
+                                                  const Text(
+                                                    "This card has been used previously, and Secrets 1 and 2 were revealed. Others may have access to the funds. If you didn't activate the card yourself, please avoid using it.",
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors.textHintsColor,
                                                     ),
-                                                  ),
+                                                  ).expandedHorizontally(),
                                                 ],
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
-                                      crossFadeState: _allSettingsState.activationStatusFromDb == true
-                                          ? CrossFadeState.showFirst
-                                          : CrossFadeState.showSecond,
-                                      duration: const Duration(milliseconds: 400),
-                                    );
-                                  },
-                                ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    secondChild: Observer(
+                                      builder: (context) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            border: Border.all(
+                                              color: Colors.grey.withValues(alpha: 0.3),
+                                            ),
+                                            color: Colors.white.withValues(alpha: 0.7),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(14),
+                                            child: Column(
+                                              children: [
+                                                AnimatedCrossFade(
+                                                  firstChild: const Text(
+                                                    'Fill in the address of your physical card wallet',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  secondChild: const Text(
+                                                    'Coinplus Virtual Card',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  crossFadeState: _addressState.isAddressVisible
+                                                      ? CrossFadeState.showSecond
+                                                      : CrossFadeState.showFirst,
+                                                  duration: const Duration(
+                                                    milliseconds: 400,
+                                                  ),
+                                                ),
+                                                const Gap(4),
+                                                AnimatedCrossFade(
+                                                  firstChild: const Text(
+                                                    'Please fill the address from your physical card into the address input field, or scan the QR code.',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  secondChild: const Text(
+                                                    'This is the virtual copy of your physical Coinplus Card with its address and the balance shown above. You can save it in the app for further easy access and tracking.',
+                                                    style: TextStyle(
+                                                      fontFamily: FontFamily.redHatMedium,
+                                                      fontSize: 14,
+                                                      color: AppColors.textHintsColor,
+                                                    ),
+                                                  ).expandedHorizontally(),
+                                                  crossFadeState: _addressState.isAddressVisible
+                                                      ? CrossFadeState.showSecond
+                                                      : CrossFadeState.showFirst,
+                                                  duration: const Duration(
+                                                    milliseconds: 400,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    crossFadeState: _allSettingsState.activationStatusFromDb == true
+                                        ? CrossFadeState.showFirst
+                                        : CrossFadeState.showSecond,
+                                    duration: const Duration(milliseconds: 400),
+                                  );
+                                },
                               ),
                               secondChild: GestureDetector(
                                 onTap: () {
@@ -1527,9 +1530,8 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                           if (widget.receivedData == null) {
                             final card = await getCardData(_btcAddressController.text);
                             if (card != null) {
-                              unawaited(
-                                connectedCount(_btcAddressController.text),
-                              );
+                              unawaited(connectedCount(_btcAddressController.text));
+                              unawaited(updateAppConnectionDate(_btcAddressController.text));
                               if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,
@@ -1577,6 +1579,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                           } else {
                             if (card != null) {
                               unawaited(connectedCount(widget.receivedData!));
+                              unawaited(updateAppConnectionDate(widget.receivedData!));
                               if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -14,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
 import '../../../gen/fonts.gen.dart';
+import '../../../providers/screen_service.dart';
+import '../../../router.gr.dart';
 
 @RoutePage()
 class AboutAppPage extends HookWidget {
@@ -159,21 +160,7 @@ class AboutAppPage extends HookWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      await FlutterWebBrowser.openWebPage(
-                        url: 'https://coinplus.com',
-                        customTabsOptions: const CustomTabsOptions(
-                          shareState: CustomTabsShareState.on,
-                          instantAppsEnabled: true,
-                          showTitle: true,
-                          urlBarHidingEnabled: true,
-                        ),
-                        safariVCOptions: const SafariViewControllerOptions(
-                          barCollapsingEnabled: true,
-                          modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                          dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                          modalPresentationCapturesStatusBarAppearance: true,
-                        ),
-                      );
+                      await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet'));
                     },
                     splashFactory: InkSparkle.splashFactory,
                     highlightColor: Colors.transparent,

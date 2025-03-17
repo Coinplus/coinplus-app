@@ -108,6 +108,28 @@ Future<void> connectedCount(String documentId) async {
   }
 }
 
+Future<void> updateAppConnectionDate(String documentId) async {
+  final card = await getCardData(documentId);
+  if (card != null) {
+    final timestamp = Timestamp.now();
+
+    await FirebaseFirestore.instance.collection('cards').doc(documentId).update({
+      'appConnectionDate': timestamp,
+    });
+  }
+}
+
+Future<void> updateCardActivationDate(String documentId) async {
+  final card = await getCardData(documentId);
+  if (card != null) {
+    final timestamp = Timestamp.now();
+
+    await FirebaseFirestore.instance.collection('cards').doc(documentId).update({
+      'activationDate': timestamp,
+    });
+  }
+}
+
 Future<void> deleteCount(String documentId) async {
   final card = await getCardData(documentId);
 

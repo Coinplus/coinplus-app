@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -85,6 +84,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
   late final TextEditingController _addressController = TextEditingController();
   late AnimationController _textFieldAnimationController;
   final ShakerController _shakeAnimationController = ShakerController();
+  final _nfcState = AllSettingsState();
 
   late AnimationController _lottieController;
   final _validationStore = ValidationState();
@@ -100,8 +100,11 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
   void initState() {
     super.initState();
     _toggleCard();
+    _nfcState.checkNfcSupport();
     if (Platform.isAndroid) {
-      nfcStop();
+      if (_nfcState.isNfcSupported) {
+        nfcStop();
+      }
     }
     if (widget.receivedData!.startsWith('0')) {
       _addressController.addListener(_addressState.validateETHAddress);
@@ -148,7 +151,6 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
 
   @override
   Widget build(BuildContext context) {
-    log(context.width.toString());
     final gaps = ResponsiveGaps(context);
     return Scaffold(
       backgroundColor: Colors.white,

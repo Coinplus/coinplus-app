@@ -57,7 +57,6 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
 
   late String secret1B58 = '';
   late String secret2B58 = '';
-  late String walletAddress = '';
   late final TextEditingController _secretOneController = TextEditingController();
   late final TextEditingController _secretTwoController = TextEditingController();
   late AnimationController _lottieController;
@@ -730,7 +729,7 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
                     : () async {
                         await recordAmplitudeEventPartTwo(
                           ContinueCLicked(
-                            walletAddress: walletAddress,
+                            walletAddress: _validationStore.walletAddress,
                             walletType: 'Bar',
                           ),
                         );
@@ -754,12 +753,14 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
                         try {
                           final wif = await getWif(secret1B58, secret2B58);
                           final publicKey = wifToPublicKey(wif);
-                          setState(() {
-                            walletAddress = publicKey!;
-                          });
+                          _validationStore.setWalletAddress(
+                            publicKey: publicKey!,
+                          );
                           if (bar.address == publicKey) {
                             unawaited(toggleActivation(bar.address));
                             unawaited(incrementActivationCount(bar.address));
+                            unawaited(updateCardActivationDate(bar.address));
+
                             await _secureStorage.savePrivateKeyInSecureStorage(
                               key: bar.address,
                               value: wif,
@@ -772,13 +773,13 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
                             await HapticFeedback.heavyImpact();
                             await recordAmplitudeEventPartTwo(
                               WalletActivated(
-                                walletAddress: walletAddress,
+                                walletAddress: _validationStore.walletAddress,
                                 walletType: 'Bar',
                               ),
                             );
                             await secretsSuccessAlert(
                               context: context,
-                              walletAddress: walletAddress,
+                              walletAddress: _validationStore.walletAddress,
                               walletType: 'Bar',
                               isBarList: true,
                               bar: bar,
@@ -789,7 +790,7 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
                             await router.maybePop();
                             await recordAmplitudeEventPartTwo(
                               WalletActivationFailed(
-                                walletAddress: walletAddress,
+                                walletAddress: _validationStore.walletAddress,
                                 walletType: 'Bar',
                               ),
                             );
@@ -798,7 +799,7 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
                             await secretsFailDialog(
                               context: context,
                               walletType: 'Bar',
-                              walletAddress: walletAddress,
+                              walletAddress: _validationStore.walletAddress,
                             );
                           }
                         } catch (e) {
@@ -878,7 +879,7 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
       await Future.delayed(const Duration(milliseconds: 100));
       _secretTwoFocusNode.requestFocus();
       await recordAmplitudeEvent(
-        Secret1Validated(walletAddress: walletAddress, walletType: 'Bar'),
+        Secret1Validated(walletAddress: _validationStore.walletAddress, walletType: 'Bar'),
       );
     }
   }
@@ -892,7 +893,7 @@ class _BarActivationPageState extends State<BarActivationPage> with TickerProvid
       );
       _secretTwoFocusNode.unfocus();
       await recordAmplitudeEvent(
-        Secret2Validated(walletAddress: walletAddress, walletType: 'Bar'),
+        Secret2Validated(walletAddress: _validationStore.walletAddress, walletType: 'Bar'),
       );
 
       await _secretTwoLottieController.forward(from: 0);

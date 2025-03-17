@@ -108,35 +108,39 @@ class CardEmptyState extends StatelessWidget {
                                 color: Color(0xFF838995),
                               ),
                             ),
-                            Row(
-                              children: [
-                                const Text(
-                                  r'$24,99',
-                                  style: TextStyle(
-                                    decoration: TextDecoration.lineThrough,
-                                    fontFamily: FontFamily.redHatMedium,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
-                                const Gap(6),
-                                FutureBuilder(
-                                  future: getBuyCardData(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.data == null) {
-                                      return Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(4),
-                                            color: Colors.grey,
+                            FutureBuilder(
+                              future: getBuyCardData(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color: Colors.grey,
+                                      ),
+                                      height: 26,
+                                      width: 57,
+                                    ),
+                                  );
+                                } else {
+                                  return Row(
+                                    children: [
+                                      if (snapshot.data!.previousPrice != snapshot.data!.price) Row(
+                                        children: [
+                                          Text(
+                                            snapshot.data!.previousPrice.toString(),
+                                            style: const TextStyle(
+                                              decoration: TextDecoration.lineThrough,
+                                              fontFamily: FontFamily.redHatMedium,
+                                              color: AppColors.primary,
+                                            ),
                                           ),
-                                          height: 26,
-                                          width: 57,
-                                        ),
-                                      );
-                                    } else {
-                                      return Container(
+                                          const Gap(6),
+                                        ],
+                                      ),
+                                      Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(4),
                                           color: const Color(0xFFFD7E70),
@@ -155,11 +159,11 @@ class CardEmptyState extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ],
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
                             ),
                           ],
                         ),

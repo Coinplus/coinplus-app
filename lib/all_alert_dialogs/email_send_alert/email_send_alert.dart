@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,21 +37,7 @@ Future<void> emailSendAlert(
           const HelpCenterClicked(source: 'Contact Us'),
         );
         await router.maybePop(const SettingsRoute());
-        await FlutterWebBrowser.openWebPage(
-          url: 'https://coinplus.gitbook.io/help-center',
-          customTabsOptions: const CustomTabsOptions(
-            shareState: CustomTabsShareState.on,
-            instantAppsEnabled: true,
-            showTitle: true,
-            urlBarHidingEnabled: true,
-          ),
-          safariVCOptions: const SafariViewControllerOptions(
-            barCollapsingEnabled: true,
-            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-            modalPresentationCapturesStatusBarAppearance: true,
-          ),
-        );
+        await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center'));
       },
       secondaryActionText: 'Close',
       secondaryAction: () async {
@@ -93,21 +78,7 @@ Future<void> emailSendFailAlert(BuildContext context) {
           const HelpCenterClicked(source: 'Contact Us'),
         );
         await router.maybePop(const SettingsRoute());
-        await FlutterWebBrowser.openWebPage(
-          url: 'https://coinplus.gitbook.io/help-center',
-          customTabsOptions: const CustomTabsOptions(
-            shareState: CustomTabsShareState.on,
-            instantAppsEnabled: true,
-            showTitle: true,
-            urlBarHidingEnabled: true,
-          ),
-          safariVCOptions: const SafariViewControllerOptions(
-            barCollapsingEnabled: true,
-            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-            modalPresentationCapturesStatusBarAppearance: true,
-          ),
-        );
+        await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center'));
       },
       widget: ScaleTap(
         enableFeedback: false,

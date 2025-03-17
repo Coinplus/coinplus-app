@@ -175,7 +175,7 @@ class AmplitudeEvent with _$AmplitudeEvent {
   }) = ReceiveClicked;
 
   const factory AmplitudeEvent.sendClicked({
-    @Default('SEND_CLICKED') String eventType,
+    @Default('TRANSACTIONS_SEND_CLICKED') String eventType,
     required String walletType,
     required String walletAddress,
     required bool activated,

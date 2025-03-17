@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
@@ -160,6 +159,7 @@ class SettingsPage extends HookWidget {
               stretch: true,
               backgroundColor: Colors.transparent,
               brightness: Brightness.light,
+              automaticBackgroundVisibility: false,
               largeTitle: Text(
                 'Settings',
                 style: TextStyle(
@@ -567,21 +567,7 @@ class SettingsPage extends HookWidget {
                               await recordAmplitudeEventPartTwo(
                                 const HelpCenterClicked(source: 'Settings'),
                               );
-                              await FlutterWebBrowser.openWebPage(
-                                url: 'https://coinplus.gitbook.io/help-center',
-                                customTabsOptions: const CustomTabsOptions(
-                                  shareState: CustomTabsShareState.on,
-                                  instantAppsEnabled: true,
-                                  showTitle: true,
-                                  urlBarHidingEnabled: true,
-                                ),
-                                safariVCOptions: const SafariViewControllerOptions(
-                                  barCollapsingEnabled: true,
-                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                  modalPresentationCapturesStatusBarAppearance: true,
-                                ),
-                              );
+                              await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center'));
                             },
                             splashFactory: InkSparkle.splashFactory,
                             highlightColor: Colors.transparent,
@@ -661,21 +647,7 @@ class SettingsPage extends HookWidget {
                           await recordAmplitudeEventPartTwo(
                             const JoinCommunityClicked(social: 'Twitter'),
                           );
-                          await FlutterWebBrowser.openWebPage(
-                            url: 'https://twitter.com/coinplus',
-                            customTabsOptions: const CustomTabsOptions(
-                              shareState: CustomTabsShareState.on,
-                              instantAppsEnabled: true,
-                              showTitle: true,
-                              urlBarHidingEnabled: true,
-                            ),
-                            safariVCOptions: const SafariViewControllerOptions(
-                              barCollapsingEnabled: true,
-                              modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                              dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
-                            ),
-                          );
+                          await router.push(WebViewRoute(link: 'https://twitter.com/coinplus'));
                         },
                         enableFeedback: false,
                         child: ClipRRect(
@@ -695,21 +667,7 @@ class SettingsPage extends HookWidget {
                           await recordAmplitudeEventPartTwo(
                             const JoinCommunityClicked(social: 'Instagram'),
                           );
-                          await FlutterWebBrowser.openWebPage(
-                            url: 'https://www.instagram.com/coinplus.inc',
-                            customTabsOptions: const CustomTabsOptions(
-                              shareState: CustomTabsShareState.on,
-                              instantAppsEnabled: true,
-                              showTitle: true,
-                              urlBarHidingEnabled: true,
-                            ),
-                            safariVCOptions: const SafariViewControllerOptions(
-                              barCollapsingEnabled: true,
-                              modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                              dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
-                            ),
-                          );
+                          await router.push(WebViewRoute(link: 'https://www.instagram.com/coinplus.inc'));
                         },
                         enableFeedback: false,
                         child: ClipRRect(
@@ -729,21 +687,7 @@ class SettingsPage extends HookWidget {
                           await recordAmplitudeEventPartTwo(
                             const JoinCommunityClicked(social: 'Facebook'),
                           );
-                          await FlutterWebBrowser.openWebPage(
-                            url: 'https://www.facebook.com/coin.plus',
-                            customTabsOptions: const CustomTabsOptions(
-                              shareState: CustomTabsShareState.on,
-                              instantAppsEnabled: true,
-                              showTitle: true,
-                              urlBarHidingEnabled: true,
-                            ),
-                            safariVCOptions: const SafariViewControllerOptions(
-                              barCollapsingEnabled: true,
-                              modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                              dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
-                            ),
-                          );
+                          await router.push(WebViewRoute(link: 'https://www.facebook.com/coin.plus'));
                         },
                         enableFeedback: false,
                         child: ClipRRect(
@@ -763,21 +707,7 @@ class SettingsPage extends HookWidget {
                           await recordAmplitudeEventPartTwo(
                             const JoinCommunityClicked(social: 'Linkedin'),
                           );
-                          await FlutterWebBrowser.openWebPage(
-                            url: 'https://www.linkedin.com/company/coinplus/',
-                            customTabsOptions: const CustomTabsOptions(
-                              shareState: CustomTabsShareState.on,
-                              instantAppsEnabled: true,
-                              showTitle: true,
-                              urlBarHidingEnabled: true,
-                            ),
-                            safariVCOptions: const SafariViewControllerOptions(
-                              barCollapsingEnabled: true,
-                              modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                              dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
-                            ),
-                          );
+                          await router.push(WebViewRoute(link: 'https://www.linkedin.com/company/coinplus/'));
                         },
                         enableFeedback: false,
                         child: ClipRRect(
@@ -800,21 +730,7 @@ class SettingsPage extends HookWidget {
                           await recordAmplitudeEventPartTwo(
                             const JoinCommunityClicked(social: 'Trust pilot'),
                           );
-                          await FlutterWebBrowser.openWebPage(
-                            url: 'https://www.trustpilot.com/review/coinplus.com',
-                            customTabsOptions: const CustomTabsOptions(
-                              shareState: CustomTabsShareState.on,
-                              instantAppsEnabled: true,
-                              showTitle: true,
-                              urlBarHidingEnabled: true,
-                            ),
-                            safariVCOptions: const SafariViewControllerOptions(
-                              barCollapsingEnabled: true,
-                              modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                              dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                              modalPresentationCapturesStatusBarAppearance: true,
-                            ),
-                          );
+                          await router.push(WebViewRoute(link: 'https://www.trustpilot.com/review/coinplus.com'));
                         },
                         enableFeedback: false,
                         child: ClipRRect(
@@ -857,21 +773,7 @@ class SettingsPage extends HookWidget {
                         children: [
                           InkWell(
                             onTap: () async {
-                              await FlutterWebBrowser.openWebPage(
-                                url: 'https://coinplus.com/privacy-policy/',
-                                customTabsOptions: const CustomTabsOptions(
-                                  shareState: CustomTabsShareState.on,
-                                  instantAppsEnabled: true,
-                                  showTitle: true,
-                                  urlBarHidingEnabled: true,
-                                ),
-                                safariVCOptions: const SafariViewControllerOptions(
-                                  barCollapsingEnabled: true,
-                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                  modalPresentationCapturesStatusBarAppearance: true,
-                                ),
-                              );
+                              await router.push(WebViewRoute(link: 'https://coinplus.com/privacy-policy/'));
                               await recordAmplitudeEventPartTwo(
                                 const PrivacyPolicyClicked(),
                               );
@@ -909,21 +811,7 @@ class SettingsPage extends HookWidget {
                           ),
                           InkWell(
                             onTap: () async {
-                              await FlutterWebBrowser.openWebPage(
-                                url: 'https://coinplus.com/terms-of-use/',
-                                customTabsOptions: const CustomTabsOptions(
-                                  shareState: CustomTabsShareState.on,
-                                  instantAppsEnabled: true,
-                                  showTitle: true,
-                                  urlBarHidingEnabled: true,
-                                ),
-                                safariVCOptions: const SafariViewControllerOptions(
-                                  barCollapsingEnabled: true,
-                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                  modalPresentationCapturesStatusBarAppearance: true,
-                                ),
-                              );
+                              await router.push(WebViewRoute(link: 'https://coinplus.com/terms-of-use/'));
                               await recordAmplitudeEventPartTwo(
                                 const TermsOfUseClicked(),
                               );

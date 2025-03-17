@@ -1112,8 +1112,6 @@ PODS:
     - OrderedSet (~> 6.0.3)
   - flutter_secure_storage (6.0.0):
     - Flutter
-  - flutter_web_browser (0.17.1):
-    - Flutter
   - gaimon (0.0.1):
     - Flutter
   - GoogleAppMeasurement (10.29.0):
@@ -1346,7 +1344,6 @@ DEPENDENCIES:
   - flutter_branch_sdk (from `.symlinks/plugins/flutter_branch_sdk/ios`)
   - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
-  - flutter_web_browser (from `.symlinks/plugins/flutter_web_browser/ios`)
   - gaimon (from `.symlinks/plugins/gaimon/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
@@ -1437,8 +1434,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
-  flutter_web_browser:
-    :path: ".symlinks/plugins/flutter_web_browser/ios"
   gaimon:
     :path: ".symlinks/plugins/gaimon/ios"
   in_app_review:
@@ -1514,7 +1509,6 @@ SPEC CHECKSUMS:
   flutter_branch_sdk: b3763b3d53a7cfbc87c51136bed66fcdc282bdf5
   flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  flutter_web_browser: 7bccaafbb0c5b8862afe7bcd158f15557109f61f
   gaimon: 266fec2cd27726df54a6694c14fc9e3f2a415c33
   GoogleAppMeasurement: f9de05ee17401e3355f68e8fc8b5064d429f5918
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a

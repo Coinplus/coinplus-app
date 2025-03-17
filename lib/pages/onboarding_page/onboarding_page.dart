@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -37,6 +38,7 @@ class OnboardingPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(context.width.toString());
     final _nfcState = useMemoized(AllSettingsState.new);
     final cardColorRes = useRef<String?>(null);
     final deepLinkRes = useRef<String?>(null);
