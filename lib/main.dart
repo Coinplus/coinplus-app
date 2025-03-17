@@ -12,7 +12,6 @@ import 'providers/get_it.dart';
 import 'services/amplitude_service.dart';
 import 'services/firebase_service.dart';
 import 'utils/secure_storage_utils.dart';
-// import 'utils/storage_utils.dart';
 
 Future<void> run({Flavor env = Flavor.DEV}) async {
   BackgroundIsolateBinaryMessenger.ensureInitialized(
@@ -23,7 +22,6 @@ Future<void> run({Flavor env = Flavor.DEV}) async {
   await FlutterBranchSdk.init();
   await initNotifications();
   final _secureStorage = SecureStorageService();
-  // await StorageUtils.clear();
 
   unawaited(
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[

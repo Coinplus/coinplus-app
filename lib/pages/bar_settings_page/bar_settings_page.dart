@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
@@ -497,22 +496,7 @@ class BarSettingsPage extends HookWidget {
                                   source: 'Wallet Settings',
                                 ),
                               );
-                              await FlutterWebBrowser.openWebPage(
-                                url:
-                                    'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
-                                customTabsOptions: const CustomTabsOptions(
-                                  shareState: CustomTabsShareState.on,
-                                  instantAppsEnabled: true,
-                                  showTitle: true,
-                                  urlBarHidingEnabled: true,
-                                ),
-                                safariVCOptions: const SafariViewControllerOptions(
-                                  barCollapsingEnabled: true,
-                                  modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                                  dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                                  modalPresentationCapturesStatusBarAppearance: true,
-                                ),
-                              );
+                              await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet'));
                             },
                             child: StyledText(
                               text:

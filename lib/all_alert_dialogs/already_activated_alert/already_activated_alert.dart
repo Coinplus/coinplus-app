@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
-
 import '../../../gen/fonts.gen.dart';
 import '../../../providers/screen_service.dart';
 import '../../../widgets/alert_dialog/dialog_box_with_action.dart';
 import '../../../widgets/alert_dialog/show_dialog_box.dart';
+import '../../router.dart';
 
 Future<void> alreadyActivatedWallet(BuildContext context) {
   return showDialogBox(
@@ -23,21 +22,7 @@ Future<void> alreadyActivatedWallet(BuildContext context) {
       primaryActionText: 'Help center',
       primaryAction: () async {
         await router.maybePop();
-        await FlutterWebBrowser.openWebPage(
-          url: 'https://coinplus.com/',
-          customTabsOptions: const CustomTabsOptions(
-            shareState: CustomTabsShareState.on,
-            instantAppsEnabled: true,
-            showTitle: true,
-            urlBarHidingEnabled: true,
-          ),
-          safariVCOptions: const SafariViewControllerOptions(
-            barCollapsingEnabled: true,
-            modalPresentationStyle: UIModalPresentationStyle.formSheet,
-            dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-            modalPresentationCapturesStatusBarAppearance: true,
-          ),
-        );
+        await router.push(WebViewRoute(link: 'https://coinplus.com/'));
       },
       secondaryActionText: 'Close',
       secondaryAction: router.maybePop,

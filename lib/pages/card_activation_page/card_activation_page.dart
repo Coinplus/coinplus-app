@@ -921,6 +921,7 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                               unawaited(
                                 incrementActivationCount(card!.address),
                               );
+                              unawaited(updateCardActivationDate(card!.address));
                               await _secureStorage.savePrivateKeyInSecureStorage(
                                 key: card!.address,
                                 value: wif,

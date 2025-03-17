@@ -163,7 +163,7 @@ class ProvideAddressTab extends HookWidget {
                       autocorrect: false,
                       autofocus: true,
                       enableSuggestions: false,
-                      scribbleEnabled: false,
+                      stylusHandwritingEnabled: false,
                       onTapOutside: (_) {
                         WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                         _scrollController.jumpTo(0);
