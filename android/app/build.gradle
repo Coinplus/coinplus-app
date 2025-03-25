@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
         applicationId = "com.coinplus.app"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName

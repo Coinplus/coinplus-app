@@ -775,7 +775,7 @@ class CardActivationRouteArgs {
 /// [_i11.CardConnectPage]
 class CardConnectRoute extends _i33.PageRouteInfo<CardConnectRouteArgs> {
   CardConnectRoute({
-    _i36.Key? key,
+    _i34.Key? key,
     String? receivedData,
     void Function(({_i35.AbstractCard? card, int index}))? onChangeCard,
     String? cardColor,
@@ -805,7 +805,7 @@ class CardConnectRouteArgs {
     this.cardColor,
   });
 
-  final _i36.Key? key;
+  final _i34.Key? key;
 
   final String? receivedData;
 

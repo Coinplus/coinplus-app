@@ -954,6 +954,8 @@ PODS:
   - AnalyticsConnector (1.0.3)
   - app_settings (5.1.1):
     - Flutter
+  - background_downloader (0.0.1):
+    - Flutter
   - BoringSSL-GRPC (0.0.32):
     - BoringSSL-GRPC/Implementation (= 0.0.32)
     - BoringSSL-GRPC/Interface (= 0.0.32)
@@ -961,6 +963,14 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.32)
   - BoringSSL-GRPC/Interface (0.0.32)
   - BranchSDK (3.6.4)
+  - circom_witnesscalc (0.0.1):
+    - CircomWitnesscalc (= 0.0.1-alpha.3)
+    - Flutter
+  - CircomWitnesscalc (0.0.1-alpha.3):
+    - CircomWitnesscalc/CircomWitnesscalc (= 0.0.1-alpha.3)
+  - CircomWitnesscalc/CircomWitnesscalc (0.0.1-alpha.3):
+    - "CircomWitnesscalc/сircomWitnesscalcС"
+  - "CircomWitnesscalc/сircomWitnesscalcС (0.0.1-alpha.3)"
   - cloud_firestore (5.5.0):
     - Firebase/Firestore (= 10.29.0)
     - firebase_core
@@ -972,6 +982,7 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
+  - CryptoSwift (1.8.4)
   - did_change_authlocal (0.0.1):
     - Flutter
   - Firebase/Auth (10.29.0):
@@ -1110,6 +1121,9 @@ PODS:
   - flutter_inappwebview_ios/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 6.0.3)
+  - flutter_rapidsnark (0.0.1-beta.3):
+    - Flutter
+    - rapidsnark (= 0.0.1-beta.2)
   - flutter_secure_storage (6.0.0):
     - Flutter
   - gaimon (0.0.1):
@@ -1270,6 +1284,8 @@ PODS:
   - local_auth_darwin (0.0.1):
     - Flutter
     - FlutterMacOS
+  - md5_file_checksum (1.0.7):
+    - Flutter
   - MLImage (1.0.0-beta4)
   - MLKitBarcodeScanning (3.0.0):
     - MLKitCommon (~> 9.0)
@@ -1304,11 +1320,19 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - polygonid_flutter_sdk (2.4.0):
+    - CryptoSwift
+    - Flutter
   - PromisesObjC (2.4.0)
   - Ramp (4.0.1)
   - ramp_flutter (1.0.1):
     - Flutter
     - Ramp
+  - rapidsnark (0.0.1-beta.2):
+    - rapidsnark/rapidsnark (= 0.0.1-beta.2)
+  - rapidsnark/rapidsnark (0.0.1-beta.2):
+    - rapidsnark/rapidsnarkC
+  - rapidsnark/rapidsnarkC (0.0.1-beta.2)
   - ReachabilitySwift (5.2.4)
   - RecaptchaInterop (100.0.0)
   - restart_app (0.0.1):
@@ -1329,6 +1353,8 @@ PODS:
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
+  - background_downloader (from `.symlinks/plugins/background_downloader/ios`)
+  - circom_witnesscalc (from `.symlinks/plugins/circom_witnesscalc/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
@@ -1343,14 +1369,17 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_branch_sdk (from `.symlinks/plugins/flutter_branch_sdk/ios`)
   - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
+  - flutter_rapidsnark (from `.symlinks/plugins/flutter_rapidsnark/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - gaimon (from `.symlinks/plugins/gaimon/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
+  - md5_file_checksum (from `.symlinks/plugins/md5_file_checksum/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - nfc_manager (from `.symlinks/plugins/nfc_manager/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - polygonid_flutter_sdk (from `.symlinks/plugins/polygonid_flutter_sdk/ios`)
   - Ramp (from `https://github.com/RampNetwork/ramp-sdk-ios`, tag `4.0.1`)
   - ramp_flutter (from `.symlinks/plugins/ramp_flutter/ios`)
   - restart_app (from `.symlinks/plugins/restart_app/ios`)
@@ -1367,6 +1396,8 @@ SPEC REPOS:
     - AnalyticsConnector
     - BoringSSL-GRPC
     - BranchSDK
+    - CircomWitnesscalc
+    - CryptoSwift
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -1402,6 +1433,7 @@ SPEC REPOS:
     - nanopb
     - OrderedSet
     - PromisesObjC
+    - rapidsnark
     - ReachabilitySwift
     - RecaptchaInterop
 
@@ -1410,6 +1442,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
+  background_downloader:
+    :path: ".symlinks/plugins/background_downloader/ios"
+  circom_witnesscalc:
+    :path: ".symlinks/plugins/circom_witnesscalc/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_functions:
@@ -1432,6 +1468,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_branch_sdk/ios"
   flutter_inappwebview_ios:
     :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
+  flutter_rapidsnark:
+    :path: ".symlinks/plugins/flutter_rapidsnark/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   gaimon:
@@ -1440,6 +1478,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/in_app_review/ios"
   local_auth_darwin:
     :path: ".symlinks/plugins/local_auth_darwin/darwin"
+  md5_file_checksum:
+    :path: ".symlinks/plugins/md5_file_checksum/ios"
   mobile_scanner:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   nfc_manager:
@@ -1448,6 +1488,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  polygonid_flutter_sdk:
+    :path: ".symlinks/plugins/polygonid_flutter_sdk/ios"
   Ramp:
     :git: https://github.com/RampNetwork/ramp-sdk-ios
     :tag: 4.0.1
@@ -1477,11 +1519,15 @@ SPEC CHECKSUMS:
   AmplitudeSwift: 421c075d47e24bcf843024c853460f0769aeac2f
   AnalyticsConnector: a53214d38ae22734c6266106c0492b37832633a9
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
+  background_downloader: 3ca0e156ad83a9fc1c8300f5f7c38e94e2d0bf51
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   BranchSDK: de8447e9afa021aec0c71358183bb1b05ccd659f
+  circom_witnesscalc: 7a21c993bb803a35ce0b2ce822c1d5d49ba0b4c7
+  CircomWitnesscalc: 194e88897842f88b39bc8670dec553f4928d1bf8
   cloud_firestore: 8dce30bd31c84a9e03e3764d71e78e73f33a9186
   cloud_functions: 0774354662acdf998260342978659707f4f5d085
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
+  CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   did_change_authlocal: 4c744cc61a03ecfc0a058f4eb12128e0466edbc0
   Firebase: cec914dab6fd7b1bd8ab56ea07ce4e03dd251c2d
   firebase_auth: 6d50c2ffbb4c7be66d20bf9c93c1ae3d6c91e1fa
@@ -1508,6 +1554,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_branch_sdk: b3763b3d53a7cfbc87c51136bed66fcdc282bdf5
   flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
+  flutter_rapidsnark: bd3c75fb57bbbfa6740a0d58cf83396bce0afee7
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   gaimon: 266fec2cd27726df54a6694c14fc9e3f2a415c33
   GoogleAppMeasurement: f9de05ee17401e3355f68e8fc8b5064d429f5918
@@ -1522,6 +1569,7 @@ SPEC CHECKSUMS:
   in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   local_auth_darwin: 66e40372f1c29f383a314c738c7446e2f7fdadc3
+  md5_file_checksum: 051c787cd7bc3f1df2ad7c8dde18384b8ae02260
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
@@ -1532,9 +1580,11 @@ SPEC CHECKSUMS:
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  polygonid_flutter_sdk: 0addb0ec937d019ca3f9fd7f408307a8ef9d730f
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   Ramp: 3f843fb75cac12ad40842afa3226bae36dc93521
   ramp_flutter: 7c2b108417cd4899c0f4aae2040a646e82b8f660
+  rapidsnark: da1c1d74a36ba8376700286d45707574d9d1afcb
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   restart_app: 806659942bf932f6ce51c5372f91ce5e81c8c14a
