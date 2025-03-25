@@ -29,7 +29,8 @@ dependencies:
 
   provider: ^6.1.2
   dio: ^5.5.0+1
-  get_it: ^8.0.3
+  get_it: ^8.0.2
+  archive: ^3.5.1
   json_annotation: ^4.9.0
   mobx: ^2.5.0
   flutter_mobx: ^2.3.0
@@ -41,7 +42,7 @@ dependencies:
   styled_text: ^8.1.0
   gap: ^3.0.1
   flutter_scale_tap: ^1.0.5
-  lottie: ^3.3.1
+  lottie: ^3.3.0
   nfc_manager: ^3.5.0
   mobile_scanner: ^4.0.0
   flip_card: ^0.7.0
@@ -84,6 +85,9 @@ dependencies:
   bitcoin_flutter:
     git:
       url: https://github.com/Coinplus/coinplus_bitcoin_flutter.git
+#  polygonid_flutter_sdk:
+#    git:
+#      url: ssh://git@github.com/0xPolygonID/polygonid-flutter-sdk.git
   btc_address_validate_swan: ^1.2.1
   fl_chart: ^0.68.0
   flutter_inappwebview: ^6.1.0+1
