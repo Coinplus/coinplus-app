@@ -88,8 +88,7 @@ class ActionSliderForCardDelete extends StatelessWidget {
               activated: isCardActivated,
             ),
           );
-          await _balanceStore.getSelectedEthCard(card.address);
-          await _balanceStore.removeSelectedEthCard();
+          unawaited(_balanceStore.removeSelectedEthCard(address: card.address));
         }
 
         await Future.wait({

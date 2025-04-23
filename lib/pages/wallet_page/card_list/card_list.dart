@@ -82,11 +82,10 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
   @override
   void initState() {
     super.initState();
+    _nfcState.checkNfcSupport();
     if (_balanceStore.cards.isNotEmpty) {
       _rampService.configuration.userAddress = _balanceStore.cards[_balanceStore.cardCurrentIndex].address;
-    }
-    _balanceStore
-      ..setOnCardAddedCallback((address) {
+      _balanceStore..setOnCardAddedCallback((address) {
         final index = _balanceStore.cards.indexWhere((element) => element.address == address);
         if (index.isNegative) {
           return;
@@ -95,19 +94,43 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
         WidgetsBinding.instance.addPostFrameCallback((_) {
           widget.carouselController.animateToPage(index);
         });
-      })
-      ..setOnCardDeletedCallback((address) {
+      })..setOnCardDeletedCallback((address) {
         final index = _balanceStore.cards.indexWhere((element) => element.address == address);
         if (index.isNegative && _balanceStore.cards.isNotEmpty) {
           widget.carouselController.jumpToPage(0);
           return;
         }
       })
-      ..setOnCardActivatedCallback((address) {
-        final index = _balanceStore.cards.indexWhere((element) => element.address == address);
-        widget.carouselController.jumpToPage(index);
-      });
-    _nfcState.checkNfcSupport();
+        ..setOnCardActivatedCallback((address) {
+          final index = _balanceStore.cards.indexWhere((element) => element.address == address);
+          widget.carouselController.jumpToPage(index);
+        });
+    }
+    if (_balanceStore.ethCards.isNotEmpty) {
+      _rampService.configuration.userAddress = _balanceStore.ethCards[_balanceStore.cardCurrentIndex].address;
+      _balanceStore
+          ..setOnCardAddedCallback((address) {
+        final index = _balanceStore.ethCards.indexWhere((element) => element.address == address);
+        if (index.isNegative) {
+          return;
+        }
+        final finalIndex = _balanceStore.cards.length + index;
+        _balanceStore.getEthCardsInfo();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          widget.carouselController.animateToPage(finalIndex);
+        });
+      })..setOnCardDeletedCallback((address) {
+        final index = _balanceStore.ethCards.indexWhere((element) => element.address == address);
+        if (index.isNegative && _balanceStore.ethCards.isNotEmpty) {
+          widget.carouselController.jumpToPage(0);
+          return;
+        }
+      })
+        ..setOnCardActivatedCallback((address) {
+          final index = _balanceStore.ethCards.indexWhere((element) => element.address == address);
+          widget.carouselController.jumpToPage(index);
+        });
+    }
   }
 
   @override
@@ -120,24 +143,24 @@ class _CardListState extends State<CardList> with TickerProviderStateMixin, Auto
             return reaction(
               (_) => _balanceStore.ethCards.length,
               (length) {
-                if (length > _balanceStore.cardCurrentIndex - _balanceStore.cards.length) {
-                  if (_balanceStore.cardCurrentIndex != 0) {
-                    widget.onCarouselScroll(length - 1);
-                    _balanceStore.setCardCurrentIndex(length);
-                    final ethCard = _balanceStore.ethCards.lastOrNull;
-                    if (ethCard != null) {
-                      widget.onCardSelected(ethCard as AbstractCard);
-                    }
-                    _rampService.configuration.userAddress =
-                        _balanceStore.ethCards[_balanceStore.cardCurrentIndex].address;
+                final btcCardCount = _balanceStore.cards.length;
+                final ethStartIndex = btcCardCount;
+
+                if (length > 0) {
+                  if (_balanceStore.cardCurrentIndex >= ethStartIndex) {
+                    final newIndex = ethStartIndex + length - 1;
+                    widget.onCarouselScroll(newIndex);
+                    _balanceStore.setCardCurrentIndex(newIndex);
+                    final ethCard = _balanceStore.ethCards.last;
+                    widget.onCardSelected(ethCard as AbstractCard);
                   } else {
-                    _rampService.configuration.userAddress =
-                        _balanceStore.ethCards[_balanceStore.cardCurrentIndex].address;
-                    _historyPageStore.setCardHistoryIndex(0);
+                    widget.onCarouselScroll(ethStartIndex);
+                    _balanceStore.setCardCurrentIndex(ethStartIndex);
                     final ethCard = _balanceStore.ethCards.first;
                     widget.onCardSelected(ethCard as AbstractCard);
-                    _balanceStore.setCardCurrentIndex(0);
                   }
+
+                  _rampService.configuration.userAddress = _balanceStore.ethCards.last.address;
                 } else {
                   widget.onCardSelected(null);
                   _rampService.configuration.userAddress =

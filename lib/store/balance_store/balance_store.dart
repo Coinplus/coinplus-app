@@ -11,16 +11,17 @@ import '../../constants/card_color.dart';
 import '../../constants/card_type.dart';
 import '../../extensions/extensions.dart';
 import '../../http/repositories/balance_repo.dart';
+import '../../http/repositories/coins_repo.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coins_dto/coin_model.dart';
 import '../../models/eth_card_model/eth_card_model.dart';
+import '../../models/eth_token_model/eth_token_model.dart';
 import '../../models/map_result/map_result_dto.dart';
 import '../../services/cloud_firestore_service.dart';
 import '../../services/firebase_service.dart';
 import '../../utils/secure_storage_utils.dart';
 import '../../utils/storage_utils.dart';
-import '../../utils/wallet_activation_status.dart';
 import '../market_page_store/market_page_store.dart';
 
 part 'balance_store.g.dart';
@@ -53,13 +54,13 @@ abstract class _BalanceStore with Store {
   @readonly
   BarModel? _selectedBar;
   @observable
-  ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
-  @observable
-  bool balanceLoading = false;
-  @observable
   int cardCurrentIndex = 0;
   @observable
   int barCurrentIndex = 0;
+  @observable
+  String mainWalletAddress = '';
+  @observable
+  String backupWalletAddress = '';
   @observable
   bool barActivation = false;
   @observable
@@ -71,21 +72,51 @@ abstract class _BalanceStore with Store {
   @observable
   bool isCardIndicatorTapped = false;
   @observable
-  BlockchainType chainType = BlockchainType.BITCOIN;
+  ObservableMap<String, bool> loadings = <String, bool>{}.asObservable();
   @observable
-  String mainWalletAddress = '';
-  @observable
-  String backupWalletAddress = '';
+  bool balanceLoading = false;
   @observable
   CardModel? backupSingleCard;
   @observable
   bool backupCardLoading = true;
+  final CoinsClient _repo = coinStatsRepo;
+
   @observable
-  bool? hasBackUp;
+  ObservableList<TokenBalance> tokens = ObservableList<TokenBalance>();
+
+  @observable
+  bool isLoading = false;
+
+  @observable
+  String? errorMessage;
 
   @action
-  Future<void> fetchHasBackUp(String address) async {
-    hasBackUp = await isCardWalletHasBackup(address: address);
+  Future<void> fetchTokens(String address) async {
+    isLoading = true;
+    errorMessage = null;
+
+    try {
+      final response = await _repo.getTokenBalances(address: address);
+      tokens.clear();
+      if (response.isNotEmpty) {
+        final balances = List<TokenBalance>.from(response.first.balances)
+          ..sort((a, b) {
+            final aValue = a.amount * a.price;
+            final bValue = b.amount * b.price;
+            return bValue.compareTo(aValue);
+          });
+
+        tokens.addAll(balances);
+      }
+    } catch (e, stackTrace) {
+      errorMessage = 'Failed to load tokens';
+      if (kDebugMode) {
+        print('fetchTokens error: $e');
+        print(stackTrace);
+      }
+    } finally {
+      isLoading = false;
+    }
   }
 
   Future<void> signIn() async {
@@ -115,38 +146,6 @@ abstract class _BalanceStore with Store {
     getEthCardsFromStorage();
     getBarsFromStorage();
     signIn();
-  }
-
-  @action
-  Future<void> loadBackupCard(String mainCardAddress) async {
-    try {
-      backupCardLoading = true;
-      backupSingleCard = await StorageUtils.searchMainAndBackupCard(mainCardAddress);
-    } catch (e) {
-      log('Error while loading backup card: $e');
-    } finally {
-      backupCardLoading = false;
-    }
-  }
-
-  Future<void> getCardsFromStorage() async {
-    final allCards = await StorageUtils.getCards();
-    _cards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
-  }
-
-  Future<void> getBackupCardsFromStorage() async {
-    final allCards = await StorageUtils.getBackupCards();
-    _backupCards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
-  }
-
-  Future<void> getEthCardsFromStorage() async {
-    final allCards = await StorageUtils.getEthCards();
-    _ethCards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
-  }
-
-  Future<void> getBarsFromStorage() async {
-    final allCards = await StorageUtils.getBars();
-    _bars = allCards.where((element) => element.type == CardType.BAR).toList().asObservable();
   }
 
   @computed
@@ -199,6 +198,46 @@ abstract class _BalanceStore with Store {
     return barCurrentIndex != _bars.length ? (_bars[barCurrentIndex].finalBalance ?? 0) / 100000000 * btcPrice! : null;
   }
 
+  //----------Get cards from locale storage----------//
+  @action
+  Future<void> loadBackupCard(String mainCardAddress) async {
+    try {
+      backupCardLoading = true;
+      backupSingleCard = await StorageUtils.searchMainAndBackupCard(mainCardAddress);
+    } catch (e) {
+      log('Error while loading backup card: $e');
+    } finally {
+      backupCardLoading = false;
+    }
+  }
+
+  @action
+  Future<void> getCardsFromStorage() async {
+    final allCards = await StorageUtils.getCards();
+    _cards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
+  }
+
+  @action
+  Future<void> getBackupCardsFromStorage() async {
+    final allCards = await StorageUtils.getBackupCards();
+    _backupCards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
+  }
+
+  @action
+  Future<void> getEthCardsFromStorage() async {
+    final allCards = await StorageUtils.getEthCards();
+    _ethCards = allCards.where((element) => element.type == CardType.CARD).toList().asObservable();
+  }
+
+  @action
+  Future<void> getBarsFromStorage() async {
+    final allCards = await StorageUtils.getBars();
+    _bars = allCards.where((element) => element.type == CardType.BAR).toList().asObservable();
+  }
+
+  //-----------------------------------------------//
+
+  //--------Fetch cards balances---------//
   @action
   Future<void> getCardsInfo() async {
     if (_cards.isEmpty) {
@@ -278,30 +317,10 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<EthCardModel> getEthCard({required int index}) async {
-    return _ethCards[index - _ethCards.length];
-  }
-
-  @computed
-  List<Object> get allCards => [..._cards, ..._ethCards];
-
-  List<Object> filterCardsByBlockchain(String blockchainType) {
-    if (blockchainType == 'BTC') {
-      return _cards;
-    } else if (blockchainType == 'ETH') {
-      return _ethCards;
-    } else {
-      return [];
-    }
-  }
-
-  @action
   Future<void> getEthCardsInfo() async {
     if (_ethCards.isEmpty) {
       return;
     }
-
-    final apiData = CoinStatsRepo();
 
     try {
       balanceLoading = true;
@@ -309,37 +328,25 @@ abstract class _BalanceStore with Store {
       for (var i = 0; i < _ethCards.length; i++) {
         final card = _ethCards[i];
         final address = card.address;
-
-        final res = await apiData.getWalletData(address: address);
+        final res = await coinStatsRepo.getTokenBalances(address: address);
         listResult = res;
-        if (res == null || res.isEmpty) {
-          continue;
+        double totalBalance = 0;
+        if (res.isNotEmpty && res.first.balances.isNotEmpty) {
+          for (final token in res.first.balances) {
+            totalBalance += token.amount * token.price;
+          }
         }
-
-        num totalBalance = 0;
-
-        for (final Map<String, dynamic> data in res) {
-          final num amount = data['amount'];
-          final num price = data['price'];
-          totalBalance += amount * price;
-        }
-
-        final cardJson = {
-          'address': address,
-          'amount': totalBalance,
-        };
-
-        final updatedCard = EthCardModel.fromJson(cardJson);
-
-        _ethCards[i] = card.copyWith(
-          finalBalance: updatedCard.finalBalance,
-          address: updatedCard.address,
+        final updatedCard = card.copyWith(
+          finalBalance: totalBalance,
+          address: address,
         );
+        _ethCards[i] = updatedCard;
+        if (_selectedEthCard?.address == card.address) {
+          _selectedEthCard = updatedCard;
+        }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
+      log(e.toString());
     } finally {
       balanceLoading = false;
     }
@@ -347,43 +354,33 @@ abstract class _BalanceStore with Store {
 
   @action
   Future<void> getBackupCardsInfo() async {
-    if (_ethCards.isEmpty) {
+    if (_backupCards.isEmpty) {
       return;
     }
-
-    final apiData = CoinStatsRepo();
-
     try {
       balanceLoading = true;
+      final addresses = _backupCards.map((e) => e.address).toList();
+      final joinedAddresses = addresses.join('|');
+      final res = await balanceRepo.getCards(
+        addresses: joinedAddresses,
+      );
+      cardMapResult = res;
+      final data = res.data.entries.map((e) {
+        final resJson = {
+          'address': e.key,
+          'final_balance': (e.value as Map)['final_balance'],
+          'total_received': (e.value as Map)['total_received'],
+        };
+
+        return CardModel.fromJson(resJson);
+      }).toList();
 
       for (var i = 0; i < _backupCards.length; i++) {
         final card = _backupCards[i];
-        final address = card.address;
-
-        final res = await apiData.getWalletData(address: address);
-        listResult = res;
-        if (res == null || res.isEmpty) {
-          continue;
-        }
-
-        num totalBalance = 0;
-
-        for (final Map<String, dynamic> data in res) {
-          final num amount = data['amount'];
-          final num price = data['price'];
-          totalBalance += amount * price;
-        }
-
-        final cardJson = {
-          'address': address,
-          'amount': totalBalance,
-        };
-
-        final updatedCard = EthCardModel.fromJson(cardJson);
-
+        final balanceCard = data.firstWhere((e) => e.address == card.address);
         _backupCards[i] = card.copyWith(
-          finalBalance: updatedCard.finalBalance,
-          address: updatedCard.address,
+          finalBalance: balanceCard.finalBalance,
+          totalReceived: balanceCard.totalReceived,
         );
       }
     } catch (e) {
@@ -395,16 +392,9 @@ abstract class _BalanceStore with Store {
     }
   }
 
-  @action
-  Future<void> updateCardIndicatorIndex(int index) async {
-    cardIndicatorIndex = index;
-  }
+  //-------------------------------------//
 
-  @action
-  Future<void> cardIndicatorTapStatus({required bool status}) async {
-    isCardIndicatorTapped = status;
-  }
-
+  //---------------------Get cards---------------------//
   @action
   Future<void> getSelectedCard(String address) async {
     _selectedCard = CardModel(
@@ -435,27 +425,24 @@ abstract class _BalanceStore with Store {
     _selectedBackupCard = CardModel.fromJson(cardJson);
   }
 
+  @action
   Future<void> getSelectedEthCard(String address) async {
-    final apiData = CoinStatsRepo();
     loadings[address] = true;
-    try {
-      final ethData = await apiData.getWalletData(address: address);
 
-      if (ethData == null || ethData.isEmpty) {
+    try {
+      final res = await coinStatsRepo.getTokenBalances(address: address);
+      if (res.isEmpty || res.first.balances.isEmpty) {
         _selectedEthCard = EthCardModel(
           address: address,
           finalBalance: 0,
         );
         return;
       }
-      num totalBalance = 0;
 
-      for (final Map<String, dynamic> data in ethData) {
-        final num amount = data['amount'];
-        final num price = data['price'];
-        totalBalance += amount * price;
+      double totalBalance = 0;
+      for (final token in res.first.balances) {
+        totalBalance += token.amount * token.price;
       }
-
       final cardJson = {
         'address': address,
         'amount': totalBalance,
@@ -464,7 +451,7 @@ abstract class _BalanceStore with Store {
       _selectedEthCard = EthCardModel.fromJson(cardJson);
     } catch (e) {
       if (kDebugMode) {
-        print('Error fetching Ethereum card data: $e');
+        print('Error fetching Ethereum card data for address $address: ${e.toString()}');
       }
     } finally {
       loadings[address] = false;
@@ -487,6 +474,142 @@ abstract class _BalanceStore with Store {
     _selectedBar = BarModel.fromJson(barJson);
   }
 
+  //---------------------------------------------//
+
+  //--------------------Save cards--------------------//
+  @action
+  void saveSelectedCard({required CardColor color}) {
+    if (_selectedCard == null) {
+      return;
+    }
+
+    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+
+    if (isCardNotExist && isBarNotExist) {
+      _selectedCard = _selectedCard!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+      );
+      _cards.add(_selectedCard!);
+
+      StorageUtils.addCard(_selectedCard!);
+      onCardAdded(_selectedCard!.address);
+    } else {
+      onCardAdded(_selectedCard!.address);
+
+      throw Exception('Card is already added');
+    }
+  }
+
+  @action
+  void saveSelectedBackupCard({required CardColor color}) {
+    final isBackupCardNotExist = _backupCards
+        .indexWhere(
+          (element) => element.address == _selectedBackupCard?.address,
+        )
+        .isNegative;
+
+    if (isBackupCardNotExist) {
+      final backup = _selectedBackupCard!.copyWith(
+        address: _selectedBackupCard!.address,
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+        name: 'Coinplus Backup Card',
+        isBackup: true,
+      );
+      _backupCards.add(backup);
+      StorageUtils.addBackupCard(backup);
+    } else {
+      if (kDebugMode) {
+        print('Backup card is already added');
+      }
+    }
+  }
+
+  @action
+  void saveSelectedEthCard({required CardColor color}) {
+    if (_selectedEthCard == null) {
+      return;
+    }
+
+    final isCardNotExist = _ethCards.indexWhere((element) => element.address == _selectedEthCard?.address).isNegative;
+
+    if (isCardNotExist) {
+      _selectedEthCard = _selectedEthCard!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+      );
+      _ethCards.add(_selectedEthCard!);
+
+      StorageUtils.addEthCard(_selectedEthCard!);
+      onCardAdded(_selectedEthCard!.address);
+    } else {
+      _ethCards[_ethCards.indexWhere((element) => element.address == _selectedEthCard?.address)] = _selectedEthCard!;
+      StorageUtils.addEthCard(_selectedEthCard!);
+      onCardAdded(_selectedEthCard!.address);
+      throw Exception('Card is already added');
+    }
+  }
+
+  @action
+  void saveSelectedCardManually({
+    required CardColor color,
+    required WalletType label,
+    required String name,
+  }) {
+    if (_selectedCard == null) {
+      return;
+    }
+
+    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard!.address).isNegative;
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
+
+    if (isCardNotExist && isBarNotExist) {
+      _selectedCard = _selectedCard!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        color: color,
+        label: label,
+        name: name,
+      );
+      _cards.add(_selectedCard!);
+      onCardAdded(_selectedCard!.address);
+      StorageUtils.addCard(_selectedCard!);
+    } else {
+      onCardAdded(_selectedCard!.address);
+      throw Exception('Card is already added');
+    }
+  }
+
+  @action
+  void saveSelectedBar({required CardColor color}) {
+    if (_selectedBar == null) {
+      return;
+    }
+
+    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedBar?.address).isNegative;
+
+    if (isBarNotExist) {
+      _selectedBar = _selectedBar!.copyWith(
+        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+      );
+      _bars.add(_selectedBar!);
+      StorageUtils.addBar(
+        _selectedBar!.copyWith(
+          createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        ),
+      );
+      onBarAdded(_selectedBar!.address);
+    } else {
+      onBarAdded(_selectedBar!.address);
+
+      throw Exception('Bar is already added');
+    }
+  }
+
+  //---------------------------------------------//
+
+  //--------------------Remove cards--------------------//
   @action
   Future<void> removeSelectedCard({required String address}) async {
     final index = _cards.indexWhere((element) => element.address == address);
@@ -505,6 +628,28 @@ abstract class _BalanceStore with Store {
     await _secureStorage.delete(key: address);
   }
 
+  @action
+  Future<void> removeSelectedEthCard({required String address}) async {
+    final index = _ethCards.indexWhere((element) => element.address == address);
+    _ethCards.removeAt(index);
+    await StorageUtils.removeEthCard(address);
+    await _secureStorage.delete(key: address);
+  }
+
+  @action
+  Future<void> removeSelectedBar() async {
+    if (_selectedBar == null) {
+      return;
+    }
+    final index = _bars.indexWhere((element) => element.address == _selectedBar!.address);
+    _bars.removeAt(index);
+    await StorageUtils.removeBar(_selectedBar!.address);
+    await _secureStorage.delete(key: _selectedBar!.address);
+  }
+
+  //---------------------------------------------//
+
+  //--------------------Actions with cards--------------------//
   @action
   Future<void> replaceMainCardWithBackup({required String mainCardAddress, required CardModel? backedUpCard}) async {
     final backupCardIndex = _backupCards.indexWhere(
@@ -541,154 +686,6 @@ abstract class _BalanceStore with Store {
     await StorageUtils.removeBackupCard(backupCard.address);
     await _secureStorage.delete(key: backedUpCard!.address);
     onCardAdded(updatedCard.address);
-  }
-
-  @action
-  Future<void> removeSelectedEthCard() async {
-    if (_selectedEthCard == null) {
-      return;
-    }
-    final index = _ethCards.indexWhere((element) => element.address == _selectedEthCard!.address);
-    _ethCards.removeAt(index);
-    await StorageUtils.removeEthCard(_selectedEthCard!.address);
-    await _secureStorage.delete(key: _selectedEthCard!.address);
-  }
-
-  @action
-  Future<void> removeSelectedBar() async {
-    if (_selectedBar == null) {
-      return;
-    }
-    final index = _bars.indexWhere((element) => element.address == _selectedBar!.address);
-    _bars.removeAt(index);
-    await StorageUtils.removeBar(_selectedBar!.address);
-    await _secureStorage.delete(key: _selectedBar!.address);
-  }
-
-  void saveSelectedCard({required CardColor color}) {
-    if (_selectedCard == null) {
-      return;
-    }
-
-    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
-    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
-
-    if (isCardNotExist && isBarNotExist) {
-      _selectedCard = _selectedCard!.copyWith(
-        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-        color: color,
-      );
-      _cards.add(_selectedCard!);
-
-      StorageUtils.addCard(_selectedCard!);
-      onCardAdded(_selectedCard!.address);
-    } else {
-      onCardAdded(_selectedCard!.address);
-
-      throw Exception('Card is already added');
-    }
-  }
-
-  void saveSelectedBackupCard({required CardColor color}) {
-    final isBackupCardNotExist = _backupCards
-        .indexWhere(
-          (element) => element.address == _selectedBackupCard?.address,
-        )
-        .isNegative;
-
-    if (isBackupCardNotExist) {
-      final backup = _selectedBackupCard!.copyWith(
-        address: _selectedBackupCard!.address,
-        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-        color: color,
-        name: 'Coinplus Backup Card',
-        isBackup: true,
-      );
-      _backupCards.add(backup);
-      StorageUtils.addBackupCard(backup);
-    } else {
-      if (kDebugMode) {
-        print('Backup card is already added');
-      }
-    }
-  }
-
-  void saveSelectedEthCard({required CardColor color}) {
-    if (_selectedEthCard == null) {
-      return;
-    }
-
-    final isCardNotExist = _ethCards.indexWhere((element) => element.address == _selectedEthCard?.address).isNegative;
-
-    if (isCardNotExist) {
-      _selectedEthCard = _selectedEthCard!.copyWith(
-        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-        color: color,
-      );
-      _ethCards.add(_selectedEthCard!);
-
-      StorageUtils.addEthCard(_selectedEthCard!);
-      onCardAdded(_selectedEthCard!.address);
-    } else {
-      onCardAdded(_selectedEthCard!.address);
-
-      throw Exception('Card is already added');
-    }
-  }
-
-  void saveSelectedCardManually({
-    required CardColor color,
-    required WalletType label,
-    required String name,
-  }) {
-    if (_selectedCard == null) {
-      return;
-    }
-
-    final isCardNotExist = _cards.indexWhere((element) => element.address == _selectedCard!.address).isNegative;
-    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedCard?.address).isNegative;
-
-    if (isCardNotExist && isBarNotExist) {
-      _selectedCard = _selectedCard!.copyWith(
-        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-        color: color,
-        label: label,
-        name: name,
-      );
-      _cards.add(_selectedCard!);
-      onCardAdded(_selectedCard!.address);
-
-      StorageUtils.addCard(_selectedCard!);
-    } else {
-      onCardAdded(_selectedCard!.address);
-
-      throw Exception('Card is already added');
-    }
-  }
-
-  void saveSelectedBar({required CardColor color}) {
-    if (_selectedBar == null) {
-      return;
-    }
-
-    final isBarNotExist = _bars.indexWhere((element) => element.address == _selectedBar?.address).isNegative;
-
-    if (isBarNotExist) {
-      _selectedBar = _selectedBar!.copyWith(
-        createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-      );
-      _bars.add(_selectedBar!);
-      StorageUtils.addBar(
-        _selectedBar!.copyWith(
-          createdAt: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-        ),
-      );
-      onBarAdded(_selectedBar!.address);
-    } else {
-      onBarAdded(_selectedBar!.address);
-
-      throw Exception('Bar is already added');
-    }
   }
 
   void changeCardIndexAndSave({
@@ -906,8 +903,8 @@ abstract class _BalanceStore with Store {
   }
 
   @action
-  Future<void> setChainType({required BlockchainType blockchain}) async {
-    chainType = blockchain;
+  Future<void> updateCardIndicatorIndex(int index) async {
+    cardIndicatorIndex = index;
   }
 
   late void Function(String addr) onCardAdded = _defaultOnCardAdded;

@@ -7,10 +7,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
-// import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
@@ -193,7 +191,9 @@ class CardSettingsPage extends HookWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if ((card.label == WalletType.COINPLUS_WALLET) && (card.color != CardColor.BACKUP))
+                  if ((card.label == WalletType.COINPLUS_WALLET) &&
+                      (card.color != CardColor.BACKUP) &&
+                      card.blockchain != 'ETH')
                     Column(
                       children: [
                         FutureBuilder(
@@ -743,34 +743,12 @@ class CardSettingsPage extends HookWidget {
                                   source: 'Wallet Settings',
                                 ),
                               );
-                              InAppWebView(
-                                initialSettings: InAppWebViewSettings(
-                                  underPageBackgroundColor: Colors.white,
-                                  transparentBackground: true,
-                                ),
-                                initialUrlRequest: URLRequest(
-                                  httpShouldHandleCookies: false,
-                                  url: WebUri(
-                                    'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
-                                  ),
+                              await router.push(
+                                WebViewRoute(
+                                  link:
+                                      'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
                                 ),
                               );
-                              // await FlutterWebBrowser.openWebPage(
-                              //   url:
-                              //       'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
-                              //   customTabsOptions: const CustomTabsOptions(
-                              //     shareState: CustomTabsShareState.on,
-                              //     instantAppsEnabled: true,
-                              //     showTitle: true,
-                              //     urlBarHidingEnabled: true,
-                              //   ),
-                              //   safariVCOptions: const SafariViewControllerOptions(
-                              //     barCollapsingEnabled: true,
-                              //     modalPresentationStyle: UIModalPresentationStyle.formSheet,
-                              //     dismissButtonStyle: SafariViewControllerDismissButtonStyle.done,
-                              //     modalPresentationCapturesStatusBarAppearance: true,
-                              //   ),
-                              // );
                             },
                             child: StyledText(
                               text:
@@ -833,7 +811,8 @@ class CardSettingsPage extends HookWidget {
                   if (card.color != CardColor.BACKUP)
                     if (card.label != WalletType.TRACKER &&
                         card.label != WalletType.COINPLUS_LEGACY_WALLET &&
-                        card.label != WalletType.TRACKER_PLUS)
+                        card.label != WalletType.TRACKER_PLUS &&
+                        card.blockchain != 'ETH')
                       Column(
                         children: [
                           const Gap(16),

@@ -365,9 +365,9 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                       children: [
                                         const Gap(15),
                                         if (!(widget.cardColor == '1' ||
-                                            widget.cardColor == 'WHITE' ||
+                                            widget.cardColor == '5' ||
                                             widget.isMiFareUltralight == true ||
-                                            widget.cardColor == 'OLD CARD'))
+                                            widget.cardColor == '4'))
                                           Assets.icons.coinplusLogo.image(height: 32)
                                         else
                                           Assets.icons.coinplusLogoBlack.image(height: 32),
@@ -386,9 +386,8 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                                 color: _focusNode.hasFocus
                                                     ? Colors.blue
                                                     : widget.cardColor == '1' ||
-                                                            widget.cardColor == 'WHITE' ||
                                                             widget.isMiFareUltralight == true ||
-                                                            widget.cardColor == 'OLD CARD'
+                                                            widget.cardColor == '4'
                                                         ? const Color(
                                                             0xFFF0563C,
                                                           )
@@ -591,17 +590,17 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
                                     if (!(widget.cardColor == '1' ||
-                                        widget.cardColor == 'WHITE' ||
+                                        widget.cardColor == '5' ||
                                         widget.isMiFareUltralight == true ||
-                                        widget.cardColor == 'OLD CARD'))
+                                        widget.cardColor == '4'))
                                       Assets.icons.cardBackText.image(height: 55)
                                     else
                                       Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
                                     if (!(widget.cardColor == '1' ||
-                                        widget.cardColor == 'WHITE' ||
+                                        widget.cardColor == '5' ||
                                         widget.isMiFareUltralight == true ||
-                                        widget.cardColor == 'OLD CARD'))
+                                        widget.cardColor == '4'))
                                       SizedBox(
                                         width: 115,
                                         child: Assets.icons.cardBackLink.image(),

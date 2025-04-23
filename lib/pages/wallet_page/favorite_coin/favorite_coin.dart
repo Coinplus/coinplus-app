@@ -34,7 +34,7 @@ class FavoriteCoin extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 12, right: 12, bottom:  context.width > 360 ? 12 : 0),
+            padding: EdgeInsets.only(left: 12, right: 12, bottom: context.width > 360 ? 12 : 0),
             child: Observer(
               builder: (_) {
                 final data = _marketPageStore.singleCoin?.result.first;

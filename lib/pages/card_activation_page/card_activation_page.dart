@@ -479,6 +479,12 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                             '',
                                                                           );
                                                                           secret1B58 = _secretOneController.text;
+                                                                          await recordAmplitudeEvent(
+                                                                            QrScanned(
+                                                                              source: 'Secret1',
+                                                                              walletAddress: card!.address,
+                                                                            ),
+                                                                          );
                                                                           await _validateSecretOne(
                                                                             card!.address,
                                                                           );
@@ -688,6 +694,12 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
                                                                             '',
                                                                           );
                                                                           secret2B58 = _secretTwoController.text;
+                                                                          await recordAmplitudeEvent(
+                                                                            QrScanned(
+                                                                              source: 'Secret2',
+                                                                              walletAddress: card!.address,
+                                                                            ),
+                                                                          );
                                                                           await _validateSecretTwo(
                                                                             card!.address,
                                                                           );
@@ -1156,6 +1168,9 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
             const Duration(milliseconds: 500),
           );
           await _secretTwoLottieController.forward(from: 0);
+          await recordAmplitudeEvent(
+            Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
+          );
         }
       } else {
         if (isValidSecret29(secretTwo)) {
@@ -1165,11 +1180,11 @@ class _CardActivationPageState extends State<CardActivationPage> with TickerProv
             const Duration(milliseconds: 500),
           );
           await _secretTwoLottieController.forward(from: 0);
+          await recordAmplitudeEvent(
+            Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
+          );
         }
       }
-      await recordAmplitudeEvent(
-        Secret2Validated(walletAddress: walletAddress, walletType: 'Card'),
-      );
     } else {
       if (isValidEthSecretTwo(secretTwo)) {
         _validationStore.validateSecretTwo();

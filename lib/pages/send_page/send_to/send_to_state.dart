@@ -97,6 +97,9 @@ abstract class SendToStateBase with Store {
   CoinResultModel? get btc => _marketPageStore.singleCoin?.result.first;
 
   @computed
+  CoinResultModel? get eth => _marketPageStore.singleCoin?.result[1];
+
+  @computed
   bool get isConvertedAmountVisible => _amount.usdToSatoshi(btcCurrentPrice: btcPrice) != 0;
 
   @computed

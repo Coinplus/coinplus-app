@@ -25,8 +25,8 @@ void registerStoreGetIt() {
 }
 
 void reRegisterStoreGetIt() {
-  final rampService = GetIt.I<RampService>();
-  final balancesStore = GetIt.I<BalanceStore>();
+  final _rampService = GetIt.I<RampService>();
+  final _balancesStore = GetIt.I<BalanceStore>();
   final _walletProtectState = GetIt.I<WalletProtectState>();
   final _sendToState = GetIt.I<SendToState>();
   final _historyPageStore = GetIt.I<HistoryPageStore>();
@@ -36,8 +36,8 @@ void reRegisterStoreGetIt() {
   final _sensorsStore = GetIt.I<AccelerometerStore>();
   final _remoteConfigStore = GetIt.I<RemoteConfigStore>();
 
-  GetIt.I.unregister(instance: rampService);
-  GetIt.I.unregister(instance: balancesStore);
+  GetIt.I.unregister(instance: _rampService);
+  GetIt.I.unregister(instance: _balancesStore);
   GetIt.I.unregister(instance: _walletProtectState);
   GetIt.I.unregister(instance: _sendToState);
   GetIt.I.unregister(instance: _historyPageStore);

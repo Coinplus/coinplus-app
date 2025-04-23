@@ -496,7 +496,12 @@ class BarSettingsPage extends HookWidget {
                                   source: 'Wallet Settings',
                                 ),
                               );
-                              await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet'));
+                              await router.push(
+                                WebViewRoute(
+                                  link:
+                                      'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
+                                ),
+                              );
                             },
                             child: StyledText(
                               text:

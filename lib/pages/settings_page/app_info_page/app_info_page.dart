@@ -160,7 +160,12 @@ class AboutAppPage extends HookWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      await router.push(WebViewRoute(link: 'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet'));
+                      await router.push(
+                        WebViewRoute(
+                          link:
+                              'https://coinplus.gitbook.io/help-center/faq/how-to-send-crypto-from-the-activated-coinplus-wallet',
+                        ),
+                      );
                     },
                     splashFactory: InkSparkle.splashFactory,
                     highlightColor: Colors.transparent,
