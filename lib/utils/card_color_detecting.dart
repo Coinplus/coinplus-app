@@ -21,13 +21,17 @@ DecorationImage getFrontImageForCardColor(String? colorNum, {bool isMifare = fal
       return DecorationImage(
         image: Assets.images.card.brownCardFront.image().image,
       );
-    case '3' || 'BACKUP':
+    case '3':
       return DecorationImage(
         image: Assets.images.card.backupCardFront.image().image,
       );
-    case 'OLD CARD':
+    case '4':
       return DecorationImage(
         image: Assets.images.card.legacyFront.image().image,
+      );
+    case '5':
+      return DecorationImage(
+        image: Assets.images.card.orangeCardFront.image().image,
       );
     default:
       return DecorationImage(
@@ -55,9 +59,13 @@ DecorationImage getFilledBackImageForCardColor(String? colorNum, {bool isMifare 
       return DecorationImage(
         image: Assets.images.card.filledBackBrown.image().image,
       );
-    case 'OLD CARD':
+    case '4':
       return DecorationImage(
         image: Assets.images.card.filledBackLegacy.image().image,
+      );
+    case '5':
+      return DecorationImage(
+        image: Assets.images.card.filledBack.image().image,
       );
     default:
       return DecorationImage(
@@ -89,9 +97,13 @@ DecorationImage getBackImageForCardColor(String? colorNum, {bool isMifare = fals
       return DecorationImage(
         image: Assets.images.card.cardBackBlack.image().image,
       );
-    case 'OLD CARD':
+    case '4':
       return DecorationImage(
         image: Assets.images.card.cardBackLegacy.image().image,
+      );
+    case '5':
+      return DecorationImage(
+        image: Assets.images.card.back.image().image,
       );
     default:
       return DecorationImage(

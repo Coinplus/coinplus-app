@@ -400,8 +400,7 @@ Future<void> nfcSessionIos({
                   ),
                 );
               }
-            }
-            else {
+            } else {
               //Fake card
               await NfcManager.instance.stopSession();
               Future.delayed(
@@ -689,9 +688,9 @@ Future<void> nfcSessionAndroid({
           }
         }
       } else {
-        if(records.length > 1) {
+        if (records.length > 1) {
           final cardIndex = _balanceStore.cards.indexWhere(
-                (element) => element.address == walletAddress,
+            (element) => element.address == walletAddress,
           );
           if (cardIndex != -1) {
             await _walletProtectState.updateModalStatus(isOpened: true);
@@ -715,12 +714,12 @@ Future<void> nfcSessionAndroid({
             );
           }
           return;
-        } else if(records.length <= 1) {
+        } else if (records.length <= 1) {
           isMifareUltralight = true;
           if (card != null && card.possibleOldCard == true) {
             if (card.nfcId == formattedTagId) {
               final cardIndex = _balanceStore.cards.indexWhere(
-                    (element) => element.address == walletAddress,
+                (element) => element.address == walletAddress,
               );
               if (cardIndex != -1) {
                 await _walletProtectState.updateModalStatus(isOpened: true);
@@ -747,7 +746,7 @@ Future<void> nfcSessionAndroid({
             } else {
               Future.delayed(
                 Duration.zero,
-                    () => _walletProtectState.updateModalStatus(isOpened: true),
+                () => _walletProtectState.updateModalStatus(isOpened: true),
               );
               await notCoinplusCardAlert(
                 context: router.navigatorKey.currentContext!,
@@ -757,13 +756,12 @@ Future<void> nfcSessionAndroid({
               );
               Future.delayed(
                 Duration.zero,
-                    () => _walletProtectState.updateModalStatus(isOpened: false),
+                () => _walletProtectState.updateModalStatus(isOpened: false),
               );
             }
-          }
-          else {
+          } else {
             final cardIndex = _balanceStore.cards.indexWhere(
-                  (element) => element.address == walletAddress,
+              (element) => element.address == walletAddress,
             );
             if (cardIndex != -1) {
               await _walletProtectState.updateModalStatus(isOpened: true);

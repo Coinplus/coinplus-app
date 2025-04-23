@@ -127,19 +127,20 @@ class CardEmptyState extends StatelessWidget {
                                 } else {
                                   return Row(
                                     children: [
-                                      if (snapshot.data!.previousPrice != snapshot.data!.price) Row(
-                                        children: [
-                                          Text(
-                                            snapshot.data!.previousPrice.toString(),
-                                            style: const TextStyle(
-                                              decoration: TextDecoration.lineThrough,
-                                              fontFamily: FontFamily.redHatMedium,
-                                              color: AppColors.primary,
+                                      if (snapshot.data!.previousPrice != snapshot.data!.price)
+                                        Row(
+                                          children: [
+                                            Text(
+                                              snapshot.data!.previousPrice.toString(),
+                                              style: const TextStyle(
+                                                decoration: TextDecoration.lineThrough,
+                                                fontFamily: FontFamily.redHatMedium,
+                                                color: AppColors.primary,
+                                              ),
                                             ),
-                                          ),
-                                          const Gap(6),
-                                        ],
-                                      ),
+                                            const Gap(6),
+                                          ],
+                                        ),
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(4),

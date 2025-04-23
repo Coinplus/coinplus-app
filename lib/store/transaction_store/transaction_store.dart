@@ -11,6 +11,7 @@ import '../../http/repositories/utxo_repo.dart';
 import '../../models/bar_model/bar_model.dart';
 import '../../models/card_model/card_model.dart';
 import '../../models/coins_dto/coin_model.dart';
+import '../../models/eth_card_model/eth_card_model.dart';
 import '../../models/tx_fee/tx_fee_dto.dart';
 import '../../models/utxo_model/utxo_model.dart';
 import '../../utils/secure_storage_utils.dart';
@@ -115,6 +116,9 @@ abstract class _TransactionStore with Store {
 
   @computed
   ObservableList<CardModel> get cards => _balanceStore.cards;
+
+  @computed
+  ObservableList<EthCardModel> get ethCards => _balanceStore.ethCards;
 
   @computed
   ObservableList<BarModel> get bars => _balanceStore.bars;

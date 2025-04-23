@@ -143,7 +143,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
 
   Future<void> initCardActivationStatus() async {
     final cardData = await getCardData(widget.receivedData.toString());
-    if(cardData != null) {
+    if (cardData != null) {
       await _allSettingsState.initActivationStatus(
         status: cardData.activated ?? false,
       );
@@ -380,9 +380,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                             borderRadius: BorderRadius.circular(
                                               6,
                                             ),
-                                            color: _validationStore.color == 'OLD CARD' ||
-                                                    _validationStore.color == 'OLD_CARD' ||
-                                                    _validationStore.color == 'UNKNOWN_COLOR'
+                                            color: _validationStore.color == '4'
                                                 ? Colors.grey.withValues(alpha: 0.5)
                                                 : Colors.black.withValues(
                                                     alpha: 0.2,
@@ -476,9 +474,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                             borderRadius: BorderRadius.circular(
                                               6,
                                             ),
-                                            color: _validationStore.color == 'OLD CARD' ||
-                                                    _validationStore.color == 'OLD_CARD' ||
-                                                    _validationStore.color == 'UNKNOWN_COLOR'
+                                            color: _validationStore.color == '4'
                                                 ? Colors.grey.withValues(alpha: 0.5)
                                                 : Colors.black.withValues(
                                                     alpha: 0.2,
@@ -697,9 +693,7 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                     Row(
                                       children: [
                                         const Gap(15),
-                                        if (!(_validationStore.color == '1' ||
-                                            _validationStore.color == 'WHITE' ||
-                                            _validationStore.color == 'OLD CARD'))
+                                        if (!(_validationStore.color == '1' || _validationStore.color == '4'))
                                           Assets.icons.coinplusLogo.image(height: 32)
                                         else
                                           Assets.icons.coinplusLogoBlack.image(height: 32),
@@ -1108,16 +1102,12 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                                       Gap(context.height * 0.03)
                                     else
                                       context.height > 667 ? Gap(context.height * 0.035) : Gap(context.height * 0.025),
-                                    if (!(_validationStore.color == '1' ||
-                                        _validationStore.color == 'WHITE' ||
-                                        _validationStore.color == 'OLD CARD'))
+                                    if (!(_validationStore.color == '1' || _validationStore.color == '4'))
                                       Assets.icons.cardBackText.image(height: 55)
                                     else
                                       Assets.icons.cardBackTextBlack.image(height: 55),
                                     Gap(context.height * 0.02),
-                                    if (!(_validationStore.color == '1' ||
-                                        _validationStore.color == 'WHITE' ||
-                                        _validationStore.color == 'OLD CARD'))
+                                    if (!(_validationStore.color == '1' || _validationStore.color == '4'))
                                       SizedBox(
                                         width: 115,
                                         child: Assets.icons.cardBackLink.image(),
@@ -1532,31 +1522,31 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                             if (card != null) {
                               unawaited(connectedCount(_btcAddressController.text));
                               unawaited(updateAppConnectionDate(_btcAddressController.text));
-                              if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
+                              if (_validationStore.color == '0') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == '1' || _validationStore.color == 'WHITE') {
+                              } else if (_validationStore.color == '1') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.WHITE,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == '2' || _validationStore.color == 'BLACK') {
+                              } else if (_validationStore.color == '2') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.BLACK,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == '3' || _validationStore.color == 'BACKUP') {
+                              } else if (_validationStore.color == '3') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.BACKUP,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == 'OLD CARD') {
+                              } else if (_validationStore.color == '4') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.LEGACY,
                                   label: WalletType.COINPLUS_LEGACY_WALLET,
@@ -1580,31 +1570,31 @@ class _CardConnectPageState extends State<CardConnectPage> with TickerProviderSt
                             if (card != null) {
                               unawaited(connectedCount(widget.receivedData!));
                               unawaited(updateAppConnectionDate(widget.receivedData!));
-                              if (_validationStore.color == '0' || _validationStore.color == 'ORANGE') {
+                              if (_validationStore.color == '0') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.ORANGE,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == '1' || _validationStore.color == 'WHITE') {
+                              } else if (_validationStore.color == '1') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.WHITE,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == '2' || _validationStore.color == 'BLACK') {
+                              } else if (_validationStore.color == '2') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.BLACK,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == '3' || _validationStore.color == 'BACKUP') {
+                              } else if (_validationStore.color == '3') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.BACKUP,
                                   label: WalletType.COINPLUS_WALLET,
                                   name: 'Coinplus Bitcoin Wallet',
                                 );
-                              } else if (_validationStore.color == 'OLD CARD') {
+                              } else if (_validationStore.color == '4') {
                                 _balanceStore.saveSelectedCardManually(
                                   color: CardColor.LEGACY,
                                   label: WalletType.COINPLUS_LEGACY_WALLET,

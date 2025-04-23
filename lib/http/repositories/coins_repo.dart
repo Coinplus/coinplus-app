@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../models/coins_dto/coin_model.dart';
+import '../../models/eth_token_model/eth_token_model.dart';
 import '../../models/history_model/transaction_model.dart';
 import '../../models/market_cap_dto/market_cap_dto.dart';
 import '../../models/patch_transactions_model/patch_transactions_model.dart';
@@ -15,6 +16,7 @@ class _Paths {
   static const transactions = '/wallet/transactions?page={page}&limit=20&address={address}&connectionId=bitcoin';
   static const walletStatus = '/wallet/status?address={address}&connectionId=bitcoin';
   static const patchTransactions = '/wallet/transactions?address={address}&connectionId=bitcoin';
+  static const ethTokenBalance = '/wallet/balances?address={address}&networks=ethereum';
 }
 
 final coinStatsRepo = CoinsClient(coinStatsDio);
@@ -45,6 +47,11 @@ abstract class CoinsClient {
 
   @PATCH(_Paths.patchTransactions)
   Future<PatchTransactionsModel> patchTransactions({
+    @Path() required String address,
+  });
+
+  @GET(_Paths.ethTokenBalance)
+  Future<List<TokenBalanceResponse>> getTokenBalances({
     @Path() required String address,
   });
 }
