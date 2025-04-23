@@ -78,7 +78,8 @@ class CardAddressField extends HookWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
-                      color: state.cards[index].label == WalletType.COINPLUS_LEGACY_WALLET || state.cards[index].label == WalletType.TRACKER_PLUS
+                      color: state.cards[index].label == WalletType.COINPLUS_LEGACY_WALLET ||
+                              state.cards[index].label == WalletType.TRACKER_PLUS
                           ? Colors.grey.withValues(alpha: 0.5)
                           : Colors.black.withValues(
                               alpha: 0.3,
@@ -142,11 +143,12 @@ class CardAddressField extends HookWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
-                  color: state.cards[index].label == WalletType.COINPLUS_LEGACY_WALLET || state.cards[index].label == WalletType.TRACKER_PLUS
+                  color: state.cards[index].label == WalletType.COINPLUS_LEGACY_WALLET ||
+                          state.cards[index].label == WalletType.TRACKER_PLUS
                       ? Colors.grey.withValues(alpha: 0.7)
                       : Colors.black.withValues(
-                    alpha: 0.3,
-                  ),
+                          alpha: 0.3,
+                        ),
                 ),
                 child: Column(
                   children: [

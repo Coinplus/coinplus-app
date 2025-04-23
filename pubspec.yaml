@@ -85,9 +85,6 @@ dependencies:
   bitcoin_flutter:
     git:
       url: https://github.com/Coinplus/coinplus_bitcoin_flutter.git
-#  polygonid_flutter_sdk:
-#    git:
-#      url: ssh://git@github.com/0xPolygonID/polygonid-flutter-sdk.git
   btc_address_validate_swan: ^1.2.1
   fl_chart: ^0.68.0
   flutter_inappwebview: ^6.1.0+1
@@ -101,7 +98,6 @@ dependencies:
   http: any
   local_auth_android: any
 dev_dependencies:
-  # Provides API to test Flutter applications that run on real devices and emulators.
   flutter_driver:
     sdk: flutter
 

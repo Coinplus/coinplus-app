@@ -149,11 +149,11 @@ class LostCardInfoModal extends StatelessWidget {
 
   Widget getColorImage(String color) {
     switch (color) {
-      case 'ORANGE':
+      case '0':
         return Assets.images.card.orangeCardFront.image(height: 45);
-      case 'WHITE':
+      case '1':
         return Assets.images.card.whiteCardFront.image(height: 45);
-      case 'BLACK':
+      case '2':
         return Assets.images.card.brownCardFront.image(height: 45);
       default:
         return const SizedBox.shrink();
