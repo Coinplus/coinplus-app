@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:action_slider/action_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:lottie/lottie.dart';
@@ -90,6 +92,7 @@ class RemoveUserData extends StatelessWidget {
                 await StorageUtils.clear();
                 await _secureStorage.clearSecureStorage();
                 reRegisterStoreGetIt();
+                await signOutUser();
                 await Future.delayed(const Duration(seconds: 1));
                 controller.success();
                 unawaited(
@@ -151,3 +154,17 @@ class RemoveUserData extends StatelessWidget {
     );
   }
 }
+
+Future<void> signOutUser() async {
+  try {
+    await FirebaseAuth.instance.signOut();
+    if (kDebugMode) {
+      print('User signed out successfully.');
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error signing out: $e');
+    }
+  }
+}
+

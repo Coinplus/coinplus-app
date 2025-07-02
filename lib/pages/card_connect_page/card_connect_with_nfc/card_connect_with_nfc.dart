@@ -363,8 +363,10 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                     Gap(gaps.logoPositionGap),
                                     Row(
                                       children: [
-                                        const Gap(15),
-                                        if (!(widget.cardColor == '1' ||
+                                        if (widget.cardColor != '6') const Gap(15),
+                                        if (widget.cardColor == '6')
+                                          Assets.icons.gateLogo.image(height: 32)
+                                        else if (!(widget.cardColor == '1' ||
                                             widget.cardColor == '5' ||
                                             widget.isMiFareUltralight == true ||
                                             widget.cardColor == '4'))
@@ -385,7 +387,7 @@ class _CardConnectWithNfcState extends State<CardConnectWithNfc> with TickerProv
                                               border: Border.all(
                                                 color: _focusNode.hasFocus
                                                     ? Colors.blue
-                                                    : widget.cardColor == '1' ||
+                                                    : widget.cardColor == '6' ? Colors.grey.withValues(alpha: 0.2): widget.cardColor == '1' ||
                                                             widget.isMiFareUltralight == true ||
                                                             widget.cardColor == '4'
                                                         ? const Color(

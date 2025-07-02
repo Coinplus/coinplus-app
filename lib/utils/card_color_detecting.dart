@@ -33,6 +33,10 @@ DecorationImage getFrontImageForCardColor(String? colorNum, {bool isMifare = fal
       return DecorationImage(
         image: Assets.images.card.orangeCardFront.image().image,
       );
+    case '6':
+      return DecorationImage(
+        image: Assets.images.card.gateFront.image().image,
+      );
     default:
       return DecorationImage(
         image: Assets.images.card.orangeCardFront.image().image,
@@ -66,6 +70,11 @@ DecorationImage getFilledBackImageForCardColor(String? colorNum, {bool isMifare 
     case '5':
       return DecorationImage(
         image: Assets.images.card.filledBack.image().image,
+      );
+
+    case '6':
+      return DecorationImage(
+        image: Assets.images.card.filledBackGate.image().image,
       );
     default:
       return DecorationImage(
@@ -104,6 +113,11 @@ DecorationImage getBackImageForCardColor(String? colorNum, {bool isMifare = fals
     case '5':
       return DecorationImage(
         image: Assets.images.card.back.image().image,
+      );
+
+    case '6':
+      return DecorationImage(
+        image: Assets.images.card.cardBackGate.image().image,
       );
     default:
       return DecorationImage(

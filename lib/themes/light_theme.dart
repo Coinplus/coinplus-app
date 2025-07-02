@@ -13,7 +13,7 @@ final lightTheme = base.copyWith(
     primary: Colors.white,
     onPrimary: Colors.black54,
   ),
-  tabBarTheme: TabBarTheme(
+  tabBarTheme: TabBarThemeData(
     unselectedLabelStyle: base.primaryTextTheme.labelLarge!.copyWith(
       color: Colors.white,
     ),

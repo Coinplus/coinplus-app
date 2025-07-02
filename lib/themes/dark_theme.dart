@@ -14,7 +14,7 @@ final darkTheme = base.copyWith(
     primary: Colors.black54,
     onPrimary: Colors.white,
   ),
-  tabBarTheme: TabBarTheme(
+  tabBarTheme: TabBarThemeData(
     unselectedLabelStyle: base.primaryTextTheme.labelLarge!.copyWith(
       color: Colors.white,
     ),

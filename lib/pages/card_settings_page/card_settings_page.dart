@@ -812,6 +812,7 @@ class CardSettingsPage extends HookWidget {
                     if (card.label != WalletType.TRACKER &&
                         card.label != WalletType.COINPLUS_LEGACY_WALLET &&
                         card.label != WalletType.TRACKER_PLUS &&
+                        card.color != CardColor.GATE_BLACK &&
                         card.blockchain != 'ETH')
                       Column(
                         children: [
