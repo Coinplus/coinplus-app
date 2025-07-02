@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:btc_address_validate_swan/btc_address_validate_swan.dart';
 import 'package:ethereum_addresses/ethereum_addresses.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../constants/card_type.dart';
-import '../../utils/compute_private_key.dart';
 import '../balance_store/balance_store.dart';
 
 part 'address_and_balance_state.g.dart';
@@ -43,17 +43,24 @@ abstract class _AddressState with Store {
   @observable
   bool isAddressVisible = false;
 
+  @computed
+  bool get isValidReceiverAddress {
+    try {
+      validate(btcAddress);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<void> validateBTCAddress() async {
-    if (btcAddress.length < 26) {
+    try {
+      validate(btcAddress);
+    } catch (e) {
       setValidationFailed();
       return;
     }
 
-    final validationRes = isValidPublicAddress(btcAddress);
-    if (!validationRes) {
-      setValidationFailed();
-      return;
-    }
     setValidationPassed();
 
     if (addressType == CardType.CARD) {
@@ -64,14 +71,13 @@ abstract class _AddressState with Store {
     }
 
     final isAddressExist =
-        addressType == CardType.CARD ? _balanceStore.selectedCard != null : _balanceStore.selectedBar != null;
+    addressType == CardType.CARD ? _balanceStore.selectedCard != null : _balanceStore.selectedBar != null;
 
     if (isAddressExist) {
       setValidationPassed();
-      return;
+    } else {
+      setValidationFailed();
     }
-
-    setValidationFailed();
   }
 
   Future<void> validateETHAddress() async {

@@ -191,6 +191,12 @@ class GotItButton extends StatelessWidget {
                               balanceStore.saveSelectedCard(
                                 color: CardColor.BACKUP,
                               );
+                            } else if (cardColor == '6') {
+                              balanceStore.saveSelectedCardManually(
+                                color: CardColor.GATE_BLACK,
+                                label: WalletType.COINPLUS_WALLET,
+                                name: 'Coinplus Bitcoin Wallet',
+                              );
                             } else {
                               balanceStore.saveSelectedCardManually(
                                 color: CardColor.LEGACY,

@@ -8,6 +8,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../constants/card_color.dart';
 import '../../../../constants/card_type.dart';
 import '../../../../extensions/extensions.dart';
 import '../../../../gen/fonts.gen.dart';
@@ -79,8 +80,8 @@ class CardAddressField extends HookWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: state.cards[index].label == WalletType.COINPLUS_LEGACY_WALLET ||
-                              state.cards[index].label == WalletType.TRACKER_PLUS
-                          ? Colors.grey.withValues(alpha: 0.5)
+                              state.cards[index].label == WalletType.TRACKER_PLUS || state.cards[index].color == CardColor.GATE_BLACK
+                          ? Colors.grey.withValues(alpha: 0.3)
                           : Colors.black.withValues(
                               alpha: 0.3,
                             ),
@@ -144,8 +145,8 @@ class CardAddressField extends HookWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: state.cards[index].label == WalletType.COINPLUS_LEGACY_WALLET ||
-                          state.cards[index].label == WalletType.TRACKER_PLUS
-                      ? Colors.grey.withValues(alpha: 0.7)
+                          state.cards[index].label == WalletType.TRACKER_PLUS || state.cards[index].color == CardColor.GATE_BLACK
+                      ? Colors.grey.withValues(alpha: 0.3)
                       : Colors.black.withValues(
                           alpha: 0.3,
                         ),

@@ -10,6 +10,7 @@ enum CardColor {
   SILVER,
   GOLD,
   ETHEREUM,
+  GATE_BLACK,
 }
 
 const cardColors = [
@@ -20,6 +21,7 @@ const cardColors = [
   CardColor.BACKUP,
   CardColor.TRACKER,
   CardColor.ETHEREUM,
+  CardColor.GATE_BLACK,
 ];
 const barColors = [CardColor.SILVER, CardColor.GOLD];
 
@@ -32,6 +34,7 @@ extension CardColorHelper on CardColor {
         CardColor.BACKUP => Assets.images.card.backupCardFront,
         CardColor.TRACKER => Assets.images.card.orangeCardFront,
         CardColor.ETHEREUM => Assets.images.card.orangeCardFront,
+        CardColor.GATE_BLACK => Assets.images.card.gateFront,
         CardColor.SILVER => Assets.images.bar.barFill,
         CardColor.GOLD => Assets.images.bar.barFill,
       };

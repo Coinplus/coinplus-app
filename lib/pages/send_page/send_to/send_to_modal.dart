@@ -36,6 +36,7 @@ class SendToModal extends HookWidget {
 
     useEffect(
       () {
+        _sendToState.clearAddressController();
         if (fromLostPage == true) {
           tabController.animateTo(2);
         }
